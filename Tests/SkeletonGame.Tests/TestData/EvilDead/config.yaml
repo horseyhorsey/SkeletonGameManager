@@ -1,0 +1,66 @@
+pinproc_class: procgame.fakepinproc.FakePinPROC
+vp_game_map_file: C:/P-ROC/shared/vp_game_map.yaml
+PYSDL2_DLL_PATH: C:\P-ROC\DLLs\
+use_virtual_dmd_only: true
+font_path:
+- C:\P-ROC\shared\dmd\
+- ./assets/dmd/
+config_path:
+- C:\P-ROC\shared\config\
+dmd_path: ./assets/dmd/
+sound_path: ./assets/sound/
+voice_dir: voice/
+sfx_dir: sfx/
+music_dir: music/
+hdfont_path: ./assets/fonts/
+dmd_grid_path: ./assets/dmd/
+dmd_dots_w: 550
+dmd_dots_h: 300
+dmd_dot_filter: true
+dmd_window_border: False
+desktop_dmd_scale: 1
+dmd_framerate: 23.98
+dmd_flip: 0
+screen_position_x: 25
+screen_position_y: 60
+audio_buffer_size: 512
+default_modes:
+  score_display: HD
+  bonus_tally: true
+  attract: true
+  osc_input: true
+  service_mode: true
+  ball_search: true
+  ball_search_delay: 30
+  tilt_mode: true
+  player_profiles: true
+  player_trophys: true
+keyboard_switch_map:
+  0: SD8
+  7: SD5
+  9: SD7
+  8: SD6
+  1: S13
+  1073742053: SF2
+  1073742049: SF4
+  i: S66
+  o: S67
+  p: S68
+  a: S31
+  s: S32
+  d: S33
+  f: S34
+  2: S16
+  3: S17
+  4: S17
+  5: S38
+  6: S26
+  t: S21
+  y: S76
+  z: S82
+  q: S61
+  w: S62
+  e: S63
+  r: S64
+  u: S38
+  47: S34

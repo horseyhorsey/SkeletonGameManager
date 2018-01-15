@@ -1,0 +1,1403 @@
+UserInterface:
+  splash_screen: loading.png
+  progress_bar:
+    x_center: 0.5
+    y_center: 0.25
+    width: 0.9
+    height: 0.1
+    border:
+    - 255
+    - 0
+    - 255
+    fill:
+    - 0
+    - 255
+    - 0
+  text:
+    color:
+    - 0
+    - 0
+    - 128
+    y_center: 0.3
+LampShows:
+- key: attract_show_0
+  file: attract0.lampshow
+- key: attract_show_1
+  file: attract1.lampshow
+- key: attract_show_2
+  file: attract2.lampshow
+- key: attract_show_3
+  file: attract3.lampshow
+- key: attract_show_4
+  file: attract4.lampshow
+- key: attract_show_5
+  file: attract5.lampshow
+- key: attract_show_6
+  file: attract6.lampshow
+- key: attract_show_7
+  file: attract7.lampshow
+- key: chase_sling
+  file: chase_sling.lampshow
+- key: DeadRoll
+  file: DeadRoll.lampshow
+- key: flash_cellar
+  file: flash_cellar.lampshow
+- key: FlashAll
+  file: FlashAll.lampshow
+- key: GreenUp
+  file: GreenUp.lampshow
+- key: swipeUp
+  file: swipeUp.lampshow
+- key: swipeDown
+  file: swipeDown.lampshow
+- key: swipeUpRed
+  file: swipeUpRed.lampshow
+- key: swipeUpYellow
+  file: swipeUpYellow.lampshow
+- key: swipeUpGreen
+  file: swipeUpGreen.lampshow
+- key: centerExpand4secs
+  file: centerExpand4secs.lampshow
+- key: centerExpandReverse
+  file: centerExpandReverse.lampshow
+- key: leftRight
+  file: leftRight.lampshow
+- key: RightLeft32
+  file: RightLeft32.lampshow
+- key: Round16
+  file: Round16.lampshow
+- key: alternating
+  file: alternating.lampshow
+- key: BridgeRamp
+  file: BridgeRamp.lampshow
+- key: alternateSpellED
+  file: alternateSpellED.lampshow
+- key: modeFailed
+  file: modeFailed.lampshow
+- key: bonusChase
+  file: bonusChase.lampshow
+- key: cellarPoint
+  file: cellarPoint.lampshow
+- key: bridgePoint
+  file: bridgePoint.lampshow
+- key: orbitPoint
+  file: orbitPoint.lampshow
+- key: modeComplete
+  file: modeComplete.lampshow
+- key: lindaStart
+  file: lindaStart.lampshow
+- key: shellyStart
+  file: shellyStart.lampshow
+- key: escapeStart
+  file: escapeStart.lampshow
+- key: handStart
+  file: handStart.lampshow
+- key: cherylStart
+  file: cherylStart.lampshow
+- key: shellyHit
+  file: shellyHit.lampshow
+- key: scottyStart
+  file: scottyStart.lampshow
+- key: cellarLock1
+  file: cellarLock1.lampshow
+- key: deadByDawnStart
+  file: deadByDawnStart.lampshow
+- key: lindaU
+  file: lindaU.lampshow
+- key: flashAllRed
+  file: flashAllRed.lampshow
+- key: flash32
+  file: flash32.lampshow
+- key: PageSmash
+  file: PageSmash.lampshow
+- key: BridgeDivert
+  file: BridgeDivert.lampshow
+- key: CellarMultiball
+  file: CellarMultiball.lampshow
+- key: shedStart
+  file: shedStart.lampshow
+- key: CherylLeft
+  file: CherylLeft.lampshow
+- key: CherylTwo
+  file: CherylTwo.lampshow
+- key: woodsKickout
+  file: woodsKickout.lampshow
+Animations:
+- key: missing
+  file: missing.png
+- frame_time: 1
+  key: IncorrectCard
+  file: Video/BallLaunch.avi  
+  streamingMovie: True
+- key: chrome
+  file: light_texture.png
+- key: dark_chrome
+  file: texture.png
+- key: bitmap
+  file: bitmap.png
+- key: menuBack
+  file: menu/redGrade.png
+- key: trophyIcon
+  file: trophyIcon.png
+- key: bookOpen
+  file: stills/bookOpen.png
+- key: clockicon
+  file: icon/clock.png
+- key: dbdAxe
+  file: stills/dbdAxe.png
+- key: trop_ann
+  file: trophys/trop_ann.png
+- key: trop_book
+  file: trophys/trop_book.png
+- key: trop_bubba
+  file: trophys/trop_bubba.png
+- key: trop_car
+  file: trophys/trop_car.png
+- key: trop_cellar
+  file: trophys/trop_cellar.png
+- key: trop_cheryl
+  file: trophys/trop_cheryl.png
+- key: trop_dagger
+  file: trophys/trop_dagger.png
+- key: trop_dbd
+  file: trophys/trop_dbd.png
+- key: trop_escape
+  file: trophys/trop_escape.png
+- key: trop_hand
+  file: trophys/trop_hand.png
+- key: trop_hen
+  file: trophys/trop_hen.png
+- key: trop_lamp
+  file: trophys/trop_lamp.png
+- key: trop_linda
+  file: trophys/trop_linda.png
+- key: trop_moon
+  file: trophys/trop_moon.png
+- key: trop_scot
+  file: trophys/trop_scot.png
+- key: trop_shed
+  file: trophys/trop_shed.png
+- key: trop_shelly
+  file: trophys/trop_shelly.png
+- key: trop_skull
+  file: trophys/trop_skull.png
+- key: trop_std
+  file: trophys/trop_std.png
+- key: trop_tape
+  file: trophys/trop_tape.png
+- key: trop_tree
+  file: trophys/trop_tree.png
+- frame_time: 1
+  key: bloodSplat
+  file: Blood/bloodSplat%04d.png
+- key: bubbaJoe
+  file: bubba0.png
+- key: DeerWall
+  file: DeerWall.png
+- x_loc: 84
+  y_loc: 10
+  key: deerL
+  file: deerL.png
+- x_loc: 343
+  y_loc: 10
+  key: deerR
+  file: deerR.png
+- key: skillDeer
+  file: skillDeer0.png
+- key: lindaTree
+  file: lindaTree0.png
+- key: shellyMilk
+  file: shellyMilk0.png
+- key: ashFace
+  file: ashFace0.png
+- key: ashBonus
+  file: ashBonus0.png
+- key: CardsBack
+  file: Cards/cards0001.png
+- key: CardsFace
+  file: Cards/cards0002.png
+- key: CardsTick
+  file: Cards/big_tick.png
+- key: 2_Spades
+  file: Cards/2_Spades.png
+- key: 4_Hearts
+  file: Cards/4_Hearts.png
+- key: 8_Spades
+  file: Cards/8_Spades.png
+- key: J_Club
+  file: Cards/J_Clubs.png
+- key: Q_Spades
+  file: Cards/Q_Spades.png
+- streamingMovie: True
+  frame_time: 1
+  key: guessRight
+  file: Video/GuessCards/guessRight.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: dontBelieveIt
+  file: Video/GuessCards/dontBelieveIt.mp4
+- key: Cards
+  file: cardStill0.png
+- streamingMovie: True
+  frame_time: 1
+  repeatAnim: true
+  key: Whirl
+  file: Video\Whirl.mp4
+- frame_time: 1
+  repeatAnim: true
+  key: Info
+  file: Video\info.mp4
+  streamingMovie: True
+- frame_time: 1
+  repeatAnim: true
+  key: Piano
+  file: Video/Piano.mp4
+  streamingMovie: True
+- streamingMovie: True
+  frame_time: 1
+  key: CarPortal
+  file: Video/CarPortal.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: BallLaunch
+  file: Video/BallLaunch.mp4
+- streamingMovie: True
+  frame_time: 1
+  repeatAnim: true
+  key: Pages
+  file: Video/Pages.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: WeLiveStill
+  file: Video/WeLiveStill.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: handVein
+  file: Video/Random/handVein.mp4
+- frame_time: 1
+  key: ShedOpen
+  file: Video/Shed/ShedOpen.mp4
+  streamingMovie: True  
+- frame_time: 1
+  key: ShedLockOne
+  file: Video/Shed/ShedLockOne.mp4
+  streamingMovie: True
+- frame_time: 1
+  key: ShedLockTwo
+  file: Video/Shed/ShedLockTwo.mp4
+  streamingMovie: True
+- streamingMovie: True
+  frame_time: 1
+  key: ShedLockThree
+  file: Video/Shed/ShedLockThree.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Cellar1-SonOfABitch
+  file: Video/Cellar/Cellar1-SonOfABitch.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Cellar2-LetMeOut
+  file: Video/Cellar/Cellar2-LetMeOut.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Cellar3-Henrietta
+  file: Video/Cellar/Cellar3-Henrietta.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: CellarKick
+  file: Video/Cellar/CellarKick.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: CellarOnHead
+  file: Video/Cellar/CellarOnHead.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: CellarPopUp
+  file: Video/Cellar/CellarPopUp.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: CellarPunch
+  file: Video/Cellar/CellarPunch.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: CellarRamp
+  file: Video/Cellar/CellarRamp.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Cellar_Open
+  file: Video/Cellar/Cellar_Open.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: EyeBall
+  file: Video/Cellar/EyeBall.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: carveWitch
+  file: Video/Wizard/carveWitch.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: zoom_saw
+  file: Video/zoom_saw.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: load_gun
+  file: Video/loadGun.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: gunNsaw
+  file: Video/gunNsaw.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: 1mill
+  file: Video/Jackpot/millionOne.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: 2mill
+  file: Video/Jackpot/millionTwo.mp4
+- frame_time: 1
+  key: 3mill
+  file: Video/Jackpot/millionThree.mp4
+  streamingMovie: True
+- frame_time: 1
+  key: superJackpot
+  file: Video/Jackpot/superJackpot.mp4
+  streamingMovie: True
+- streamingMovie: True
+  frame_time: 1
+  key: laughH
+  file: Video/Drain/laughH.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: laughL
+  file: Video/Drain/laughL.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: laughLTwo
+  file: Video/Drain/laughLTwo.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: laughC
+  file: Video/Drain/laughC.mp4
+- frame_time: 1
+  key: laughCTwo
+  file: Video/Drain/laughCTwo.mp4
+  streamingMovie: True  
+- frame_time: 1
+  key: intoStairs
+  file: Video/Drain/intoStairs.mp4
+  streamingMovie: True
+- frame_time: 1
+  key: houseZoom
+  file: Video/Drain/houseZoom.mp4
+  streamingMovie: True
+- streamingMovie: True
+  frame_time: 1
+  key: Trailer1
+  file: Video/Attract/Trailer1.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Trailer2
+  file: Video/Attract/Trailer2.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Trailer3
+  file: Video/Attract/Trailer3.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Trailer4
+  file: Video/Attract/Trailer4.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Trailer5
+  file: Video/Attract/Trailer5.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Trailer6
+  file: Video/Attract/Trailer6.mp4
+- streamingMovie: True
+  frame_time: 1
+  key: Trailer7
+  file: Video/Attract/Trailer7.mp4
+- frame_time: 1
+  key: BookPassage
+  file: Video/BookPassage.mp4
+  streamingMovie: True  
+- frame_time: 1
+  key: TreeDrag
+  file: Video/TreeDrag.mp4
+  streamingMovie: True  
+- frame_time: 1
+  key: Leaves
+  file: Video/Leaves.mp4  
+  streamingMovie: True  
+- key: Sun
+  file: Sun0.png
+- streamingMovie: True
+  frame_time: 1
+  key: treeVineMouth
+  file: Video/rapeyTree.avi
+  streamingMovie: True  
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handStart
+#   file: Video/Hand/handStart.mp4  
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handRun
+#   file: Video/Hand/handRun.mp4  
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handShotOne
+#   file: Video/Hand/handShotOne.mp4
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handShotTwo
+#   file: Video/Hand/handShotTwo.mp4      
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handShotThree
+#   file: Video/Hand/handShotThree.mp4    
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handMissOne
+#   file: Video/Hand/handMissOne.mp4 
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handMissTwo
+#   file: Video/Hand/handMissTwo.mp4   
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handMissThree
+#   file: Video/Hand/handMissThree.mp4     
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handFinger
+#   file: Video/Hand/handFinger.mp4    
+# - streamingMovie: True
+#   frame_time: 1
+#   key: handEnd
+#   file: Video/Hand/handEnd.mp4    
+#SHELLY
+- key : 'shellyStart'
+  file: 'Video/Shelly/shellyStart.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'shellyOne'
+  file: 'Video/Shelly/shellyOne.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'shellyTwo'
+  file: 'Video/Shelly/shellyTwo.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'shellyThree'
+  file: 'Video/Shelly/shellyThree.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'shellyFour'
+  file: 'Video/Shelly/shellyFour.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'shellyFive'
+  file: 'Video/Shelly/shellyFive.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'shellyEnd'
+  file: 'Video/Shelly/shellyEnd.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'shellyStartKick'
+  file: 'Video/Shelly/shellyStartKick.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True  
+#ESCAPE  
+- key : 'escapeStart'
+  file: 'Video/Escape/escapeStart.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'escapeOne'
+  file: 'Video/Escape/escapeOne.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True  
+- key : 'escapeTwo'
+  file: 'Video/Escape/escapeTwo.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True    
+- key : 'escapeThree'
+  file: 'Video/Escape/escapeThree.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True    
+- key : 'escapeFour'
+  file: 'Video/Escape/escapeFour.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True    
+- key : 'escapeFive'
+  file: 'Video/Escape/escapeFive.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True   
+- key : 'escapeSix'
+  file: 'Video/Escape/escapeSix.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True      
+- key : 'escapeEnd'
+  file: 'Video/Escape/escapeEnd.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True  
+#SCOTTY
+- key : 'ScottyAllDie'
+  file: 'Video/Scotty/ScottyAllDie.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'ScottyBridge'
+  file: 'Video/Scotty/ScottyBridge.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'ScottyLeave'
+  file: 'Video/Scotty/ScottyLeave.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'ScottyWereNot'
+  file: 'Video/Scotty/ScottyWereNot.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'ScottyScotty'
+  file: 'Video/Scotty/ScottyScotty.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True
+- key : 'ScottyCherylWasRight'
+  file: 'Video/Scotty/ScottyCherylWasRight.mp4'
+  frame_time : 1
+  repeatAnim : False  
+  streamingMovie: True   
+- key: shedPic
+  file: shedPic0.png
+- key: bridgeDivert
+  file: bridgeDivert0.png
+- key: cherylStill
+  file: cherylStill0.png
+- key: scottyStill
+  file: scottyStill0.png
+- key: escapeStill
+  file: escapeStill0.png
+- key: shedLock
+  file: shedLock0.png
+- key: houseStill
+  file: houseStill0.png
+- key: chainsawWipe
+  file: Video/Shed/ChainsawWipe/chainsawWipe%02d.png
+Fonts:
+  FontStyles:
+  - key: weird
+    interior_color:
+    - 0
+    - 0
+    - 128
+    line_width: 1
+    line_color:
+    - 255
+    - 0
+    - 128
+  - key: blueish
+    interior_color:
+    - 0
+    - 0
+    - 255
+    line_width: 1
+    line_color:
+    - 0
+    - 0
+    - 128
+  - key: default
+    interior_color:
+    - 255
+    - 0
+    - 0
+    line_width: 3
+    line_color:
+    - 255
+    - 255
+    - 51    
+  - key: redYellow
+    interior_color:
+    - 255
+    - 0
+    - 0
+    line_width: 3
+    line_color:
+    - 255
+    - 255
+    - 51
+  - key: redYellowThin
+    interior_color:
+    - 255
+    - 0
+    - 0
+    line_width: 2
+    line_color:
+    - 255
+    - 255
+    - 51
+  - key: blood
+    interior_color:
+    - 255
+    - 0
+    - 0
+    line_width: 2
+    line_color:
+    - 255
+    - 255
+    - 51
+  HDFonts:
+  - key: 'default'  # NOTE: The font keyed 'default' is used if a specific name cannot be found!
+    file: 'EVILDEAD.ttf'
+    size: 15    
+  - size: 62
+    key: EDLarge
+    file: EVILDEAD.ttf
+  - size: 62
+    key: FeastLarge
+    file: FEASFBI_.ttf
+  - size: 15
+    key: Font_7x5
+    file: Oswald-Heavy.ttf
+  - size: 14
+    key: Font_7x5
+    file: Oswald-Heavy.ttf
+  - size: 20
+    key: small
+    file: Oswald-Heavy.ttf
+  - size: 20
+    key: pinreg
+    file: Oswald-Heavy.ttf
+  - size: 32
+    key: pinregmed
+    file: Oswald-Heavy.ttf
+  - size: 18
+    key: tiny
+    file: Oswald-Heavy.ttf
+  - size: 24
+    key: micro
+    file: PKMN-Pinball.ttf
+  - size: 16
+    key: settings-font
+    file: Oswald-Heavy.ttf
+  - size: 15
+    key: settings-font-small
+    file: Oswald-Heavy.ttf
+  - size: 32
+    key: tiny
+    file: Oswald-Heavy.ttf
+  - size: 12
+    key: pinregtiny
+    file: PKMN-Pinball.ttf
+  - size: 36
+    key: pinregsmall
+    file: PKMN-Pinball.ttf
+  - size: 15
+    key: med
+    file: Oswald-Heavy.ttf
+  - size: 62
+    key: large
+    file: Oswald-Heavy.ttf
+  - size: 48
+    key: score_1p
+    file: Oswald-Heavy.ttf
+  - size: 92
+    key: score_activeL
+    file: Oswald-Heavy.ttf
+  - size: 86
+    key: score_activeM
+    file: Oswald-Heavy.ttf
+  - size: 78
+    key: score_activeS
+    file: Oswald-Heavy.ttf
+  - size: 32
+    key: score_inactive
+    file: Oswald-Light.ttf
+  - size: 14
+    key: score_sub
+    file: Oswald-Heavy.ttf
+  - size: 15
+    key: default_msg
+    file: EVILDEAD.ttf
+  - size: 15
+    key: tilt-font-small
+    file: Oswald-Heavy.ttf
+  - size: 18
+    key: tilt-font-big
+    file: Oswald-Heavy.ttf
+  - size: 40
+    key: high_score_entry_inits
+    file: Oswald-Heavy.ttf
+  - size: 40
+    key: high_score_entry_msg
+    file: EVILDEAD.ttf
+  - size: 40
+    key: high_score_entry_letters
+    file: Oswald-Heavy.ttf
+  - size: 32
+    key: ed_common
+    file: EVILDEAD.ttf
+  - size: 48
+    key: ed_targets
+    file: EVILDEAD.ttf
+  - size: 60
+    key: ed_LeftRamp1
+    file: EVILDEAD.ttf
+  - size: 72
+    key: ed_LeftRamp2
+    file: EVILDEAD.ttf
+  - size: 80
+    key: ed_eighty
+    file: EVILDEAD.ttf
+  - size: 100
+    key: spellED
+    file: EVILDEAD.ttf
+  - size: 22
+    key: spellEDInfo
+    file: EVILDEAD.ttf
+Audio:
+  Music:
+  - key: base-music-bgm
+    file: MusicLoop1.mp3
+  - volume: 0.35
+    key: PagemusicLoop
+    file: PagemusicLoop.mp3
+  - key: Pagemusic
+    file: Pagemusic.mp3
+  - key: shedMusic
+    file: MusicLoop8.mp3
+  - key: cellarMusic
+    file: MusicLoop3.mp3
+  - key: scottyMusic
+    file: MusicLoop14.mp3
+  - key: lindaMusic
+    file: MusicLoop16.mp3
+  - key: shellyMusic
+    file: MusicLoop15.mp3
+  - key: escapeMusic
+    file: MusicLoop2.mp3
+  - key: handMusic
+    file: MusicLoop4.mp3
+  - key: cherylMusic
+    file: MusicLoop17.mp3
+  - key: profile_menu
+    file: MusicLoop18.mp3
+  - key: MockingBird
+    file: MockingBird.mp3
+  - key: pianopiece2
+    file: pianopiece2.mp3
+  - volume: 0.9
+    key: DeadByDawnJungle
+    file: DeadByDawnPartTwo.mp3
+  - volume: 0.9
+    key: battleReady
+    file: MusicLoop8.mp3
+  - volume: 0.8
+    key: ModeComplete
+    file: ModeComplete.mp3
+  Effects:
+  - key: service_save
+    file: accomplish_tune.wav
+  - key: service_previous
+    file: click.wav
+  - key: service_next
+    file: click.wav
+  - key: service_enter
+    file: MENU A_Select.wav
+  - key: service_exit
+    file: MENU A_Back.wav
+  - key: service_cancel
+    file: MESSAGE-B_Decline.wav
+  - key: sling
+    file: MENU B_Select.ogg
+  - key: target
+    file: MENU B_Back.wav
+  - key: target_bank
+    file: ALERT_Appear.wav
+  - key: tick
+    file: tick.wav
+  - key: tock
+    file: tock.wav
+  - key: ChungArghh
+    file: ChungArghh.ogg
+  - key: stringsdown
+    file: stringsdown.ogg
+  - key: hatch_open
+    file: hatch_open.ogg
+  - key: hatch_close
+    file: hatch_close.ogg
+  - key: NoiseRise
+    file: NoiseRise.ogg
+  - key: NoiseWheel
+    file: NoiseWheel.ogg
+  - key: DownBuild
+    file: DownBuild.ogg
+  - key: TruckEngine
+    file: TruckEngine.ogg
+  - key: laughs_short
+    file: laughs/laughShort.ogg
+  - key: laughs_short
+    file: laughs/laughShort1.ogg
+  - key: laughs_short
+    file: laughs/laughShort2.ogg
+  - key: laughs_short
+    file: laughs/laughShort3.ogg
+  - key: laughs_short
+    file: laughs/laughShort4.ogg
+  - key: laughs_short
+    file: laughs/laughShort5.ogg
+  - key: clockDing
+    file: clockDing.ogg
+  - key: clockTick
+    file: clockTick.ogg
+  - key: ChungChing
+    file: ChungChing.ogg
+  - key: shedExit
+    file: shedExit.ogg
+  - key: kickNoise2
+    file: horseFX/kickNoise2.ogg
+  - key: JoinUsFX
+    file: horseFX/JoinUsFX.ogg
+  - volume: 0.3
+    key: ChezLaff
+    file: horseFX/ChezLaff.ogg
+  - key: disturbed
+    file: horseFX/disturbed.ogg
+  - key: henriettaRReverb
+    file: horseFX/henriettaRReverb.ogg
+  - key: outThereRVerb
+    file: horseFX/outThereRVerb.ogg
+  - key: TheOthers
+    file: horseFX/TheOthers.ogg
+  - key: urgh
+    file: horseFX/urghBliBloy.ogg
+  - key: shutItVerb
+    file: horseFX/shutItVerb(2).ogg
+  - key: tilt
+    file: no_idiot.ogg
+  - key: tiltWarning
+    file: AllKilled.ogg
+  - key: reloadGun2
+    file: reloadGun2.ogg
+  - key: shotgunBlast
+    file: shotgunBlast.ogg
+  - volume: 0.8
+    key: AshLaunch
+    file: LetsGo.ogg    
+  - volume: 0.4
+    key: bump1
+    file: bump1.ogg
+  - volume: 0.4
+    key: bump2
+    file: bump2.ogg
+  - volume: 0.4
+    key: bump3
+    file: bump3.ogg
+  - volume: 0.4
+    key: bump4
+    file: bump4.ogg
+  - volume: 0.4
+    key: bump5
+    file: bump5.ogg
+  - volume: 0.4
+    key: bump6
+    file: bump6.ogg
+  - volume: 0.4
+    key: bump7
+    file: bump7.ogg
+  - volume: 0.4
+    key: bump8
+    file: bump8.ogg
+  - key: hail
+    file: hail.ogg
+  - volume: 0.8
+    key: rapeyTree
+    file: TreeExtra.ogg   
+  - volume: 0.8
+    key: BallLaunch
+    file: BallLaunch.ogg
+  - volume: 0.8
+    key: laughH
+    file: Drain/laughH.ogg
+  - volume: 0.8
+    key: laughL
+    file: Drain/laughL.ogg
+  - volume: 0.8
+    key: laughLTwo
+    file: Drain/laughLTwo.ogg
+  - volume: 0.8
+    key: laughC
+    file: Drain/laughC.ogg
+  - volume: 0.8
+    key: laughCTwo
+    file: Drain/laughCTwo.ogg
+  - key: DeathDrop
+    file: Drain/DeathDrop.ogg
+  - key: OutLane
+    file: Drain/hopeyourot.ogg
+  - key: OutLane
+    file: Drain/GTFO.ogg
+  - key: OutLane
+    file: Drain/HellWasThat.ogg
+  - key: OutLane
+    file: Drain/dontWannaDie.ogg
+  - volume: 0.8
+    key: lindaStart
+    file: Linda/LindaStart.ogg
+  - volume: 0.8
+    key: lindaStartKick
+    file: Linda/LindaStartKick.ogg
+  - volume: 0.8
+    key: lindaOne
+    file: Linda/lindaOne.ogg
+  - volume: 0.8
+    key: lindaTwo
+    file: Linda/lindaTwo.ogg
+  - volume: 0.8
+    key: lindaThree
+    file: Linda/lindaThree.ogg
+  - volume: 0.8
+    key: lindaFour
+    file: Linda/lindaFour.ogg
+  - volume: 0.8
+    key: lindaEnd
+    file: Linda/lindaEnd.ogg
+  - volume: 0.8
+    key: lindaBodyStart
+    file: Linda/lindaBodyStart.ogg
+  - volume: 0.8
+    key: lindaBodyFight
+    file: Linda/lindaBodyFight.ogg
+  - volume: 0.8
+    key: lindaBodyEnd
+    file: Linda/lindaBodyEnd.ogg
+  - volume: 0.8
+    key: lindaMiss
+    file: Linda/lindaMiss.ogg
+  - volume: 0.8
+    key: lindaCall
+    file: Linda/lindaCall.ogg    
+  - volume: 0.8
+    key: Cellar1-SonOfABitch
+    file: CellarMBall/Cellar/Cellar1-SonOfABitch.ogg
+  - volume: 0.8
+    key: Cellar2-LetMeOut
+    file: CellarMBall/Cellar/Cellar2-LetMeOut.ogg
+  - volume: 0.8
+    key: Cellar3-Henrietta
+    file: CellarMBall/Cellar/Cellar3-Henrietta.ogg
+  - volume: 0.8
+    key: Cellar1-Short
+    file: CellarMBall/Cellar/Cellar1-Short.ogg
+  - volume: 0.8
+    key: Cellar2-Short
+    file: CellarMBall/Cellar/Cellar2-Short.ogg
+  - volume: 0.8
+    key: Cellar3-Short
+    file: CellarMBall/Cellar/Cellar3-Short.ogg
+  - volume: 0.8
+    key: CellarEyeBall
+    file: CellarMBall/Cellar/CellarEyeBall.ogg
+  - volume: 0.8
+    key: CellarKick
+    file: CellarMBall/Cellar/CellarKick.ogg
+  - volume: 0.8
+    key: CellarOnHead
+    file: CellarMBall/Cellar/CellarOnHead.ogg
+  - volume: 0.8
+    key: Cellar-Open
+    file: CellarMBall/Cellar/Cellar-Open.ogg
+  - volume: 0.8
+    key: CellarPopUp
+    file: CellarMBall/Cellar/CellarPopUp.ogg
+  - volume: 0.8
+    key: CellarPunch
+    file: CellarMBall/Cellar/CellarPunch.ogg
+  - volume: 0.8
+    key: EyeBall
+    file: CellarMBall/EyeBall.ogg
+  - key: Trailer1
+    file: Attract/Trailer1.ogg
+  - key: Trailer2
+    file: Attract/Trailer2.ogg
+  - key: Trailer3
+    file: Attract/Trailer3.ogg
+  - key: Trailer4
+    file: Attract/Trailer4.ogg
+  - key: Trailer5
+    file: Attract/Trailer5.ogg
+  - key: Trailer6
+    file: Attract/Trailer6.ogg
+  - key: Trailer7
+    file: Attract/Trailer7.ogg     
+  - volume: 0.8
+    key: PianoTune
+    file: Attract/pianoFull.ogg
+  - volume: 0.8
+    key: Groovy
+    file: groovy.ogg
+  - volume: 0.8
+    key: BubbaJoe
+    file: BubbaJoe.ogg
+  - volume: 0.8
+    key: BallSearch
+    file: Random/where_are_you.ogg
+  - volume: 0.8
+    key: BallSearch
+    file: Random/where_is_she.ogg
+  - volume: 0.8
+    key: PagesQuick
+    file: Pages/PagesQuick.ogg
+  - volume: 0.8
+    key: Quick
+    file: Quick.ogg
+  - volume: 0.8
+    key: quickly
+    file: quickly.ogg
+  - volume: 0.8
+    key: ShedBlankRat
+    file: Workshed/ShedBlankRat.ogg
+  - volume: 0.8
+    key: ShedLockOne
+    file: Workshed/ShedLockOne.ogg
+  - volume: 0.8
+    key: ShedLockTwo
+    file: Workshed/ShedLockTwo.ogg
+  - volume: 0.8
+    key: ShedLockThree
+    file: Workshed/ShedLockThree.ogg
+  - volume: 0.8
+    key: ShedOpen
+    file: Workshed/ShedOpen.ogg
+  - volume: 0.8
+    key: sawComplete
+    file: Workshed/sawComplete.ogg
+  - volume: 0.8
+    key: CarTires
+    file: CarTires.ogg
+  - volume: 0.8
+    key: Cards2S
+    file: Cards/Cards2S.ogg
+  - volume: 0.8
+    key: Cards4H
+    file: Cards/Cards4H.ogg
+  - volume: 0.8
+    key: Cards8S
+    file: Cards/Cards8S.ogg
+  - volume: 0.8
+    key: CardsJC
+    file: Cards/CardsJC.ogg
+  - volume: 0.8
+    key: CardsJD
+    file: Cards/CardsJD.ogg
+  - volume: 0.8
+    key: CardsQS
+    file: Cards/CardsQS.ogg
+  - volume: 0.8
+    key: dontBelieveIt
+    file: Cards/dontBelieveIt.ogg
+  - volume: 0.8
+    key: CardRight
+    file: Cards/guessRight.ogg
+  - volume: 0.8
+    key: incorrect
+    file: Cards/incorrect.ogg
+  - volume: 0.8
+    key: BuildUp6
+    file: Cards/BuildUp6.ogg
+  - volume: 0.8
+    key: WeLiveStill
+    file: WeLiveStill.ogg
+  - volume: 0.8
+    key: BookPassage
+    file: BookPassage.ogg  
+  - key: TargetHit
+    file: Targets/WoodHit.ogg
+  - key: TargetHit
+    file: Targets/WoodHit1.ogg
+  - key: TargetHit
+    file: Targets/WoodHit2.ogg
+  - volume: 0.8
+    key: PagesChance
+    file: Pages/PagesChance.ogg
+  - volume: 0.8
+    key: pagesSquat
+    file: Pages/PagesDontMeanSquat.ogg
+  - volume: 0.8
+    key: BonusMaybe1
+    file: Bonus/BonusMaybe1.ogg
+  - volume: 0.8
+    key: AshBonus
+    file: AshBonus.ogg
+  - volume: 0.8
+    key: Passage
+    file: Passages/passage_1.ogg
+  - volume: 0.8
+    key: Passage
+    file: Passages/passage_2.ogg
+  - volume: 0.8
+    key: Passage
+    file: Passages/passage_3.ogg
+  - volume: 0.8
+    key: Passage
+    file: Passages/passage_4.ogg
+  - volume: 0.8
+    key: Passage
+    file: Passages/passage_5.ogg
+  - volume: 0.8
+    key: pagesBook
+    file: Pages/pagesBook.ogg
+  - volume: 0.8
+    key: thankyou
+    file: thankyou.ogg
+  - volume: 0.8
+    key: fruitCellar
+    file: fruitCellar.ogg
+  - volume: 0.8
+    key: carveWitch
+    file: Wizard/carveWitch.ogg
+  - volume: 0.8
+    key: throwInThere
+    file: CellarRamp/throwInThere.ogg
+  - volume: 0.8
+    key: Cellar-Open
+    file: CellarRamp/Cellar-Open.ogg
+  - volume: 0.8
+    key: soundsCellar
+    file: CellarRamp/CellarAlrightnow.ogg
+  - volume: 0.8
+    key: soundsCellar
+    file: CellarRamp/CellarAlrightnow2.ogg
+  - volume: 0.8
+    key: soundsCellar
+    file: Cellar-AlrightnowAngry.ogg
+  - volume: 0.8
+    key: soundsCellar
+    file: CellarRamp/Cellar-AlrightnowAngry2.ogg
+  - volume: 0.8
+    key: soundsCellar
+    file: CellarRamp/CellarAshhelpme.ogg
+  - volume: 0.8
+    key: soundsCellar
+    file: CellarRamp/CellarAshleyHelpMe.ogg
+  - volume: 0.8
+    key: soundsCellar
+    file: CellarRamp/CellarLetMeout.ogg
+  - volume: 0.8
+    key: soundsCellar
+    file: CellarRamp/StrangeSept.ogg
+  - volume: 0.8
+    key: ScottyAllDie
+    file: ScottyMBall/ScottyAllDie.ogg
+  - volume: 0.8
+    key: ScottyBridge
+    file: ScottyMBall/ScottyBridge.ogg
+  - volume: 0.8
+    key: ScottyCherylWasRight
+    file: ScottyMBall/ScottyCherylWasRight.ogg
+  - volume: 0.8
+    key: ScottyLeave
+    file: ScottyMBall/ScottyLeave.ogg
+  - volume: 0.8
+    key: ScottyScotty
+    file: ScottyMBall/ScottyScotty.ogg
+  - volume: 0.8
+    key: ScottyWereNot
+    file: ScottyMBall/ScottyWereNot.ogg
+  - volume: 0.8
+    key: escapeStart
+    file: Escape/escapeStart.ogg
+  - volume: 0.8
+    key: escapeOne
+    file: Escape/escapeOne.ogg
+  - volume: 0.8
+    key: escapeTwo
+    file: Escape/escapeTwo.ogg
+  - volume: 0.8
+    key: escapeThree
+    file: Escape/escapeThree.ogg
+  - volume: 0.8
+    key: escapeFour
+    file: Escape/escapeFour.ogg
+  - volume: 0.8
+    key: escapeFive
+    file: Escape/escapeFive.ogg
+  - volume: 0.8
+    key: escapeSix
+    file: Escape/escapeSix.ogg
+  - volume: 0.8
+    key: escapeEnd
+    file: Escape/escapeEnd.ogg
+  - volume: 0.8
+    key: escapeRandom
+    file: Escape/woodsNoise.ogg
+  - volume: 0.8
+    key: escapeRandom
+    file: Escape/woodsNoise1.ogg
+  - volume: 0.8
+    key: escapeRandom
+    file: Escape/woodsNoise2.ogg
+  - volume: 0.8
+    key: escapeRandom
+    file: Escape/woodsNoise3.ogg
+  - volume: 0.8
+    key: cherylStart
+    file: Cheryl/cherylStart.ogg
+  - volume: 0.8
+    key: cherylOne
+    file: Cheryl/cherylOne.ogg
+  - volume: 0.8
+    key: cherylTwo
+    file: Cheryl/cherylTwo.ogg
+  - volume: 0.8
+    key: cherylThree
+    file: Cheryl/cherylThree.ogg
+  - volume: 0.8
+    key: cherylFour
+    file: Cheryl/cherylFour.ogg
+  - volume: 0.8
+    key: cherylFive
+    file: Cheryl/cherylFive.ogg
+  - volume: 0.8
+    key: cherylEnd
+    file: Cheryl/cherylEnd.ogg
+  - volume: 0.8
+    key: cherylCallOuts
+    file: Cheryl/cherylSister.ogg
+  - volume: 0.8
+    key: cherylCallOuts
+    file: Cheryl/cherylDie.ogg
+  - volume: 0.8
+    key: cherylCallOuts
+    file: Cheryl/disturbed.ogg    
+  Voice:
+  - volume: 0.8
+    key: AshReady
+    file: ASH/ASH_JackMeUp.ogg
+  - volume: 0.8
+    key: AshReady
+    file: ASH/ASH_WhereYouBeen.ogg
+  - volume: 0.8
+    key: AshReady
+    file: ASH/ASH_ShallWeDance.ogg
+  - volume: 0.8
+    key: AshReady
+    file: ASH/Ash_GetMovin.ogg
+  - volume: 0.8
+    key: AshReady
+    file: ASH/ASH_You'reMess.ogg
+  - volume: 0.8
+    key: AshWaiting
+    file: ASH/ASH_WhatYouWaiting.ogg
+  - volume: 0.8
+    key: AshWaiting
+    file: ASH/ASH_HoldStillGnome.ogg
+  - volume: 0.8
+    key: AshWaiting
+    file: ASH/ASH_WhatIsThisAStaring.ogg
+  - volume: 0.8
+    key: AshWaiting
+    file: ASH/ASH_SmokeBreak.ogg
+  - volume: 0.8
+    key: AshLaunch
+    file: ASH/ASH_BombsAway.ogg
+  - volume: 0.8
+    key: gameEnd
+    file: ASH/ASH_GameSetMatch.ogg
+  - volume: 0.8
+    key: badShot
+    file: ASH/ASH_Detour.ogg
+  - volume: 0.8
+    key: badShot
+    file: ASH/ASH_PathTime.ogg
+  - volume: 0.8
+    key: goodShot
+    file: ASH/ASH_Bingo.ogg
+  - volume: 0.8
+    key: goodShot
+    file: ASH/ASH_BohYeah.ogg
+  - volume: 0.8
+    key: goodShot
+    file: ASH/ASH_Booya.ogg
+  - volume: 0.8
+    key: ASH_FeltGood
+    file: ASH/ASH_FeltGood.ogg
+  - volume: 0.8
+    key: ASH_Incoming
+    file: ASH/ASH_Incoming.ogg
+  - volume: 0.8
+    key: STDM
+    file: ASH/ASH_IsThatTheBest.ogg
+  - volume: 0.8
+    key: STDM
+    file: ASH/ASH_JustFleshWound.ogg
+  - volume: 0.8
+    key: STDM
+    file: ASH/ASH_SunInEyes.ogg
+  - volume: 0.8
+    key: Complete
+    file: ASH/ASH_WhenYouGetToHell.ogg
+  - volume: 0.8
+    key: Complete
+    file: ASH/ASH_TheUndeadGot.ogg
+  - volume: 0.8
+    key: Complete
+    file: ASH/ASH_YourDaddy.ogg
+  - volume: 0.8
+    key: Complete
+    file: ASH/ASH_MessingWithTheKing.ogg
+  - volume: 0.8
+    key: Outhole
+    file: ASH/ASH_Hit.ogg
+  - volume: 0.8
+    key: Outhole
+    file: ASH/ASH_Rarup.ogg
+  - volume: 0.8
+    key: Wicked
+    file: ASH/ASH_EvilGetWicked.ogg
+  - volume: 0.8
+    key: ASH_BubblePop
+    file: ASH/ASH_BubblePop.ogg
+  - key: Broken
+    file: ASH/ASH_Broken.ogg
+  - key: ASH_TimeToEarn
+    file: ASH/ASH_TimeToEarn.ogg
+  - key: ASH_STRUGGLE
+    file: ASH/ASH_STRUGGLE.ogg
+  - key: Jackpot
+    file: ASH/ASH_Goooaaal.ogg
+  - key: Jackpot
+    file: ASH/ASH_Goooaaal.ogg
+  - volume: 0.8
+    key: Jackpot
+    file: ASH/ASH_ThisIsTherapy.ogg
+  - key: ShowEm
+    file: ASH/ASH_ShowEmWhatYouGot.ogg
+  - key: ASH_Sigh
+    file: ASH/ASH_Sigh.ogg
+  - key: ASH_WhatsThatSmell
+    file: ASH/ASH_WhatsThatSmell.ogg
+  - key: ASH_WantSome
+    file: ASH/ASH_WantSome.ogg
