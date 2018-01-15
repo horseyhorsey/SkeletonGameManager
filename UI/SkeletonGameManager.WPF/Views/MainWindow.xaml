@@ -1,0 +1,62 @@
+﻿<Window x:Class="SkeletonGameManager.WPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:prism="http://prismlibrary.com/"
+        xmlns:views="clr-namespace:SkeletonGameManager.WPF.Views"
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="350" Width="525">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Margin="3">
+
+            <!--HEADER-->
+            <TextBlock Text="{StaticResource GameFolder}" DockPanel.Dock="Left"/>
+
+            <!--GAME FOLDER-->
+            <TextBox Text="{Binding GameFolder, UpdateSourceTrigger=PropertyChanged}" 
+                     MinWidth="300" 
+                     ToolTip="Current skeleton game folder"
+                     />
+
+            <!--LOAD YAMLS-->
+            <Button Content="Load" 
+                    DockPanel.Dock="Right" 
+                    ToolTip="Load yaml entries"
+                    Command="{Binding RefreshObjectsCommand}"
+                    />
+
+            <!--SET DIR-->
+            <Button Content="..." DockPanel.Dock="Right" ToolTip="Set game folder"
+                    Command="{Binding SetDirectoryCommand}"
+                    />
+
+        </DockPanel>
+
+        <!--YAML CONFIG VIEWS-->
+        <TabControl Grid.Row="1" Margin="3">
+
+            <!--SKELETON GAME CONFIG-->
+            <TabItem Header="Config.yaml">
+                <ContentControl prism:RegionManager.RegionName="ConfigRegion"/>
+            </TabItem>
+
+            <!--SKELETON GAME ASSETS-->
+            <TabItem Header="Asset_List.yaml">
+                <ContentControl prism:RegionManager.RegionName="AssetsRegion"/>
+            </TabItem>
+
+            <!--SKELETON GAME ATTRACT-->
+            <TabItem Header="Attract.yaml">
+                <ContentControl prism:RegionManager.RegionName="AttractRegion"/>
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</Window>
+

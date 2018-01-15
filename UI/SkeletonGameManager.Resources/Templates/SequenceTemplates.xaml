@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+
+    <DataTemplate x:Key="SequenceTemplate">
+        <GroupBox Header="{Binding}">
+            <StackPanel>
+                <TextBox Text="{Binding duration}"/>
+                <TextBox Text="{Binding lampshow}"/>
+                <TextBox Text="{Binding sound}"/>
+                <TextBox Text="{Binding Font}"/>
+                <TextBox Text="{Binding FontStyle}"/>
+                <TextBox Text="{Binding Background}"/>
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+    
+</ResourceDictionary>

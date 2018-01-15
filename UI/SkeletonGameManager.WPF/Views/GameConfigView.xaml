@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="SkeletonGameManager.WPF.Views.GameConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Header="Asset Paths">
+
+                <StackPanel>
+                    <TextBlock Text="dmd_path"/>
+                    <TextBox Text="{Binding GameConfigModel.DmdPath, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="sound_path"/>
+                    <TextBox Text="{Binding GameConfigModel.SoundPath, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="voice_dir"/>
+                    <TextBox Text="{Binding GameConfigModel.VoiceDir, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="sfx_dir"/>
+                    <TextBox Text="{Binding GameConfigModel.SfxDir, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="hdfont_path"/>
+                    <TextBox Text="{Binding GameConfigModel.HdFontPath, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="dmd_grid_path"/>
+                    <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="SDL DLL Path"/>
+                    <TextBox Text="{Binding GameConfigModel.PySdlDllPath, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="VP Game Map file"/>
+                    <TextBox Text="{Binding GameConfigModel.VpGameMapFile, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+            </GroupBox>
+
+            <GroupBox Header="Display (Dmd)" Grid.Column="1">
+
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Dots Width"/>
+                        <TextBox Text="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+
+                        <TextBlock Text="Dots Height"/>
+                        <TextBox Text="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+
+                        <TextBlock Text="Framerate"/>
+                        <TextBox Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Border"/>
+                        <CheckBox IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Flip Display"/>
+                        <TextBox Text="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Dot Filter"/>
+                        <CheckBox IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Pos X"/>
+                        <TextBox Text="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+                        <TextBlock Text="Pos Y"/>
+                        <TextBox Text="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </GroupBox>
+
+            <!--<GroupBox Header="Display (Dmd)">
+                <StackPanel>
+                    <TextBox Text="{Binding GameConfigModel.audio_buffer_size, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>    
+            </GroupBox>-->
+
+
+        </Grid>
+
+        <Button Grid.Row="1" Command="{Binding SaveCommand}" Content="Save"/>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,147 @@
+﻿<UserControl x:Class="SkeletonGameManager.WPF.Views.AssetListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <TabControl>
+
+            <TabItem Header="Animations">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding AssetsFile.Animations.Count, StringFormat={}Entries: {0}}"/>
+                        <TextBlock Text="{Binding ElementName=AnimDataGrid,Path=SelectedItems.Count, StringFormat={}Selected: {0}}"/>
+                    </StackPanel>
+
+                    <DataGrid Grid.Row="1" x:Name="AnimDataGrid" 
+                              ScrollViewer.CanContentScroll="False"
+                              SelectionMode="Extended"
+                              ItemsSource="{Binding AssetsFile.Animations}"/>
+
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Sound">
+
+                <TabControl>
+
+                    <TabItem Header="Music">
+                        <Grid>
+                            <DataGrid ItemsSource="{Binding AssetsFile.Audio.Music}"></DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                    <TabItem Header="Voice">
+                        <Grid>
+                            <DataGrid ItemsSource="{Binding AssetsFile.Audio.Voice}"></DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                    <TabItem Header="Sfx">
+                        <Grid>
+                            <DataGrid ItemsSource="{Binding AssetsFile.Audio.Effects}"></DataGrid>
+                        </Grid>
+                    </TabItem>
+
+                </TabControl>
+
+            </TabItem>
+
+            <TabItem Header="Fonts">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid ItemsSource="{Binding AssetsFile.Fonts.HDFonts}"/>
+
+                    <DataGrid Grid.Column="1" ItemsSource="{Binding AssetsFile.Fonts.FontStyles}"/>
+
+                    <DataGrid Grid.Column="2" ItemsSource="{Binding AssetsFile.Fonts.DMDFonts}"/>
+                </Grid>
+            </TabItem>
+
+            <!--GAME LOADING PROGRESS-->
+            <TabItem Header="Loading">
+                <StackPanel>
+                    <TextBox Text="{Binding AssetsFile.UserInterface.splash_screen}"/>
+                    <TextBlock Text="Progress Bar"></TextBlock>
+                    <!--Progress bar options-->
+                    <StackPanel>
+                        <DockPanel>
+                            <Label Content="Border color"></Label>
+                            <ListBox ItemsSource="{Binding AssetsFile.UserInterface.progress_bar.border}"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Border color"></Label>
+                            <ListBox ItemsSource="{Binding AssetsFile.UserInterface.progress_bar.fill}"/>
+                        </DockPanel>
+                        <DockPanel>
+                            <Label Content="Size"></Label>
+                            <TextBox Text="{Binding AssetsFile.UserInterface.progress_bar.width}"/>
+                            <TextBox Text="{Binding AssetsFile.UserInterface.progress_bar.height}"/>
+                            <TextBox Text="{Binding AssetsFile.UserInterface.progress_bar.x_center}"/>
+                        </DockPanel>
+                    </StackPanel>
+                    <DockPanel>
+                        <Label Content="Text"></Label>
+
+                        <ListBox ItemsSource="{Binding AssetsFile.UserInterface.text.color,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
+                        <TextBox Text="{Binding AssetsFile.UserInterface.text.y_center}"/>
+                        <!--<extendKit:ColorPicker Name="ColorPicker" SelectedColor="{Binding TestColor,UpdateSourceTrigger=PropertyChanged}" DisplayColorAndName="True"></extendKit:ColorPicker>-->
+                    </DockPanel>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Lampshows">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Available Shows"/>
+                    <Label Content="Applied" Grid.Column="1"/>
+
+                    <Grid Grid.Row="1">
+                        <ListView Grid.Row="1"/>
+                    </Grid>
+
+                    <DataGrid Grid.Row="1" Grid.Column="1" 
+                              ItemsSource="{Binding AssetsFile.LampShows}"></DataGrid>
+
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <Button Grid.Row="1" Command="{Binding SaveCommand}" Content="Save Asset List"/>
+
+    </Grid>
+</UserControl>
+
+    
