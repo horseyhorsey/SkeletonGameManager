@@ -47,8 +47,12 @@ namespace SkeletonGameManager.WPF.ViewModels
         public override void OnLoadYamlFilesChanged()
         {
             AttractConfig = _skeletonGameProvider.AttractConfig;
-            var _sequences = _skeletonGameAttract.GetAvailableSequences(AttractConfig);
-            Sequences = new ObservableCollection<SequenceBase>(_sequences);
+
+            if (AttractConfig != null)
+            {
+                var _sequences = _skeletonGameAttract.GetAvailableSequences(AttractConfig);
+                Sequences = new ObservableCollection<SequenceBase>(_sequences);
+            }            
         }
     }
 }
