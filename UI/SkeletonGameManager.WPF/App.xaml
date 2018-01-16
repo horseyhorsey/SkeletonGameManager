@@ -7,6 +7,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/StringResources.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/BrushResources.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/ControlResources.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/IconResources.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/ImageResources.xaml" />
 
                 <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/Templates/SequenceTemplates.xaml" />
