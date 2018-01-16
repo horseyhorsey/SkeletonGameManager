@@ -9,6 +9,8 @@ namespace SkeletonGameManager.WPF.Providers
 {
     public interface ISkeletonGameProvider
     {
+        void ClearConfigs();
+
         /// <summary>
         /// Gets or sets the current skeleton game folder.
         /// </summary>
@@ -71,6 +73,14 @@ namespace SkeletonGameManager.WPF.Providers
 
         #region Public Methods
 
+        public void ClearConfigs()
+        {
+            GameConfig = null;
+            AssetsConfig = null;
+            ScoreDisplayConfig = null;
+            ScoreDisplayConfig = null;
+        }
+
         public async Task LoadYamlEntriesAsync()
         {
             if (string.IsNullOrWhiteSpace(this.GameFolder))
@@ -98,7 +108,9 @@ namespace SkeletonGameManager.WPF.Providers
 
                 }
                 catch (System.Exception ex)
-                {                             
+                {
+                    ClearConfigs();
+
                     throw;
                 }
                 
@@ -120,3 +132,4 @@ namespace SkeletonGameManager.WPF.Providers
         #endregion
     }
 }
+
