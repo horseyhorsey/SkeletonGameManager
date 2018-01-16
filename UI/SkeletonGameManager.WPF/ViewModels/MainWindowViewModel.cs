@@ -51,6 +51,21 @@ namespace SkeletonGameManager.WPF.ViewModels
                 RefreshObjectsCommand.RaiseCanExecuteChanged();
             }
         }
+
+
+        private bool isMainTabEnabled = false;
+        /// <summary>
+        /// Gets or sets the IsMainTabEnabled to enable the main tab. Should be disabled when user hasn't loaded a games folder config.yaml
+        /// </summary>
+        public bool IsMainTabEnabled
+        {
+            get { return isMainTabEnabled; }
+            set
+            {
+                SetProperty(ref isMainTabEnabled, value);                
+            }
+        }
+        
         #endregion
 
         #region Private Methods        
@@ -65,8 +80,14 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             if (Directory.Exists(GameFolder))
                 if (File.Exists(Path.Combine(GameFolder, "config.yaml")))
-                    return true;
+                {                    
+                    if (_skeletonGameProvider.GameConfig != null)
+                        IsMainTabEnabled = true;
 
+                    return true;
+                }
+
+            IsMainTabEnabled = false;
             return false;
         }
 
@@ -81,9 +102,13 @@ namespace SkeletonGameManager.WPF.ViewModels
                 await _skeletonGameProvider.LoadYamlEntriesAsync();
 
                 _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
+
+                IsMainTabEnabled = true;
             }
             catch (Exception ex)
             {
+                IsMainTabEnabled = false;                
+
                 System.Windows.MessageBox.Show($"Failed loading skeleton game files. {ex.Data["yaml"]} {ex.Message} {ex.InnerException.Message}");
             }
         }
@@ -99,7 +124,13 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             if (result == DialogResult.OK)
             {
-                GameFolder = dlg.SelectedPath;                
+                _skeletonGameProvider.ClearConfigs();
+
+                IsMainTabEnabled = false;
+
+                GameFolder = dlg.SelectedPath;
+
+                _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
             };      
         } 
         #endregion
