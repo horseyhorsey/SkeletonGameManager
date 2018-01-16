@@ -3,60 +3,120 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
         xmlns:views="clr-namespace:SkeletonGameManager.WPF.Views"
-        prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525">
-    <Grid>
+        prism:ViewModelLocator.AutoWireViewModel="True"       
+        WindowStyle="None" ResizeMode="CanResizeWithGrip"
+        AllowsTransparency="True"
+        Background="Transparent"        
+        
+        Title="{Binding Title}" Width="1024" Height="768">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    <Window.Resources>
+        <Style x:Key="ChromeWindow" TargetType="{x:Type views:MainWindow}">
+            
+            <Setter Property="WindowChrome.WindowChrome">
+                <Setter.Value>
+                    <WindowChrome GlassFrameThickness="1"
+                                  ResizeBorderThickness="0"
+                                  CaptionHeight="20"
+                                  />
+                </Setter.Value>
+            </Setter>
 
-        <DockPanel Margin="3">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type views:MainWindow}">
+                        
+                        <Grid>
+                            <!--DISPLAY WINDOW CONTENT-->
+                            <Border Background="LightGray" CornerRadius="15">
+                                <ContentPresenter Content="{TemplateBinding Content}"/>
+                            </Border>
+                            
+                            <!--BEHIND WINDOW-->
+                            <Border CornerRadius="15"
+                                    Background="SlateGray"
+                                    BorderThickness="5"
+                                    Grid.ZIndex="-1">
+                            </Border>
 
-            <!--HEADER-->
-            <TextBlock Text="{StaticResource GameFolder}" DockPanel.Dock="Left"/>
+                            <Grid Margin="15"  >
 
-            <!--GAME FOLDER-->
-            <TextBox Text="{Binding GameFolder, UpdateSourceTrigger=PropertyChanged}" 
-                     MinWidth="300" 
-                     ToolTip="Current skeleton game folder"
-                     />
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
 
-            <!--LOAD YAMLS-->
-            <Button Content="Load" 
-                    DockPanel.Dock="Right" 
-                    ToolTip="Load yaml entries"
-                    Command="{Binding RefreshObjectsCommand}"
-                    />
+                                <!--TITLE-->
+                                <StackPanel Orientation="Horizontal">
+                                    
+                                    <ContentPresenter Margin="5" Content="{StaticResource Path_Skele}"/>
+                                    
+                                    <TextBlock Grid.Row="0" Text="SkeletonGame Manager" 
+                                               FontSize="24" FontStyle="Italic"
+                                               FontWeight="DemiBold" Margin="5,10,0,0"
+                                               />
 
-            <!--SET DIR-->
-            <Button Content="..." DockPanel.Dock="Right" ToolTip="Set game folder"
-                    Command="{Binding SetDirectoryCommand}"
-                    />
+                                    <DockPanel Margin="3" Grid.Row="2" VerticalAlignment="Bottom">
 
-        </DockPanel>
+                                        <!--HEADER-->
+                                        <TextBlock Text="{StaticResource GameFolder}" Margin="50,0"
+                                                   FontStyle="Italic" VerticalAlignment="Bottom"
+                                                   FontWeight="Bold"
+                                                   DockPanel.Dock="Left"/>
 
-        <!--YAML CONFIG VIEWS-->
-        <TabControl Grid.Row="1" Margin="3">
+                                        <!--GAME FOLDER-->
+                                        <TextBox Text="{Binding GameFolder, UpdateSourceTrigger=PropertyChanged}" 
+                                            MinWidth="300" MaxHeight="20" DockPanel.Dock="Left"
+                                            ToolTip="Current skeleton game folder"
+                                                />
 
-            <!--SKELETON GAME CONFIG-->
-            <TabItem Header="Config.yaml">
-                <ContentControl prism:RegionManager.RegionName="ConfigRegion"/>
-            </TabItem>
+                                        <!--LOAD YAMLS-->
+                                        <Button Content="Load" MaxWidth="50"
+                                                DockPanel.Dock="Right" 
+                                                ToolTip="Load yaml entries"
+                                                Command="{Binding RefreshObjectsCommand}"
+                                                />
 
-            <!--SKELETON GAME ASSETS-->
-            <TabItem Header="Asset_List.yaml">
-                <ContentControl prism:RegionManager.RegionName="AssetsRegion"/>
-            </TabItem>
+                                        <!--SET DIR-->
+                                        <Button Content="..." MaxWidth="50" DockPanel.Dock="Right" ToolTip="Set game folder"
+                                            Command="{Binding SetDirectoryCommand}"
+                                                />
 
-            <!--SKELETON GAME ATTRACT-->
-            <TabItem Header="Attract.yaml">
-                <ContentControl prism:RegionManager.RegionName="AttractRegion"/>
-            </TabItem>
+                                    </DockPanel>
+                                </StackPanel>
 
-        </TabControl>
+                                <Separator Grid.Row="1" Background="White"/>
 
-    </Grid>
+                                <!--YAML CONFIG VIEWS-->
+                                <TabControl Grid.Row="3" Margin="3" IsEnabled="{Binding IsMainTabEnabled}">
+
+                                    <!--SKELETON GAME CONFIG-->
+                                    <TabItem Header="Config.yaml">
+                                        <ContentControl prism:RegionManager.RegionName="ConfigRegion" />
+                                    </TabItem>
+
+                                    <!--SKELETON GAME ASSETS-->
+                                    <TabItem Header="Asset_List.yaml">
+                                        <ContentControl prism:RegionManager.RegionName="AssetsRegion"/>
+                                    </TabItem>
+
+                                    <!--SKELETON GAME ATTRACT-->
+                                    <TabItem Header="Attract.yaml">
+                                        <ContentControl prism:RegionManager.RegionName="AttractRegion"/>
+                                    </TabItem>
+
+                                </TabControl>
+
+                            </Grid>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    
 </Window>
 
