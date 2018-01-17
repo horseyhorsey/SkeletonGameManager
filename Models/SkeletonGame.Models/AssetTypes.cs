@@ -3,6 +3,9 @@
     public enum AssetTypes
     {
         Lampshows,
-        HdFonts
+        HdFonts,
+        Music,
+        Voice,
+        Sfx
     }
 }
