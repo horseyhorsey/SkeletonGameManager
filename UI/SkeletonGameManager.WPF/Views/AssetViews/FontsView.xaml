@@ -17,7 +17,14 @@
 
         <ListView ItemsSource="{Binding AssetFiles}"/>
 
-        <DataGrid Grid.Column="1" ItemsSource="{Binding HdFonts}"/>
+        <DataGrid Grid.Column="1" ItemsSource="{Binding HdFonts}" 
+                  AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Size}"/>
+                <DataGridTextColumn Binding="{Binding Key}" Width="3*"/>
+                <DataGridTextColumn Binding="{Binding File}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <DataGrid Grid.Column="2" ItemsSource="{Binding FontStyles}" AutoGenerateColumns="False">
 
