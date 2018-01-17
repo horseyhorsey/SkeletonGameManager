@@ -6,6 +6,7 @@
         HdFonts,
         Music,
         Voice,
-        Sfx
+        Sfx,
+        Animations
     }
 }
