@@ -29,7 +29,20 @@
                 <views:LampshowView DataContext="{Binding LampshowViewModel}"/>
 
             </TabItem>
-            
+
+            <!--FONTS / FONT STYLES-->
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel ToolTip="Fonts">
+                        <ContentPresenter Content="{StaticResource Path_Fonts}"/>
+                        <TextBlock Text="Fonts"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <views:FontsView DataContext="{Binding FontsViewModel}"/>
+                
+            </TabItem>
+
             <TabItem>
                 <TabItem.Header>
                     <StackPanel ToolTip="Animations">
@@ -104,28 +117,6 @@
 
                 </TabControl>
 
-            </TabItem>
-
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel ToolTip="Fonts">
-                        <ContentPresenter Content="{StaticResource Path_Fonts}"/>
-                        <TextBlock Text="Fonts"/>
-                    </StackPanel>
-                </TabItem.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <DataGrid ItemsSource="{Binding AssetsFile.Fonts.HDFonts}"/>
-
-                    <DataGrid Grid.Column="1" ItemsSource="{Binding AssetsFile.Fonts.FontStyles}"/>
-
-                    <DataGrid Grid.Column="2" ItemsSource="{Binding AssetsFile.Fonts.DMDFonts}"/>
-                </Grid>
             </TabItem>
 
             <!--GAME LOADING PROGRESS-->
