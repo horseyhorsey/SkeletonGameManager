@@ -120,6 +120,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AssetViews\AnimationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AssetViews\FontsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -166,6 +170,7 @@
     <Compile Include="Providers\ISkeletonGameProvider.cs" />
     <Compile Include="Selectors\AttractSequenceSelector.cs" />
     <Compile Include="ViewModels\AssetListViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\AnimationsViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModels\AssetFileBaseViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModels\FontsViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModels\LampshowViewModel.cs" />
@@ -177,6 +182,9 @@
     <Compile Include="ViewModels\SkeletonGameManagerViewModelBase.cs" />
     <Compile Include="Views\AssetListView.xaml.cs">
       <DependentUpon>AssetListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\AnimationsView.xaml.cs">
+      <DependentUpon>AnimationsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AssetViews\FontsView.xaml.cs">
       <DependentUpon>FontsView.xaml</DependentUpon>

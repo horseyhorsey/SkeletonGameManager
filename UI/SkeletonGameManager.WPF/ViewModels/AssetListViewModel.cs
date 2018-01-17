@@ -92,6 +92,13 @@ namespace SkeletonGameManager.WPF.ViewModels
             set { SetProperty(ref sfxViewModel, value); }
         }
 
+        private AnimationsViewModel animationsViewModel;
+        public AnimationsViewModel AnimationsViewModel
+        {
+            get { return animationsViewModel; }
+            set { SetProperty(ref animationsViewModel, value); }
+        }
+
         #endregion
 
         public override async Task OnLoadYamlFilesChanged()
@@ -133,6 +140,9 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                 SfxViewModel = new SoundViewModel(_skeletonGameFiles, _skeletonGameProvider, AssetTypes.Sfx);
                 await SfxViewModel.GetFiles();
+
+                AnimationsViewModel = new AnimationsViewModel(_skeletonGameFiles, _skeletonGameProvider);
+                await AnimationsViewModel.GetFiles();
 
                 SaveCommand.RaiseCanExecuteChanged();
             }

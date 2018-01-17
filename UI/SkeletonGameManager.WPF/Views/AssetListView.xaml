@@ -56,6 +56,7 @@
                 
             </TabItem>
             
+            <!--ANIMATIONS-->
             <TabItem>
                 <TabItem.Header>
                     <StackPanel ToolTip="Animations">
@@ -63,24 +64,9 @@
                         <TextBlock Text="Anims"/>
                     </StackPanel>
                 </TabItem.Header>
-                <Grid>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding AssetsFile.Animations.Count, StringFormat={}Entries: {0}}"/>
-                        <TextBlock Text="{Binding ElementName=AnimDataGrid,Path=SelectedItems.Count, StringFormat={}Selected: {0}}"/>
-                    </StackPanel>
-
-                    <DataGrid Grid.Row="1" x:Name="AnimDataGrid" 
-                              ScrollViewer.CanContentScroll="False"
-                              SelectionMode="Extended"
-                              ItemsSource="{Binding AssetsFile.Animations}"/>
-
-                </Grid>
+                <views:AnimationsView DataContext="{Binding AnimationsViewModel}"/>
+                
             </TabItem>
 
             <TabItem>
