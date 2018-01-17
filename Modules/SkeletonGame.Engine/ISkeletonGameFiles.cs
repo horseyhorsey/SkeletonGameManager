@@ -24,6 +24,8 @@ namespace SkeletonGame.Engine
                 {
                     case AssetTypes.Lampshows:
                         return Directory.EnumerateFiles(path, @"*.lampshow");
+                    case AssetTypes.HdFonts:
+                        return Directory.EnumerateFiles(path, @"*.ttf");
                     default:
                         return null;
                 }
