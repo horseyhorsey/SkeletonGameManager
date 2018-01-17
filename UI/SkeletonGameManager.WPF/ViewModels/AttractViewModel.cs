@@ -5,6 +5,7 @@ using SkeletonGame.Models;
 using SkeletonGameManager.WPF.Providers;
 using System.Collections.ObjectModel;
 using SkeletonGame.Engine;
+using System.Threading.Tasks;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -44,15 +45,18 @@ namespace SkeletonGameManager.WPF.ViewModels
             set { SetProperty(ref selectedSequence, value); }
         }
 
-        public override void OnLoadYamlFilesChanged()
+        public override Task OnLoadYamlFilesChanged()
         {
-            AttractConfig = _skeletonGameProvider.AttractConfig;
-
-            if (AttractConfig != null)
+            return Task.Run(() =>
             {
-                var _sequences = _skeletonGameAttract.GetAvailableSequences(AttractConfig);
-                Sequences = new ObservableCollection<SequenceBase>(_sequences);
-            }            
+                AttractConfig = _skeletonGameProvider.AttractConfig;
+
+                if (AttractConfig != null)
+                {
+                    var _sequences = _skeletonGameAttract.GetAvailableSequences(AttractConfig);
+                    Sequences = new ObservableCollection<SequenceBase>(_sequences);
+                }
+            });
         }
     }
 }
