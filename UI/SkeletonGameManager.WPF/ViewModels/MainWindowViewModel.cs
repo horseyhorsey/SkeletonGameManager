@@ -130,7 +130,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                 GameFolder = dlg.SelectedPath;
 
-                _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
+                //_eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
             };      
         } 
         #endregion
