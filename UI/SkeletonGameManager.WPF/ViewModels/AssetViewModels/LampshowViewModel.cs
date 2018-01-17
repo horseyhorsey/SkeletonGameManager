@@ -112,9 +112,12 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 
                             //Don't add dupes
                             if (!this.AssetFiles.Any(x => x == lampFile) && !this.LampShows.Any(x => x.File == lampFileName))
-                            {                                
+                            {
                                 //Copy the file to the lampshow path and add to list
-                                File.Copy(lampFile, Path.Combine(_lampshowPath, lampFileName));
+                                var newFilePath = Path.Combine(_lampshowPath, lampFileName);
+                                if (!File.Exists(newFilePath))
+                                    File.Copy(lampFile, newFilePath);
+
                                 this.AssetFiles.Add(lampFileName);
                             }
                                 
