@@ -31,10 +31,10 @@ namespace SkeletonGame.Models
         public float Height { get; set; }
 
         [YamlMember(Alias = "border", ApplyNamingConventions = false)]
-        public List<int>Bborder { get; set; }
+        public List<byte>Border { get; set; }
 
         [YamlMember(Alias = "fill", ApplyNamingConventions = false)]
-        public List<int> Fill { get; set; }
+        public List<byte> Fill { get; set; }
 
     }
 }
