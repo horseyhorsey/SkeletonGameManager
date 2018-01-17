@@ -26,11 +26,33 @@ namespace SkeletonGame.Engine
                         return Directory.EnumerateFiles(path, @"*.lampshow");
                     case AssetTypes.HdFonts:
                         return Directory.EnumerateFiles(path, @"*.ttf");
+                    case AssetTypes.Music:
+                    case AssetTypes.Voice:
+                    case AssetTypes.Sfx:
+                        var audioFileFilters = new List<string> { "*.wav", "*.mp3", "*.ogg" };
+                        return GetFiles(path, audioFileFilters);
                     default:
                         return null;
                 }
             });
             
+        }
+
+        /// <summary>
+        /// Gets all the files in a directory & sub dirs by extension filters.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="filters">The filters.</param>
+        /// <returns></returns>
+        private IEnumerable<string> GetFiles(string path, IEnumerable<string> filters)
+        {
+            var files = new List<string>();
+            foreach (var filter in filters)
+            {
+                files.AddRange(Directory.EnumerateFiles(path, filter, SearchOption.AllDirectories));                
+            }
+
+            return files;
         }
     }
 }
