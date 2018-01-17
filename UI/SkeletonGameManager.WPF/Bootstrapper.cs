@@ -41,7 +41,11 @@ namespace SkeletonGameManager.WPF
             base.ConfigureContainer();
 
             Container.RegisterInstance<ISkeletonGameSerializer>(Container.Resolve<SkeletonGameSerializer>());
-            Container.RegisterInstance<ISkeletonGameProvider>(Container.Resolve<SkeletonGameProvider>());            
+
+            Container.RegisterInstance<ISkeletonGameProvider>(Container.Resolve<SkeletonGameProvider>());
+
+            Container.RegisterInstance<ISkeletonGameFiles>
+                (Container.Resolve<SkeletonGameFiles>());
 
             Container.RegisterTypeForNavigation<GameConfigView>("GameConfigView");                       
         }
