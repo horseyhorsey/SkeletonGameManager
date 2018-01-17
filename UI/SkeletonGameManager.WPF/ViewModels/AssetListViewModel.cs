@@ -56,12 +56,19 @@ namespace SkeletonGameManager.WPF.ViewModels
             get { return lampshowViewModel; }
             set { SetProperty(ref lampshowViewModel, value); }
         }
+
+        private FontsViewModel fontsViewModel;
+        public FontsViewModel FontsViewModel
+        {
+            get { return fontsViewModel; }
+            set { SetProperty(ref fontsViewModel, value); }
+        }
         #endregion
 
         public override async Task OnLoadYamlFilesChanged()
         {
             AssetsFile = _skeletonGameProvider.AssetsConfig;
-
+            
             try
             {
                 var lampshowPath = Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows");
@@ -80,9 +87,11 @@ namespace SkeletonGameManager.WPF.ViewModels
                             LampshowViewModel.AssetFiles.Add(lampFile);
                         });
                     }
-                        
-
                 }
+
+                FontsViewModel = new FontsViewModel(_skeletonGameFiles, _skeletonGameProvider);
+
+                await FontsViewModel.GetFiles();
 
                 SaveCommand.RaiseCanExecuteChanged();
             }
