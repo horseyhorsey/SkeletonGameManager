@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
-             prism:ViewModelLocator.AutoWireViewModel="True"
+             prism:ViewModelLocator.AutoWireViewModel="True"             
+             xmlns:views="clr-namespace:SkeletonGameManager.WPF.Views.AssetViews"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -13,9 +14,22 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <TabControl>
 
+            <!--LAMPSHOWS-->
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel ToolTip="Lampshows">
+                        <ContentPresenter Content="{StaticResource Path_Lamps}"/>
+                        <TextBlock Text="Shows"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <views:LampshowView DataContext="{Binding LampshowViewModel}"/>
+
+            </TabItem>
+            
             <TabItem>
                 <TabItem.Header>
                     <StackPanel ToolTip="Animations">
@@ -122,7 +136,7 @@
                         <TextBlock Text="Progress"/>
                     </StackPanel>
                 </TabItem.Header>
-                
+
                 <StackPanel>
                     <TextBox Text="{Binding AssetsFile.UserInterface.splash_screen}"/>
                     <TextBlock Text="Progress Bar"></TextBlock>
@@ -151,39 +165,6 @@
                         <!--<extendKit:ColorPicker Name="ColorPicker" SelectedColor="{Binding TestColor,UpdateSourceTrigger=PropertyChanged}" DisplayColorAndName="True"></extendKit:ColorPicker>-->
                     </DockPanel>
                 </StackPanel>
-            </TabItem>
-
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel ToolTip="Lampshows">
-                        <ContentPresenter Content="{StaticResource Path_Lamps}"/>
-                        <TextBlock Text="Shows"/>
-                    </StackPanel>
-                </TabItem.Header>
-                
-                <Grid>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Available Shows"/>
-                    <Label Content="Applied" Grid.Column="1"/>
-
-                    <Grid Grid.Row="1">
-                        <ListView Grid.Row="1"/>
-                    </Grid>
-
-                    <DataGrid Grid.Row="1" Grid.Column="1" 
-                              ItemsSource="{Binding AssetsFile.LampShows}"></DataGrid>
-
-                </Grid>
             </TabItem>
 
         </TabControl>

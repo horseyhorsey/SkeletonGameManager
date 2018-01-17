@@ -38,6 +38,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GongSolutions.Wpf.DragDrop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\gong-wpf-dragdrop.1.1.0\lib\net46\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
@@ -99,6 +102,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AssetViews\LampshowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AttractView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -120,12 +127,16 @@
     <Compile Include="Providers\ISkeletonGameProvider.cs" />
     <Compile Include="Selectors\AttractSequenceSelector.cs" />
     <Compile Include="ViewModels\AssetListViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\LampshowViewModel.cs" />
     <Compile Include="ViewModels\AttractViewModel.cs" />
     <Compile Include="ViewModels\GameConfigViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\SkeletonGameManagerViewModelBase.cs" />
     <Compile Include="Views\AssetListView.xaml.cs">
       <DependentUpon>AssetListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\LampshowView.xaml.cs">
+      <DependentUpon>LampshowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AttractView.xaml.cs">
       <DependentUpon>AttractView.xaml</DependentUpon>
