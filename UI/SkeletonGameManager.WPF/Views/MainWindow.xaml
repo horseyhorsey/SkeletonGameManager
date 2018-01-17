@@ -5,7 +5,7 @@
         xmlns:views="clr-namespace:SkeletonGameManager.WPF.Views"
         prism:ViewModelLocator.AutoWireViewModel="True"       
         WindowStyle="None" ResizeMode="CanResizeWithGrip"
-        AllowsTransparency="True"
+        AllowsTransparency="True" ShowInTaskbar="True"
         Background="Transparent"        
         
         Title="{Binding Title}" Width="1024" Height="768">
