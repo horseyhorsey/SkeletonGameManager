@@ -6,6 +6,8 @@ using SkeletonGameManager.WPF.Providers;
 using SkeletonGame.Models;
 using System.Windows.Input;
 using Prism.Commands;
+using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -37,11 +39,18 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         #region Private Methods
 
-        public override void OnLoadYamlFilesChanged()
+        public override Task OnLoadYamlFilesChanged()
         {
-            GameConfigModel = _skeletonGameProvider.GameConfig;
+            return Task.Run(async () =>
+            {
+                GameConfigModel = _skeletonGameProvider.GameConfig;
 
-            SaveCommand.RaiseCanExecuteChanged();
+                 await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                {
+                    SaveCommand.RaiseCanExecuteChanged();
+                });
+                
+            });
         }
 
         #endregion        
