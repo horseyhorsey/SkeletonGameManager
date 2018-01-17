@@ -31,6 +31,9 @@ namespace SkeletonGame.Engine
                     case AssetTypes.Sfx:
                         var audioFileFilters = new List<string> { "*.wav", "*.mp3", "*.ogg" };
                         return GetFiles(path, audioFileFilters);
+                    case AssetTypes.Animations:
+                        var animFileFilters = new List<string> { "*.png", "*.jpg", "*.mp4", "*.avi" };
+                        return GetFiles(path, animFileFilters);
                     default:
                         return null;
                 }
