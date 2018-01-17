@@ -7,7 +7,7 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              Background="{DynamicResource Brush_GradientBackground}"
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="768" d:DesignWidth="500">
     <UserControl.Resources>
 
         <!--ROUNDED TEXTBOX-->
@@ -23,8 +23,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
 
         <GroupBox Header="Asset Paths">
 
@@ -44,9 +51,6 @@
                 <TextBlock Text="hdfont_path"/>
                 <TextBox Text="{Binding GameConfigModel.HdFontPath, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="dmd_grid_path"/>
-                <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"/>
-
                 <TextBlock Text="SDL DLL Path"/>
                 <TextBox Text="{Binding GameConfigModel.PySdlDllPath, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -56,44 +60,91 @@
 
         </GroupBox>
 
-        <GroupBox Header="Display (Dmd)" Grid.Row="1">
+        <GroupBox Header="Display (Dmd)" Grid.Column="1">
 
-        <StackPanel>
+            <StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Dots Width"/>
-                <TextBox Text="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
-
-                <TextBlock Text="Dots Height"/>
-                <TextBox Text="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
-
-                <TextBlock Text="Framerate"/>
-                <TextBox Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
-
-            </StackPanel>
+                <TextBlock Text="dmd_grid_path"/>
+                <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Border"/>
-                <CheckBox IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="Flip Display"/>
-                <TextBox Text="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="Dots Width"/>
+                    <TextBox Text="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
 
-                <TextBlock Text="Dot Filter"/>
-                <CheckBox IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
+                    <TextBlock Text="Dots Height"/>
+                    <TextBox Text="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+
+                    <TextBlock Text="Framerate"/>
+                    <TextBox Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+
+                </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Pos X"/>
-                <TextBox Text="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
-                <TextBlock Text="Pos Y"/>
-                <TextBox Text="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" Content="Bordered"/>
+                   
+                    <CheckBox IsChecked="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}" Content="Flip Display"/>
+
+                    <CheckBox IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}" Content="Dot Filter"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <TextBlock Text="Pos X"/>
+                    <TextBox Text="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+                    <TextBlock Text="Pos Y"/>
+                    <TextBox Text="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
 
-    </GroupBox>
+        </GroupBox>
 
-        <Button Grid.Row="2" VerticalAlignment="Bottom" 
+        <GroupBox Header="Default Modes" Grid.Row="2">
+
+            <StackPanel Orientation="Horizontal">
+                <StackPanel>
+                    <TextBlock Text="Bonus Tally"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.BonusTally, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="OSC Input"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.OscInput, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Attract"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.Attract, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Service"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.ServiceMode, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Profiles"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.PlayerProfiles, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+
+                <StackPanel>
+
+                    <TextBlock Text="Tilt"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.TiltMode, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Trophys"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.PlayerTrophys, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Ball Search"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.BallSearch, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Ball Search Delay"/>
+                    <TextBox Text="{Binding GameConfigModel.DefaultModes.BallSearchDelay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                </StackPanel>
+            </StackPanel>
+
+        </GroupBox>
+
+        <GroupBox Header="Audio" Grid.Row="3">
+            <StackPanel>
+            <TextBlock Text="Buffer size"/>
+            <TextBox Text="{Binding GameConfigModel.AudioBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+        </GroupBox>
+
+        <Button Grid.Row="4" VerticalAlignment="Bottom" 
                 Command="{Binding SaveCommand}" Content="Save"/>
 
     </Grid>
