@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/ImageResources.xaml" />
 
                 <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/Templates/SequenceTemplates.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/Templates/DataGridTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <converters:ListToColorConverter x:Key="ListToColorConv"/>
