@@ -2,6 +2,7 @@
 {
     public enum AssetTypes
     {
-        Lampshows
+        Lampshows,
+        HdFonts
     }
 }
