@@ -63,6 +63,35 @@ namespace SkeletonGameManager.WPF.ViewModels
             get { return fontsViewModel; }
             set { SetProperty(ref fontsViewModel, value); }
         }
+
+        private LoadingProgressViewModel loadingProgressViewModel;
+        public LoadingProgressViewModel LoadingProgressViewModel
+        {
+            get { return loadingProgressViewModel; }
+            set { SetProperty(ref loadingProgressViewModel, value); }
+        }
+
+        private SoundViewModel musicViewModel;
+        public SoundViewModel MusicViewModel
+        {
+            get { return musicViewModel; }
+            set { SetProperty(ref musicViewModel, value); }
+        }
+
+        private SoundViewModel voiceViewModel;
+        public SoundViewModel VoiceViewModel
+        {
+            get { return voiceViewModel; }
+            set { SetProperty(ref voiceViewModel, value); }
+        }
+
+        private SoundViewModel sfxViewModel;
+        public SoundViewModel SfxViewModel
+        {
+            get { return sfxViewModel; }
+            set { SetProperty(ref sfxViewModel, value); }
+        }
+
         #endregion
 
         public override async Task OnLoadYamlFilesChanged()
@@ -89,9 +118,21 @@ namespace SkeletonGameManager.WPF.ViewModels
                     }
                 }
 
+                //Fonts Vm
                 FontsViewModel = new FontsViewModel(_skeletonGameFiles, _skeletonGameProvider);
-
                 await FontsViewModel.GetFiles();
+
+                //Loading
+                LoadingProgressViewModel = new LoadingProgressViewModel(_skeletonGameProvider.AssetsConfig.UserInterface);
+
+                MusicViewModel = new SoundViewModel(_skeletonGameFiles, _skeletonGameProvider, AssetTypes.Music);
+                await MusicViewModel.GetFiles();
+
+                VoiceViewModel = new SoundViewModel(_skeletonGameFiles, _skeletonGameProvider, AssetTypes.Voice);
+                await VoiceViewModel.GetFiles();
+
+                SfxViewModel = new SoundViewModel(_skeletonGameFiles, _skeletonGameProvider, AssetTypes.Sfx);
+                await SfxViewModel.GetFiles();
 
                 SaveCommand.RaiseCanExecuteChanged();
             }

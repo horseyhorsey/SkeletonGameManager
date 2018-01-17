@@ -128,6 +128,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AssetViews\LoadingProgressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\SfxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\SoundView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\VoiceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AttractView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -153,6 +169,8 @@
     <Compile Include="ViewModels\AssetViewModels\AssetFileBaseViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModels\FontsViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModels\LampshowViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\LoadingProgressViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\SoundViewModel.cs" />
     <Compile Include="ViewModels\AttractViewModel.cs" />
     <Compile Include="ViewModels\GameConfigViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -165,6 +183,18 @@
     </Compile>
     <Compile Include="Views\AssetViews\LampshowView.xaml.cs">
       <DependentUpon>LampshowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\LoadingProgressView.xaml.cs">
+      <DependentUpon>LoadingProgressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\SfxView.xaml.cs">
+      <DependentUpon>SfxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\SoundView.xaml.cs">
+      <DependentUpon>SoundView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\VoiceView.xaml.cs">
+      <DependentUpon>VoiceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AttractView.xaml.cs">
       <DependentUpon>AttractView.xaml</DependentUpon>

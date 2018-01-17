@@ -43,6 +43,19 @@
                 
             </TabItem>
 
+            <!--GAME LOADING PROGRESS-->
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel ToolTip="Loader">
+                        <ContentPresenter Content="{StaticResource Path_Progress}"/>
+                        <TextBlock Text="Progress"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <views:LoadingProgressView DataContext="{Binding LoadingProgressViewModel}"/>
+                
+            </TabItem>
+            
             <TabItem>
                 <TabItem.Header>
                     <StackPanel ToolTip="Animations">
@@ -86,9 +99,9 @@
                                 <TextBlock Text="Music"/>
                             </StackPanel>
                         </TabItem.Header>
-                        <Grid>
-                            <DataGrid ItemsSource="{Binding AssetsFile.Audio.Music}"></DataGrid>
-                        </Grid>
+
+                        <views:SoundView DataContext="{Binding MusicViewModel}"/>
+
                     </TabItem>
 
                     <TabItem>
@@ -98,9 +111,9 @@
                                 <TextBlock Text="Voice"/>
                             </StackPanel>
                         </TabItem.Header>
-                        <Grid>
-                            <DataGrid ItemsSource="{Binding AssetsFile.Audio.Voice}"></DataGrid>
-                        </Grid>
+
+                        <views:SoundView DataContext="{Binding VoiceViewModel}"/>
+                        
                     </TabItem>
 
                     <TabItem>
@@ -110,52 +123,13 @@
                                 <TextBlock Text="Sfx"/>
                             </StackPanel>
                         </TabItem.Header>
-                        <Grid>
-                            <DataGrid ItemsSource="{Binding AssetsFile.Audio.Effects}"></DataGrid>
-                        </Grid>
+
+                        <views:SoundView DataContext="{Binding SfxViewModel}"/>
+                        
                     </TabItem>
 
                 </TabControl>
 
-            </TabItem>
-
-            <!--GAME LOADING PROGRESS-->
-            <TabItem>
-                <TabItem.Header>
-                    <StackPanel ToolTip="Loader">
-                        <ContentPresenter Content="{StaticResource Path_Progress}"/>
-                        <TextBlock Text="Progress"/>
-                    </StackPanel>
-                </TabItem.Header>
-
-                <StackPanel>
-                    <TextBox Text="{Binding AssetsFile.UserInterface.splash_screen}"/>
-                    <TextBlock Text="Progress Bar"></TextBlock>
-                    <!--Progress bar options-->
-                    <StackPanel>
-                        <DockPanel>
-                            <Label Content="Border color"></Label>
-                            <ListBox ItemsSource="{Binding AssetsFile.UserInterface.progress_bar.border}"/>
-                        </DockPanel>
-                        <DockPanel>
-                            <Label Content="Border color"></Label>
-                            <ListBox ItemsSource="{Binding AssetsFile.UserInterface.progress_bar.fill}"/>
-                        </DockPanel>
-                        <DockPanel>
-                            <Label Content="Size"></Label>
-                            <TextBox Text="{Binding AssetsFile.UserInterface.progress_bar.width}"/>
-                            <TextBox Text="{Binding AssetsFile.UserInterface.progress_bar.height}"/>
-                            <TextBox Text="{Binding AssetsFile.UserInterface.progress_bar.x_center}"/>
-                        </DockPanel>
-                    </StackPanel>
-                    <DockPanel>
-                        <Label Content="Text"></Label>
-
-                        <ListBox ItemsSource="{Binding AssetsFile.UserInterface.text.color,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"/>
-                        <TextBox Text="{Binding AssetsFile.UserInterface.text.y_center}"/>
-                        <!--<extendKit:ColorPicker Name="ColorPicker" SelectedColor="{Binding TestColor,UpdateSourceTrigger=PropertyChanged}" DisplayColorAndName="True"></extendKit:ColorPicker>-->
-                    </DockPanel>
-                </StackPanel>
             </TabItem>
 
         </TabControl>
