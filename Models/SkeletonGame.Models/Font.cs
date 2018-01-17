@@ -21,13 +21,13 @@ namespace SkeletonGame.Models
         public string Key { get; set; }
 
         [YamlMember(Alias = "interior_color", ApplyNamingConventions = false)]
-        public List<int> InteriorColor { get; set; }
+        public List<byte> InteriorColor { get; set; }
 
         [YamlMember(Alias = "line_width", ApplyNamingConventions = false)]
         public decimal LineWidth { get; set; }
 
         [YamlMember(Alias = "line_color", ApplyNamingConventions = false)]
-        public List<int> LineColor { get; set; }
+        public List<byte> LineColor { get; set; }
     }
 
     public class HdFont : AssetKeyFile
