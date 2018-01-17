@@ -3,6 +3,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using SkeletonGameManager.WPF.Events;
 using System;
+using System.Threading.Tasks;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -39,9 +40,9 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         #region Public Methods
 
-        public virtual void OnLoadYamlFilesChanged()
+        public virtual Task OnLoadYamlFilesChanged()
         {
-            
+            return null;
         }
 
         #endregion
