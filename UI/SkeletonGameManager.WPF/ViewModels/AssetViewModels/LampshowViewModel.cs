@@ -6,17 +6,27 @@ using System.Linq;
 using System.Windows;
 using SkeletonGame.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using SkeletonGame.Engine;
+using SkeletonGameManager.WPF.Providers;
+using System.Windows.Threading;
 
 namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 {
     public class LampshowViewModel : AssetFileBaseViewModel
     {
         private readonly string _lampshowPath;
+        private ISkeletonGameFiles _skeletonGameFiles;
+        private readonly ISkeletonGameProvider _skeletonGameProvider;
 
-        public LampshowViewModel(List<LampShow> lampShows, string lampshowPath)
+        public LampshowViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider)
         {
-            _lampshowPath = lampshowPath;
-            LampShows = new ObservableCollection<LampShow>(lampShows);
+            _skeletonGameFiles = skeletonGameFiles;
+            _skeletonGameProvider = skeletonGameProvider;
+
+            _lampshowPath = Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows");
+
+            LampShows = new ObservableCollection<LampShow>(_skeletonGameProvider.AssetsConfig.LampShows);
             LampShows.CollectionChanged += LampShows_CollectionChanged;
         }
 
@@ -32,12 +42,30 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             
         }
 
-        private ObservableCollection<LampShow> lampshows;        
-
+        #region Properties
+        private ObservableCollection<LampShow> lampshows;
         public ObservableCollection<LampShow> LampShows
         {
             get { return lampshows; }
             set { SetProperty(ref lampshows, value); }
+        }
+        #endregion
+
+        public async override Task GetFiles()
+        {
+            var lampshowFiles = await _skeletonGameFiles.GetFilesAsync(_lampshowPath, AssetTypes.Lampshows);
+            this.AssetFiles = new ObservableCollection<string>();
+
+            foreach (var lampshow in lampshowFiles)
+            {
+                var lampFile = Path.GetFileName(lampshow);
+                if (!LampShows.Any(x => x.File == lampFile))
+                {
+                    await Dispatcher.CurrentDispatcher.InvokeAsync(() => {
+                        AssetFiles.Add(lampFile);
+                    });
+                }
+            }
         }
 
         public override void Drop(IDropInfo dropInfo)

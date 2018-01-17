@@ -107,23 +107,9 @@ namespace SkeletonGameManager.WPF.ViewModels
             
             try
             {
-                var lampshowPath = Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows");
-                LampshowViewModel = new LampshowViewModel(AssetsFile.LampShows, lampshowPath);
-
-                //Only path in skele game that isn't editable
-                var lampshows = await _skeletonGameFiles.GetFilesAsync(lampshowPath, AssetTypes.Lampshows);
-
-                LampshowViewModel.AssetFiles = new System.Collections.ObjectModel.ObservableCollection<string>();
-                foreach (var lampshow in lampshows)
-                {
-                    var lampFile = Path.GetFileName(lampshow);
-                    if (!AssetsFile.LampShows.Any(x => x.File == lampFile))
-                    {
-                        await Dispatcher.CurrentDispatcher.InvokeAsync(() => {
-                            LampshowViewModel.AssetFiles.Add(lampFile);
-                        });
-                    }
-                }
+                //Lampshows                
+                LampshowViewModel = new LampshowViewModel(_skeletonGameFiles, _skeletonGameProvider);                
+                await LampshowViewModel.GetFiles();
 
                 //Fonts Vm
                 FontsViewModel = new FontsViewModel(_skeletonGameFiles, _skeletonGameProvider);
@@ -131,6 +117,8 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                 //Loading
                 LoadingProgressViewModel = new LoadingProgressViewModel(_skeletonGameProvider.AssetsConfig.UserInterface);
+
+                //Audio
 
                 MusicViewModel = new SoundViewModel(_skeletonGameFiles, _skeletonGameProvider, AssetTypes.Music);
                 await MusicViewModel.GetFiles();
@@ -140,6 +128,8 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                 SfxViewModel = new SoundViewModel(_skeletonGameFiles, _skeletonGameProvider, AssetTypes.Sfx);
                 await SfxViewModel.GetFiles();
+
+                //Animations
 
                 AnimationsViewModel = new AnimationsViewModel(_skeletonGameFiles, _skeletonGameProvider);
                 await AnimationsViewModel.GetFiles();
