@@ -10,9 +10,12 @@ using System.Collections.Generic;
 namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 {
     public class LampshowViewModel : AssetFileBaseViewModel
-    {       
-        public LampshowViewModel(List<LampShow> lampShows)
+    {
+        private readonly string _lampshowPath;
+
+        public LampshowViewModel(List<LampShow> lampShows, string lampshowPath)
         {
+            _lampshowPath = lampshowPath;
             LampShows = new ObservableCollection<LampShow>(lampShows);
             LampShows.CollectionChanged += LampShows_CollectionChanged;
         }
@@ -29,7 +32,8 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             
         }
 
-        private ObservableCollection<LampShow> lampshows;
+        private ObservableCollection<LampShow> lampshows;        
+
         public ObservableCollection<LampShow> LampShows
         {
             get { return lampshows; }
@@ -40,12 +44,14 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
         {
             try
             {
+                
                 IList<LampShow> addedLampshows = new List<LampShow>();
                 List<string> droppedFiles = new List<string>();
+
                 //Needs a few checks here. We can be dragging in from explorer or across to the datagrid.
                 var dragFileList = dropInfo.Data;
 
-                //Dragged from windows
+                //Dragged files from windows
                 if (dragFileList.GetType() == typeof(DataObject))
                 {
                     var windowsFileList = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>();
@@ -58,40 +64,68 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
                     try
                     {
                         //Add files and remove them from the available list
-                        droppedFiles.AddRange((IEnumerable<string>)dragFileList);
-                        foreach (var file in droppedFiles)
-                        {
-                            this.AssetFiles.Remove(file);
-                        }
+                        droppedFiles.AddRange((IEnumerable<string>)dragFileList);                        
                     }
                     catch (System.Exception)
                     {
                         var file = (string)dragFileList;
                         droppedFiles.Add(file);
-                        this.AssetFiles.Remove(file);
-                    }                    
+                    }
                 }
 
-                //Convert the lampshow files to lampshow models
-                foreach (var lampFile in droppedFiles)
+                //Null draginfo here should mean files came from windows, so add them to file list
+                if (dropInfo.DragInfo == null)
                 {
-                    if (Path.GetExtension(lampFile) == ".lampshow")
+                    foreach (var lampFile in droppedFiles)
                     {
-                        var file = Path.GetFileName(lampFile);
-                        var key = Path.GetFileNameWithoutExtension(lampFile);
-
-                        addedLampshows.Add(new LampShow()
+                        if (Path.GetExtension(lampFile) == ".lampshow")
                         {
-                            Key = key,
-                            File = Path.GetFileName(lampFile)
-                        });
-                    }                    
-                }
+                            //Don't add dupes
+                            if (!this.AssetFiles.Any(x => x == lampFile))
+                            {
+                                var lampFileName = Path.GetFileName(lampFile);
 
-                if (addedLampshows.Count > 0)
-                {
-                    LampShows.AddRange(addedLampshows);
+                                //Copy the file to the lampshow path and add to list
+                                File.Copy(lampFile, Path.Combine(_lampshowPath, lampFileName));
+                                this.AssetFiles.Add(lampFileName);
+                            }
+                                
+                        }
+                    }
                 }
+                //Convert the lampshow files to lampshow models and add to datagrid
+                else
+                {
+                    // Return if trying to drag to the same element
+                    if (dropInfo.DragInfo.VisualSource == dropInfo.VisualTarget) return;
+
+                    //Remove all dragged files from list                    
+                    foreach (var file in droppedFiles)
+                    {
+                        this.AssetFiles.Remove(file);
+                    }
+
+                    //Create lamp shows
+                    foreach (var lampFile in droppedFiles)
+                    {
+                        if (Path.GetExtension(lampFile) == ".lampshow")
+                        {
+                            var file = Path.GetFileName(lampFile);
+                            var key = Path.GetFileNameWithoutExtension(lampFile);
+
+                            addedLampshows.Add(new LampShow()
+                            {
+                                Key = key,
+                                File = Path.GetFileName(lampFile)
+                            });
+                        }
+                    }
+
+                    if (addedLampshows.Count > 0)
+                    {
+                        LampShows.AddRange(addedLampshows);
+                    }
+                }                
 
             }
             catch (System.Exception)

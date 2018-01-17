@@ -64,11 +64,11 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             try
             {
-                LampshowViewModel = new LampshowViewModel(AssetsFile.LampShows);
+                var lampshowPath = Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows");
+                LampshowViewModel = new LampshowViewModel(AssetsFile.LampShows, lampshowPath);
 
                 //Only path in skele game that isn't editable
-                var lampshows = await _skeletonGameFiles.GetFilesAsync(
-                Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows"), AssetTypes.Lampshows);
+                var lampshows = await _skeletonGameFiles.GetFilesAsync(lampshowPath, AssetTypes.Lampshows);
 
                 LampshowViewModel.AssetFiles = new System.Collections.ObjectModel.ObservableCollection<string>();
                 foreach (var lampshow in lampshows)
