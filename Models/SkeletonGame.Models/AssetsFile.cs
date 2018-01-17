@@ -10,10 +10,10 @@ namespace SkeletonGame.Models
         public UserInterface UserInterface { get; set; }
 
         [YamlMember(Alias = "LampShows", ApplyNamingConventions = false)]
-        public List<LampShow> LampShows { get; set; }
+        public List<LampShow> LampShows { get; set; } = new List<LampShow>();
 
         [YamlMember(Alias = "Animations", ApplyNamingConventions = false)]
-        public List<Animation> Animations { get; set; }
+        public List<Animation> Animations { get; set; } = new List<Animation>();
 
         [YamlMember(Alias = "Fonts", ApplyNamingConventions = false)]
         public Font Fonts { get; set; }
