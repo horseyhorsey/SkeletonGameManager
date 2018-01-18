@@ -1,4 +1,7 @@
 ﻿using SkeletonGame.Models;
+using SkeletonGame.Models.Attract;
+using SkeletonGameManager.WPF.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,18 +23,36 @@ namespace SkeletonGameManager.WPF.Selectors
         {
             DataTemplate _template = null;
 
-            if (item == null) return _template;
-            
+            if (item == null) return _template;                       
+
+            var sequenceItem = item as AttractSequenceViewModel;
+
+            var type = sequenceItem.Sequence.GetType();
+
+            return GetTemplate(type, container);
+        }
+
+        private DataTemplate GetTemplate(Type type, DependencyObject container)
+        {
             var element = container as FrameworkElement;
 
-            var sequenceItem = item as SequenceBase;
-
-            var type = sequenceItem.GetType();
-
             if (type == typeof(LastScores))
-                _template = element.FindResource("SequenceTemplate") as DataTemplate;
+                return element.FindResource("Sequence_LastScores") as DataTemplate;
+            else if (type == typeof(HighScores))
+                return element.FindResource("Sequence_HighScores") as DataTemplate;
+            else if (type == typeof(Combo))
+                return element.FindResource("Sequence_Combo") as DataTemplate;
+            else if (type == typeof(TextLayer))
+                return element.FindResource("Sequence_TextLayer") as DataTemplate;
+            else if (type == typeof(RandomText))
+                return element.FindResource("Sequence_RandomText") as DataTemplate;
+            else if (type == typeof(AttractAnimation))
+                return element.FindResource("Sequence_Animation") as DataTemplate;
+            else if (type == typeof(PanningLayer))
+                return element.FindResource("Sequence_Panning") as DataTemplate;
 
-            return _template;
+            else
+                return null;
         }
     }
 }
