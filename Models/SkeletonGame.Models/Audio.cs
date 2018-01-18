@@ -13,6 +13,8 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "Voice", ApplyNamingConventions = false)]
         public List<Voice> Voice { get; set; }
+
+        public List<Music> AllAudio { get; set; } = new List<Models.Music>();
     }
 
     public class Music : AssetKeyFile
