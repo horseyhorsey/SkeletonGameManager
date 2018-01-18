@@ -176,6 +176,7 @@
     <Compile Include="ViewModels\AssetViewModels\LampshowViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModels\LoadingProgressViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModels\SoundViewModel.cs" />
+    <Compile Include="ViewModels\AttractSequenceViewModel.cs" />
     <Compile Include="ViewModels\AttractViewModel.cs" />
     <Compile Include="ViewModels\GameConfigViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
