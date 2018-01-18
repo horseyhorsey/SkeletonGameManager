@@ -26,7 +26,7 @@ namespace SkeletonGame.Models.Attract
         public string FramesPerMovement { get; set; }
 
         [YamlMember(Alias = "bounce", ApplyNamingConventions = false)]
-        public string Bounce { get; set; }
+        public bool Bounce { get; set; }
 
         [YamlMember(Alias = "contents", ApplyNamingConventions = false)]
         public Contents Contents { get; set; }        
