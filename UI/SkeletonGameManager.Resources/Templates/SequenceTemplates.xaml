@@ -1,18 +1,301 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    >
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
 
     <DataTemplate x:Key="SequenceTemplate">
         <GroupBox Header="{Binding}">
             <StackPanel>
                 <TextBox Text="{Binding duration}"/>
                 <TextBox Text="{Binding lampshow}"/>
-                <TextBox Text="{Binding sound}"/>
+                <TextBox Text="{Binding Sound}"/>
                 <TextBox Text="{Binding Font}"/>
                 <TextBox Text="{Binding FontStyle}"/>
-                <TextBox Text="{Binding Background}"/>
+                <TextBox Text="{Binding Animation}"/>
             </StackPanel>
         </GroupBox>
     </DataTemplate>
-    
+
+    <Style x:Key="Panel_Font" TargetType="Button">
+        <Setter Property="Command" Value="{Binding SetAttractValueCommand}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderThickness="2" BorderBrush="Black">
+                    <DockPanel Margin="3">
+                        <Label Content="{TemplateBinding CommandParameter}"/>
+                        <TextBlock Text="{TemplateBinding Content}" FontSize="16" VerticalAlignment="Center"/>
+                        </DockPanel>
+                </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Style_AssetCombo" TargetType="ComboBox">
+        <Setter Property="SelectedValuePath" Value="Key"/>
+    </Style>
+
+    <Style x:Key="Style_AnimAssetCombo" TargetType="ComboBox">
+        <Setter Property="SelectedValuePath" Value="Name"/>
+    </Style>
+
+
+    <Style x:Key="Style_FontCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+           TargetType="ComboBox">
+        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Fonts.HdFonts}"/>
+        <Setter Property="SelectedValue" Value="{Binding Sequence.Font,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Size, StringFormat={} Size: {0}}"/>
+                        <TextBlock Text="{Binding Key, StringFormat={} Key: {0}}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Style_FontStyleCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+           TargetType="ComboBox">
+        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Fonts.FontStyles}"/>
+        <Setter Property="SelectedValue" Value="{Binding Sequence.FontStyle,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Key}"/>
+                        <!--<Rectangle Fill="{Binding InteriorColor, Converter={StaticResource ListToColorConv},Mode=OneTime}"/>-->
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Style_AnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+           TargetType="ComboBox">
+        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Animations}"/>
+        <Setter Property="SelectedValue" Value="{Binding Sequence.Animation,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Key}"/>
+                        <!--<Rectangle Fill="{Binding InteriorColor, Converter={StaticResource ListToColorConv},Mode=OneTime}"/>-->
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Style_AttractAnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+           TargetType="ComboBox">
+        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Animations}"/>
+        <Setter Property="SelectedValue" Value="{Binding Sequence.Name,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Key}"/>
+                        <!--<Rectangle Fill="{Binding InteriorColor, Converter={StaticResource ListToColorConv},Mode=OneTime}"/>-->
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Style_SoundsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+           TargetType="ComboBox">
+        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Audio.AllAudio}"/>
+        <Setter Property="SelectedValue" Value="{Binding Sequence.Sound,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Key}"/>
+                        <!--<Rectangle Fill="{Binding InteriorColor, Converter={StaticResource ListToColorConv},Mode=OneTime}"/>-->
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Style_LampsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+           TargetType="ComboBox">
+        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.LampShows}"/>
+        <Setter Property="SelectedValue" Value="{Binding Sequence.lampshow,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Key}"/>
+                        <!--<Rectangle Fill="{Binding InteriorColor, Converter={StaticResource ListToColorConv},Mode=OneTime}"/>-->
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Grid x:Key="Attract_Standard">
+        <StackPanel>
+
+            <Label Content="Font"/>
+            <ComboBox Style="{StaticResource Style_FontCombo}"/>
+
+            <Label Content="Style"/>
+            <ComboBox Style="{StaticResource Style_FontStyleCombo}"/>
+
+            <Label Content="Animation"/>
+            <ComboBox Style="{StaticResource Style_AnimationsCombo}"/>
+
+            <Label Content="Sound"/>
+            <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
+
+            <Label Content="Lampshow"/>
+            <ComboBox Style="{StaticResource Style_LampsCombo}"/>
+
+            <Label Content="Duration"/>
+            <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+        </StackPanel>
+    </Grid>
+
+    <DataTemplate x:Key="Sequence_LastScores">
+        <GroupBox Header="{Binding Name}">
+            <Grid>
+                <ContentPresenter Content="{StaticResource Attract_Standard}"/>
+            </Grid>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Sequence_HighScores">
+        <GroupBox Header="{Binding Name}">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <GroupBox Header="Order">
+                    <ListView ItemsSource="{Binding Sequence.Order}">
+                    </ListView>
+                </GroupBox>
+
+                <ContentPresenter Grid.Row="1" Content="{StaticResource Attract_Standard}"/>
+            </Grid>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Sequence_Combo">
+        <GroupBox Header="{Binding Name}">
+            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <DataGrid ItemsSource="{Binding Sequence.Text}" 
+                          CanUserAddRows="True"
+                          AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=.}" Width="5*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
+
+            </Grid>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Sequence_TextLayer">
+        <GroupBox Header="{Binding Name}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <StackPanel>
+                    <TextBox Text="{Binding Sequence.Text}"/>
+                    <TextBox Text="{Binding Sequence.VJustify}"/>
+                    <TextBox Text="{Binding Sequence.HJustify}"/>
+                </StackPanel>
+
+                <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
+            </Grid>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Sequence_Animation">
+        <GroupBox Header="{Binding Name}">
+            <StackPanel>
+                <Label Content="Name"/>
+                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}"/>
+
+                <Label Content="Lampshow"/>
+                <ComboBox Style="{StaticResource Style_LampsCombo}"/>
+
+                <Label Content="Sound"/>
+                <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
+                
+                <Label Content="Duration"/>
+                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Sequence_Panning">
+        <GroupBox Header="{Binding Name}">
+            <StackPanel>
+                <TextBox Text="{Binding Sequence.Width}"/>
+                <TextBox Text="{Binding Sequence.Height}"/>
+                <TextBox Text="{Binding Sequence.OriginX}"/>
+                <TextBox Text="{Binding Sequence.OriginY}"/>
+                <TextBox Text="{Binding Sequence.ScrollX}"/>
+                <TextBox Text="{Binding Sequence.ScrollY}"/>
+                <TextBox Text="{Binding Sequence.FramesPerMovement}"/>
+                <CheckBox Content="{Binding Sequence.Bounce}"/>
+                <TextBox Text="{Binding Sequence.lampshow}"/>
+                <TextBox Text="{Binding Sequence.Sound}"/>
+                <Label Content="Duration"/>
+                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Sequence_RandomText">
+        <GroupBox Header="{Binding Name}">
+            <StackPanel>
+                <TextBox Text="{Binding Sequence.Header}"/>
+                <ScrollViewer>
+                    <ListView ItemsSource="{Binding Sequence.TextOptions}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding Text}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <VirtualizingStackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                    </ListView>
+                </ScrollViewer>
+                <TextBox Text="{Binding Sequence.Font}" IsReadOnly="True"/>
+                <TextBox Text="{Binding Sequence.FontStyle}"/>
+                <TextBox Text="{Binding Sequence.Animation}"/>
+                <TextBox Text="{Binding Sequence.lampshow}"/>
+                <TextBox Text="{Binding Sequence.Sound}"/>
+                <Label Content="Duration"/>
+                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+
 </ResourceDictionary>
+    
