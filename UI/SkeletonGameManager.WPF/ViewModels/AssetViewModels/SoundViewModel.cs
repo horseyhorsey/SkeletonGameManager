@@ -64,6 +64,8 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             else
                 _audioPathFull = new Uri(audioDir);
 
+            if (!Directory.Exists(_audioPathFull.AbsolutePath)) Directory.CreateDirectory(_audioPathFull.AbsolutePath);
+
             var audioFiles = await _skeletonGameFiles.GetFilesAsync(_audioPathFull.AbsolutePath, _audioType);
             this.AssetFiles = new System.Collections.ObjectModel.ObservableCollection<string>(audioFiles);
         }
@@ -76,12 +78,15 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             {
                 case AssetTypes.Music:
                     AudioEntries = new ObservableCollection<Music>(_skeletonGameProvider.AssetsConfig.Audio.Music);
+                    _skeletonGameProvider.AssetsConfig.Audio.AllAudio.AddRange(_skeletonGameProvider.AssetsConfig.Audio.Music);
                     break;
                 case AssetTypes.Voice:
                     AudioEntries = new ObservableCollection<Music>(_skeletonGameProvider.AssetsConfig.Audio.Voice);
+                    _skeletonGameProvider.AssetsConfig.Audio.AllAudio.AddRange(_skeletonGameProvider.AssetsConfig.Audio.Voice);
                     break;
                 case AssetTypes.Sfx:
                     AudioEntries = new ObservableCollection<Music>(_skeletonGameProvider.AssetsConfig.Audio.Effects);
+                    _skeletonGameProvider.AssetsConfig.Audio.AllAudio.AddRange(_skeletonGameProvider.AssetsConfig.Audio.Effects);
                     break;
                 default:
                     break;
