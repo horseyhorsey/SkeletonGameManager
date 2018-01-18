@@ -51,8 +51,8 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
         public string FontStyle { get; set; }
 
-        [YamlMember(Alias = "Background", ApplyNamingConventions = false)]
-        public string Background { get; set; }
+        [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
+        public string Animation { get; set; }
 
         [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
         public string Sound { get; set; }
@@ -100,6 +100,9 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
         public string Font { get; set; }
 
+        [YamlMember(Alias = "blink_frames", ApplyNamingConventions = false)]
+        public string BlinkFrames { get; set; }
+
         public AttractSequenceType GetSequenceType => AttractSequenceType.text_layer;
     }
 
@@ -125,7 +128,7 @@ namespace SkeletonGame.Models
 
     public class AnimationLayer
     {
-        public string name { get; set; }
+        public string Name { get; set; }
     }
 
     public class Content
@@ -158,7 +161,7 @@ namespace SkeletonGame.Models
     public class TextOption
     {
         [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
-        public object Text { get; set; }
+        public List<string> Text { get; set; }
     }
 
     public class AttractAnimation : SequenceBase
@@ -180,8 +183,8 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
         public string FontStyle { get; set; }
 
-        [YamlMember(Alias = "Background", ApplyNamingConventions = false)]
-        public string Background { get; set; }
+        [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
+        public string Animation { get; set; }
 
         [YamlMember(Alias = "Order", ApplyNamingConventions = false)]
         public List<string> Order { get; set; }
