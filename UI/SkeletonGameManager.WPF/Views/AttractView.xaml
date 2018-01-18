@@ -7,34 +7,70 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:selectors="clr-namespace:SkeletonGameManager.WPF.Selectors"
              prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:model="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
+             PresentationTraceSources.TraceLevel="High"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+
+        <Grid.Resources>
+            <selectors:AttractSequenceSelector x:Key="AttractSequenceSelector" />
+
+            <ObjectDataProvider x:Key="SequenceTypes"
+                                MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="model:AttractSequenceType"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </Grid.Resources>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <selectors:AttractSequenceSelector x:Key="AttractSequenceSelector" />
+        <GroupBox Header="Add">
+            <StackPanel Orientation="Horizontal">
 
-        </Grid.Resources>
+                <Label Content="Add sequence"/>
+                
+                <ComboBox x:Name="SequenceSelector"
+                          MinWidth="150"                           
+                          ItemsSource="{Binding Source={StaticResource SequenceTypes}}"
+                          />
+                
+                <Button Content="+" MinWidth="50" 
+                        Command="{Binding AddNewSequenceCommand}"
+                        CommandParameter="{Binding ElementName=SequenceSelector,Path=SelectedItem}"
+                    />
+            </StackPanel>
+        </GroupBox>
 
-        <!--ItemTemplateSelector="{StaticResource AttractSequenceSelector}"-->
-        <ListView ItemsSource="{Binding Sequences}"                   
-                  SelectedItem="{Binding SelectedSequence}"
+        <GroupBox Grid.Row="1" Header="Sequences">
+            <!--ItemTemplateSelector="{StaticResource AttractSequenceSelector}"-->
+            <ListView ItemsSource="{Binding Sequences}"   
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding SelectedSequence}"
                   >
-        </ListView>
+            </ListView>
+        </GroupBox>
 
         <!--SELECTED SEQUENCE-->
-        <Grid Grid.Column="1" Background="White">
+        <Grid Grid.Column="1" Background="White" Grid.Row="1">
 
+            <ScrollViewer>
             <ContentPresenter ContentTemplateSelector="{StaticResource AttractSequenceSelector}"
                               Content="{Binding SelectedSequence}"
                               />
 
+            </ScrollViewer>
         </Grid>
 
     </Grid>
