@@ -26,7 +26,7 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 
             _lampshowPath = Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows");
 
-            LampShows = new ObservableCollection<LampShow>(_skeletonGameProvider.AssetsConfig.LampShows);
+            LampShows = new ObservableCollection<LampShow>(_skeletonGameProvider.AssetsConfig.LampShows ?? new List<LampShow>());
             LampShows.CollectionChanged += LampShows_CollectionChanged;
         }
 
@@ -53,6 +53,8 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 
         public async override Task GetFiles()
         {
+            if (!Directory.Exists(_lampshowPath)) Directory.CreateDirectory(_lampshowPath);
+
             var lampshowFiles = await _skeletonGameFiles.GetFilesAsync(_lampshowPath, AssetTypes.Lampshows);
             this.AssetFiles = new ObservableCollection<string>();
 
