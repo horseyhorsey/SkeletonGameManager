@@ -17,6 +17,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         private ISkeletonGameAttract _skeletonGameAttract;
 
         public DelegateCommand<object> AddNewSequenceCommand { get; set; }
+        public DelegateCommand SaveAttractCommand { get; set; }
 
         public AttractViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {            
@@ -26,6 +27,12 @@ namespace SkeletonGameManager.WPF.ViewModels
             Sequences = new ObservableCollection<AttractSequenceViewModel>();
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
+
+            SaveAttractCommand = new DelegateCommand(() =>
+            {
+                skeletonGameProvider.SaveAttractFile();
+
+            });
 
             AddNewSequenceCommand = new DelegateCommand<object>((x) =>
             {

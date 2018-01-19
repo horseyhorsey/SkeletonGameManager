@@ -35,6 +35,8 @@ namespace SkeletonGameManager.WPF.Providers
         void SaveAssetsFile(AssetsFile assetsFile);
 
         void SaveGameConfig(GameConfig config);
+
+        void SaveAttractFile();
     }
 
     /// <summary>
@@ -121,6 +123,12 @@ namespace SkeletonGameManager.WPF.Providers
         {
             var yamlFile = Path.Combine(GameFolder, YamlFiles[1]);
             _skeletonGameSerializer.SerializeYaml(yamlFile, assetsFile);
+        }
+
+        public void SaveAttractFile()
+        {
+            var yamlFile = Path.Combine(GameFolder, YamlFiles[2]);
+            _skeletonGameSerializer.SerializeYaml("TestAttract.yaml", AttractConfig);
         }
 
         public void SaveGameConfig(GameConfig config)

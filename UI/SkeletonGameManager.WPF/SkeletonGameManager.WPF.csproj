@@ -116,6 +116,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\ScenesViewModel.cs" />
+    <Compile Include="Views\ScenesView.xaml.cs">
+      <DependentUpon>ScenesView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\AssetListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -169,6 +173,7 @@
     <Compile Include="Events\ViewModelEvents.cs" />
     <Compile Include="Providers\ISkeletonGameProvider.cs" />
     <Compile Include="Selectors\AttractSequenceSelector.cs" />
+    <Compile Include="Selectors\GroupedLayerSelector.cs" />
     <Compile Include="ViewModels\AssetListViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModels\AnimationsViewModel.cs" />
     <Compile Include="ViewModels\AssetViewModels\AssetFileBaseViewModel.cs" />
@@ -215,6 +220,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ScenesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

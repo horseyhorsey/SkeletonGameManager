@@ -23,11 +23,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border BorderThickness="2" BorderBrush="Black">
-                    <DockPanel Margin="3">
-                        <Label Content="{TemplateBinding CommandParameter}"/>
-                        <TextBlock Text="{TemplateBinding Content}" FontSize="16" VerticalAlignment="Center"/>
+                        <DockPanel Margin="3">
+                            <Label Content="{TemplateBinding CommandParameter}"/>
+                            <TextBlock Text="{TemplateBinding Content}" FontSize="16" VerticalAlignment="Center"/>
                         </DockPanel>
-                </Border>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -191,7 +191,7 @@
 
     <DataTemplate x:Key="Sequence_Combo">
         <GroupBox Header="{Binding Name}">
-            
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -219,7 +219,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
+
                 <StackPanel>
                     <TextBox Text="{Binding Sequence.Text}"/>
                     <TextBox Text="{Binding Sequence.VJustify}"/>
@@ -279,8 +279,57 @@
         </GroupBox>
     </DataTemplate>
 
-    <DataTemplate x:Key="Sequence_Panning">
+    <DataTemplate x:Key="Sequence_Markup">
         <GroupBox Header="{Binding Name}">
+            <StackPanel>
+                <xctk:IntegerUpDown Value="{Binding Sequence.Width}"/>
+
+                <GroupBox Header="Bold">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Font"/>
+                        <ComboBox Style="{StaticResource Style_FontCombo}" 
+                              SelectedValue="{Binding Sequence.Bold.Font}"/>
+
+                        <Label Content="Style"/>
+                        <ComboBox Style="{StaticResource Style_FontStyleCombo}"
+                              SelectedValue="{Binding Sequence.Bold.FontStyle}"
+                              />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Normal">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Font"/>
+                        <ComboBox Style="{StaticResource Style_FontCombo}" 
+                              SelectedValue="{Binding Sequence.Normal.Font}"/>
+
+                        <Label Content="Style"/>
+                        <ComboBox Style="{StaticResource Style_FontStyleCombo}"
+                              SelectedValue="{Binding Sequence.Normal.FontStyle}"
+                              />
+                    </StackPanel>
+                </GroupBox>
+
+                <ListView ItemsSource="{Binding Sequence.Message}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBox Text="{Binding Path=.}" HorizontalAlignment="Stretch"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Label Content="Animation"/>
+                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding Sequence.Animation}"/>
+
+                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Sequence_Panning">
+        <GroupBox Header="{Binding Name}" x:Name="Root">
             <StackPanel>
 
                 <Grid>
@@ -358,13 +407,61 @@
 
                         <Label Content="Layers"/>
 
-                        <!--ItemTemplateSelector="{DynamicResource GroupedLayerSelector}"-->
-                        <ListView ItemsSource="{Binding Sequence.Contents.GroupLayer.Contents}"                                  
+                        <!---->
+                        <ListView ItemsSource="{Binding Sequence.Contents.GroupLayer.Contents}" 
+                                  ItemTemplateSelector="{DynamicResource GroupedLayerSelector}"
                                   />
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
         </GroupBox>
+    </DataTemplate>
+    
+        <DataTemplate x:Key="Content_AnimationLayer">
+        <StackPanel Orientation="Horizontal" >
+                <Label Content="Name"/>
+                <ComboBox  SelectedValuePath="AnimationLayer.Name"
+                           SelectedValue="{Binding Content.AnimationLayer.Name, UpdateSourceTrigger=PropertyChanged}" 
+                           DisplayMemberPath="Key"
+                           ItemsSource="{Binding ElementName=Root,Path=DataContext._skeletonGameProvider.AssetsConfig.Animations}"
+                          />
+        </StackPanel>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="Content_MarkupLayer">
+        
+        <GroupBox Header="MarkUpLayer">
+        <StackPanel>            
+            <xctk:IntegerUpDown Value="{Binding MarkupLayer.Width}"/>
+            
+            <GroupBox Header="Bold">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Font"/>
+                    <ComboBox Style="{StaticResource Style_FontCombo}" 
+                              SelectedValue="{Binding MarkupLayer.Bold.Font}"/>
+
+                    <Label Content="Style"/>
+                    <ComboBox Style="{StaticResource Style_FontStyleCombo}"/>
+                </StackPanel>   
+            </GroupBox>
+            
+            <GroupBox Header="Normal">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Font"/>
+                    <ComboBox Style="{StaticResource Style_FontCombo}" 
+                            SelectedValue="{Binding Sequence.Normal.Font}"/>
+
+                    <Label Content="Style"/>
+                    <ComboBox Style="{StaticResource Style_FontStyleCombo}"
+                            SelectedValue="{Binding Sequence.Normal.FontStyle}"
+                            />
+                </StackPanel>
+            </GroupBox>
+            
+            
+        </StackPanel>    
+        </GroupBox>
+        
     </DataTemplate>
 
 </ResourceDictionary>

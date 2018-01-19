@@ -16,6 +16,7 @@
 
         <Grid.Resources>
             <selectors:AttractSequenceSelector x:Key="AttractSequenceSelector" />
+            <selectors:GroupedLayerSelector x:Key="GroupedLayerSelector" />
 
             <ObjectDataProvider x:Key="SequenceTypes"
                                 MethodName="GetValues" ObjectType="{x:Type system:Enum}">
@@ -72,6 +73,8 @@
 
             </ScrollViewer>
         </Grid>
+
+        <Button Content="Save Attract" Grid.Row="2" Command="{Binding SaveAttractCommand}" HorizontalAlignment="Right"/>
 
     </Grid>
 </UserControl>

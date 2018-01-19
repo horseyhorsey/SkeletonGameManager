@@ -50,6 +50,8 @@ namespace SkeletonGameManager.WPF.Selectors
                 return element.FindResource("Sequence_Animation") as DataTemplate;
             else if (type == typeof(PanningLayer))
                 return element.FindResource("Sequence_Panning") as DataTemplate;
+            else if (type == typeof(MarkupLayer))
+                return element.FindResource("Sequence_Markup") as DataTemplate;
 
             else
                 return null;
