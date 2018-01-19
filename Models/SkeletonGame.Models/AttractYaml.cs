@@ -41,6 +41,9 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "Credits", ApplyNamingConventions = false)]
         public Credits Credits { get; set; }
+
+        [YamlMember(Alias = "markup_layer", ApplyNamingConventions = false)]
+        public MarkupLayer MarkupLayer { get; set; }
     }
     
     public class LastScores : SequenceBase
@@ -57,7 +60,7 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
         public string Sound { get; set; }
 
-        public AttractSequenceType GetSequenceType => AttractSequenceType.LastScores;
+       // public AttractSequenceType GetSequenceType => AttractSequenceType.LastScores;
     }
 
     public class Combo : SequenceBase
@@ -77,7 +80,7 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
         public string FontStyle { get; set; }
 
-        public AttractSequenceType GetSequenceType => AttractSequenceType.Combo;
+        //public AttractSequenceType GetSequenceType => AttractSequenceType.Combo;
     }
 
     public class TextLayer : SequenceBase
@@ -103,7 +106,7 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "blink_frames", ApplyNamingConventions = false)]
         public string BlinkFrames { get; set; }
 
-        public AttractSequenceType GetSequenceType => AttractSequenceType.text_layer;
+       // public AttractSequenceType GetSequenceType => AttractSequenceType.text_layer;
     }
 
     public class RandomText : SequenceBase
@@ -123,7 +126,7 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
         public string FontStyle { get; set; }
 
-        public AttractSequenceType GetSequenceType => AttractSequenceType.RandomText;
+       // public AttractSequenceType GetSequenceType => AttractSequenceType.RandomText;
     }
 
     public class AnimationLayer
@@ -173,7 +176,7 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
         public string Sound { get; set; }
 
-        public AttractSequenceType GetSequenceType => AttractSequenceType.Animation;
+        //public AttractSequenceType GetSequenceType => AttractSequenceType.Animation;
     }
 
     public class HighScores : SequenceBase
@@ -190,7 +193,7 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "Order", ApplyNamingConventions = false)]
         public List<string> Order { get; set; }
 
-        public AttractSequenceType GetSequenceType => AttractSequenceType.HighScores;
+        ///public AttractSequenceType GetSequenceType => AttractSequenceType.HighScores;
     }
 
     public class Credits : SequenceBase
@@ -204,6 +207,6 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
         public string Sound { get; set; }
 
-        public AttractSequenceType GetSequenceType => AttractSequenceType.HighScores;
+        //public AttractSequenceType GetSequenceType => AttractSequenceType.HighScores;
     }
 }
