@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    PresentationTraceSources.TraceLevel="High"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
 
     <DataTemplate x:Key="SequenceTemplate">
@@ -241,26 +242,7 @@
 
                 <Label Content="Sound"/>
                 <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
-                
-                <Label Content="Duration"/>
-                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
-            </StackPanel>
-        </GroupBox>
-    </DataTemplate>
 
-    <DataTemplate x:Key="Sequence_Panning">
-        <GroupBox Header="{Binding Name}">
-            <StackPanel>
-                <TextBox Text="{Binding Sequence.Width}"/>
-                <TextBox Text="{Binding Sequence.Height}"/>
-                <TextBox Text="{Binding Sequence.OriginX}"/>
-                <TextBox Text="{Binding Sequence.OriginY}"/>
-                <TextBox Text="{Binding Sequence.ScrollX}"/>
-                <TextBox Text="{Binding Sequence.ScrollY}"/>
-                <TextBox Text="{Binding Sequence.FramesPerMovement}"/>
-                <CheckBox Content="{Binding Sequence.Bounce}"/>
-                <TextBox Text="{Binding Sequence.lampshow}"/>
-                <TextBox Text="{Binding Sequence.Sound}"/>
                 <Label Content="Duration"/>
                 <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
             </StackPanel>
@@ -293,6 +275,94 @@
                 <TextBox Text="{Binding Sequence.Sound}"/>
                 <Label Content="Duration"/>
                 <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Sequence_Panning">
+        <GroupBox Header="{Binding Name}">
+            <StackPanel>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type xctk:IntegerUpDown}">
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Label Content="Height" Grid.Column="0"/>
+                    <xctk:IntegerUpDown Grid.Column="1" Value="{Binding Sequence.Width}"/>
+
+                    <Label Content="Width" Grid.Column="2"/>
+                    <xctk:IntegerUpDown Grid.Column="3" Value="{Binding Sequence.Height}"/>
+
+                    <Label Content="Origin X" Grid.Column="4"/>
+                    <xctk:IntegerUpDown Grid.Column="5"
+                                        Value="{Binding Sequence.OriginX}"/>
+
+                    <Label Content="Origin Y" Grid.Column="6"/>
+                    <xctk:IntegerUpDown Grid.Column="7" Value="{Binding Sequence.OriginY}"/>
+
+                    <!--ROW 1-->
+                    <Label Content="Scroll X" Grid.Row="1" />
+                    <xctk:IntegerUpDown Grid.Column="1" Grid.Row="1"                                          
+                                        Value="{Binding Sequence.ScrollX}"/>
+
+                    <Label Content="Scroll Y" Grid.Row="1" Grid.Column="2"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Value="{Binding Sequence.ScrollY}"/>
+
+                    <Label Content="Frames Per Movement" Grid.Row="1" Grid.Column="4"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="5" Value="{Binding Sequence.FramesPerMovement}"/>
+
+                    <Label Content="Bounce" Grid.Row="1" Grid.Column="6"/>
+                    <CheckBox Grid.Row="1" Grid.Column="7" Margin="5" IsChecked="{Binding Sequence.Bounce}"/>
+
+
+                </Grid>
+
+                <Label Content="Lampshow"/>
+                <ComboBox Style="{StaticResource Style_LampsCombo}"/>
+
+                <Label Content="Sound"/>
+                <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
+
+                <Label Content="Duration"/>
+                <xctk:DecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+
+                <GroupBox Header="Contents - Grouped Layer">
+                    <StackPanel Margin="5">
+
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Width"/>
+                            <xctk:IntegerUpDown Value="{Binding Sequence.Contents.GroupLayer.Width}"/>
+
+                            <Label Content="Height"/>
+                            <xctk:IntegerUpDown Value="{Binding Sequence.Contents.GroupLayer.Height}"/>
+                        </StackPanel>
+
+                        <Label Content="Layers"/>
+
+                        <!--ItemTemplateSelector="{DynamicResource GroupedLayerSelector}"-->
+                        <ListView ItemsSource="{Binding Sequence.Contents.GroupLayer.Contents}"                                  
+                                  />
+                    </StackPanel>
+                </GroupBox>
             </StackPanel>
         </GroupBox>
     </DataTemplate>
