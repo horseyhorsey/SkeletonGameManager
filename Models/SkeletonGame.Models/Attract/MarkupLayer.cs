@@ -16,6 +16,9 @@ namespace SkeletonGame.Models.Attract
 
         [YamlMember(Alias = "Message", ApplyNamingConventions = false)]
         public List<string> Message { get; set; }
+
+        [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
+        public string Animation { get; set; }
     }
 
     public class Bold
