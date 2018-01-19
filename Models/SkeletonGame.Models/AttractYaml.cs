@@ -128,6 +128,7 @@ namespace SkeletonGame.Models
 
     public class AnimationLayer
     {
+        [YamlMember(Alias = "name", ApplyNamingConventions = false)]
         public string Name { get; set; }
     }
 
