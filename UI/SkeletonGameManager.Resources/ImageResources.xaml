@@ -1,5 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:SkeletonGameManager.Resources">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <BitmapImage x:Key="Image_Paper" UriSource="pack://application:,,,/SkeletonGameManager.Resources;component/Image/paper.jpg"/>
+    
+    <ImageBrush x:Key="Brush_Paper"
+        ImageSource="{StaticResource Image_Paper}"/>
     
 </ResourceDictionary>

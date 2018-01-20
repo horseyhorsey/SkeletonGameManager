@@ -121,5 +121,8 @@
   <ItemGroup>
     <Folder Include="Fonts\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\paper.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
