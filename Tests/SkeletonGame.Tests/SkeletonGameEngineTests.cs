@@ -5,6 +5,7 @@ using SkeletonGame.Models.Score;
 using System;
 using System.IO;
 using Xunit;
+using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Tests
 {
@@ -76,9 +77,10 @@ namespace SkeletonGame.Tests
             Assert.NotNull(ScoreDisplayConfig);
         }
 
-        [Fact(Skip = "Try again, yaml sucks lol")]
+        [Fact]
         public void DeserializeMachineYaml()
         {
+            //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");
             var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");
         }
 
