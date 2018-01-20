@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Prism.Events;
 using SkeletonGameManager.WPF.Events;
+using SkeletonGameManager.WPF.Views;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -20,6 +21,8 @@ namespace SkeletonGameManager.WPF.ViewModels
         #region Commands
         public ICommand SetDirectoryCommand { get; set; }
         public DelegateCommand RefreshObjectsCommand { get; set; }
+        public ICommand CreateNewGameCommand { get; set; }
+        
         #endregion
 
         #region Constructors
@@ -31,6 +34,18 @@ namespace SkeletonGameManager.WPF.ViewModels
             SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory());
 
             RefreshObjectsCommand = new DelegateCommand(async () => await OnRefreshSkeletonGameObjects(), () => IsValidGameFolder());
+
+            CreateNewGameCommand = new DelegateCommand(CreateNewGame);
+        }
+
+        private void CreateNewGame()
+        {
+            var vm = new CreateNewGameWindowViewModel();
+            var window = new CreateNewGameWindow();
+            window.DataContext = vm;
+
+            var dialog = window.ShowDialog();
+            
         }
 
         #endregion

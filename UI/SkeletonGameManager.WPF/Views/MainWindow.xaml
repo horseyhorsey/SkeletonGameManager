@@ -60,6 +60,13 @@
 
                                     <DockPanel Margin="3" Grid.Row="2" VerticalAlignment="Bottom">
 
+                                        <Menu VerticalAlignment="Center">
+                                            <MenuItem Header="Options">
+                                                <MenuItem Header="New" Command="{Binding CreateNewGameCommand}">
+                                                </MenuItem> 
+                                            </MenuItem>
+                                        </Menu>
+
                                         <!--HEADER-->
                                         <TextBlock Text="{StaticResource GameFolder}" Margin="50,0"
                                                    FontStyle="Italic" VerticalAlignment="Bottom"

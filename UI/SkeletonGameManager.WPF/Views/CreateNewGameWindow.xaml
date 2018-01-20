@@ -1,0 +1,29 @@
+﻿<Window x:Class="SkeletonGameManager.WPF.Views.CreateNewGameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SkeletonGameManager.WPF.Views"
+        mc:Ignorable="d" Title="Create New Game"
+        WindowStartupLocation="CenterScreen"
+        Height="200" Width="300">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="P-ROC Game Path" HorizontalAlignment="Center"/>
+        <TextBox Text="{Binding ProcPath, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" />
+
+        <TextBlock Text="Game Name" HorizontalAlignment="Center" Grid.Row="2"/>
+        <TextBox Text="{Binding GameName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" />
+
+        <Button Margin="10" Command="{Binding CreateNewSkeletonGame}" 
+                HorizontalAlignment="Center" Width="50"
+                Content="Create" IsDefault="True" Grid.Row="4"/>
+    </Grid>
+</Window>
