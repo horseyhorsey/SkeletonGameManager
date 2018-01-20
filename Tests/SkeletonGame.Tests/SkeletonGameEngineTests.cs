@@ -2,6 +2,7 @@ using SkeletonGame.Engine;
 using SkeletonGame.Models;
 using SkeletonGame.Models.Machine;
 using SkeletonGame.Models.Score;
+using System;
 using System.IO;
 using Xunit;
 
@@ -85,6 +86,15 @@ namespace SkeletonGame.Tests
         public void YamlToJson()
         {
             var attract = _skeleSerializer.ConvertToJson(@"TestData/EmptyGame/config.yaml");
+        }
+
+        [Fact(Skip = "Just used for creating the extraction method")]
+        public void ExtractZipArchive()
+        {
+            var createSkele = new CreateSkeletonGame();
+            var zip = @"C:\Users\funktub\Documents\Visual Studio 2017\Projects\Pinball\SkeletonGameManager\UI\SkeletonGameManager.WPF\bin\Debug\Temp\dev.zip";
+
+            createSkele.CreateNewGameEntry("MyNewGame", Environment.CurrentDirectory, zip);
         }
     }
 }
