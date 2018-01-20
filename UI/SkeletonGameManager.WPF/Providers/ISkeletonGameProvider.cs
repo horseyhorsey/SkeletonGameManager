@@ -1,9 +1,11 @@
 ﻿using SkeletonGame.Engine;
 using SkeletonGame.Models;
+using SkeletonGame.Models.Machine;
 using SkeletonGame.Models.Score;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace SkeletonGameManager.WPF.Providers
 {
@@ -32,6 +34,8 @@ namespace SkeletonGameManager.WPF.Providers
 
         ScoreDisplay ScoreDisplayConfig { get; set; }
 
+        MachineConfig MachineConfig { get; set; }
+
         void SaveAssetsFile(AssetsFile assetsFile);
 
         void SaveGameConfig(GameConfig config);
@@ -59,7 +63,7 @@ namespace SkeletonGameManager.WPF.Providers
         #endregion
 
         #region Properties
-        public IReadOnlyList<string> YamlFiles { get; } = new List<string>() { "config.yaml", "config/asset_list.yaml", "config/attract.yaml", "config/new_score_display.yaml", "config/score_display.yaml" };
+        public IReadOnlyList<string> YamlFiles { get; } = new List<string>() { "config.yaml", "config/asset_list.yaml", "config/attract.yaml", "config/new_score_display.yaml", "config/score_display.yaml", "config/machine.yaml" };
 
         public string GameFolder { get; set; }
 
@@ -70,6 +74,8 @@ namespace SkeletonGameManager.WPF.Providers
         public AssetsFile AssetsConfig { get; set; }
 
         public ScoreDisplay ScoreDisplayConfig { get; set; }
+
+        public MachineConfig MachineConfig { get; set; }
 
         #endregion
 
@@ -91,7 +97,7 @@ namespace SkeletonGameManager.WPF.Providers
             if (!Directory.Exists(GameFolder))
                 throw new FileNotFoundException($"Cannot find game folder: {GameFolder}");
 
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 try
                 {
@@ -103,10 +109,29 @@ namespace SkeletonGameManager.WPF.Providers
                     var scoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[4]);
 
                     //Deal with the updated score display
-                    if (File.Exists(scoreDisplayYaml))
+                    if (File.Exists(newScoreDisplayYaml))
                         ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(newScoreDisplayYaml);
                     else if (File.Exists(scoreDisplayYaml))
                         ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(scoreDisplayYaml);
+
+                    try
+                    {
+                        MachineConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfig>(Path.Combine(GameFolder, YamlFiles[5]));
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        Dispatcher.CurrentDispatcher.Invoke(() =>
+                        {
+                            System.Windows.MessageBox.Show($"{ex.Message}");
+                        });
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Dispatcher.CurrentDispatcher.Invoke(() =>
+                        {
+                            System.Windows.MessageBox.Show($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}");
+                        });                        
+                    }                    
 
                 }
                 catch (System.Exception ex)
