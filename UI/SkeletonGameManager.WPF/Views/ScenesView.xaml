@@ -4,10 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:sceneeditviews="clr-namespace:SkeletonGameManager.WPF.Views"
+             xmlns:sceneeditviews1="clr-namespace:SkeletonGameManager.WPF.Views.SceneEditViews"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="768" d:DesignWidth="1024">
     <Grid>
-            
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--<sceneeditviews1:SceneProcessView/>-->
+
+        <sceneeditviews:SceneMediaView Grid.Column="1"/>
+
     </Grid>
 </UserControl>

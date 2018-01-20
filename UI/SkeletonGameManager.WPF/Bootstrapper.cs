@@ -24,7 +24,7 @@ namespace SkeletonGameManager.WPF
                 regionManager.RegisterViewWithRegion("ConfigRegion", typeof(GameConfigView));
                 regionManager.RegisterViewWithRegion("AssetsRegion", typeof(AssetListView));
                 regionManager.RegisterViewWithRegion("AttractRegion", typeof(AttractView));
-                regionManager.RegisterViewWithRegion("ScenesRegion", typeof(ScenesView));
+                regionManager.RegisterViewWithRegion("ScenesRegion", typeof(SceneMediaView));
             }
 
             Application.Current.MainWindow.Show();                                            

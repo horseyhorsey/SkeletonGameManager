@@ -116,7 +116,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Interfaces\IMediaPlayer.cs" />
+    <Compile Include="Model\TrimVideo.cs" />
+    <Compile Include="ViewModels\SceneMediaViewModel.cs" />
+    <Compile Include="ViewModels\SceneEditViewModels\SceneProcessItemViewModel.cs" />
+    <Compile Include="ViewModels\SceneEditViewModels\SceneProcessViewModel.cs" />
     <Compile Include="ViewModels\ScenesViewModel.cs" />
+    <Compile Include="Views\SceneMediaView.xaml.cs">
+      <DependentUpon>SceneMediaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SceneEditViews\SceneProcessView.xaml.cs">
+      <DependentUpon>SceneProcessView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ScenesView.xaml.cs">
       <DependentUpon>ScenesView.xaml</DependentUpon>
     </Compile>
@@ -220,6 +231,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\SceneMediaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SceneEditViews\SceneProcessView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ScenesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -269,10 +288,7 @@
       <Name>SkeletonGameManager.Resources</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
