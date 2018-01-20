@@ -80,7 +80,22 @@ namespace SkeletonGameManager.WPF.ViewModels
                 SetProperty(ref isMainTabEnabled, value);                
             }
         }
+
+        private bool isMachineConfigEnabled = false;
+        /// <summary>
+        /// Gets or sets the IsMachineConfigEnabled to enable the machine config tab. Should be disabled when a machine.yaml fails to parse
+        /// </summary>
+        public bool IsMachineConfigEnabled
+        {
+            get { return isMachineConfigEnabled; }
+            set
+            {
+                SetProperty(ref isMachineConfigEnabled, value);
+            }
+        }
+
         
+
         #endregion
 
         #region Private Methods        
@@ -119,6 +134,9 @@ namespace SkeletonGameManager.WPF.ViewModels
                 _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
 
                 IsMainTabEnabled = true;
+
+                //Disable machine tab if failed top parse
+                IsMachineConfigEnabled = _skeletonGameProvider.MachineConfig == null ? false : true;
             }
             catch (Exception ex)
             {

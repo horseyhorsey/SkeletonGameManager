@@ -104,6 +104,11 @@
                                         <ContentControl prism:RegionManager.RegionName="ConfigRegion" />
                                     </TabItem>
 
+                                    <!--MACHINE CONFIG-->
+                                    <TabItem Header="Machine.yaml" IsEnabled="{Binding IsMachineConfigEnabled}">
+                                        <ContentControl prism:RegionManager.RegionName="MachineRegion" />
+                                    </TabItem>
+
                                     <!--SKELETON GAME ASSETS-->
                                     <TabItem Header="Asset_List.yaml">
                                         <ContentControl prism:RegionManager.RegionName="AssetsRegion"/>
