@@ -17,8 +17,8 @@
             set
             {
                 reset = value;
-                if (Reset) BallSearch[0] = "reset";
-                else BallSearch[0] = null;
+                if (Reset) BallSearch[1] = "reset";
+                else BallSearch[1] = null;
             }
         }
 
@@ -29,8 +29,8 @@
             set
             {
                 stop = value;
-                if (Stop) BallSearch[1] = "stop";
-                else BallSearch[1] = null;
+                if (Stop) BallSearch[0] = "stop";
+                else BallSearch[0] = null;
             }
         }
     }
