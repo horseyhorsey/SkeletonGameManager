@@ -121,6 +121,8 @@
     <Compile Include="Model\TrimVideo.cs" />
     <Compile Include="ViewModels\CreateNewGameWindowViewModel.cs" />
     <Compile Include="ViewModels\MachineConfigViewModel.cs" />
+    <Compile Include="ViewModels\Machine\LampViewModel.cs" />
+    <Compile Include="ViewModels\Machine\SolenoidFlasherViewModel.cs" />
     <Compile Include="ViewModels\Machine\SwitchViewModel.cs" />
     <Compile Include="ViewModels\SceneMediaViewModel.cs" />
     <Compile Include="ViewModels\SceneEditViewModels\SceneProcessItemViewModel.cs" />
