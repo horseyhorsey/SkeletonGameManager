@@ -49,6 +49,7 @@
                                             <RowDefinition/>
                                             <RowDefinition/>
                                             <RowDefinition/>
+                                            <RowDefinition/>
                                         </Grid.RowDefinitions>
 
                                         <Grid.ColumnDefinitions>
@@ -80,7 +81,14 @@
                                                    HorizontalAlignment="Left"
                                                    />
 
-                                        <StackPanel Orientation="Horizontal" Grid.Row="3" TextElement.FontSize="11" Grid.Column="1">
+                                        <TextBox Background="Transparent" Text="{Binding Type}" 
+                                                 ToolTip="NC or NO = Normally closed, Normally Open"
+                                                 Grid.Row="3" Grid.Column="1"
+                                                 TextWrapping="Wrap"
+                                                   HorizontalAlignment="Left"
+                                                   />
+
+                                        <StackPanel Orientation="Horizontal" Grid.Row="4" TextElement.FontSize="11" Grid.Column="1">
                                             <CheckBox Content="S" ToolTip="Ball search Stop" IsChecked="{Binding Stop}"/>
                                             <CheckBox Content="R" ToolTip="Ball search Reset" IsChecked="{Binding Reset}"/>
                                         </StackPanel>
