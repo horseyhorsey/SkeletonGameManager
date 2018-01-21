@@ -217,34 +217,6 @@
 
         <TabControl Background="{StaticResource Brush_Paper}">
 
-            <TabItem Header="General">
-
-                <Grid>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <ItemsControl Grid.Row="1"                        
-                                  ItemsSource="{Binding DedicatedSwitches}"                                   
-                                  />
-
-                    <ItemsControl ItemsSource="{Binding FlippersSwitches}"                                   
-                                  Grid.Row="1" Grid.Column="1"/>
-
-                </Grid>
-                
-                
-            </TabItem>
-            
             <TabItem Header="Switches" >
                 <ItemsControl ItemsSource="{Binding Switches}" Style="{StaticResource PinballSwitchMatrix}"/>
             </TabItem>
