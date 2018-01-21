@@ -6,13 +6,24 @@
              xmlns:local="clr-namespace:SkeletonGameManager.WPF.Views"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:ui="clr-namespace:SkeletonGameManager.WPF.Controls"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:model="clr-namespace:SkeletonGame.Models.Machine;assembly=SkeletonGame.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    
     <Grid>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
         <Grid.Resources>
-            <Style x:Key="PinballMatrix" TargetType="{x:Type ItemsControl}">
+
+
+            <Style x:Key="PinballSwitchMatrix" TargetType="{x:Type ItemsControl}">
 
                 <Setter Property="ItemsPanel">
                     <Setter.Value>
@@ -24,6 +35,145 @@
 
                 <Setter Property="ItemTemplate">
                     <Setter.Value>
+                        <DataTemplate>
+                            <ToggleButton Background="Transparent" 
+                                          BorderThickness="2"
+                                          BorderBrush="Black"
+                                          Padding="-5"
+                                    >
+                                <ToggleButton.Content>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="20"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="{Binding Number}" Grid.Row="0"
+                                                   HorizontalAlignment="Center" Grid.Column="1"
+                                                   FontWeight="DemiBold"
+                                                   FontSize="16"
+                                                   />
+
+                                        <TextBox Background="Transparent" Text="{Binding Name}"
+                                                 TextWrapping="Wrap" Grid.Row="1" Grid.Column="1"
+                                                   HorizontalAlignment="Left"
+                                                 ToolTip="Switch Name. Setting to NOT USED will not be added to yaml"
+                                                   />
+
+                                        <ContentPresenter Content="{StaticResource Path_Tags}"
+                                                          HorizontalAlignment="Left"
+                                                          ToolTip="Tags" Grid.Column="0"
+                                                          Width="10" Height="10" Margin="6,0"
+                                                          Grid.Row="2"/>
+                                        
+                                        <TextBox Background="Transparent" Text="{Binding Tags}" 
+                                                 Grid.Row="2" Grid.Column="1"
+                                                 TextWrapping="Wrap"
+                                                   HorizontalAlignment="Left"
+                                                   />
+
+                                        <StackPanel Orientation="Horizontal" Grid.Row="3" TextElement.FontSize="11" Grid.Column="1">
+                                            <CheckBox Content="S" ToolTip="Ball search Stop" IsChecked="{Binding Stop}"/>
+                                            <CheckBox Content="R" ToolTip="Ball search Reset" IsChecked="{Binding Reset}"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </ToggleButton.Content>
+                            </ToggleButton>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+
+            <!--LAMPS-->
+            <Style x:Key="PinballLampMatrix" TargetType="{x:Type ItemsControl}">
+
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <ui:UniformGridWithOrientation Columns="9" Rows="8" IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="ItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Border Background="Transparent" BorderThickness="2"
+                                    BorderBrush="Black"
+                                    >
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding Number}" 
+                                                   Grid.Column="1"
+                                                   Grid.Row="0" VerticalAlignment="Top"
+                                                   HorizontalAlignment="Center"
+                                                   FontStyle="Italic"
+                                                   FontWeight="DemiBold"
+                                                   FontSize="18"
+                                                   />
+
+                                    <TextBox Background="Transparent" 
+                                                 Grid.Column="1"
+                                                 Text="{Binding Name}"                                                 
+                                                 Grid.Row="1"
+                                                 TextWrapping="Wrap"
+                                                   HorizontalAlignment="Left"
+                                                   />
+
+                                    <ContentPresenter Content="{StaticResource Path_Tags}"
+                                                          HorizontalAlignment="Left"
+                                                      ToolTip="Tags"
+                                                          Width="10" Height="10" Margin="3"
+                                                          Grid.Row="2"/>
+
+                                    <TextBox Grid.Row="2" Grid.Column="1"
+                                                 Background="Transparent" 
+                                                 Text="{Binding Tags}" 
+                                                 TextWrapping="Wrap"
+                                                 VerticalAlignment="Center"
+                                                 HorizontalAlignment="Center"
+                                                 FontSize="12"
+                                                   />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+
+            <Style x:Key="PinballMatrix_SingleColumn" TargetType="{x:Type ItemsControl}">
+
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <ui:UniformGridWithOrientation Columns="1" IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="ItemTemplate">
+                    <Setter.Value>
+
                         <DataTemplate>
                             <ToggleButton Background="Transparent" BorderThickness="2"
                                     BorderBrush="Black"
@@ -39,9 +189,9 @@
 
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition/>
-                                            
+
                                         </Grid.ColumnDefinitions>
-                                        
+
                                         <TextBox Background="Transparent" Text="{Binding Name}"
                                                  TextWrapping="Wrap"
                                                    HorizontalAlignment="Right"
@@ -55,33 +205,131 @@
                                         <TextBlock Text="{Binding Number}" Grid.Row="2"
                                                    HorizontalAlignment="Right"
                                                    />
-
-                                        <StackPanel Orientation="Horizontal" Grid.Row="3">
-                                            <CheckBox Content="Stop" IsChecked="{Binding Stop}"/>
-                                            <CheckBox Content="Reset" IsChecked="{Binding Reset}"/>
-                                        </StackPanel>
                                     </Grid>
                                 </ToggleButton.Content>
                             </ToggleButton>
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
-
             </Style>
             
         </Grid.Resources>
 
         <TabControl Background="{StaticResource Brush_Paper}">
+
+            <TabItem Header="General">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <ItemsControl Grid.Row="1"                        
+                                  ItemsSource="{Binding DedicatedSwitches}"                                   
+                                  />
+
+                    <ItemsControl ItemsSource="{Binding FlippersSwitches}"                                   
+                                  Grid.Row="1" Grid.Column="1"/>
+
+                </Grid>
+                
+                
+            </TabItem>
+            
             <TabItem Header="Switches" >
-                <ItemsControl ItemsSource="{Binding Switches}" Style="{StaticResource PinballMatrix}"/>
+                <ItemsControl ItemsSource="{Binding Switches}" Style="{StaticResource PinballSwitchMatrix}"/>
             </TabItem>
 
             <TabItem Header="Lamps" Background="{StaticResource Brush_Paper}">
-                <ItemsControl ItemsSource="{Binding Lamps}" Style="{StaticResource PinballMatrix}"/>
+                <ItemsControl ItemsSource="{Binding Lamps}" Style="{StaticResource PinballLampMatrix}"/>
             </TabItem>
 
-            <TabItem Header="Coils"/>
-            
+            <TabItem Header="Coils">
+
+                <Grid>
+
+                    <!--<Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>-->
+
+                    <!--STANDARD FLASHER / COILS-->
+                    <DataGrid ItemsSource="{Binding Coils}" CanUserAddRows="False"
+                              CanUserDeleteRows="False" CanUserResizeRows="False"
+                              AutoGenerateColumns="False" Grid.Column="1">
+
+                        <DataGrid.Resources>
+                            <ObjectDataProvider x:Key="solenoidTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+                                <ObjectDataProvider.MethodParameters>
+                                    <x:Type Type="{x:Type model:SolenoidType}"/>
+                                </ObjectDataProvider.MethodParameters>
+                            </ObjectDataProvider>
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Number}" IsReadOnly="True" Header="No."/>
+
+                            <!--BALL SEARCH-->
+                            <DataGridCheckBoxColumn Binding="{Binding BallSearch}"  Width="0.1*">
+                                <DataGridCheckBoxColumn.Header>
+                                    <TextBlock Text="Search">
+                                        <TextBlock.ToolTip>
+                                            <TextBlock TextWrapping="Wrap" Width="150" MaxWidth="150" 
+                                                   Text="{StaticResource CoilBallSearch}"/>
+                                        </TextBlock.ToolTip>
+                                </TextBlock>
+                                </DataGridCheckBoxColumn.Header>
+                            </DataGridCheckBoxColumn>
+
+                            <DataGridTextColumn Binding="{Binding Name}" Width="1*" Header="Name"/>
+                            <DataGridTextColumn Binding="{Binding Tags}" Width="0.5*" Header="Tags"/>
+                            <DataGridTemplateColumn Width="0.2*" Header="Pulse Time">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <xctk:ByteUpDown Value="{Binding PulseTime}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="0.1*" Header="PatterOn">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <xctk:ByteUpDown Value="{Binding PatterOnTime}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="0.1*" Header="PatterOff">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <xctk:ByteUpDown Value="{Binding PatterOffTime}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridComboBoxColumn SelectedItemBinding="{Binding SolenoidType}" Header="SolenoidType"
+                                                Width="0.3*"                                                
+                                                ItemsSource="{Binding Source={StaticResource solenoidTypes}}">
+                            </DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+
+            </TabItem>
+
         </TabControl>
+
+        <Button Command="{Binding SaveMachineConfigCommand}" Grid.Row="1" Content="Save Machine"/>
+        
     </Grid>
+    
 </UserControl>
+
+    
