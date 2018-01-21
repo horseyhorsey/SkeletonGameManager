@@ -212,7 +212,9 @@ namespace SkeletonGameManager.WPF.ViewModels
                 {
                     var t = Enum.Parse(typeof(FlipperCoils), flipCoil);
                     var desc = DescriptionAttr<FlipperCoils>((FlipperCoils)t);
-                    var enabled = desc.Contains("flipperLw") ? true : false;
+                    //var enabled = desc.Contains("flipperLw") ? true : false;
+                    if (desc.Contains("Up"))
+                        desc = "NOT USED";
 
                     Coils.Add(new SolenoidFlasherViewModel
                     {
