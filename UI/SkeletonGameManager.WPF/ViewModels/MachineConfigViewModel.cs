@@ -104,13 +104,12 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             MachineConfig = _skeletonGameProvider.MachineConfig;
 
-            MachineType type = (MachineType)Enum.Parse(typeof(MachineType), MachineConfig.PRGame.MachineType.ToUpper());
-
-            CreateSwitchesAndLamps(type);
-            CreateCoils(type);
-
             if (MachineConfig != null)
             {
+                MachineType type = (MachineType)Enum.Parse(typeof(MachineType), MachineConfig.PRGame.MachineType.ToUpper());
+
+                CreateSwitchesAndLamps(type);
+                CreateCoils(type);
 
                 //Lamps
                 foreach (var prLamp in MachineConfig.PRLamps)
