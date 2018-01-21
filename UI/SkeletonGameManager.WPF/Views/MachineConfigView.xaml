@@ -16,6 +16,7 @@
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -215,10 +216,29 @@
             
         </Grid.Resources>
 
-        <TabControl Background="{StaticResource Brush_Paper}">
+        <GroupBox Header="Machine" Margin="0,5">
+        <StackPanel Orientation="Horizontal">
 
-            <TabItem Header="Switches" >
-                <ItemsControl ItemsSource="{Binding Switches}" Style="{StaticResource PinballSwitchMatrix}"/>
+            <TextBlock Text="Type: "/>
+            
+            <TextBlock Text="Balls In Machine" Margin="50,0"/>
+            <TextBlock />
+            </StackPanel>
+        </GroupBox>
+
+        <TabControl Grid.Row="1" Background="{StaticResource Brush_Paper}">
+
+            <TabItem Header="Switches">
+                <TabControl>
+
+                    <TabItem Header="Matrix" >
+                        <ItemsControl ItemsSource="{Binding Switches}" Style="{StaticResource PinballSwitchMatrix}"/>
+                    </TabItem>
+                    
+                    <TabItem Header="Dedicated">
+
+                    </TabItem>
+                </TabControl>
             </TabItem>
 
             <TabItem Header="Lamps" Background="{StaticResource Brush_Paper}">
@@ -298,7 +318,7 @@
 
         </TabControl>
 
-        <Button Command="{Binding SaveMachineConfigCommand}" Grid.Row="1" Content="Save Machine"/>
+        <Button Command="{Binding SaveMachineConfigCommand}" Grid.Row="2" Content="Save Machine"/>
         
     </Grid>
     
