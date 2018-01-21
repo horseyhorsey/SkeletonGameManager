@@ -41,6 +41,8 @@ namespace SkeletonGameManager.WPF.Providers
         void SaveGameConfig(GameConfig config);
 
         void SaveAttractFile();
+
+        void SaveMachineConfig(MachineConfig mConfig);
     }
 
     /// <summary>
@@ -160,6 +162,13 @@ namespace SkeletonGameManager.WPF.Providers
         {
             var yamlFile = Path.Combine(GameFolder, YamlFiles[0]);
             _skeletonGameSerializer.SerializeYaml(yamlFile, config);
+        }
+
+        public void SaveMachineConfig(MachineConfig mConfig)
+        {
+            //var yamlFile = Path.Combine(GameFolder, YamlFiles[6]);
+            _skeletonGameSerializer.SerializeYaml("machine.yaml", mConfig);
+            //_skeletonGameSerializer.SerializeYaml(yamlFile, mConfig);
         }
 
         #endregion
