@@ -8,6 +8,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using SkeletonGameManager.WPF.ViewModels.Machine;
+using System.Windows.Input;
+using Prism.Commands;
+using System;
+using System.Reflection;
+using System.ComponentModel;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -15,20 +20,34 @@ namespace SkeletonGameManager.WPF.ViewModels
     {
         private ISkeletonGameProvider _skeletonGameProvider;
 
+        public ICommand SaveMachineConfigCommand { get; set; }
+
         public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {
             _skeletonGameProvider = skeletonGameProvider;
 
+            InitializeCollections();
+
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
 
-            InitializeCollections();
-        }        
+            SaveMachineConfigCommand = new DelegateCommand(() =>
+            {
+                SaveMachineConfig();
+            });            
+        }
 
         private ObservableCollection<SwitchViewModel> switches;
         public ObservableCollection<SwitchViewModel> Switches
         {
             get { return switches; }
             set { SetProperty(ref switches, value); }
+        }
+
+        private ObservableCollection<SolenoidFlasherViewModel> coils;
+        public ObservableCollection<SolenoidFlasherViewModel> Coils
+        {
+            get { return coils; }
+            set { SetProperty(ref coils, value); }
         }
 
         private ObservableCollection<PRSwitch> dSwitches;
@@ -45,8 +64,8 @@ namespace SkeletonGameManager.WPF.ViewModels
             set { SetProperty(ref fSwitches, value); }
         }
 
-        private ObservableCollection<PRLamp> lamps;
-        public ObservableCollection<PRLamp> Lamps
+        private ObservableCollection<LampViewModel> lamps;
+        public ObservableCollection<LampViewModel> Lamps
         {
             get { return lamps; }
             set { SetProperty(ref lamps, value); }
@@ -62,76 +81,269 @@ namespace SkeletonGameManager.WPF.ViewModels
         #endregion
 
         #region Public Methods
+
+        /// <summary>
+        /// Called when [load yaml files changed]. Adds any items found in the machines yaml file.
+        /// </summary>
+        /// <returns></returns>
         public async override Task OnLoadYamlFilesChanged()
         {
             MachineConfig = _skeletonGameProvider.MachineConfig;
 
-            foreach (var prSwitch in MachineConfig.PRSwitches)
+            MachineType type = (MachineType)Enum.Parse(typeof(MachineType), MachineConfig.PRGame.MachineType.ToUpper());
+
+            CreateSwitchesAndLamps(type);
+            CreateCoils(type);
+
+            if (MachineConfig != null)
             {
-                if (prSwitch.Number.Contains("D"))
-                    DedicatedSwitches.Add(prSwitch);
-                else if (prSwitch.Number.Contains("F"))
-                    FlippersSwitches.Add(prSwitch);
-                else
+
+                //Lamps
+                foreach (var prLamp in MachineConfig.PRLamps)
                 {
-                    var sw = Switches.First(x => x.Number == prSwitch.Number);
-                    if (sw !=null)
+                    var lamp = Lamps.FirstOrDefault(x => x.Number == prLamp.Number);
+                    if (lamp != null)
                     {
-                        sw.Name = prSwitch.Name;
-                        sw.Tags = prSwitch.Tags;
-                        sw.Type = prSwitch.SwitchType;
+                        //lamp.Number = prLamp.Number;
+                        lamp.Name = prLamp.Name;
+                        lamp.Tags = prLamp.Tags;
+                    }
+                }
 
-                        if (prSwitch.BallSearch != null)
+                //Switches
+                foreach (var prSwitch in MachineConfig.PRSwitches)
+                {
+                    if (prSwitch.Number.Contains("D"))
+                        DedicatedSwitches.Add(prSwitch);
+                    else if (prSwitch.Number.Contains("F"))
+                        FlippersSwitches.Add(prSwitch);
+                    else
+                    {
+                        var sw = Switches.First(x => x.Number == prSwitch.Number);
+                        if (sw != null)
                         {
-                            if (prSwitch.BallSearch.Contains("reset"))
-                                sw.Reset = true;
+                            sw.Name = prSwitch.Name;
+                            sw.Tags = prSwitch.Tags;
+                            sw.Type = prSwitch.SwitchType;
 
-                            if (prSwitch.BallSearch.Contains("stop"))
-                                sw.Stop = true;
-                        }                        
-                        
-                    }                        
-                }                    
-            }
+                            if (prSwitch.BallSearch != null)
+                            {
+                                if (prSwitch.BallSearch.Contains("reset"))
+                                    sw.Reset = true;
 
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            {
+                                if (prSwitch.BallSearch.Contains("stop"))
+                                    sw.Stop = true;
+                            }
+
+                        }
+                    }
+                }
+
+                foreach (var prCoil in MachineConfig.PRCoils)
+                {
+                    var coil = Coils.FirstOrDefault(x => x.Number == prCoil.Number);
+                    if (coil != null)
+                    {
+                        coil.Name = prCoil.Name;
+                        coil.Number = prCoil.Number;
+                        coil.PatterOffTime = prCoil.PatterOffTime;
+                        coil.PatterOnTime = prCoil.PatterOnTime;
+                        coil.PulseTime = prCoil.PulseTime;
+                        coil.SolenoidType = prCoil.SolenoidType ?? 0;
+                        coil.BallSearch = prCoil.BallSearch;
+                    }
+                }
+
+                await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                {
                 //SaveCommand.RaiseCanExecuteChanged();
             });
+            }
         } 
         #endregion
 
         #region Private Methods
         /// <summary>
-        /// Initializes the collections for Matrix
+        /// Initializes the collections for Matrixs and tables
         /// </summary>
         private void InitializeCollections()
         {
             Switches = new ObservableCollection<SwitchViewModel>();
-            Lamps = new ObservableCollection<PRLamp>();
+            Lamps = new ObservableCollection<LampViewModel>();
+            Coils = new ObservableCollection<SolenoidFlasherViewModel>();
 
             DedicatedSwitches = new ObservableCollection<PRSwitch>();
             FlippersSwitches = new ObservableCollection<PRSwitch>();
+        }
 
-            for (int i = 11; i < 99; i++)
+        private void CreateCoils(MachineType type)
+        {            
+            if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPDALPHANUMERIC)
             {
-                var numStr = i.ToString();
-                if (!numStr.Contains("9")) { 
-                    if (!numStr.Contains("0"))
+                for (int i = 1; i < 29; i++)
+                {
+                    string num = i.ToString();
+                    if (i < 10) { num = "0" + i; }
+                    Coils.Add(new SolenoidFlasherViewModel
                     {
-                        AddToMatrix(numStr);
-                    }
+                        Name = "NOT USED",
+                        Number = $"C{num}",
+                        SolenoidType = 0
+                    });
                 }
-                else if (i > 90)
-                    AddToMatrix(numStr);
+
+                //Add flipper circuits
+                foreach (var flipCoil in Enum.GetNames(typeof(FlipperCoils)))
+                {
+                    var t = Enum.Parse(typeof(FlipperCoils), flipCoil);
+                    var desc = DescriptionAttr<FlipperCoils>((FlipperCoils)t);
+                    var enabled = desc.Contains("flipperLw") ? true : false;
+
+                    Coils.Add(new SolenoidFlasherViewModel
+                    {
+                        Name = desc,
+                        Number = flipCoil,
+                    });
+                }
+
+                for (int i = 37; i < 44; i++)
+                {
+                    Coils.Add(new SolenoidFlasherViewModel
+                    {
+                        Name = "NOT USED",
+                        Number = $"C{i}",
+                        SolenoidType = 0
+                    });
+                }
+
+                #endregion
             }
         }
 
-        private void AddToMatrix(string numStr)
+        /// <summary>
+        /// Creates switches based on machine type. TODO: Other machine types like stern and PDB
+        /// </summary>
+        /// <param name="machineType">Type of the machine.</param>
+        private void CreateSwitchesAndLamps(MachineType type)
+        {            
+            if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPDALPHANUMERIC)
+            {
+                //Add switches and lamps
+                for (int i = 11; i < 99; i++)
+                {
+                    var numStr = i.ToString();
+                    if (!numStr.Contains("9"))
+                    {
+                        if (!numStr.Contains("0"))
+                        {
+                            AddToMatrix(numStr, i);
+                        }
+                    }
+                    else if (i > 90)
+                        AddToMatrix(numStr, i);
+                }
+            }            
+        }
+
+        public string DescriptionAttr<T>(T source)
+        {
+            FieldInfo fi = source.GetType().GetField(source.ToString());
+
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(
+                typeof(DescriptionAttribute), false);
+
+            if (attributes != null && attributes.Length > 0) return attributes[0].Description;
+            else return source.ToString();
+        }
+
+        private void AddToMatrix(string numStr, int num)
         {
             Switches.Add(new SwitchViewModel() { Number = $"S{numStr}", Name = "NOT USED" });
-            Lamps.Add(new PRLamp() { Number = $"L{numStr}", Name = "NOT USED" });
+
+            if (num > 90 && num < 96)
+            {
+                Lamps.Add(new LampViewModel() { Number = $"G0{numStr.Substring(1,1)}", Name = "NOT USED" });
+            }
+            else if (num < 90)
+            {
+                Lamps.Add(new LampViewModel() { Number = $"L{numStr}", Name = "NOT USED" });
+            }
         }
-        #endregion
+
+        private void SaveMachineConfig()
+        {
+            var mConfig = MachineConfig;
+            mConfig.PRSwitches.Clear();            
+            mConfig.PRSwitches.AddRange(this.FlippersSwitches);
+            mConfig.PRSwitches.AddRange(this.DedicatedSwitches);
+
+            //Save switches
+            foreach (var item in Switches)
+            {
+                if (item.Name != "NOT USED")
+                {
+                    var sw = new PRSwitch()
+                    {
+                        Name = item.Name,
+                        Number = item.Number,
+                        Tags = item.Tags,
+                        SwitchType = item.Type
+                    };
+
+                    if (item.BallSearch.Any(x => x != null))
+                        sw.BallSearch = $"{item.BallSearch[0]}, {item.BallSearch[1]}";
+
+                    MachineConfig.PRSwitches.Add(sw);
+                }                
+            }
+
+            //Save Lamps
+            mConfig.PRLamps.Clear();
+            foreach (var item in Lamps)
+            {
+                if (item.Name != "NOT USED")
+                {
+                    var lamp = new PRLamp()
+                    {
+                        Name = item.Name,
+                        Number = item.Number,
+                        Tags = item.Tags,
+                    };
+
+                    MachineConfig.PRLamps.Add(lamp);
+                }
+            }
+
+            mConfig.PRCoils.Clear();
+            mConfig.PRFlippers.Clear();
+
+            foreach (var coil in Coils)
+            {
+                if (coil.Name != "NOT USED")
+                {
+                    var newcoil = new PRCoil()
+                    {
+                        Name = coil.Name,
+                        Number = coil.Number,
+                        Tags = coil.Tags,
+                        PatterOffTime = coil.PatterOffTime,
+                        PatterOnTime = coil.PatterOnTime,
+                        BallSearch = coil.BallSearch,
+                        PulseTime = coil.PulseTime,
+                        SolenoidType = coil.SolenoidType
+                    };                    
+
+                    //Add to the PRFlippers list
+                    if (newcoil.Name.Contains("Main"))
+                    {
+                        mConfig.PRFlippers.Add(newcoil.Name.Replace("Main", string.Empty));
+                    }
+
+                    MachineConfig.PRCoils.Add(newcoil);
+                }
+            }
+
+            _skeletonGameProvider.SaveMachineConfig(mConfig);
+        }
     }
 }
