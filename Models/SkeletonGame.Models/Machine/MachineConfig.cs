@@ -29,6 +29,8 @@ namespace SkeletonGame.Models.Machine
         [YamlMember(Alias = "patterOffTime", ApplyNamingConventions = false)]
         public byte? PatterOffTime { get; set; }
 
+        [YamlMember(Alias = "solenoid_type", ApplyNamingConventions = false)]
+        public SolenoidType? SolenoidType { get; set; }
     }
 
     public class PRLamp : GameItemBase { }
@@ -63,11 +65,11 @@ namespace SkeletonGame.Models.Machine
         [YamlMember(Alias = "PRFlippers", ApplyNamingConventions = false)]
         public List<string> PRFlippers { get; set; }
 
-        [YamlMember(Alias = "PRLamps", ApplyNamingConventions = false)]
-        public List<PRLamp> PRLamps { get; set; }
-
         [YamlMember(Alias = "PRSwitches", ApplyNamingConventions = false)]
         public List<PRSwitch> PRSwitches { get; set; }
+
+        [YamlMember(Alias = "PRLamps", ApplyNamingConventions = false)]
+        public List<PRLamp> PRLamps { get; set; }
 
         [YamlMember(Alias = "PRCoils", ApplyNamingConventions = false)]
         public List<PRCoil> PRCoils { get; set; }
