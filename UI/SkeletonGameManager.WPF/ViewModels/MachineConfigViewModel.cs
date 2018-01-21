@@ -4,7 +4,6 @@ using SkeletonGameManager.WPF.Providers;
 using SkeletonGame.Models.Machine;
 using System.Windows.Threading;
 using SkeletonGameManager.WPF.Events;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using SkeletonGameManager.WPF.ViewModels.Machine;
@@ -22,6 +21,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         public ICommand SaveMachineConfigCommand { get; set; }
 
+        #region Constructors
         public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {
             _skeletonGameProvider = skeletonGameProvider;
@@ -33,15 +33,11 @@ namespace SkeletonGameManager.WPF.ViewModels
             SaveMachineConfigCommand = new DelegateCommand(() =>
             {
                 SaveMachineConfig();
-            });            
+            });
         }
+        #endregion
 
-        private ObservableCollection<SwitchViewModel> switches;
-        public ObservableCollection<SwitchViewModel> Switches
-        {
-            get { return switches; }
-            set { SetProperty(ref switches, value); }
-        }
+        #region Properties
 
         private ObservableCollection<SolenoidFlasherViewModel> coils;
         public ObservableCollection<SolenoidFlasherViewModel> Coils
@@ -71,16 +67,33 @@ namespace SkeletonGameManager.WPF.ViewModels
             set { SetProperty(ref lamps, value); }
         }
 
-        #region Properties
         private MachineConfig machineConfigModel;
         public MachineConfig MachineConfig
         {
             get { return machineConfigModel; }
             set { SetProperty(ref machineConfigModel, value); }
         }
+
+        private ObservableCollection<SwitchViewModel> switches;
+        public ObservableCollection<SwitchViewModel> Switches
+        {
+            get { return switches; }
+            set { SetProperty(ref switches, value); }
+        }
         #endregion
 
         #region Public Methods
+
+        public string DescriptionAttr<T>(T source)
+        {
+            FieldInfo fi = source.GetType().GetField(source.ToString());
+
+            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(
+                typeof(DescriptionAttribute), false);
+
+            if (attributes != null && attributes.Length > 0) return attributes[0].Description;
+            else return source.ToString();
+        }
 
         /// <summary>
         /// Called when [load yaml files changed]. Adds any items found in the machines yaml file.
@@ -88,6 +101,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         /// <returns></returns>
         public async override Task OnLoadYamlFilesChanged()
         {
+
             MachineConfig = _skeletonGameProvider.MachineConfig;
 
             MachineType type = (MachineType)Enum.Parse(typeof(MachineType), MachineConfig.PRGame.MachineType.ToUpper());
@@ -159,25 +173,26 @@ namespace SkeletonGameManager.WPF.ViewModels
                 //SaveCommand.RaiseCanExecuteChanged();
             });
             }
-        } 
+        }
         #endregion
 
         #region Private Methods
-        /// <summary>
-        /// Initializes the collections for Matrixs and tables
-        /// </summary>
-        private void InitializeCollections()
+        private void AddToMatrix(string numStr, int num)
         {
-            Switches = new ObservableCollection<SwitchViewModel>();
-            Lamps = new ObservableCollection<LampViewModel>();
-            Coils = new ObservableCollection<SolenoidFlasherViewModel>();
+            Switches.Add(new SwitchViewModel() { Number = $"S{numStr}", Name = "NOT USED" });
 
-            DedicatedSwitches = new ObservableCollection<PRSwitch>();
-            FlippersSwitches = new ObservableCollection<PRSwitch>();
+            if (num > 90 && num < 96)
+            {
+                Lamps.Add(new LampViewModel() { Number = $"G0{numStr.Substring(1, 1)}", Name = "NOT USED" });
+            }
+            else if (num < 90)
+            {
+                Lamps.Add(new LampViewModel() { Number = $"L{numStr}", Name = "NOT USED" });
+            }
         }
 
         private void CreateCoils(MachineType type)
-        {            
+        {
             if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPDALPHANUMERIC)
             {
                 for (int i = 1; i < 29; i++)
@@ -216,7 +231,6 @@ namespace SkeletonGameManager.WPF.ViewModels
                     });
                 }
 
-                #endregion
             }
         }
 
@@ -225,7 +239,11 @@ namespace SkeletonGameManager.WPF.ViewModels
         /// </summary>
         /// <param name="machineType">Type of the machine.</param>
         private void CreateSwitchesAndLamps(MachineType type)
-        {            
+        {
+            this.Lamps.Clear();
+            this.Switches.Clear();
+            this.Coils.Clear();
+
             if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPDALPHANUMERIC)
             {
                 //Add switches and lamps
@@ -242,38 +260,26 @@ namespace SkeletonGameManager.WPF.ViewModels
                     else if (i > 90)
                         AddToMatrix(numStr, i);
                 }
-            }            
+            }
         }
 
-        public string DescriptionAttr<T>(T source)
+        /// <summary>
+        /// Initializes the collections for Matrixs and tables
+        /// </summary>
+        private void InitializeCollections()
         {
-            FieldInfo fi = source.GetType().GetField(source.ToString());
+            Switches = new ObservableCollection<SwitchViewModel>();
+            Lamps = new ObservableCollection<LampViewModel>();
+            Coils = new ObservableCollection<SolenoidFlasherViewModel>();
 
-            DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(
-                typeof(DescriptionAttribute), false);
-
-            if (attributes != null && attributes.Length > 0) return attributes[0].Description;
-            else return source.ToString();
-        }
-
-        private void AddToMatrix(string numStr, int num)
-        {
-            Switches.Add(new SwitchViewModel() { Number = $"S{numStr}", Name = "NOT USED" });
-
-            if (num > 90 && num < 96)
-            {
-                Lamps.Add(new LampViewModel() { Number = $"G0{numStr.Substring(1,1)}", Name = "NOT USED" });
-            }
-            else if (num < 90)
-            {
-                Lamps.Add(new LampViewModel() { Number = $"L{numStr}", Name = "NOT USED" });
-            }
+            DedicatedSwitches = new ObservableCollection<PRSwitch>();
+            FlippersSwitches = new ObservableCollection<PRSwitch>();
         }
 
         private void SaveMachineConfig()
         {
             var mConfig = MachineConfig;
-            mConfig.PRSwitches.Clear();            
+            mConfig.PRSwitches.Clear();
             mConfig.PRSwitches.AddRange(this.FlippersSwitches);
             mConfig.PRSwitches.AddRange(this.DedicatedSwitches);
 
@@ -294,7 +300,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         sw.BallSearch = $"{item.BallSearch[0]}, {item.BallSearch[1]}";
 
                     MachineConfig.PRSwitches.Add(sw);
-                }                
+                }
             }
 
             //Save Lamps
@@ -331,7 +337,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         BallSearch = coil.BallSearch,
                         PulseTime = coil.PulseTime,
                         SolenoidType = coil.SolenoidType
-                    };                    
+                    };
 
                     //Add to the PRFlippers list
                     if (newcoil.Name.Contains("Main"))
@@ -344,6 +350,9 @@ namespace SkeletonGameManager.WPF.ViewModels
             }
 
             _skeletonGameProvider.SaveMachineConfig(mConfig);
+
+
         }
+        #endregion
     }
 }
