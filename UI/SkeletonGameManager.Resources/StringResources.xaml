@@ -5,4 +5,9 @@
 
     <sys:String x:Key="GameFolder">Skeleton Game Folder</sys:String>
 
+    <sys:String x:Key="CoilBallSearch">
+        Coils tagged for ballsearch are fired when the ball has not been seen or at the start of the game when all balls can't be found so these coils are coils that help return the ball to the trough. NOTE: trough should NOT be tagged for ballsearch since firing the
+        # trough would not help fill the trough...Add the tag autoPlunger to a coil to support autoplunging on ball save
+    </sys:String>
+
 </ResourceDictionary>
