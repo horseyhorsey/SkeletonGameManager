@@ -11,5 +11,7 @@ namespace SkeletonGameManager.WPF.Interfaces
         void Stop();
 
         TimeSpan GetCurrentTime();
+
+        void SetPosition(TimeSpan ts);
     }
 }
