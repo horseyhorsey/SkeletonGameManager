@@ -119,7 +119,7 @@
                                         <ContentControl prism:RegionManager.RegionName="AttractRegion"/>
                                     </TabItem>
 
-                                    <TabItem Header="Scenes">
+                                    <TabItem Header="Scene Grab">
 
                                         <ContentControl prism:RegionManager.RegionName="ScenesRegion"/>
 
