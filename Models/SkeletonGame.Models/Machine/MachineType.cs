@@ -5,7 +5,7 @@
 
         WPC,        
         WPC95,
-        WPDALPHANUMERIC,
+        WPCALPHANUMERIC,
         STERNSAM,
         STERNWHITESTAR,
         PDB
