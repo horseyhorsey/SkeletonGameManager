@@ -39,17 +39,13 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         #region Private Methods
 
-        public override Task OnLoadYamlFilesChanged()
+        public async override Task OnLoadYamlFilesChanged()
         {
-            return Task.Run(async () =>
-            {
-                GameConfigModel = _skeletonGameProvider.GameConfig;
+            GameConfigModel = _skeletonGameProvider.GameConfig;
 
-                 await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-                {
-                    SaveCommand.RaiseCanExecuteChanged();
-                });
-                
+            await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+            {
+                SaveCommand.RaiseCanExecuteChanged();
             });
         }
 
