@@ -39,10 +39,38 @@ namespace SkeletonGameManager.WPF.ViewModels
         }
 
         #region Properties
-        public string VideoPreviewHeader { get; set; }        
-        public TimeSpan? SelectionStart { get; set; }
-        public TimeSpan? SelectionEnd { get; set; }
+        private string videoPreviewHeader;
+        public string VideoPreviewHeader
+        {
+            get { return videoPreviewHeader; }
+            set { SetProperty(ref videoPreviewHeader, value); }
+        }
+
         public TimeSpan SliderValue { get; set; }
+
+        private TimeSpan? selectionEnd;
+        public TimeSpan? SelectionEnd
+        {
+            get { return selectionEnd; }
+            set {
+                SetProperty(ref selectionEnd, value);
+
+                if (value != null)
+                    _mediaElement.SetPosition((TimeSpan)value);
+            }
+        }
+
+        private TimeSpan? selectionStart;
+        public TimeSpan? SelectionStart
+        {
+            get { return selectionStart; }
+            set {
+                SetProperty(ref selectionStart, value);
+
+                if (value != null)
+                    _mediaElement.SetPosition((TimeSpan)value);
+            }
+        }
 
         private string videoSource;
         public string VideoSource
@@ -133,7 +161,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             if (mediaPlayer != null)
             {
                 _mediaElement = mediaPlayer;
-                SliderValue = _mediaElement.GetCurrentTime();
+                SliderValue = _mediaElement.GetCurrentTime();                
             }
                 
         }
@@ -172,9 +200,18 @@ namespace SkeletonGameManager.WPF.ViewModels
             try
             {
                 if (inOut == "In")
-                    SelectionStart = _mediaElement.GetCurrentTime();
+                {
+                    SelectionStart = _mediaElement.GetCurrentTime();                    
+                    if (SelectionStart > SelectionEnd)
+                        SelectionEnd = null;
+                }                    
                 else if (inOut == "Out")
-                    SelectionEnd = _mediaElement.GetCurrentTime();
+                {
+                    SelectionEnd = _mediaElement.GetCurrentTime();                    
+                    if (SelectionEnd < SelectionStart)
+                        SelectionStart = null;
+                }
+                    
             }
             catch { }
         }

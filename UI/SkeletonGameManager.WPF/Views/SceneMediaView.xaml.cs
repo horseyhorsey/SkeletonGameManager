@@ -63,7 +63,7 @@ namespace SkeletonGameManager.WPF.Views
 
         TimeSpan IMediaPlayer.GetCurrentTime()
         {
-            return MediaElement.Position;
+            return MediaElement.Position;            
         }
         #endregion
 
@@ -110,7 +110,7 @@ namespace SkeletonGameManager.WPF.Views
             StopTimer();
             MediaElement.Stop();
             isPlaying = false;
-            MediaElement.Position = TimeSpan.FromSeconds(timelineSlider.Value);
+            MediaElement.Position = TimeSpan.FromSeconds(timelineSlider.Value);            
         }
         #endregion
 
@@ -136,6 +136,11 @@ namespace SkeletonGameManager.WPF.Views
                 //timelineSlider.Maximum = MediaElement.NaturalDuration.TimeSpan.TotalSeconds;
                 timelineSlider.Value = MediaElement.Position.TotalSeconds;
             }
+        }
+
+        public void SetPosition(TimeSpan ts)
+        {
+            MediaElement.Position = ts;
         }
 
         #endregion

@@ -126,7 +126,7 @@
     <Compile Include="ViewModels\Machine\SwitchViewModel.cs" />
     <Compile Include="ViewModels\SceneMediaViewModel.cs" />
     <Compile Include="ViewModels\SceneEditViewModels\SceneProcessItemViewModel.cs" />
-    <Compile Include="ViewModels\SceneEditViewModels\SceneProcessViewModel.cs" />
+    <Compile Include="ViewModels\SceneProcessViewModel.cs" />
     <Compile Include="ViewModels\ScenesViewModel.cs" />
     <Compile Include="Views\CreateNewGameWindow.xaml.cs">
       <DependentUpon>CreateNewGameWindow.xaml</DependentUpon>
@@ -137,7 +137,7 @@
     <Compile Include="Views\SceneMediaView.xaml.cs">
       <DependentUpon>SceneMediaView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SceneEditViews\SceneProcessView.xaml.cs">
+    <Compile Include="Views\SceneProcessView.xaml.cs">
       <DependentUpon>SceneProcessView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ScenesView.xaml.cs">
@@ -255,7 +255,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SceneEditViews\SceneProcessView.xaml">
+    <Page Include="Views\SceneProcessView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,7 +308,9 @@
       <Name>SkeletonGameManager.Resources</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\SceneEditViews\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>

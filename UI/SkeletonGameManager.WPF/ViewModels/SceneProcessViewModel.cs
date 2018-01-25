@@ -7,8 +7,9 @@ using System.Windows.Input;
 using SkeletonGameManager.WPF.Model;
 using SkeletonGameManager.WPF.Events;
 using SkeletonGame.Engine;
+using SkeletonGameManager.WPF.ViewModels.SceneEditViewModels;
 
-namespace SkeletonGameManager.WPF.ViewModels.SceneEditViewModels
+namespace SkeletonGameManager.WPF.ViewModels
 {
     public class SceneProcessViewModel : SkeletonGameManagerViewModelBase
     {

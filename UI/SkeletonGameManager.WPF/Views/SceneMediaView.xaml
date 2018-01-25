@@ -2,38 +2,47 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SkeletonGameManager.WPF.Views.SceneEditViews"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"             
              xmlns:dd="urn:gong-wpf-dragdrop"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              x:Name="MediaElementViewName"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid dd:DragDrop.IsDropTarget="True"
+             d:DesignHeight="300" d:DesignWidth="900">
+    <Grid dd:DragDrop.IsDropTarget="True" x:Name="LayoutRoot"
                                   dd:DragDrop.DropHandler="{Binding}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <MediaElement Stretch="Uniform" x:Name="MediaElement" LoadedBehavior="Manual"
+        <Border BorderThickness="2" BorderBrush="Black" CornerRadius="5" Margin="5">
+            <MediaElement Stretch="Uniform" x:Name="MediaElement" LoadedBehavior="Manual"
+                          ScrubbingEnabled="True"
                             MediaOpened="MediaElement_MediaOpened" MediaEnded="MediaElement_MediaEnded"
                           Source="{Binding VideoSource, UpdateSourceTrigger=PropertyChanged}"                                  
                                   Margin="0,-1,0,1"
                       >
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding MediaElementLoadedCommand}" 
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding MediaElementLoadedCommand}" 
                                                CommandParameter="{Binding ElementName=MediaElementViewName}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </MediaElement>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </MediaElement>
+        </Border>
 
         <!--VIDEO CONTROLS-->
-        <DockPanel Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <StackPanel HorizontalAlignment="Left" Grid.Row="1" MaxHeight="45" Orientation="Horizontal">
+        <Grid Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel HorizontalAlignment="Left" Grid.Row="0" MaxHeight="45" Orientation="Horizontal">
 
                 <DockPanel VerticalAlignment="Center" HorizontalAlignment="Left">
 
@@ -46,12 +55,14 @@
                     <!--PLAY-->
                     <Button Height="35" Width="35" Command="{Binding VideoControlCommand}" CommandParameter="play"
                                         HorizontalAlignment="Left" 
+                            Content="{StaticResource Path_Play}"
                                         VerticalAlignment="Top">
                     </Button>
 
                     <!--PAUSE-->
                     <Button Height="35" Width="35" Command="{Binding VideoControlCommand}" CommandParameter="pause"
                                 HorizontalAlignment="Left" 
+                            Content="{StaticResource Path_Pause}"
                                 VerticalAlignment="Top" 
                                 >
                     </Button>
@@ -59,6 +70,7 @@
                     <!--STOP-->
                     <Button Command="{Binding VideoControlCommand}" CommandParameter="stop"
                                 HorizontalAlignment="Left" Height="35" Width="35"
+                            Content="{StaticResource Path_Stop}"
                                 VerticalAlignment="Top">
                     </Button>
 
@@ -78,16 +90,22 @@
                         <Run Text="Seek"/>
                 </TextBlock>
 
-                <Slider x:Name="timelineSlider" Width="150" VerticalAlignment="Center" AutoToolTipPlacement="BottomRight"
-                    Value="{Binding SliderValue, UpdateSourceTrigger=PropertyChanged}"
-                        SelectionStart="{Binding SelectionStart, UpdateSourceTrigger=PropertyChanged}" ValueChanged="timelineSlider_ValueChanged" Thumb.DragStarted="timelineSlider_SeekStarted"
-                        SelectionEnd="{Binding SelectionEnd,UpdateSourceTrigger=PropertyChanged}" Thumb.DragCompleted="timelineSlider_SeekCompleted">
+                <Slider x:Name="timelineSlider" Width="150" VerticalAlignment="Center"
+                        AutoToolTipPlacement="BottomRight" 
+                        Value="{Binding SliderValue, UpdateSourceTrigger=PropertyChanged}"                                                
+                        ValueChanged="timelineSlider_ValueChanged" Thumb.DragStarted="timelineSlider_SeekStarted"
+                        Thumb.DragCompleted="timelineSlider_SeekCompleted"
+                        >
                 </Slider>
+                
+                
 
                 <TextBlock x:Name="media_wheelTime" Margin="5" TextWrapping="Wrap" Width="108" VerticalAlignment="Center"/>
 
                 <!--START TRIM-->
-                <Button Height="35" Width="35" Command="{Binding MarkVideoRangeCommand}" CommandParameter="In" ToolTip="Mark video start from the sliders current position"
+                <Button Height="35" Width="35" Command="{Binding MarkVideoRangeCommand}" CommandParameter="In" 
+                                ToolTip="Mark video start from the sliders current position"
+                                Content="{StaticResource Path_Pin}"
                                 HorizontalAlignment="Left" 
                                 VerticalAlignment="Top"                                                              
                                 >
@@ -96,24 +114,45 @@
                 <!--END TRIM-->
                 <Button Height="35" Width="35" Command="{Binding MarkVideoRangeCommand}" CommandParameter="Out" ToolTip="Mark video end from the sliders current position"
                                 HorizontalAlignment="Left" 
+                                Content="{StaticResource Path_Pin}"
                                 VerticalAlignment="Top"                                                              
                                 >
                 </Button>
 
                 <!--Add list-->
-                <Button Height="35" Width="35" Command="{Binding AddToProcessListCommand}" CommandParameter="Out" ToolTip="Add points to the process list."
+                <Button Height="35" Width="35"                        
+                        Command="{Binding AddToProcessListCommand}" CommandParameter="Out" 
+                                ToolTip="Add points to the process list."
                                 HorizontalAlignment="Left" 
-                                VerticalAlignment="Top"                             
+                                VerticalAlignment="Top"         
+                        Content="{StaticResource Path_Add}"
                                 >
                 </Button>
 
-                <Label Content="Start" VerticalAlignment="Center" ToolTip="Start time"/>
-                <TextBlock VerticalAlignment="Center" MinWidth="50" Text="{Binding SelectionStart, UpdateSourceTrigger=PropertyChanged}"/>
-                <Label Content="End" VerticalAlignment="Center" ToolTip="End time"/>
-                <TextBlock VerticalAlignment="Center" MinWidth="50" Text="{Binding SelectionEnd, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                <TextBlock VerticalAlignment="Center" MinWidth="50" 
+                           Foreground="Black"
+                           Text="{Binding SelectionStart, UpdateSourceTrigger=PropertyChanged}"/>
+                
+                
+                <TextBlock VerticalAlignment="Center" MinWidth="50" 
+                           Foreground="Black" 
+                           Text="{Binding SelectionEnd, UpdateSourceTrigger=PropertyChanged}"/>
 
             </StackPanel>
-        </DockPanel>
+
+
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
+
+                <Label Content="Start" VerticalAlignment="Center" ToolTip="Start time"/>
+                <xctk:TimeSpanUpDown Value="{Binding SelectionStart}" FractionalSecondsDigitsCount="2"/>
+
+                <Label Content="End" VerticalAlignment="Center" ToolTip="End time"/>
+                <xctk:TimeSpanUpDown Value="{Binding SelectionEnd}"/>
+            </StackPanel>
+
+
+        </Grid>
 
     </Grid>
 </UserControl>
