@@ -10,4 +10,16 @@
         # trough would not help fill the trough...Add the tag autoPlunger to a coil to support autoplunging on ball save
     </sys:String>
 
+    <sys:String x:Key="OpenDir">
+        Opens the current directory
+    </sys:String>
+
+    <sys:String x:Key="DropFilesInfo">
+        Drop files to copy to list
+    </sys:String>
+
+    <sys:String x:Key="FileOptionInfo">
+        Double clicking opens with default process
+    </sys:String>
+
 </ResourceDictionary>
