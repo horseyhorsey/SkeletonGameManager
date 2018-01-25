@@ -132,7 +132,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         FlippersSwitches.Add(prSwitch);
                     else
                     {
-                        var sw = Switches.First(x => x.Number == prSwitch.Number);
+                        var sw = Switches.FirstOrDefault(x => x.Number == prSwitch.Number);
                         if (sw != null)
                         {
                             sw.Name = prSwitch.Name;
@@ -169,8 +169,8 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                 await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {
-                //SaveCommand.RaiseCanExecuteChanged();
-            });
+                    //SaveCommand.RaiseCanExecuteChanged();
+                });
             }
         }
         #endregion
@@ -190,9 +190,31 @@ namespace SkeletonGameManager.WPF.ViewModels
             }
         }
 
+        /// <summary>
+        /// Adds to a new <see cref="LampViewModel"/> to collection for matrix
+        /// </summary>
+        /// <param name="i">The i.</param>
+        private void AddToLampMatrix(int i)
+        {
+            string numString = string.Empty;
+
+            numString = (i < 10) ? $"0{i}" : $"{i}";
+
+            Lamps.Add(new LampViewModel() { Number = $"L{numString}", Name = "NOT USED" });
+        }
+
+        private void AddToSwitchMatrix(int i)
+        {
+            string numString = string.Empty;
+
+            numString = (i < 10) ? $"0{i}" : $"{i}";
+
+            Switches.Add(new SwitchViewModel() { Number = $"S{numString}", Name = "NOT USED" });
+        }
+
         private void CreateCoils(MachineType type)
         {
-            if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPDALPHANUMERIC)
+            if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPCALPHANUMERIC)
             {
                 for (int i = 1; i < 29; i++)
                 {
@@ -233,6 +255,20 @@ namespace SkeletonGameManager.WPF.ViewModels
                 }
 
             }
+            else if(type == MachineType.STERNSAM)
+            {
+                for (int i = 1; i < 33; i++)
+                {
+                    var numString = string.Empty;
+                    numString = (i < 10) ?  $"C0{i}" : $"C{i}";
+
+                    Coils.Add(new SolenoidFlasherViewModel
+                    {
+                        Name = "NOT USED",
+                        Number = numString,
+                    });
+                }
+            }
         }
 
         /// <summary>
@@ -245,7 +281,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             this.Switches.Clear();
             this.Coils.Clear();
 
-            if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPDALPHANUMERIC)
+            if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPCALPHANUMERIC)
             {
                 //Add switches and lamps
                 for (int i = 11; i < 99; i++)
@@ -260,6 +296,16 @@ namespace SkeletonGameManager.WPF.ViewModels
                     }
                     else if (i > 90)
                         AddToMatrix(numStr, i);
+                }
+            }
+            else if (type == MachineType.STERNSAM)
+            {
+                for (int i = 1; i < 81; i++)
+                {
+                    if (i < 65)
+                        AddToSwitchMatrix(i);
+
+                    AddToLampMatrix(i);
                 }
             }
         }
