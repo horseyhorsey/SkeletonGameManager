@@ -7,9 +7,10 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:enum="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              Background="{DynamicResource Brush_GradientBackground}"
-             d:DesignHeight="768" d:DesignWidth="500">
+             d:DesignHeight="768" d:DesignWidth="768">
     <UserControl.Resources>
 
         <!--ROUNDED TEXTBOX-->
@@ -42,22 +43,22 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox Header="Asset Paths">
+        <GroupBox Header="Paths">
 
             <StackPanel>
                 <TextBlock Text="DMD Path"/>
                 <TextBox Text="{Binding GameConfigModel.DmdPath, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="sound_path"/>
+                <TextBlock Text="Sound Path"/>
                 <TextBox Text="{Binding GameConfigModel.SoundPath, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="voice_dir"/>
+                <TextBlock Text="Voice Dir"/>
                 <TextBox Text="{Binding GameConfigModel.VoiceDir, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="sfx_dir"/>
+                <TextBlock Text="Sfx Dir"/>
                 <TextBox Text="{Binding GameConfigModel.SfxDir, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="hdfont_path"/>
+                <TextBlock Text="HdFont Path"/>
                 <TextBox Text="{Binding GameConfigModel.HdFontPath, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="SDL DLL Path"/>
@@ -71,26 +72,32 @@
 
         <GroupBox Header="Display (Dmd)" Grid.Column="1">
 
-            <StackPanel>
+            <StackPanel Margin="3">
 
-                <TextBlock Text="dmd_grid_path"/>
+                <TextBlock Text="Dmd Grid Path"/>
                 <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <StackPanel Orientation="Horizontal" Margin="5">
+                <StackPanel Orientation="Horizontal" Margin="5" Height="25">
 
-                    <TextBlock Text="Dots Width"/>
-                    <TextBox Text="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+                    <TextBlock Text="Width" VerticalAlignment="Center"/>
+                    <xctk:IntegerUpDown 
+                        MinWidth="60" Minimum="0"
+                        Value="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <TextBlock Text="Dots Height"/>
-                    <TextBox Text="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+                    <TextBlock Text="Dots Height" VerticalAlignment="Center"/>
+                    <xctk:IntegerUpDown 
+                        MinWidth="60" Minimum="0"
+                        Value="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <TextBlock Text="Framerate"/>
-                    <TextBox Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+                    <TextBlock Text="Framerate" VerticalAlignment="Center"/>
+                    <xctk:DoubleUpDown 
+                        MinWidth="60" Minimum="0"
+                        Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}"/>
 
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <CheckBox IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" Content="Bordered"/>
+                    <CheckBox IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" Content="Bordered Window"/>
                    
                     <CheckBox IsChecked="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}" Content="Flip Display"/>
 
@@ -98,10 +105,12 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="Pos X"/>
-                    <TextBox Text="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
-                    <TextBlock Text="Pos Y"/>
-                    <TextBox Text="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}" MinWidth="40"/>
+                    <TextBlock Text="Pos X" VerticalAlignment="Center"/>
+                    <xctk:IntegerUpDown 
+                        Value="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}" MinWidth="60"/>
+                    <TextBlock Text="Pos Y" VerticalAlignment="Center"/>
+                    <xctk:IntegerUpDown 
+                        Value="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}" MinWidth="60"/>
                 </StackPanel>
             </StackPanel>
 
@@ -139,7 +148,8 @@
                     <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.BallSearch, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <TextBlock Text="Ball Search Delay"/>
-                    <TextBox Text="{Binding GameConfigModel.DefaultModes.BallSearchDelay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <xctk:IntegerUpDown
+                        Value="{Binding GameConfigModel.DefaultModes.BallSearchDelay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 </StackPanel>
             </StackPanel>
@@ -153,7 +163,7 @@
             </StackPanel>
         </GroupBox>
 
-        <Button Grid.Row="4" VerticalAlignment="Bottom" 
+        <Button Grid.Row="4" Margin="15" VerticalAlignment="Bottom" HorizontalAlignment="Center"
                 Command="{Binding SaveCommand}" Content="Save"/>
 
     </Grid>
