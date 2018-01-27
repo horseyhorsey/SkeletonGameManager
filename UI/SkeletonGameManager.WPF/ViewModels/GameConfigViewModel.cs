@@ -24,6 +24,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
+                GameConfigModel.AudioBufferSize = (int)SelectedBufferSize;
                 _skeletonGameProvider.SaveGameConfig(GameConfigModel);
             },() => GameConfigModel == null ? false : true);
         }
@@ -35,6 +36,13 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             get { return gameConfig; }
             set { SetProperty(ref gameConfig, value); }
+        }
+
+        private BufferSize bufferSize = BufferSize.Buff512;
+        public BufferSize SelectedBufferSize
+        {
+            get { return bufferSize; }
+            set { SetProperty(ref bufferSize, value); }
         }
 
         #region Private Methods

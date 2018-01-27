@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:enum="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
              mc:Ignorable="d" 
              Background="{DynamicResource Brush_GradientBackground}"
              d:DesignHeight="768" d:DesignWidth="500">
@@ -15,6 +17,13 @@
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="FontWeight" Value="DemiBold"/>
         </Style>
+
+        <ObjectDataProvider x:Key="BufferSizes" MethodName="GetValues" 
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enum:BufferSize"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
 
     </UserControl.Resources>
 
@@ -139,8 +148,8 @@
 
         <GroupBox Header="Audio" Grid.Row="3">
             <StackPanel>
-            <TextBlock Text="Buffer size"/>
-            <TextBox Text="{Binding GameConfigModel.AudioBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Buffer size"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource BufferSizes}}" SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
         </GroupBox>
 
