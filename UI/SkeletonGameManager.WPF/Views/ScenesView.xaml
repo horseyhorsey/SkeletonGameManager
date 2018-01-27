@@ -11,15 +11,18 @@
     <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <Expander Header="Process" ExpandDirection="Right" Background="LightGray" IsExpanded="True">
 
-        <sceneeditviews:SceneProcessView/>
+            <!--PROCESS LIST VIEW-->
+            <sceneeditviews:SceneProcessView MinWidth="350"/>
 
-        <GridSplitter Grid.Column="0"/>
+        </Expander>
 
+        <!--MAIN CLIPPING VIEW-->
         <sceneeditviews:SceneMediaView Grid.Column="1"/>
 
     </Grid>
