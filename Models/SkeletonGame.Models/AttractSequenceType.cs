@@ -9,6 +9,7 @@
         RandomText,
         Animation,
         HighScores,
-        Credits
+        Credits,
+        MarkupLayer
     }
 }
