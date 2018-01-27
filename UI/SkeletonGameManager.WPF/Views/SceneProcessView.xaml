@@ -13,6 +13,8 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
+        
+        <!--FFMPEG PRESETS-->
         <ObjectDataProvider x:Key="FfmpegSpeed"
                                 MethodName="GetValues" ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -20,6 +22,7 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
+        <!--AUDIO TYPES-->
         <ObjectDataProvider x:Key="AudioTypes"
                                 MethodName="GetValues" ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -36,13 +39,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Process" Grid.Row="1" VerticalAlignment="Bottom">
+        <GroupBox Header="Process" Grid.Row="0" VerticalAlignment="Bottom">
             <StackPanel>
-                <Button Content="Process" Command="{Binding ProcessListCommand}"/>
+                <Button Content="Process" Command="{Binding ProcessListCommand}"
+                        HorizontalAlignment="Center" ToolTip="Process all clips in list"
+                        />
             </StackPanel>
         </GroupBox>
 
-        <GroupBox Header="Video Process" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
+        <GroupBox Header="Video Process" Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch">
             <Grid>
                 <ListView ItemsSource="{Binding VideoProcessItems}" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.ItemTemplate>
