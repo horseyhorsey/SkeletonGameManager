@@ -10,15 +10,31 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              x:Name="MediaElementViewName"
-             d:DesignHeight="300" d:DesignWidth="900">
+             d:DesignHeight="800" d:DesignWidth="900">
     <Grid dd:DragDrop.IsDropTarget="True" x:Name="LayoutRoot"
                                   dd:DragDrop.DropHandler="{Binding}" >
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border BorderThickness="2" BorderBrush="Black" CornerRadius="5" Margin="5">
+        <GroupBox Header="Media Info">
+
+            <!--File Infomation-->
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding LoadedMediaInfo.Width,StringFormat={}Width: {0} }"/>
+                <TextBlock Text="{Binding LoadedMediaInfo.Height,StringFormat={}   Height: {0} }"/>
+                <TextBlock Text="{Binding LoadedMediaInfo.Duration,StringFormat={}   Duration: {0} }"/>
+                <TextBlock Text="{Binding LoadedMediaInfo.FrameRate,StringFormat={}   FPS: {0} }"/>
+                <TextBlock Text="{Binding LoadedMediaInfo.Video,StringFormat={}   Video: {0} }"/>
+                <TextBlock Text="{Binding LoadedMediaInfo.Audio,StringFormat={}   Audio: {0} }"/>
+            </StackPanel>
+        </GroupBox>
+
+        <Border BorderThickness="2" BorderBrush="Black" CornerRadius="5" Margin="5" Grid.Row="1">
             <MediaElement Stretch="Uniform" x:Name="MediaElement" LoadedBehavior="Manual"
                           ScrubbingEnabled="True"
                             MediaOpened="MediaElement_MediaOpened" MediaEnded="MediaElement_MediaEnded"
@@ -34,8 +50,20 @@
             </MediaElement>
         </Border>
 
+        <!--SLIDER-->
+
+        <Slider x:Name="timelineSlider" VerticalAlignment="Center" TickFrequency="1"    HorizontalAlignment="Stretch"
+                        Grid.Row="2" IsSelectionRangeEnabled="True" 
+                        Value="{Binding SliderValue,UpdateSourceTrigger=PropertyChanged}"                        
+                        AutoToolTipPlacement="BottomRight" TickPlacement="Both"  IsSnapToTickEnabled="True"                                    
+                        Minimum="0" ValueChanged="timelineSlider_ValueChanged" Thumb.DragStarted="timelineSlider_SeekStarted"
+                        Thumb.DragCompleted="timelineSlider_SeekCompleted"
+                        >
+            <!--SelectionStart="{Binding SelectionStart, UpdateSourceTrigger=PropertyChanged}" SelectionEnd="{Binding SelectionEnd, UpdateSourceTrigger=PropertyChanged}"-->
+        </Slider>
+
         <!--VIDEO CONTROLS-->
-        <Grid Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5">
+        <Grid Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -43,38 +71,6 @@
             </Grid.RowDefinitions>
 
             <StackPanel HorizontalAlignment="Left" Grid.Row="0" MaxHeight="45" Orientation="Horizontal">
-
-                <DockPanel VerticalAlignment="Center" HorizontalAlignment="Left">
-
-                    <!--GO BACK-->
-                    <!--<Button  Command="{Binding NavigateAwayCommand}"
-                            HorizontalAlignment="Left"
-                            ToolTip="Back to view">
-                    </Button>-->
-
-                    <!--PLAY-->
-                    <Button Height="35" Width="35" Command="{Binding VideoControlCommand}" CommandParameter="play"
-                                        HorizontalAlignment="Left" 
-                            Content="{StaticResource Path_Play}"
-                                        VerticalAlignment="Top">
-                    </Button>
-
-                    <!--PAUSE-->
-                    <Button Height="35" Width="35" Command="{Binding VideoControlCommand}" CommandParameter="pause"
-                                HorizontalAlignment="Left" 
-                            Content="{StaticResource Path_Pause}"
-                                VerticalAlignment="Top" 
-                                >
-                    </Button>
-
-                    <!--STOP-->
-                    <Button Command="{Binding VideoControlCommand}" CommandParameter="stop"
-                                HorizontalAlignment="Left" Height="35" Width="35"
-                            Content="{StaticResource Path_Stop}"
-                                VerticalAlignment="Top">
-                    </Button>
-
-                </DockPanel>
 
                 <!-- Volume slider. This slider allows a Volume range between 0 and 1. -->
                 <TextBlock Foreground="White" VerticalAlignment="Center" Margin="5">
@@ -85,22 +81,35 @@
                 <Slider x:Name="volumeSlider" Width="70"
                         VerticalAlignment="Center" Value="{Binding VolumerSlider}" Minimum="0" Maximum="1" Margin="0,12,0,11"/>
 
-                <!--SLIDER-->
-                <TextBlock Foreground="White" Margin="5"  VerticalAlignment="Center">
-                        <Run Text="Seek"/>
-                </TextBlock>
+            </StackPanel>
 
-                <Slider x:Name="timelineSlider" Width="150" VerticalAlignment="Center"
-                        AutoToolTipPlacement="BottomRight" 
-                        Value="{Binding SliderValue, UpdateSourceTrigger=PropertyChanged}"                                                
-                        ValueChanged="timelineSlider_ValueChanged" Thumb.DragStarted="timelineSlider_SeekStarted"
-                        Thumb.DragCompleted="timelineSlider_SeekCompleted"
-                        >
-                </Slider>
-                
-                
+        </Grid>
 
-                <TextBlock x:Name="media_wheelTime" Margin="5" TextWrapping="Wrap" Width="108" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Left">
+
+            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5">
+
+                <!--PLAY-->
+                <Button Height="35" Width="35" Command="{Binding VideoControlCommand}" CommandParameter="play"
+                                        HorizontalAlignment="Left" 
+                            Content="{StaticResource Path_Play}"
+                                        VerticalAlignment="Top">
+                </Button>
+
+                <!--PAUSE-->
+                <Button Height="35" Width="35" Command="{Binding VideoControlCommand}" CommandParameter="pause"
+                                HorizontalAlignment="Left" 
+                            Content="{StaticResource Path_Pause}"
+                                VerticalAlignment="Top" 
+                                >
+                </Button>
+
+                <!--STOP-->
+                <Button Command="{Binding VideoControlCommand}" CommandParameter="stop"
+                                HorizontalAlignment="Left" Height="35" Width="35"
+                            Content="{StaticResource Path_Stop}"
+                                VerticalAlignment="Top">
+                </Button>
 
                 <!--START TRIM-->
                 <Button Height="35" Width="35" Command="{Binding MarkVideoRangeCommand}" CommandParameter="In" 
@@ -129,30 +138,27 @@
                                 >
                 </Button>
 
-                
-                <TextBlock VerticalAlignment="Center" MinWidth="50" 
+
+            </DockPanel>
+
+
+            <TextBlock VerticalAlignment="Center" MinWidth="50" 
                            Foreground="Black"
-                           Text="{Binding SelectionStart, UpdateSourceTrigger=PropertyChanged}"/>
-                
-                
-                <TextBlock VerticalAlignment="Center" MinWidth="50" 
+                           Text="{Binding ElementName=timelineSlider, Path=Value}"/>
+
+
+            <TextBlock VerticalAlignment="Center" MinWidth="50" 
                            Foreground="Black" 
                            Text="{Binding SelectionEnd, UpdateSourceTrigger=PropertyChanged}"/>
 
-            </StackPanel>
+            <Label Content="Start" VerticalAlignment="Center" ToolTip="Start time"/>
+            <!--<xctk:TimeSpanUpDown Value="{Binding SelectionStart}" Width="85" MaxWidth="85" FractionalSecondsDigitsCount="2"/>-->
+            <xctk:IntegerUpDown Value="{Binding SelectionStart}"/>
 
-
-            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right">
-
-                <Label Content="Start" VerticalAlignment="Center" ToolTip="Start time"/>
-                <xctk:TimeSpanUpDown Value="{Binding SelectionStart}" FractionalSecondsDigitsCount="2"/>
-
-                <Label Content="End" VerticalAlignment="Center" ToolTip="End time"/>
-                <xctk:TimeSpanUpDown Value="{Binding SelectionEnd}"/>
-            </StackPanel>
-
-
-        </Grid>
+            <Label Content="End" VerticalAlignment="Center" ToolTip="End time"/>
+            <!--<xctk:TimeSpanUpDown Value="{Binding SelectionEnd}" Width="85" MaxWidth="85" FractionalSecondsDigitsCount="2"/>-->
+            <xctk:IntegerUpDown Value="{Binding SelectionEnd}"/>
+        </StackPanel>
 
     </Grid>
 </UserControl>

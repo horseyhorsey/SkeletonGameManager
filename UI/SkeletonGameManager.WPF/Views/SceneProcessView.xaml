@@ -5,8 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:ffmpeg="clr-namespace:FFMpegSharp.FFMPEG.Enums;assembly=FFMpegSharp"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:enums="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="FfmpegSpeed"
+                                MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="ffmpeg:Speed"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="AudioTypes"
+                                MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:AudioTypes"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        
+    </UserControl.Resources>
+    
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -21,16 +44,53 @@
 
         <GroupBox Header="Video Process" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch">
             <Grid>
-                <ListView ItemsSource="{Binding VideoProcessItems}">
+                <ListView ItemsSource="{Binding VideoProcessItems}" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Command="{Binding RemoveCommand}" Content="X"/>
-                                <TextBlock Text="{Binding SystemName}"/>
+                            <!--LENGTH INFO-->
+                            <StackPanel>
+
                                 <TextBlock Text="{Binding File}"/>
-                                <TextBlock Text="{Binding StartTime}" Margin="3"/>
-                                <TextBlock Text="{Binding EndTime}" Margin="3"/>
-                                <TextBlock Text="{Binding Duration}" Margin="3"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Command="{Binding RemoveCommand}" Content="X"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        />
+                                    <!--<TextBlock Text="{Binding SystemName}"/>-->
+                                    <xctk:IntegerUpDown Text="{Binding Video.StartFrame, StringFormat={}Start: {0}}" 
+                                                        IsReadOnly="True" IsEnabled="False"
+                                                     AllowTextInput="False" ShowButtonSpinner="False"
+                                                     Margin="3"/>
+
+                                    <xctk:IntegerUpDown Text="{Binding Video.Frames, StringFormat={}Frames: {0}}" IsReadOnly="True"
+                                                        IsEnabled="False"
+                                                     AllowTextInput="False" ShowButtonSpinner="False"
+                                                     Margin="3"/>
+
+                                    <xctk:WatermarkTextBox Watermark="Export name" Text="{Binding ExportName}"/>
+
+                                </StackPanel>
+
+                                <Expander Header="Options">
+
+                                    <StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="3">
+                                            <CheckBox IsChecked="{Binding ExportAudio}" Content="Audio"/>
+                                            <CheckBox x:Name="ExportVidCheckbox" IsChecked="{Binding ExportVideo}" Content="Video"/>
+                                            <CheckBox IsChecked="{Binding ResizeToDmdSize}" Content="Resize To Dmd"/>
+                                        </StackPanel>
+
+                                        <ComboBox ItemsSource="{Binding Source={StaticResource AudioTypes}}" SelectedItem="{Binding SelectedAudioType}" Margin="3"/>
+
+                                        <CheckBox IsChecked="{Binding SplitVideoAndAudio}" IsEnabled="{Binding ElementName=ExportVidCheckbox, Path=IsChecked}" Content="Split and copy? " ToolTip="Split the video/audio after processing and put in asset folders"/>
+
+                                        <!--FFMPEG PRESET-->
+                                        <ComboBox ItemsSource="{Binding Source={StaticResource FfmpegSpeed}}" SelectedItem="{Binding SelectedSpeed}" Margin="3"/>
+
+                                    </StackPanel>
+                                </Expander>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>

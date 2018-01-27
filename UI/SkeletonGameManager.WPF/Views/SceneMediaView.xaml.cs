@@ -16,6 +16,8 @@ namespace SkeletonGameManager.WPF.Views
         private bool isPlaying;
         private DispatcherTimer timer = new DispatcherTimer();
         public bool IsSeekingMedia { get; private set; }
+        public double FrameRate { get; set; }
+        public double FrameCount { get; set; }
         #endregion
 
         #region Constructor
@@ -45,6 +47,15 @@ namespace SkeletonGameManager.WPF.Views
             if (!isPlaying)
             {
                 StartTimer();
+
+                //Play from sliders position
+                if (timelineSlider.Value > 0)
+                {
+                    var secondsFromSlider = timelineSlider.Value / FrameRate;
+                    var valu = TimeSpan.FromSeconds(secondsFromSlider);
+                    MediaElement.Position = valu;
+                }
+                    
 
                 MediaElement.Play();
 
@@ -76,18 +87,24 @@ namespace SkeletonGameManager.WPF.Views
         private void timelineSlider_SeekCompleted(object sender, DragCompletedEventArgs e)
         {
             IsSeekingMedia = false;
-            MediaElement.Position = TimeSpan.FromSeconds(timelineSlider.Value);
+            if (MediaElement.Source != null)
+            {
+                //MediaElement.Position = TimeSpan.FromSeconds(timelineSlider.Value);
+                var secondsFromSlider = timelineSlider.Value / FrameRate;
+                var valu = TimeSpan.FromSeconds(secondsFromSlider);
+                MediaElement.Position = valu;
+            }            
         }
 
         private void timelineSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            media_wheelTime.Text = TimeSpan.FromSeconds(timelineSlider.Value).ToString(@"hh\:mm\:ss");
+            //media_wheelTime.Text = TimeSpan.FromSeconds(timelineSlider.Value).ToString(@"hh\:mm\:ss");
         }
 
         private void SetSeekBarToZero()
         {
             var ts = new TimeSpan(0, 0, 0, 0);
-            media_wheelTime.Text = ts.ToString();
+            
             timelineSlider.Value = 0;
         }
         #endregion
@@ -99,7 +116,8 @@ namespace SkeletonGameManager.WPF.Views
 
             try
             {
-                timelineSlider.Maximum = MediaElement.NaturalDuration.TimeSpan.TotalMilliseconds / 1000;
+                timelineSlider.Maximum = FrameCount;
+                //timelineSlider.Maximum = MediaElement.NaturalDuration.TimeSpan.TotalMilliseconds / 1000;
             }
             catch { }
         }
@@ -133,14 +151,18 @@ namespace SkeletonGameManager.WPF.Views
             if ((MediaElement.Source != null) && (MediaElement.NaturalDuration.HasTimeSpan) && (!IsSeekingMedia))
             {
                 //timelineSlider.Minimum = 0;
-                //timelineSlider.Maximum = MediaElement.NaturalDuration.TimeSpan.TotalSeconds;
-                timelineSlider.Value = MediaElement.Position.TotalSeconds;
+                var mediaPos = MediaElement.Position.TotalSeconds;
+                timelineSlider.Value = mediaPos * FrameRate;
             }
         }
 
-        public void SetPosition(TimeSpan ts)
+        public void SetPosition(int framePos)
         {
-            MediaElement.Position = ts;
+            var secondsFromSlider = framePos / FrameRate; 
+            var valu = TimeSpan.FromSeconds(secondsFromSlider);
+            //MediaElement.Position = valu;
+            timelineSlider.Value = framePos;
+            MediaElement.Position = valu;
         }
 
         #endregion

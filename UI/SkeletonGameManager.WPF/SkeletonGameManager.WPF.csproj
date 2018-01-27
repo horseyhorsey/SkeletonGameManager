@@ -73,6 +73,7 @@
       <HintPath>..\..\packages\PropertyChanged.Fody.2.2.4.0\lib\net452\PropertyChanged.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
@@ -302,6 +303,10 @@
     <ProjectReference Include="..\..\Modules\SkeletonGame.Engine\SkeletonGame.Engine.csproj">
       <Project>{798cad91-b4bd-4b70-8b70-436b23cb99be}</Project>
       <Name>SkeletonGame.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Module\FFMpegSharp\FFMpegSharp.csproj">
+      <Project>{5cec6504-bd25-45d0-830c-a2162f4aad12}</Project>
+      <Name>FFMpegSharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\SkeletonGameManager.Resources\SkeletonGameManager.Resources.csproj">
       <Project>{ce1e49c2-ec38-4853-b807-ca94248a1780}</Project>

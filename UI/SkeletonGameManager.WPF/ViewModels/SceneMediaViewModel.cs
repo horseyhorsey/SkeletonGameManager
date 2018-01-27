@@ -10,6 +10,8 @@ using System.Windows;
 using System.Linq;
 using System.IO;
 using System.Collections.Generic;
+using FFMpegSharp;
+using SkeletonGameManager.WPF.Providers;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -17,16 +19,19 @@ namespace SkeletonGameManager.WPF.ViewModels
     public class SceneMediaViewModel : SkeletonGameManagerViewModelBase, IDropTarget
     {
         public IMediaPlayer _mediaElement;
+        private ISkeletonGameProvider _skeletonGameProvider;
 
         #region Commands
         public ICommand MarkVideoRangeCommand { get; set; }
         public DelegateCommand<IMediaPlayer> MediaElementLoadedCommand { get; set; }
         public ICommand VideoControlCommand { get; set; }
         public ICommand AddToProcessListCommand { get; set; }
+
         #endregion
 
-        public SceneMediaViewModel(IEventAggregator eventAggregator) : base(eventAggregator)
+        public SceneMediaViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {
+            _skeletonGameProvider = skeletonGameProvider;
 
             MarkVideoRangeCommand = new DelegateCommand<string>(MarkVideoRange);
             MediaElementLoadedCommand = new DelegateCommand<IMediaPlayer>(MediaElementLoaded);
@@ -35,7 +40,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             _eventAggregator.GetEvent<VideoSourceEvent>().Subscribe(OnVideoSourceUpdated);
 
             //Add the selection start and end to process list
-            AddToProcessListCommand = new DelegateCommand(AddToProcessList);
+            AddToProcessListCommand = new DelegateCommand(AddToProcessList);            
         }
 
         #region Properties
@@ -46,29 +51,41 @@ namespace SkeletonGameManager.WPF.ViewModels
             set { SetProperty(ref videoPreviewHeader, value); }
         }
 
-        public TimeSpan SliderValue { get; set; }
+        private VideoInfo loadedMediaInfo;
+        public VideoInfo LoadedMediaInfo
+        {
+            get { return loadedMediaInfo; }
+            set { SetProperty(ref loadedMediaInfo, value); }
+        }
 
-        private TimeSpan? selectionEnd;
-        public TimeSpan? SelectionEnd
+        private int sliderVlue;
+        public int SliderValue
+        {
+            get { return sliderVlue; }
+            set { SetProperty(ref sliderVlue, value); }
+        }
+
+        private int selectionEnd;
+        public int SelectionEnd
         {
             get { return selectionEnd; }
-            set {
+            set
+            {
                 SetProperty(ref selectionEnd, value);
 
-                if (value != null)
-                    _mediaElement.SetPosition((TimeSpan)value);
+                _mediaElement.SetPosition(SelectionEnd);
             }
         }
 
-        private TimeSpan? selectionStart;
-        public TimeSpan? SelectionStart
+        private int selectionStart;
+        public int SelectionStart
         {
             get { return selectionStart; }
-            set {
+            set
+            {
                 SetProperty(ref selectionStart, value);
 
-                if (value != null)
-                    _mediaElement.SetPosition((TimeSpan)value);
+                _mediaElement.SetPosition(SelectionStart);
             }
         }
 
@@ -134,22 +151,21 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         #region Support Methods
 
+        /// <summary>
+        /// Creates a <see cref="TrimVideo"/> object and adds to process list.
+        /// </summary>
         private void AddToProcessList()
         {
-            if (SelectionStart.HasValue && SelectionEnd.HasValue)
+            var trimVideoItem = new TrimVideo
             {
-                var trimVideoItem = new TrimVideo
-                {
-                    Start = SelectionStart.Value,
-                    End = SelectionEnd.Value,
-                    File = VideoSource
-                };
+                File = VideoSource,
+                StartFrame = SelectionStart,
+                Frames = SelectionEnd - SelectionStart,
+                FrameRate = _mediaElement.FrameRate
+            };
 
-                _eventAggregator.GetEvent<VideoProcessItemAddedEvent>()
-                    .Publish(trimVideoItem);
-
-                SelectionStart = null; SelectionEnd = null;
-            }
+            _eventAggregator.GetEvent<VideoProcessItemAddedEvent>()
+                .Publish(trimVideoItem);
         }
 
         /// <summary>
@@ -157,13 +173,12 @@ namespace SkeletonGameManager.WPF.ViewModels
         /// </summary>
         /// <param name="mediaPlayer">The media player.</param>
         private void MediaElementLoaded(IMediaPlayer mediaPlayer)
-        {            
+        {
             if (mediaPlayer != null)
             {
                 _mediaElement = mediaPlayer;
-                SliderValue = _mediaElement.GetCurrentTime();                
+                SliderValue = 0;
             }
-                
         }
 
         /// <summary>
@@ -193,6 +208,12 @@ namespace SkeletonGameManager.WPF.ViewModels
             VideoSource = obj;
 
             VideoPreviewHeader = obj;
+
+            LoadedMediaInfo = FFMpegSharp.VideoInfo.FromPath(obj);
+
+            //Set the framerate and count from the loaded video
+            _mediaElement.FrameRate = LoadedMediaInfo.FrameRate;
+            _mediaElement.FrameCount = Math.Ceiling(LoadedMediaInfo.Duration.TotalSeconds * LoadedMediaInfo.FrameRate);            
         }
 
         private void MarkVideoRange(string inOut)
@@ -201,17 +222,19 @@ namespace SkeletonGameManager.WPF.ViewModels
             {
                 if (inOut == "In")
                 {
-                    SelectionStart = _mediaElement.GetCurrentTime();                    
-                    if (SelectionStart > SelectionEnd)
-                        SelectionEnd = null;
-                }                    
+                    SelectionStart = SliderValue;
+                    //if (SelectionStart > SelectionEnd)
+                    //{
+                    //    SelectionEnd = SelectionStart;                        
+                    //}
+                }
                 else if (inOut == "Out")
                 {
-                    SelectionEnd = _mediaElement.GetCurrentTime();                    
-                    if (SelectionEnd < SelectionStart)
-                        SelectionStart = null;
+                    SelectionEnd = SliderValue;
+                    //if (SelectionEnd < SelectionStart)
+                    //    SelectionEnd = SelectionStart;
                 }
-                    
+
             }
             catch { }
         }
