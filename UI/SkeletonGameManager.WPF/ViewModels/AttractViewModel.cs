@@ -66,6 +66,9 @@ namespace SkeletonGameManager.WPF.ViewModels
                     case AttractSequenceType.Credits:
                         Sequences.Add(new AttractSequenceViewModel(new Credits(),_skeletonGameProvider));
                         break;
+                    case AttractSequenceType.MarkupLayer:
+                        Sequences.Add(new AttractSequenceViewModel(new MarkupLayer(), _skeletonGameProvider));
+                        break;
                     default:
                         break;
                 }                
