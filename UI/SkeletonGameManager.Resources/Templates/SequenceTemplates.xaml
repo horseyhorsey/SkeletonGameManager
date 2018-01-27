@@ -198,11 +198,11 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <DataGrid ItemsSource="{Binding Sequence.Text}" 
-                          CanUserAddRows="True"
-                          AutoGenerateColumns="False">
+                <DataGrid ItemsSource="{Binding Sequence.Text, UpdateSourceTrigger=PropertyChanged}" 
+                          CanUserAddRows="False"
+                          AutoGenerateColumns="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=.}" Width="5*"/>
+                        <DataGridTextColumn Binding="{Binding Path=.,TargetNullValue=null, UpdateSourceTrigger=PropertyChanged}" Width="5*"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
@@ -314,7 +314,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <TextBox Text="{Binding Path=.}" HorizontalAlignment="Stretch"/>
+                                <TextBox Text="{Binding}" HorizontalAlignment="Stretch"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -409,8 +409,12 @@
 
                         <!---->
                         <ListView ItemsSource="{Binding Sequence.Contents.GroupLayer.Contents}" 
+                                  MinHeight="50"
                                   ItemTemplateSelector="{DynamicResource GroupedLayerSelector}"
                                   />
+                        
+                        <Button Content="+" Margin="3" MinWidth="50" 
+                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
