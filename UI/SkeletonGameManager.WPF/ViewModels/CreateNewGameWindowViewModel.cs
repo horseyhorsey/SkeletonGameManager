@@ -105,8 +105,8 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                 //Read all and replace with the new values
                 var machineConfigString = File.ReadAllText(machineYaml);
-                machineConfigString = machineConfigString.Replace("  machineType: wpc", $"  machineType: {SelectedMachineType.ToString()}");
-                machineConfigString = machineConfigString.Replace("  numBalls: 6", $"  numBalls: {BallsInMachine}");
+                machineConfigString = machineConfigString.Replace("  machineType: wpc", $" machineType: {SelectedMachineType.ToString().ToLower()}");
+                machineConfigString = machineConfigString.Replace("  numBalls: 6", $" numBalls: {BallsInMachine}");
 
                 //Rewrite the text back
                 File.WriteAllText(machineYaml, machineConfigString);
