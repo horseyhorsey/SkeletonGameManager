@@ -12,7 +12,7 @@
              xmlns:model="clr-namespace:SkeletonGame.Models.Machine;assembly=SkeletonGame.Models"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -74,7 +74,7 @@
                                                           ToolTip="Tags" Grid.Column="0"
                                                           Width="10" Height="10" Margin="6,0"
                                                           Grid.Row="2"/>
-                                        
+
                                         <TextBox Background="Transparent" Text="{Binding Tags}" 
                                                  Grid.Row="2" Grid.Column="1"
                                                  TextWrapping="Wrap"
@@ -221,16 +221,16 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            
+
         </Grid.Resources>
 
-        <GroupBox Header="Machine" Margin="0,5">
-        <StackPanel Orientation="Horizontal">
+        <GroupBox Header="PR Game" Margin="0,5">
+            <StackPanel Orientation="Horizontal" Margin="5">
 
-            <TextBlock Text="Type: "/>
-            
-            <TextBlock Text="Balls In Machine" Margin="50,0"/>
-            <TextBlock />
+                <TextBlock Text="{Binding MachineConfig.PRGame.MachineType, StringFormat={} Machine Type: {0}}"/>
+
+                <TextBlock Text="{Binding MachineConfig.PRGame.NumBalls, StringFormat={} Machine Type: {0}}" Margin="50,0"/>
+
             </StackPanel>
         </GroupBox>
 
@@ -242,7 +242,7 @@
                     <TabItem Header="Matrix" >
                         <ItemsControl ItemsSource="{Binding Switches}" Style="{StaticResource PinballSwitchMatrix}"/>
                     </TabItem>
-                    
+
                     <TabItem Header="Dedicated">
 
                     </TabItem>
@@ -327,9 +327,9 @@
         </TabControl>
 
         <Button Command="{Binding SaveMachineConfigCommand}" Grid.Row="2" Content="Save Machine"/>
-        
+
     </Grid>
-    
+
 </UserControl>
 
     
