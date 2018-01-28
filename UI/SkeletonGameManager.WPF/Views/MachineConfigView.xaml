@@ -229,7 +229,7 @@
 
                 <TextBlock Text="{Binding MachineConfig.PRGame.MachineType, StringFormat={} Machine Type: {0}}"/>
 
-                <TextBlock Text="{Binding MachineConfig.PRGame.NumBalls, StringFormat={} Machine Type: {0}}" Margin="50,0"/>
+                <TextBlock Text="{Binding MachineConfig.PRGame.NumBalls, StringFormat={} Balls in Machine: {0}}" Margin="50,0"/>
 
             </StackPanel>
         </GroupBox>
