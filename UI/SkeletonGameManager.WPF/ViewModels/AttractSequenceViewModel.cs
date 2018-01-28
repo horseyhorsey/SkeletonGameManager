@@ -5,6 +5,7 @@ using SkeletonGame.Models;
 using SkeletonGameManager.WPF.Events;
 using SkeletonGameManager.WPF.Providers;
 using SkeletonGameManager.WPF.Views;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace SkeletonGameManager.WPF.ViewModels
@@ -23,6 +24,17 @@ namespace SkeletonGameManager.WPF.ViewModels
             Name = type.Name;
             Sequence = sequence;
 
+            if (type == typeof(Combo))
+            {
+                var combo = Sequence as Combo;
+                TextOptions = new ObservableCollection<TestViewModel>()
+                {
+                    new TestViewModel{Meh = combo.TextList[0]},
+                    new TestViewModel{Meh = combo.TextList[1]},
+                    new TestViewModel{Meh = combo.TextList[2]}
+                };
+            }
+
             SetAttractValueCommand = new DelegateCommand<string>((name) =>
             {
                 var meh = Sequence;                
@@ -36,6 +48,31 @@ namespace SkeletonGameManager.WPF.ViewModels
         }
         
         public string Name { get; set; }
-        public SequenceBase Sequence { get; set; }        
+
+        //public SequenceBase Sequence { get; set; }        
+
+        private SequenceBase sequence;
+        public SequenceBase Sequence
+        {
+            get { return sequence; }
+            set { SetProperty(ref sequence, value); }
+        }
+
+        private ObservableCollection<TestViewModel> textOptions;
+        public ObservableCollection<TestViewModel> TextOptions
+        {
+            get { return textOptions; }
+            set { SetProperty(ref textOptions, value); }
+        }
+    }
+
+    public class TestViewModel : BindableBase
+    {
+        private string meh;
+        public string Meh
+        {
+            get { return meh; }
+            set { SetProperty(ref meh, value); }
+        }
     }
 }

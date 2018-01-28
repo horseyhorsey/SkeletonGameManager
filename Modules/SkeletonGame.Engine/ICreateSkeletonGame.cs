@@ -9,7 +9,7 @@ namespace SkeletonGame.Engine
         /// Creates new game from a downloaded skeleton game framework
         /// </summary>
         /// <param name="skeletonGameBranchZip">The skeleton game branch zip.</param>
-        void CreateNewGameEntry(string gameName, string procFolder, string skeletonGameBranchZip);
+        void CreateNewGameEntry(string gameName, string templateName, string procFolder, string skeletonGameBranchZip);
     }
 
     public class CreateSkeletonGame : ICreateSkeletonGame
@@ -20,17 +20,22 @@ namespace SkeletonGame.Engine
         /// <param name="gameName"></param>
         /// <param name="procFolder"></param>
         /// <param name="skeletonGameBranchZip">The skeleton game branch zip.</param>
-        public void CreateNewGameEntry(string gameName, string procFolder, string skeletonGameBranchZip)
+        public void CreateNewGameEntry(string gameName, string templateName, string procFolder, string skeletonGameBranchZip)
         {
-            var gamePath = CreateDirectoriesForNewGame(procFolder, gameName);
+            var fullPath = Path.Combine(procFolder, gameName);
+            var gamePath = CreateDirectoriesForNewGame(fullPath);
+
+            //Create the extra directory I created for VP help
+            if (templateName == "EmptyGameVP")
+                Directory.CreateDirectory(Path.Combine(fullPath, "VP"));
 
             using (ZipArchive archive = ZipFile.OpenRead(skeletonGameBranchZip))
             {
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {
                     var fullname = entry.FullName;
-                    if (fullname.Contains("PyProcGameHD-SkeletonGame-dev/EmptyGame/"))                    
-                        ExtractFile(gamePath, entry, fullname, "PyProcGameHD-SkeletonGame-dev/EmptyGame/");                    
+                    if (fullname.Contains($"PyProcGameHD-SkeletonGame-dev/{templateName}"))                    
+                        ExtractFile(gamePath, entry, fullname, $"PyProcGameHD-SkeletonGame-dev/{templateName}/");                    
                     else if (fullname.Contains("PyProcGameHD-SkeletonGame-dev/procgame/"))
                         ExtractFile(gamePath, entry, fullname, "PyProcGameHD-SkeletonGame-dev/");
                 }
@@ -61,33 +66,32 @@ namespace SkeletonGame.Engine
         /// <param name="procFolder">The proc folder.</param>
         /// <param name="gameName">Name of the game.</param>
         /// <returns>The full path to the game</returns>
-        private string CreateDirectoriesForNewGame(string procFolder, string gameName)
-        {
-            var fullPath = Path.Combine(procFolder, gameName);
-            Directory.CreateDirectory(fullPath);
-            Directory.CreateDirectory(fullPath + "\\assets\\dmd");
-            Directory.CreateDirectory(fullPath + "\\assets\\fonts");
-            Directory.CreateDirectory(fullPath + "\\assets\\lampshows");
-            Directory.CreateDirectory(fullPath + "\\assets\\sound\\music");
-            Directory.CreateDirectory(fullPath + "\\assets\\sound\\voice");
-            Directory.CreateDirectory(fullPath + "\\assets\\sound\\sfx");
+        private string CreateDirectoriesForNewGame(string fullGamePath)
+        {            
+            Directory.CreateDirectory(fullGamePath);
+            Directory.CreateDirectory(fullGamePath + "\\assets\\dmd");
+            Directory.CreateDirectory(fullGamePath + "\\assets\\fonts");
+            Directory.CreateDirectory(fullGamePath + "\\assets\\lampshows");
+            Directory.CreateDirectory(fullGamePath + "\\assets\\sound\\music");
+            Directory.CreateDirectory(fullGamePath + "\\assets\\sound\\voice");
+            Directory.CreateDirectory(fullGamePath + "\\assets\\sound\\sfx");
 
-            Directory.CreateDirectory(fullPath + "\\config");
-            Directory.CreateDirectory(fullPath + "\\config\\profiles");
-            Directory.CreateDirectory(fullPath + "\\config\\trophys");
+            Directory.CreateDirectory(fullGamePath + "\\config");
+            Directory.CreateDirectory(fullGamePath + "\\config\\profiles");
+            Directory.CreateDirectory(fullGamePath + "\\config\\trophys");
 
-            Directory.CreateDirectory(fullPath + "\\my_modes");
+            Directory.CreateDirectory(fullGamePath + "\\my_modes");
 
-            Directory.CreateDirectory(fullPath + "\\procgame");
-            Directory.CreateDirectory(fullPath + "\\procgame\\desktop");
-            Directory.CreateDirectory(fullPath + "\\procgame\\dmd");
-            Directory.CreateDirectory(fullPath + "\\procgame\\game");
-            Directory.CreateDirectory(fullPath + "\\procgame\\highscore");
-            Directory.CreateDirectory(fullPath + "\\procgame\\modes");
-            Directory.CreateDirectory(fullPath + "\\procgame\\profiles");
-            Directory.CreateDirectory(fullPath + "\\procgame\\tools\\mailbox");
+            Directory.CreateDirectory(fullGamePath + "\\procgame");
+            Directory.CreateDirectory(fullGamePath + "\\procgame\\desktop");
+            Directory.CreateDirectory(fullGamePath + "\\procgame\\dmd");
+            Directory.CreateDirectory(fullGamePath + "\\procgame\\game");
+            Directory.CreateDirectory(fullGamePath + "\\procgame\\highscore");
+            Directory.CreateDirectory(fullGamePath + "\\procgame\\modes");
+            Directory.CreateDirectory(fullGamePath + "\\procgame\\profiles");
+            Directory.CreateDirectory(fullGamePath + "\\procgame\\tools\\mailbox");
 
-            return fullPath;
+            return fullGamePath;
         }
     }
 }

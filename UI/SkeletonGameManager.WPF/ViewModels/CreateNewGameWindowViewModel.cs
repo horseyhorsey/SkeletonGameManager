@@ -2,6 +2,7 @@
 using Prism.Events;
 using Prism.Mvvm;
 using SkeletonGame.Engine;
+using SkeletonGame.Models.Machine;
 using System.IO;
 using System.Net;
 using System.Windows;
@@ -25,7 +26,6 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         #region Properties
         private string gameName;
-
         public string GameName
         {
             get { return gameName; }
@@ -41,6 +41,27 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             get { return procPath; }
             set { SetProperty(ref procPath, value); }
+        }
+
+        private string selectedTemplate = "EmptyGameVP";
+        public string SelectedTemplate
+        {
+            get { return selectedTemplate; }
+            set { SetProperty(ref selectedTemplate, value); }
+        }
+
+        private MachineType selectedMachineType;
+        public MachineType SelectedMachineType
+        {
+            get { return selectedMachineType; }
+            set { SetProperty(ref selectedMachineType, value); }
+        }
+
+        private int ballInMachine = 4;
+        public int BallsInMachine
+        {
+            get { return ballInMachine; }
+            set { SetProperty(ref ballInMachine, value); }
         }
 
         #endregion
@@ -77,13 +98,23 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                 //Create game from download.
                 var creator = new CreateSkeletonGame();
-                creator.CreateNewGameEntry(GameName, ProcPath, fileDownload);
+                creator.CreateNewGameEntry(GameName, SelectedTemplate, ProcPath, fileDownload);
+
+                //Add the machinetype and balls in machine
+                var machineYaml = Path.Combine(gamePath, "config", "machine.yaml");
+
+                //Read all and replace with the new values
+                var machineConfigString = File.ReadAllText(machineYaml);
+                machineConfigString = machineConfigString.Replace("  machineType: wpc", $"  machineType: {SelectedMachineType.ToString()}");
+                machineConfigString = machineConfigString.Replace("  numBalls: 6", $"  numBalls: {BallsInMachine}");
+
+                //Rewrite the text back
+                File.WriteAllText(machineYaml, machineConfigString);
 
                 MessageBox.Show($"New game: {GameName} succesfully created at {gamePath}");                
             }
             catch (System.Exception ex)
             {
-
                 MessageBox.Show($"Error creating game {ex.Message}");
             }
         }

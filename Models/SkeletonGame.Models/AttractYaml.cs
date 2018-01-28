@@ -1,5 +1,6 @@
 ﻿using SkeletonGame.Models.Attract;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models
@@ -16,6 +17,7 @@ namespace SkeletonGame.Models
         public string duration { get; set; }
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class Sequence
     {
         [YamlMember(Alias = "LastScores", ApplyNamingConventions = false)]
@@ -63,10 +65,12 @@ namespace SkeletonGame.Models
        // public AttractSequenceType GetSequenceType => AttractSequenceType.LastScores;
     }
 
+    //C:\P-ROC\Games\jaws
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class Combo : SequenceBase
-    {
-        [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
-        public List<string> Text { get; set; }
+    {        
+        [YamlMember(Alias = "Text", ApplyNamingConventions = false)]        
+        public ObservableCollection<string> TextList { get; set; }
 
         [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
         public string Animation { get; set; }

@@ -14,6 +14,7 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "Voice", ApplyNamingConventions = false)]
         public List<Voice> Voice { get; set; }
 
+        [YamlIgnore]
         public List<Music> AllAudio { get; set; } = new List<Models.Music>();
     }
 

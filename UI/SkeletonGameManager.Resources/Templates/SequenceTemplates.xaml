@@ -190,7 +190,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_Combo">
-        <GroupBox Header="{Binding Name}">
+        <GroupBox Header="{Binding Name}" x:Name="LayoutRoot">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -198,13 +198,18 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <DataGrid ItemsSource="{Binding Sequence.Text, UpdateSourceTrigger=PropertyChanged}" 
-                          CanUserAddRows="False"
-                          AutoGenerateColumns="True">
-                    <DataGrid.Columns>
+                <ListView ItemsSource="{Binding TextOptions, UpdateSourceTrigger=PropertyChanged}">
+                    <!--<DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding Path=.,TargetNullValue=null, UpdateSourceTrigger=PropertyChanged}" Width="5*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                    </DataGrid.Columns>-->
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBox Text="{Binding Meh,UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
                 <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
 
@@ -253,6 +258,7 @@
         <GroupBox Header="{Binding Name}">
             <StackPanel>
                 <TextBox Text="{Binding Sequence.Header}"/>
+                
                 <ScrollViewer>
                     <ListView ItemsSource="{Binding Sequence.TextOptions}">
                         <ListView.ItemTemplate>
@@ -268,6 +274,7 @@
                         </ListView.ItemsPanel>
                     </ListView>
                 </ScrollViewer>
+                
                 <TextBox Text="{Binding Sequence.Font}" IsReadOnly="True"/>
                 <TextBox Text="{Binding Sequence.FontStyle}"/>
                 <TextBox Text="{Binding Sequence.Animation}"/>
