@@ -156,13 +156,20 @@ namespace SkeletonGameManager.WPF.Views
             }
         }
 
+        /// <summary>
+        /// Sets the position of the slider and media position
+        /// </summary>
+        /// <param name="framePos">The frame position.</param>
         public void SetPosition(int framePos)
         {
-            var secondsFromSlider = framePos / FrameRate; 
-            var valu = TimeSpan.FromSeconds(secondsFromSlider);
-            //MediaElement.Position = valu;
-            timelineSlider.Value = framePos;
-            MediaElement.Position = valu;
+            if (MediaElement.Source != null)
+            {
+                var secondsFromSlider = framePos / FrameRate;
+                var valu = TimeSpan.FromSeconds(secondsFromSlider);
+                //MediaElement.Position = valu;
+                timelineSlider.Value = framePos;
+                MediaElement.Position = valu;
+            }            
         }
 
         #endregion
