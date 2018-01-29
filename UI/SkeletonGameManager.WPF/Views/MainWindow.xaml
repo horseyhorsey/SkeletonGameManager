@@ -110,7 +110,17 @@
                                     </TabItem>
 
                                     <!--SKELETON GAME ASSETS-->
-                                    <TabItem Header="Asset_List.yaml">
+                                    <TabItem>
+                                        <TabItem.Header>
+                                            <DockPanel>
+                                                <TextBlock Text="asset_list.yaml" Margin="3"/>
+                                                <Button Content="{StaticResource Path_Dir}"
+                                                        Command="{Binding OpenFileFolderCommand}"
+                                                        CommandParameter="asset_list.yaml"
+                                                        DockPanel.Dock="Right" Height="15" Width="20" VerticalAlignment="Center"/>
+                                            </DockPanel>    
+                                        </TabItem.Header>
+                                        
                                         <ContentControl prism:RegionManager.RegionName="AssetsRegion"/>
                                     </TabItem>
 
