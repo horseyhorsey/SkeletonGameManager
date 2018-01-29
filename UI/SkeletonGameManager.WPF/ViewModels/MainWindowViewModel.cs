@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Prism.Events;
 using SkeletonGameManager.WPF.Events;
 using SkeletonGameManager.WPF.Views;
+using System.Diagnostics;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -22,7 +23,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         public ICommand SetDirectoryCommand { get; set; }
         public DelegateCommand RefreshObjectsCommand { get; set; }
         public ICommand CreateNewGameCommand { get; set; }
-        
+        public ICommand OpenFileFolderCommand { get; set; }        
         #endregion
 
         #region Constructors
@@ -36,6 +37,18 @@ namespace SkeletonGameManager.WPF.ViewModels
             RefreshObjectsCommand = new DelegateCommand(async () => await OnRefreshSkeletonGameObjects(), () => IsValidGameFolder());
 
             CreateNewGameCommand = new DelegateCommand(CreateNewGame);
+
+            OpenFileFolderCommand = new DelegateCommand<string>((x) =>
+            {
+                switch (x)
+                {
+                    case "asset_list.yaml":
+                        Process.Start(Path.Combine(_skeletonGameProvider.GameFolder, "config", x));
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
 
         private void CreateNewGame()
