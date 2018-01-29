@@ -22,4 +22,8 @@
         Double clicking opens with default process
     </sys:String>
 
+    <sys:String x:Key="GameLaunchInfo">
+        Launches the game with your default python install.
+    </sys:String>
+
 </ResourceDictionary>
