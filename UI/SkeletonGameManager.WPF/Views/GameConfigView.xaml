@@ -158,12 +158,19 @@
 
                     </StackPanel>
 
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Scale"/>
+                        <xctk:IntegerUpDown Minimum="1" Maximum="10" ClipValueToMinMax="True" ToolTip="Scale the display" Margin="5,0" MaxWidth="50" HorizontalAlignment="Left"
+                                            MinWidth="60" Text="{Binding GameConfigModel.DesktopDmdScale, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
                     <StackPanel Orientation="Horizontal" Margin="5">
                         <CheckBox IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" Content="Bordered Window"/>
 
                         <CheckBox IsChecked="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}" Content="Flip Display"/>
 
                         <CheckBox IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}" Content="Dot Filter"/>
+                       
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Margin="5">
