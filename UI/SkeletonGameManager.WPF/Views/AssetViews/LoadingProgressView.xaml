@@ -7,6 +7,17 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+
+        <Style TargetType="xctk:DoubleUpDown">
+            <Setter Property="Increment" Value="0.1"/>
+            <Setter Property="Minimum" Value="0.0"/>
+            <Setter Property="Maximum" Value="1.0"/>
+            <Setter Property="ClipValueToMinMax" Value="True"/>
+        </Style>
+        
+    </UserControl.Resources>
     
     <StackPanel>
         <Label Content="Background"></Label>
@@ -17,28 +28,35 @@
         <!--Progress bar options-->
         <StackPanel>
             <DockPanel>
-                <Label Content="Border"></Label>
+                <Label Content="Border: "></Label>
                 <xctk:ColorPicker SelectedColor="{Binding UserInterface.ProgressBar.Border, Converter={StaticResource ListToColorConv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </DockPanel>
-            <DockPanel>
-                <Label Content="Fill      "></Label>
+                
+                <!--FILL-->
+                <Label Content="Fill      :"></Label>
                 <xctk:ColorPicker SelectedColor="{Binding UserInterface.ProgressBar.Fill, Converter={StaticResource ListToColorConv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
 
             <Label Content="Size"></Label>
             <StackPanel Orientation="Horizontal">
+                
                 <Label Content="Width"/>
-                <TextBox Text="{Binding UserInterface.ProgressBar.Width}" MinWidth="50"/>
+                <xctk:DoubleUpDown Value="{Binding UserInterface.ProgressBar.Width}" MinWidth="50"/>
+
                 <Label Content="Height"></Label>
-                <TextBox Text="{Binding UserInterface.ProgressBar.Height}" MinWidth="50"/>
+                <xctk:DoubleUpDown  Value="{Binding UserInterface.ProgressBar.Height}" MinWidth="50"/>
+                
                 <Label Content="XCenter"></Label>
-                <TextBox Text="{Binding UserInterface.ProgressBar.XCenter}" MinWidth="50"/>
+                <xctk:DoubleUpDown  Value="{Binding UserInterface.ProgressBar.XCenter}" MinWidth="50"/>
+                
             </StackPanel>
         </StackPanel>
-        <DockPanel>
-            <Label Content="Text"></Label>
+        
+        <DockPanel Margin="15">
+            <Label Content="Text Color"></Label>
             <xctk:ColorPicker SelectedColor="{Binding UserInterface.Text.Color, Converter={StaticResource ListToColorConv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBox Text="{Binding UserInterface.Text.YCenter}" DockPanel.Dock="Right"/>
+
+            <Label Content="Y Center"></Label>
+            <xctk:DoubleUpDown  Value="{Binding UserInterface.Text.YCenter}" DockPanel.Dock="Right"/>
         </DockPanel>
     </StackPanel>
 </UserControl>
