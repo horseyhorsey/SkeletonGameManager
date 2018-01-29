@@ -70,52 +70,6 @@
 
         </GroupBox>
 
-        <GroupBox Header="Display (Dmd)" Grid.Column="1">
-
-            <StackPanel Margin="3">
-
-                <TextBlock Text="Dmd Grid Path"/>
-                <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <StackPanel Orientation="Horizontal" Margin="5" Height="25">
-
-                    <TextBlock Text="Width" VerticalAlignment="Center"/>
-                    <xctk:IntegerUpDown 
-                        MinWidth="60" Minimum="0"
-                        Value="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <TextBlock Text="Dots Height" VerticalAlignment="Center"/>
-                    <xctk:IntegerUpDown 
-                        MinWidth="60" Minimum="0"
-                        Value="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <TextBlock Text="Framerate" VerticalAlignment="Center"/>
-                    <xctk:DoubleUpDown 
-                        MinWidth="60" Minimum="0"
-                        Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}"/>
-
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <CheckBox IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" Content="Bordered Window"/>
-                   
-                    <CheckBox IsChecked="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}" Content="Flip Display"/>
-
-                    <CheckBox IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}" Content="Dot Filter"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="Pos X" VerticalAlignment="Center"/>
-                    <xctk:IntegerUpDown 
-                        Value="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}" MinWidth="60"/>
-                    <TextBlock Text="Pos Y" VerticalAlignment="Center"/>
-                    <xctk:IntegerUpDown 
-                        Value="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}" MinWidth="60"/>
-                </StackPanel>
-            </StackPanel>
-
-        </GroupBox>
-
         <GroupBox Header="Default Modes" Grid.Row="2">
 
             <StackPanel Orientation="Horizontal">
@@ -165,6 +119,66 @@
 
         <Button Grid.Row="4" Margin="15" VerticalAlignment="Bottom" HorizontalAlignment="Center"
                 Command="{Binding SaveCommand}" Content="Save"/>
+        
+        
+
+        <!--SECOND COLUMN-->
+
+        <StackPanel Grid.Column="1">
+            <GroupBox Header="Game Launch" Grid.Row="0" Grid.Column="1" Height="50" VerticalAlignment="Top">
+                <Button Content="{StaticResource Path_Game}" Width="25" Height="25"
+                    ToolTip="{StaticResource GameLaunchInfo}"
+                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Command="{Binding LaunchGameCommand}"/>
+            </GroupBox>
+
+            <GroupBox Header="Display (Dmd)" Grid.Column="1" Grid.Row="0">
+
+                <StackPanel Margin="3">
+
+                    <TextBlock Text="Dmd Grid Path"/>
+                    <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="5" Height="25">
+
+                        <TextBlock Text="Width" VerticalAlignment="Center"/>
+                        <xctk:IntegerUpDown 
+                        MinWidth="60" Minimum="0"
+                        Value="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Dots Height" VerticalAlignment="Center"/>
+                        <xctk:IntegerUpDown 
+                        MinWidth="60" Minimum="0"
+                        Value="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Framerate" VerticalAlignment="Center"/>
+                        <xctk:DoubleUpDown 
+                        MinWidth="60" Minimum="0"
+                        Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" Content="Bordered Window"/>
+
+                        <CheckBox IsChecked="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}" Content="Flip Display"/>
+
+                        <CheckBox IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}" Content="Dot Filter"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <TextBlock Text="Pos X" VerticalAlignment="Center"/>
+                        <xctk:IntegerUpDown 
+                        Value="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}" MinWidth="60"/>
+                        <TextBlock Text="Pos Y" VerticalAlignment="Center"/>
+                        <xctk:IntegerUpDown 
+                        Value="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}" MinWidth="60"/>
+                    </StackPanel>
+                </StackPanel>
+
+            </GroupBox>
+        </StackPanel>
+
 
     </Grid>
 </UserControl>
