@@ -8,12 +8,18 @@ using System.Windows.Input;
 using Prism.Commands;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Diagnostics;
+using System.IO;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
     public class GameConfigViewModel : SkeletonGameManagerViewModelBase
     {        
-        private ISkeletonGameProvider _skeletonGameProvider;        
+        private ISkeletonGameProvider _skeletonGameProvider;
+
+        #region Command
+        public ICommand LaunchGameCommand { get; set; }
+        #endregion
 
         #region Constructors
 
@@ -27,6 +33,20 @@ namespace SkeletonGameManager.WPF.ViewModels
                 GameConfigModel.AudioBufferSize = (int)SelectedBufferSize;
                 _skeletonGameProvider.SaveGameConfig(GameConfigModel);
             },() => GameConfigModel == null ? false : true);
+
+            LaunchGameCommand = new DelegateCommand(() =>
+            {
+                var gameEntryPointFile = Path.Combine(_skeletonGameProvider.GameFolder, "game.py");
+
+                if (!File.Exists(gameEntryPointFile))
+                    return;
+
+                var startInfo = new ProcessStartInfo("python");
+                startInfo.WorkingDirectory = _skeletonGameProvider.GameFolder;
+                startInfo.Arguments = $"{gameEntryPointFile}";
+
+                Process.Start(startInfo);
+            });
         }
 
         #endregion
