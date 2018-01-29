@@ -1,4 +1,6 @@
-﻿namespace SkeletonGameManager.WPF.Model
+﻿using System;
+
+namespace SkeletonGameManager.WPF.Model
 {
     public class TrimVideo
     {
@@ -21,5 +23,21 @@
         /// Gets the frame rate of the video
         /// </summary>
         public double FrameRate { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets the start time.
+        /// </summary>
+        /// <value>
+        /// The start time.
+        /// </value>
+        public TimeSpan StartTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the end time.
+        /// </summary>
+        /// <value>
+        /// The end time.
+        /// </value>
+        public TimeSpan EndTime { get; set; }
     }
 }

@@ -70,12 +70,12 @@ namespace SkeletonGame.Engine
         /// <param name="ffmpeg">The ffmpeg executable</param>
         /// <param name="inputFile">The input file.</param>
         /// <param name="outputFile">The output file.</param>
-        /// <param name="startFrame">The start frame.</param>
+        /// <param name="startTime">The start frame.</param>
         /// <param name="frames">The frames.</param>
         /// <param name="frameRate">The frame rate.</param>
         /// <param name="preset">The ffmpeg preset.</param>
         /// <returns></returns>
-        public static void ConvertVideoClip(string ffmpeg, string inputFile, string outputFile, int startFrame, int frames, double frameRate, string resize = null, string preset = "Medium")
+        public static void ConvertVideoClip(string ffmpeg, string inputFile, string outputFile, TimeSpan startTime, TimeSpan endTime, double frameRate, string resize = null, string preset = "Medium")
         {
             var startInfo = new ProcessStartInfo(ffmpeg);
 
@@ -85,13 +85,13 @@ namespace SkeletonGame.Engine
 
             //Get the -ss start frame
             var metaDataRemove = $"-map_metadata -1 -map_chapters -1";
-            var start = startFrame / frameRate;
+            //var start = startFrame / frameRate;
 
             //Are we resizing the clip
             string size = resize == null ? string.Empty : $"-s {resize}";
 
             //Join args to convert
-            var ffmpegArgs = $"-ss {start} -i {input} -vframes {frames} {metaDataRemove} -c:v libx264 -preset {preset} {size} {outvideofileName}";
+            var ffmpegArgs = $"-i {input} -ss {startTime} -to {endTime} {metaDataRemove} -c:v libx264 -preset {preset} {size} {outvideofileName}";
 
             //Start the process
             startInfo.Arguments = ffmpegArgs;

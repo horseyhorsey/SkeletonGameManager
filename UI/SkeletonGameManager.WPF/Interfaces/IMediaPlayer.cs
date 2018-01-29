@@ -12,6 +12,8 @@ namespace SkeletonGameManager.WPF.Interfaces
 
         TimeSpan GetCurrentTime();
 
+        TimeSpan GetCurrentPosition();
+
         void SetPosition(int framePos);
 
         double FrameRate { get; set; }

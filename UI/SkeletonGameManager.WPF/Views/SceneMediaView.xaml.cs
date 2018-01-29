@@ -54,8 +54,7 @@ namespace SkeletonGameManager.WPF.Views
                     var secondsFromSlider = timelineSlider.Value / FrameRate;
                     var valu = TimeSpan.FromSeconds(secondsFromSlider);
                     MediaElement.Position = valu;
-                }
-                    
+                }                    
 
                 MediaElement.Play();
 
@@ -135,7 +134,7 @@ namespace SkeletonGameManager.WPF.Views
         #region Timer
         private void StartTimer()
         {
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Interval = TimeSpan.FromMilliseconds(FrameRate / 1000);
             timer.Tick += timer_Tick;
             timer.Start();
         }
@@ -170,6 +169,11 @@ namespace SkeletonGameManager.WPF.Views
                 timelineSlider.Value = framePos;
                 MediaElement.Position = valu;
             }            
+        }
+
+        public TimeSpan GetCurrentPosition()
+        {
+            return MediaElement.Position;
         }
 
         #endregion

@@ -74,6 +74,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                 SetProperty(ref selectionEnd, value);
 
                 _mediaElement.SetPosition(SelectionEnd);
+                EndTime = _mediaElement.GetCurrentPosition();
             }
         }
 
@@ -86,6 +87,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                 SetProperty(ref selectionStart, value);
 
                 _mediaElement.SetPosition(SelectionStart);
+                StartTime = _mediaElement.GetCurrentPosition();
             }
         }
 
@@ -94,6 +96,20 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             get { return videoSource; }
             set { SetProperty(ref videoSource, value); }
+        }
+
+        private TimeSpan startTime;
+        public TimeSpan StartTime
+        {
+            get { return startTime; }
+            set { SetProperty(ref startTime, value); }
+        }
+
+        private TimeSpan endTime;
+        public TimeSpan EndTime
+        {
+            get { return endTime; }
+            set { SetProperty(ref endTime, value); }
         }
         #endregion
 
@@ -161,7 +177,9 @@ namespace SkeletonGameManager.WPF.ViewModels
                 File = VideoSource,
                 StartFrame = SelectionStart,
                 Frames = SelectionEnd - SelectionStart,
-                FrameRate = _mediaElement.FrameRate
+                FrameRate = _mediaElement.FrameRate,     
+                StartTime = this.StartTime,
+                EndTime = this.EndTime
             };
 
             _eventAggregator.GetEvent<VideoProcessItemAddedEvent>()
@@ -223,16 +241,12 @@ namespace SkeletonGameManager.WPF.ViewModels
                 if (inOut == "In")
                 {
                     SelectionStart = SliderValue;
-                    //if (SelectionStart > SelectionEnd)
-                    //{
-                    //    SelectionEnd = SelectionStart;                        
-                    //}
+                    StartTime = _mediaElement.GetCurrentPosition();                   
                 }
                 else if (inOut == "Out")
                 {
                     SelectionEnd = SliderValue;
-                    //if (SelectionEnd < SelectionStart)
-                    //    SelectionEnd = SelectionStart;
+                    EndTime = _mediaElement.GetCurrentPosition();
                 }
 
             }

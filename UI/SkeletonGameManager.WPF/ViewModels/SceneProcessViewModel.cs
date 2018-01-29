@@ -118,7 +118,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         //Process this clip to the temporary directory
                         VideoHelper.ConvertVideoClip(ffmpeg,
                             video.File, tempOutputFile,
-                            video.Video.StartFrame, video.Video.Frames - 1, video.Video.FrameRate, resolution,
+                            video.Video.StartTime, video.Video.EndTime, video.Video.FrameRate, resolution,
                             video.SelectedSpeed.ToString());
 
                         //Split the temporary file and put into asset folders
