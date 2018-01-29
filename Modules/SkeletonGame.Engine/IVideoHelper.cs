@@ -91,7 +91,7 @@ namespace SkeletonGame.Engine
             string size = resize == null ? string.Empty : $"-s {resize}";
 
             //Join args to convert
-            var ffmpegArgs = $"-i {input} -ss {startTime} -to {endTime} {metaDataRemove} -c:v libx264 -preset {preset} {size} {outvideofileName}";
+            var ffmpegArgs = $"-ss {startTime} -to {endTime} -i {input} {metaDataRemove} -c:v libx264 -preset {preset} {size} {outvideofileName}";
 
             //Start the process
             startInfo.Arguments = ffmpegArgs;
