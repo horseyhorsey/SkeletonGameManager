@@ -19,16 +19,16 @@ namespace SkeletonGame.Models
     public class ProgressBar
     {
         [YamlMember(Alias = "x_center", ApplyNamingConventions = false)]
-        public float XCenter { get; set; }
+        public double XCenter { get; set; } = 0.0d;
 
         [YamlMember(Alias = "y_center", ApplyNamingConventions = false)]
-        public float YCenter { get; set; }
+        public double YCenter { get; set; } = 0.0d;
 
         [YamlMember(Alias = "width", ApplyNamingConventions = false)]
-        public float Width { get; set; }
+        public double Width { get; set; } = 0.0d;
 
         [YamlMember(Alias = "height", ApplyNamingConventions = false)]
-        public float Height { get; set; }
+        public double Height { get; set; } = 0.0d;
 
         [YamlMember(Alias = "border", ApplyNamingConventions = false)]
         public List<byte>Border { get; set; }
