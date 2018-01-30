@@ -25,5 +25,53 @@
     <sys:String x:Key="GameLaunchInfo">
         Launches the game with your default python install.
     </sys:String>
+    
+    <!--GAME CONFIG-->
+    <sys:String x:Key="Tip_DmdGrid">
+        Where to find the dmdgrid32x32.png file
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdBordered">
+        Shows a border around the window.
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdFlipped">
+        Flips the display. Options are 0, 1, 2, 3
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdResolution">
+        Display resolution. Shouldn't be changed after doing work to a game.
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdScale">
+        The display scale is the multiplier per dot.  At 5 each dot is 5x5 pixels
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdFramerate">
+        The displays framerate
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdPosition">
+        Sets the displays position.
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdFullScreen">
+        Full-screen mode scales the contents to fit the full display; may not look right
+    </sys:String>
+    
+    <!--DEFAULT MODES-->
+
+    <sys:String x:Key="Tip_OSC">
+        Enables an OSC server which listens for switches pushed from a UI. eg SwitchMatrix Gui
+    </sys:String>
+
+    <sys:String x:Key="Tip_Profiles">
+        Enables a profile menu players where players can create &amp; select players
+    </sys:String>
+
+    <sys:String x:Key="Tip_Trophys">
+        Enables a mode that displays trophys when complete. See the trophy_default_data.
+    </sys:String>
 
 </ResourceDictionary>
+    
