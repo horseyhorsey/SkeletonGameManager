@@ -1,7 +1,9 @@
-﻿using YamlDotNet.Serialization;
+﻿using PropertyChanged;
+using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models
 {
+    [AddINotifyPropertyChangedInterface]
     /// <summary>
     /// Base model to hold key file values for most classes.
     /// </summary>

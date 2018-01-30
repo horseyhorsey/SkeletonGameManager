@@ -1,7 +1,9 @@
-﻿using YamlDotNet.Serialization;
+﻿using PropertyChanged;
+using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models
 {
+    [AddINotifyPropertyChangedInterface]
     public class Animation : AssetKeyFile
     {
         [YamlMember(Alias = "frame_time", ApplyNamingConventions = false)]

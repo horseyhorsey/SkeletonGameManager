@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models
@@ -6,30 +7,21 @@ namespace SkeletonGame.Models
     public class Audio
     {
         [YamlMember(Alias = "Music", ApplyNamingConventions = false)]
-        public List<Music> Music { get; set; }
+        public ObservableCollection<Music> Music { get; set; }
 
         [YamlMember(Alias = "Effects", ApplyNamingConventions = false)]
-        public List<Effect> Effects { get; set; }
+        public ObservableCollection<Music> Effects { get; set; }
 
         [YamlMember(Alias = "Voice", ApplyNamingConventions = false)]
-        public List<Voice> Voice { get; set; }
+        public ObservableCollection<Music> Voice { get; set; }
 
         [YamlIgnore]
-        public List<Music> AllAudio { get; set; } = new List<Models.Music>();
+        public ObservableCollection<Music> AllAudio { get; set; } = new ObservableCollection<Models.Music>();
     }
 
     public class Music : AssetKeyFile
     {
         [YamlMember(Alias = "volume", ApplyNamingConventions = false)]
         public decimal Volume { get; set; } 
-    }
-
-    public class Effect : Music
-    {
-
-    }
-
-    public class Voice : Music
-    {
     }
 }
