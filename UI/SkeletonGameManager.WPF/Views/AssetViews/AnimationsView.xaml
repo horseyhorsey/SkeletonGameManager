@@ -19,30 +19,45 @@
         </Grid.ColumnDefinitions>
 
         <ListView ItemsSource="{Binding AssetFiles}" Grid.Row="1">
-            
+
         </ListView>
 
+        <GridSplitter Width="5" Grid.Column="0" Grid.RowSpan="2" Background="Silver" Margin="0,20"/>
+
         <StackPanel Orientation="Horizontal" Grid.Column="1">
-            <TextBlock Text="{Binding Animations.Count, StringFormat={}Entries: {0}}"/>
-            <TextBlock Text="{Binding ElementName=AnimDataGrid,Path=SelectedItems.Count, StringFormat={}Selected: {0}}"/>
+            <TextBlock Text="{Binding Animations.Count, StringFormat={}   Entries: {0}   }"/>
+            <TextBlock Text="{Binding ElementName=AnimDataGrid,Path=SelectedItems.Count, StringFormat={}     Selected: {0}}"/>
         </StackPanel>
 
         <DataGrid Grid.Row="1" x:Name="AnimDataGrid" Grid.Column="1"
                               ScrollViewer.CanContentScroll="False"
                               SelectionMode="Extended" AutoGenerateColumns="False"
-                              ItemsSource="{Binding Animations}">
+                              ItemsSource="{Binding Animations, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Key" Binding="{Binding Key}" Width="5*"/>
-                <DataGridTextColumn Header="File" Binding="{Binding File}" Width="5*"/>
-                <DataGridTextColumn Header="FrameTime" Binding="{Binding FrameTime}" MaxWidth="40"/>
+                <DataGridTextColumn Header="Key" Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
+                <DataGridTextColumn Header="File" Binding="{Binding File, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
                 <DataGridTextColumn Header="X_Loc" Binding="{Binding XLoc}"/>
                 <DataGridTextColumn Header="Y_Loc" Binding="{Binding YLoc}"/>
+                <DataGridTextColumn Header="FrameTime" Binding="{Binding FrameTime}" MaxWidth="40"/>
+                <DataGridCheckBoxColumn Header="Repeat" Binding="{Binding Repeat}" MaxWidth="40"/>
                 <DataGridCheckBoxColumn Header="Hold" Binding="{Binding HoldLastFrame}"/>
-                <DataGridCheckBoxColumn Header="StreamingMovie" Binding="{Binding StreamingMovie}"/>
-                <DataGridCheckBoxColumn Header="StreamingPng" Binding="{Binding StreamingPng}"/>
-                <DataGridCheckBoxColumn Header="StreamingPngCached" Binding="{Binding StreamingPngCached}"/>
-                <DataGridCheckBoxColumn Header="SkipPreLoading" Binding="{Binding SkipPreLoading}"/>
-                <DataGridTextColumn Header="Sequence" Binding="{Binding Sequence}"/>
+                <DataGridCheckBoxColumn Header="StreamingMovie" Binding="{Binding StreamingMovie}" Width="10"/>
+                <DataGridCheckBoxColumn Header="StreamingPng" Binding="{Binding StreamingPng}" Width="10"/>
+                <DataGridCheckBoxColumn Header="StreamingPngCached" Binding="{Binding StreamingPngCached}" Width="10"/>
+                <DataGridCheckBoxColumn Header="SkipPreLoading" Binding="{Binding SkipPreLoading}" Width="20"/>
+                <DataGridTemplateColumn Header="Sequence">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListView ItemsSource="{Binding Sequence}">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                            </ListView>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
