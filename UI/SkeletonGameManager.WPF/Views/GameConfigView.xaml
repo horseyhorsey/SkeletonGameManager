@@ -26,6 +26,32 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type xctk:IntegerUpDown}">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="ClipValueToMinMax" Value="True"/>
+        </Style>
+
+        <Style TargetType="{x:Type xctk:DoubleUpDown}">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="ClipValueToMinMax" Value="True"/>
+        </Style>
+
     </UserControl.Resources>
 
     <Grid>
@@ -70,120 +96,179 @@
 
         </GroupBox>
 
-        <GroupBox Header="Default Modes" Grid.Row="2">
+        <GroupBox Header="Default Modes" Grid.Column="0" Grid.Row="2">
 
-            <StackPanel Orientation="Horizontal">
-                <StackPanel>
-                    <TextBlock Text="Bonus Tally"/>
-                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.BonusTally, UpdateSourceTrigger=PropertyChanged}"/>
+            <Grid>
 
-                    <TextBlock Text="OSC Input"/>
-                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.OscInput, UpdateSourceTrigger=PropertyChanged}"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                    <TextBlock Text="Attract"/>
-                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.Attract, UpdateSourceTrigger=PropertyChanged}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Service"/>
-                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.ServiceMode, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Attract" Grid.Row="0"/>
+                <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding GameConfigModel.DefaultModes.Attract, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <TextBlock Text="Profiles"/>
-                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.PlayerProfiles, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
+                <TextBlock Text="Bonus Tally" Grid.Column="2"/>
+                <CheckBox Grid.Column="3" IsChecked="{Binding GameConfigModel.DefaultModes.BonusTally, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <StackPanel>
+                <TextBlock Text="Service" Grid.Row="0" Grid.Column="4"/>
+                <CheckBox Grid.Row="0" Grid.Column="5" IsChecked="{Binding GameConfigModel.DefaultModes.ServiceMode, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <TextBlock Text="Tilt"/>
-                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.TiltMode, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Ball Search" Grid.Row="1"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding GameConfigModel.DefaultModes.BallSearch, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <TextBlock Text="Trophys"/>
-                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.PlayerTrophys, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <TextBlock Text="Ball Search"/>
-                    <CheckBox IsChecked="{Binding GameConfigModel.DefaultModes.BallSearch, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <TextBlock Text="Ball Search Delay"/>
-                    <xctk:IntegerUpDown
+                <TextBlock Text="Ball Search Delay" Grid.Row="1" Grid.Column="2"/>
+                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Maximum="60"
                         Value="{Binding GameConfigModel.DefaultModes.BallSearchDelay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                </StackPanel>
-            </StackPanel>
+                <TextBlock Text="Tilt" Grid.Row="2"/>
+                <CheckBox Grid.Row="2" Grid.Column="1" 
+                          IsChecked="{Binding GameConfigModel.DefaultModes.TiltMode, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="OSC Input" Grid.Row="2" Grid.Column="2" />
+                <CheckBox  Grid.Row="2" Grid.Column="3" 
+                           ToolTip="{StaticResource Tip_OSC}"
+                           IsChecked="{Binding GameConfigModel.DefaultModes.OscInput, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Profiles" Grid.Row="3" Grid.Column="0"/>
+                <CheckBox Grid.Row="3" Grid.Column="1" x:Name="ProfileCheckBox"
+                          ToolTip="{StaticResource Tip_Profiles}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.PlayerProfiles, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Trophys" Grid.Row="3" Grid.Column="2"/>
+                <CheckBox Grid.Row="3" Grid.Column="3" IsEnabled="{Binding ElementName=ProfileCheckBox, Path=IsChecked}"
+                          ToolTip="{StaticResource Tip_Trophys}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.PlayerTrophys, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
 
         </GroupBox>
 
-        <GroupBox Header="Audio" Grid.Row="3">
-            <StackPanel>
-                <TextBlock Text="Buffer size"/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource BufferSizes}}" SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
-            </StackPanel>
-        </GroupBox>
-
-        <Button Grid.Row="4" Margin="15" VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                Command="{Binding SaveCommand}" Content="Save"/>
-        
-        
-
-        <!--SECOND COLUMN-->
-
-        <StackPanel Grid.Column="1">
-            <GroupBox Header="Game Launch" Grid.Row="0" Grid.Column="1" Height="50" VerticalAlignment="Top">
-                <Button Content="{StaticResource Path_Game}" Width="25" Height="25"
+        <GroupBox Header="Game Launch" Grid.Row="3" Height="50" VerticalAlignment="Top" Margin="5">
+            <Button Content="{StaticResource Path_Game}" Width="25" Height="25"
                     ToolTip="{StaticResource GameLaunchInfo}"
                     HorizontalAlignment="Left" VerticalAlignment="Center"
                     Command="{Binding LaunchGameCommand}"/>
-            </GroupBox>
+        </GroupBox>
 
+
+        <Button Grid.Row="4" Margin="15" VerticalAlignment="Bottom" Grid.ColumnSpan="3" 
+                HorizontalAlignment="Center" Width="100" Height="60"
+                Command="{Binding SaveCommand}" Content="Save Config" ToolTip="Overwrites the config.yaml."/>
+
+        <!--DMD OPTIONS-->
+        <StackPanel Grid.Column="1">
+
+
+            <!--DISPLAY ( DMD )-->
             <GroupBox Header="Display (Dmd)" Grid.Column="1" Grid.Row="0">
 
                 <StackPanel Margin="3">
 
                     <TextBlock Text="Dmd Grid Path"/>
-                    <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="{StaticResource Tip_DmdGrid}"
+                             />
 
-                    <StackPanel Orientation="Horizontal" Margin="5" Height="25">
+                    <Grid Margin="5">
 
-                        <TextBlock Text="Width" VerticalAlignment="Center"/>
-                        <xctk:IntegerUpDown 
-                        MinWidth="60" Minimum="0"
-                        Value="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Text="Dots Height" VerticalAlignment="Center"/>
-                        <xctk:IntegerUpDown 
-                        MinWidth="60" Minimum="0"
-                        Value="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="Framerate" VerticalAlignment="Center"/>
-                        <xctk:DoubleUpDown 
-                        MinWidth="60" Minimum="0"
-                        Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Width"/>
+                        <xctk:IntegerUpDown Grid.Column="1"
+                                            ToolTip="{StaticResource Tip_DmdResolution}"
+                                            Value="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    </StackPanel>
+                        <TextBlock Text="Height" Grid.Column="2"/>
+                        <xctk:IntegerUpDown Grid.Column="3" 
+                                            ToolTip="{StaticResource Tip_DmdResolution}"
+                                            Value="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Scale"/>
-                        <xctk:IntegerUpDown Minimum="1" Maximum="10" ClipValueToMinMax="True" ToolTip="Scale the display" Margin="5,0" MaxWidth="50" HorizontalAlignment="Left"
-                                            MinWidth="60" Text="{Binding GameConfigModel.DesktopDmdScale, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
+                        <TextBlock Text="Scale" Grid.Column="4"/>
+                        <xctk:IntegerUpDown Grid.Column="5" Minimum="1" Maximum="10"    
+                                            ToolTip="{StaticResource Tip_DmdScale}"
+                                            Text="{Binding GameConfigModel.DesktopDmdScale, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <CheckBox IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" Content="Bordered Window"/>
+                        <TextBlock Text="Framerate" Grid.Row="1"/>
+                        <xctk:DoubleUpDown Grid.Column="1" Grid.Row="1" ToolTip="{StaticResource Tip_DmdScale}"
+                                           Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <CheckBox IsChecked="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}" Content="Flip Display"/>
+                        <TextBlock Text="Pos X" Grid.Row="2"/>
+                        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1"
+                                            ToolTip="{StaticResource Tip_DmdPosition}"
+                                            Value="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <CheckBox IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}" Content="Dot Filter"/>
-                       
-                    </StackPanel>
+                        <TextBlock Text="Pos Y" Grid.Column="2" Grid.Row="2"/>
+                        <xctk:IntegerUpDown Grid.Column="3" Grid.Row="2" 
+                                            ToolTip="{StaticResource Tip_DmdPosition}"
+                                            Value="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}"/>
 
-                    <StackPanel Orientation="Horizontal" Margin="5">
-                        <TextBlock Text="Pos X" VerticalAlignment="Center"/>
-                        <xctk:IntegerUpDown 
-                        Value="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}" MinWidth="60"/>
-                        <TextBlock Text="Pos Y" VerticalAlignment="Center"/>
-                        <xctk:IntegerUpDown 
-                        Value="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}" MinWidth="60"/>
-                    </StackPanel>
+
+                        <TextBlock Text="Flip" Grid.Column="0" Grid.Row="3"/>
+                        <xctk:IntegerUpDown Grid.Column="1" Grid.Row="3" Margin="3" Minimum="0" Maximum="3"
+                                            ToolTip="{StaticResource Tip_DmdFlipped}"
+                                  Value="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="6">
+                            <CheckBox Grid.Row="4" Margin="3" Grid.Column="0" Content="Bordered Window"
+                                  ToolTip="{StaticResource Tip_DmdBordered}"
+                                  IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <CheckBox Grid.Column="1" Grid.Row="4" Margin="3"
+                                   ToolTip="{StaticResource Tip_DmdFramerate}"
+                                  IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}" Content="Dot Filter"/>
+
+                            <CheckBox Grid.Column="2" Grid.Row="4" Margin="3"
+                                  ToolTip="Raises the window above every other window. Good for Visual Pinball or always having the display in view"
+                                  IsChecked="{Binding GameConfigModel.AlwaysOnTop, UpdateSourceTrigger=PropertyChanged}" Content="On Top"                                  
+                                  />
+
+                            <CheckBox Grid.Column="2" Grid.Row="4" Margin="3"
+                                  IsChecked="{Binding GameConfigModel.DmdFullscreen, UpdateSourceTrigger=PropertyChanged}" 
+                                      Content="Full Screen" ToolTip="{StaticResource Tip_DmdFullScreen}"
+                                  />
+                        </StackPanel>
+
+                    </Grid>
+
                 </StackPanel>
 
             </GroupBox>
+
+            <!--AUDIO OPTIONS-->
+            <GroupBox Header="Audio" Grid.Row="2">
+                <StackPanel>
+                    <TextBlock Text="Buffer size"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource BufferSizes}}" SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
+                </StackPanel>
+            </GroupBox>
+
         </StackPanel>
 
 
