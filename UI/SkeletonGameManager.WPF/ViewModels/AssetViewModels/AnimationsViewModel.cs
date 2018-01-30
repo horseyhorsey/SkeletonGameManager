@@ -19,11 +19,11 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             _skeletonGameFiles = skeletonGameFiles;
             _skeletonGameProvider = skeletonGameProvider;
 
-            Animations = new ObservableCollection<Animation>(_skeletonGameProvider.AssetsConfig.Animations);
+            //Just assign this collection, don't create a new observable
+            Animations = _skeletonGameProvider.AssetsConfig.Animations;
         }
 
         private ObservableCollection<Animation> animation;        
-
         public ObservableCollection<Animation> Animations
         {
             get { return animation; }

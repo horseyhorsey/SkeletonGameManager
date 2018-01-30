@@ -165,15 +165,15 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             switch (audioType)
             {
                 case AssetTypes.Music:
-                    AudioEntries = new ObservableCollection<Music>(_skeletonGameProvider.AssetsConfig.Audio.Music);
+                    AudioEntries = _skeletonGameProvider.AssetsConfig.Audio.Music;
                     _skeletonGameProvider.AssetsConfig.Audio.AllAudio.AddRange(_skeletonGameProvider.AssetsConfig.Audio.Music);
                     break;
                 case AssetTypes.Voice:
-                    AudioEntries = new ObservableCollection<Music>(_skeletonGameProvider.AssetsConfig.Audio.Voice);
+                    AudioEntries = _skeletonGameProvider.AssetsConfig.Audio.Voice;
                     _skeletonGameProvider.AssetsConfig.Audio.AllAudio.AddRange(_skeletonGameProvider.AssetsConfig.Audio.Voice);
                     break;
                 case AssetTypes.Sfx:
-                    AudioEntries = new ObservableCollection<Music>(_skeletonGameProvider.AssetsConfig.Audio.Effects);
+                    AudioEntries = _skeletonGameProvider.AssetsConfig.Audio.Effects;
                     _skeletonGameProvider.AssetsConfig.Audio.AllAudio.AddRange(_skeletonGameProvider.AssetsConfig.Audio.Effects);
                     break;
                 default:
