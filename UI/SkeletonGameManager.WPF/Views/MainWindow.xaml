@@ -28,7 +28,7 @@
                         
                         <Grid>
                             <!--DISPLAY WINDOW CONTENT-->
-                            <Border Background="LightGray" CornerRadius="15">
+                            <Border Background="LightGray" CornerRadius="0,15,0,0">
                                 <ContentPresenter Content="{TemplateBinding Content}"/>
                             </Border>
                             
@@ -60,7 +60,8 @@
 
                                     <DockPanel Margin="3" Grid.Row="2" VerticalAlignment="Bottom">
 
-                                        <Menu VerticalAlignment="Center">
+                                        <Menu VerticalAlignment="Bottom">
+                                            
                                             <MenuItem Header="Options">
                                                 <MenuItem Header="New" Command="{Binding CreateNewGameCommand}">
                                                 </MenuItem> 
@@ -68,7 +69,7 @@
                                         </Menu>
 
                                         <!--HEADER-->
-                                        <TextBlock Text="{StaticResource GameFolder}" Margin="50,0"
+                                        <TextBlock Text="{StaticResource GameFolder}" Margin="20,0"
                                                    FontStyle="Italic" VerticalAlignment="Bottom"
                                                    FontWeight="Bold"
                                                    DockPanel.Dock="Left"/>
