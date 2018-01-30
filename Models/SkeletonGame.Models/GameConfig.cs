@@ -67,6 +67,9 @@ namespace SkeletonGame.Models {
         [YamlMember(Alias = "dmd_window_border", ApplyNamingConventions = false)]
         public string DmdWindowBorder { get; set; } = "true";
 
+        [YamlMember(Alias = "dmd_always_on_top", ApplyNamingConventions = false)]
+        public string AlwaysOnTop { get; set; } = "true";        
+
         [YamlMember(Alias = "desktop_dmd_scale", ApplyNamingConventions = false)]
         public byte DesktopDmdScale { get; set; } = 5;
 
