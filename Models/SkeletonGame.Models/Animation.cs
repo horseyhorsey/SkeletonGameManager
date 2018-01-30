@@ -1,4 +1,5 @@
 ﻿using PropertyChanged;
+using System.Collections.Generic;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models
@@ -24,8 +25,8 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "holdLastFrame", ApplyNamingConventions = false)]
         public bool HoldLastFrame { get; set; } = false;
 
-        [YamlMember(Alias = "sequence", ApplyNamingConventions = false)]
-        public int[] Sequence { get; set; }
+        [YamlMember(Alias = "sequence", ApplyNamingConventions = false]
+        public List<int> Sequence { get; set; }
 
         [YamlMember(Alias = "streamingMovie", ApplyNamingConventions = false)]
         public bool StreamingMovie { get; set; } = false;
