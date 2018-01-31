@@ -25,7 +25,7 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "holdLastFrame", ApplyNamingConventions = false)]
         public bool HoldLastFrame { get; set; } = false;
 
-        [YamlMember(Alias = "sequence", ApplyNamingConventions = false]
+        [YamlMember(Alias = "sequence", ApplyNamingConventions = false)]
         public List<int> Sequence { get; set; }
 
         [YamlMember(Alias = "streamingMovie", ApplyNamingConventions = false)]
