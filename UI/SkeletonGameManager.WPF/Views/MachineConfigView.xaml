@@ -220,6 +220,9 @@
 
                 <TextBlock Text="{Binding MachineConfig.PRGame.NumBalls, StringFormat={} Balls in Machine: {0}}" Margin="50,0"/>
 
+                <!--SAVE MACHINE BUTTON-->
+                <Button Command="{Binding SaveMachineConfigCommand}" Grid.Row="2" Content="Save Machine.yaml" ToolTip="Saves all the machine configuration"/>
+
             </StackPanel>
         </GroupBox>
         
@@ -259,11 +262,11 @@
                                             <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
-                                    
+
                                 </Style>
-                                
+
                             </ItemsControl.Style>
-                            
+
                         </ItemsControl>
                     </TabItem>
 
@@ -271,7 +274,7 @@
                     <TabItem Header="Dedicated">
 
                     </TabItem>
-                    
+
                 </TabControl>
             </TabItem>
 
@@ -297,11 +300,11 @@
                             <Setter Property="ItemsPanel" Value="{StaticResource STD_Matrix}"/>
 
                             <!--CHANGE THE STYLE IF USING A SAM CONFIG-->
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
-                                        <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
+                                    <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
                         </Style>
                     </ItemsControl.Style>
 
@@ -381,9 +384,6 @@
             </TabItem>
 
         </TabControl>
-
-        <!--SAVE MACHINE BUTTON-->
-        <Button Command="{Binding SaveMachineConfigCommand}" Grid.Row="2" Content="Save Machine"/>
 
     </Grid>
 
