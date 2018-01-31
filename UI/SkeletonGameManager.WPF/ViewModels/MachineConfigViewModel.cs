@@ -12,19 +12,25 @@ using Prism.Commands;
 using System;
 using System.Reflection;
 using System.ComponentModel;
+using SkeletonGame.Engine;
+using System.IO;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
     public class MachineConfigViewModel : SkeletonGameManagerViewModelBase
     {
         private ISkeletonGameProvider _skeletonGameProvider;
+        private IVpScriptExporter _vpScriptExporter;
 
         public ICommand SaveMachineConfigCommand { get; set; }
+        public ICommand ExportToVpCommand { get; set; }
 
         #region Constructors
         public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {
             _skeletonGameProvider = skeletonGameProvider;
+
+            _vpScriptExporter = new VpScriptExporter();
 
             InitializeCollections();
 
@@ -34,7 +40,13 @@ namespace SkeletonGameManager.WPF.ViewModels
             {
                 SaveMachineConfig();
             });
+
+            ExportToVpCommand = new DelegateCommand<string>((x) =>
+            {
+                ExportVpScript(x);
+            });
         }
+
         #endregion
 
         #region Properties
@@ -307,6 +319,31 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                     AddToLampMatrix(i);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Exports the vp script.
+        /// </summary>
+        /// <param name="machineItemType">Type of the machine item eg Switch, Coil</param>
+        private void ExportVpScript(string machineItemType)
+        {
+            var scriptString = string.Empty;
+            var scriptFileName = $"{_skeletonGameProvider.GameFolder}\\VP_{machineItemType}.txt";
+
+            //Delete exisitng scripts
+            if (File.Exists(scriptFileName))
+                File.Delete(scriptFileName);
+
+            if (machineItemType == "Switch")
+                scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Switch);
+            else if (machineItemType == "Coil")
+                scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Coil);
+
+            //Write the script
+            using (var sw = File.CreateText(scriptFileName))
+            {
+                sw.Write(scriptString);
             }
         }
 

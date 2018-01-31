@@ -20,6 +20,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
         <Grid.Resources>
 
             <!--SWITCH STYLES-->
@@ -225,9 +230,23 @@
 
             </StackPanel>
         </GroupBox>
+
+        <GroupBox Header="VP Script Exports" Grid.Column="1" Margin="0,5">
+            <StackPanel Orientation="Horizontal">
+
+                <Button Content="SwitchHits" VerticalAlignment="Center" Margin="5,0" ToolTip="Exports switch hits to make it a bit faster creating script switch hits for visual pinball"
+                        Command="{Binding ExportToVpCommand}" CommandParameter="Switch"
+                        />
+                
+                <Button Content="SolCallBacks" VerticalAlignment="Center" Margin="5,0" 
+                        Command="{Binding ExportToVpCommand}" CommandParameter="Coil"
+                        ToolTip="Exports SolCallBacks for Visual Pinball"/>
+                
+            </StackPanel>
+        </GroupBox>
         
          <!--MAIN TAB CONTROL-->
-        <TabControl Grid.Row="1" Background="{StaticResource Brush_Paper}">
+        <TabControl Grid.Row="1" Grid.ColumnSpan="2" Background="{StaticResource Brush_Paper}">
 
             <!--SWITCHES - THE STYLE CHANGES DEPENDING ON THE MACHINE TYPE-->
             <TabItem Header="Switches">

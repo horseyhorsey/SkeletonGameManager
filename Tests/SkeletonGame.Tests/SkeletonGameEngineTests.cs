@@ -96,7 +96,7 @@ namespace SkeletonGame.Tests
             var createSkele = new CreateSkeletonGame();
             var zip = @"C:\Users\funktub\Documents\Visual Studio 2017\Projects\Pinball\SkeletonGameManager\UI\SkeletonGameManager.WPF\bin\Debug\Temp\dev.zip";
 
-            createSkele.CreateNewGameEntry("MyNewGame", Environment.CurrentDirectory, zip);
+            createSkele.CreateNewGameEntry("MyNewGame", "EmptyGame", Environment.CurrentDirectory, zip);
         }
     }
 }
