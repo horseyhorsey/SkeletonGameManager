@@ -4,6 +4,7 @@ using SkeletonGame.Models.Machine;
 using SkeletonGame.Models.Score;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -52,7 +53,7 @@ namespace SkeletonGameManager.WPF.Providers
     public class SkeletonGameProvider : ISkeletonGameProvider
     {
         #region Fields
-        private ISkeletonGameSerializer _skeletonGameSerializer; 
+        private ISkeletonGameSerializer _skeletonGameSerializer;
         #endregion
 
         #region Constructors
@@ -132,8 +133,8 @@ namespace SkeletonGameManager.WPF.Providers
                         Dispatcher.CurrentDispatcher.Invoke(() =>
                         {
                             System.Windows.MessageBox.Show($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}");
-                        });                        
-                    }                    
+                        });
+                    }
 
                 }
                 catch (System.Exception ex)
@@ -142,8 +143,8 @@ namespace SkeletonGameManager.WPF.Providers
 
                     throw;
                 }
-                
-            });            
+
+            });
         }
 
         public void SaveAssetsFile(AssetsFile assetsFile)
@@ -154,8 +155,20 @@ namespace SkeletonGameManager.WPF.Providers
 
         public void SaveAttractFile()
         {
+            var combo = AttractConfig.AttractSequences
+                .Select(x => x.Combo);
+
             var yamlFile = Path.Combine(GameFolder, YamlFiles[2]);
-            _skeletonGameSerializer.SerializeYaml("TestAttract.yaml", AttractConfig);
+
+            foreach (var item in combo.Where(x => x!= null))
+            {                
+                item.TextList.Clear();
+                item.TextList = item.TextEntries.Select(x => x.TextLine).ToList();
+                //item.TextEntries.Clear();
+            }                  
+            //AttractConfig.Sequences
+            _skeletonGameSerializer.SerializeYaml(yamlFile, AttractConfig);
+
         }
 
         public void SaveGameConfig(GameConfig config)

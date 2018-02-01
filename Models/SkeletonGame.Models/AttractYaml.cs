@@ -1,10 +1,21 @@
 ﻿using SkeletonGame.Models.Attract;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models
 {
+    /// <summary>
+    /// Interface for sequences with text lists.
+    /// </summary>
+    public interface ITextEntries
+    {
+        List<string> TextList { get; set; }
+
+        ObservableCollection<TextListViewModel> TextEntries { get; set; }
+    }
+
     public class AttractYaml
     {
         [YamlMember(Alias = "Sequence", ApplyNamingConventions = false)]
@@ -54,7 +65,7 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "markup_layer", ApplyNamingConventions = false)]
         public MarkupLayer MarkupLayer { get; set; }
     }
-    
+
     public class LastScores : SequenceBase
     {
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
@@ -72,10 +83,38 @@ namespace SkeletonGame.Models
 
     //C:\P-ROC\Games\jaws
     [PropertyChanged.AddINotifyPropertyChangedInterface]
-    public class Combo : SequenceBase
-    {        
-        [YamlMember(Alias = "Text", ApplyNamingConventions = false)]        
-        public ObservableCollection<string> TextList { get; set; }
+    public class Combo : SequenceBase, ITextEntries
+    {
+        private List<string> _textList;
+        [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
+        public List<string> TextList
+        {
+            get
+            {
+                return _textList;
+            }
+
+            set
+            {
+                _textList = value;
+
+                if (_textList != null)
+                {
+                    TextEntries.Clear();
+                    foreach (var textLine in _textList)
+                    {
+                        TextEntries.Add(new TextListViewModel { TextLine = textLine });
+                    }
+                }
+                else
+                {
+                    TextEntries.Clear();
+                }
+            }
+        }
+
+        [YamlIgnore]
+        public ObservableCollection<TextListViewModel> TextEntries { get; set; } = new ObservableCollection<TextListViewModel>();
 
         [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
         public string Animation { get; set; }
@@ -88,6 +127,11 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
         public string FontStyle { get; set; }
+    }
+
+    public class TextListViewModel
+    {
+        public string TextLine { get; set; }
     }
 
     public class TextLayer : SequenceBase
@@ -169,10 +213,12 @@ namespace SkeletonGame.Models
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
-    public class TextOption
+    public class TextOption : ITextEntries
     {
         [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
-        public List<string> Text { get; set; }
+        public List<string> TextList { get; set; }
+
+        public ObservableCollection<TextListViewModel> TextEntries { get; set; }
     }
 
     public class AttractAnimation : SequenceBase

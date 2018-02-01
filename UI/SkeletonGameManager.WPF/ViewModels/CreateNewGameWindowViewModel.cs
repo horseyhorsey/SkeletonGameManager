@@ -95,6 +95,10 @@ namespace SkeletonGameManager.WPF.ViewModels
                         DownloadSkeletonGame(fileDownload);
                     }
                 }
+                else
+                {
+                    DownloadSkeletonGame(fileDownload);
+                }
 
                 //Create game from download.
                 var creator = new CreateSkeletonGame();

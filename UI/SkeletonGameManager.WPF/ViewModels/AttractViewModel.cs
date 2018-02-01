@@ -29,6 +29,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             SaveAttractCommand = new DelegateCommand(() =>
             {
+
                 skeletonGameProvider.SaveAttractFile();
 
             });

@@ -17,7 +17,7 @@ namespace SkeletonGame.Tests
         [Fact]
         public void GetAvailableSequencesFromEmptyGame()
         {
-            var attractFile = "TestData/EmptyGame/config/attract.yaml";
+            var attractFile = "TestData/SampleGame/config/attract.yaml";
 
             var attract = _skeleSerializer.DeserializeSkeletonYaml<AttractYaml>(attractFile);
 
@@ -27,7 +27,7 @@ namespace SkeletonGame.Tests
 
             skeletonGameAttract.GetAvailableSequences(attract);
 
-            Assert.True(sequences.Count() > 0);
+            Assert.True(attract.Sequences.Count() > 0);            
         }
     }
 }

@@ -200,18 +200,12 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <ListView ItemsSource="{Binding TextOptions, UpdateSourceTrigger=PropertyChanged}">
-                    <!--<DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=.,TargetNullValue=null, UpdateSourceTrigger=PropertyChanged}" Width="5*"/>
-                    </DataGrid.Columns>-->
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBox Text="{Binding Meh,UpdateSourceTrigger=PropertyChanged}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding TextLine, TargetNullValue=null, 
+                            UpdateSourceTrigger=PropertyChanged}" Width="5*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
 
                 <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
 
@@ -262,10 +256,10 @@
                 <TextBox Text="{Binding Header}"/>
                 
                 <ScrollViewer>
-                    <ListView ItemsSource="{Binding TextOptions}">
+                    <ListView ItemsSource="{Binding TextEntries}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <ListView ItemsSource="{Binding Text}"/>
+                                <ListView ItemsSource="{Binding TextLine}"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
 
