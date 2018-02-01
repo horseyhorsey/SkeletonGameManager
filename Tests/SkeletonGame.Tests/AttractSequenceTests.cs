@@ -25,7 +25,7 @@ namespace SkeletonGame.Tests
 
             ISkeletonGameAttract skeletonGameAttract = new SkeletonGameAttract();
 
-            var sequences = skeletonGameAttract.GetAvailableSequences(attract);
+            skeletonGameAttract.GetAvailableSequences(attract);
 
             Assert.True(sequences.Count() > 0);
         }

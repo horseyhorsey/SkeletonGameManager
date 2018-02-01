@@ -8,23 +8,22 @@ using System.Threading.Tasks;
 using Prism.Commands;
 using SkeletonGame.Models.Attract;
 using System.Windows.Threading;
+using System.Linq;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
     public class AttractViewModel : SkeletonGameManagerViewModelBase
     {
-        private ISkeletonGameProvider _skeletonGameProvider;
+        public ISkeletonGameProvider _skeletonGameProvider { get; set; }
         private ISkeletonGameAttract _skeletonGameAttract;
 
         public DelegateCommand<object> AddNewSequenceCommand { get; set; }
         public DelegateCommand SaveAttractCommand { get; set; }
 
         public AttractViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
-        {            
+        {
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonGameAttract = new SkeletonGameAttract();
-
-            Sequences = new ObservableCollection<AttractSequenceViewModel>();
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
 
@@ -43,79 +42,80 @@ namespace SkeletonGameManager.WPF.ViewModels
                 switch (seqType)
                 {
                     case AttractSequenceType.LastScores:
-                        Sequences.Add(new AttractSequenceViewModel(new LastScores(), _skeletonGameProvider));
+                        Sequences.Add(new LastScores() { Name = "LastScores"});
+                        _skeletonGameProvider.AttractConfig.AttractSequences.Add(new Sequence(){LastScores = (LastScores)Sequences.Last()});
                         break;
                     case AttractSequenceType.Combo:
-                        Sequences.Add(new AttractSequenceViewModel(new Combo(), _skeletonGameProvider));
+                        Sequences.Add(new Combo() { Name = "Combo"});
+                        _skeletonGameProvider.AttractConfig.AttractSequences.Add(new Sequence() { Combo = (Combo)Sequences.Last()});
                         break;
                     case AttractSequenceType.text_layer:
-                        Sequences.Add(new AttractSequenceViewModel(new TextLayer(), _skeletonGameProvider));
+                        Sequences.Add(new TextLayer() { Name = "TextLayer" });
+                        _skeletonGameProvider.AttractConfig.AttractSequences.Add(new Sequence() { text_layer = (TextLayer)Sequences.Last()});
                         break;
                     case AttractSequenceType.panning_layer:
-                        Sequences.Add(new AttractSequenceViewModel(new PanningLayer(), _skeletonGameProvider));
+                        Sequences.Add(new PanningLayer() { Name = "PanningLayer" });
+                        _skeletonGameProvider.AttractConfig.AttractSequences.Add(new Sequence() { panning_layer = (PanningLayer)Sequences.Last() });
                         break;
                     case AttractSequenceType.RandomText:
-                        Sequences.Add(new AttractSequenceViewModel(new RandomText(), _skeletonGameProvider));
+                        Sequences.Add(new RandomText() { Name = "RandomText" });
+                        _skeletonGameProvider.AttractConfig.AttractSequences.Add(new Sequence() { RandomText = (RandomText)Sequences.Last() });
                         break;
                     case AttractSequenceType.Animation:
-                        Sequences.Add(new AttractSequenceViewModel(new AttractAnimation(), _skeletonGameProvider));
+                        Sequences.Add(new AttractAnimation() { Name = "AttractAnimation" });
+                        _skeletonGameProvider.AttractConfig.AttractSequences.Add(new Sequence() { Animation = (AttractAnimation)Sequences.Last()});
                         break;
                     case AttractSequenceType.HighScores:
-                        Sequences.Add(new AttractSequenceViewModel(new HighScores(),_skeletonGameProvider));
+                        Sequences.Add(new HighScores() { Name = "HighScores" });
+                        _skeletonGameProvider.AttractConfig.AttractSequences.Add(new Sequence() { HighScores = (HighScores)Sequences.Last() });
                         break;
                     case AttractSequenceType.Credits:
-                        Sequences.Add(new AttractSequenceViewModel(new Credits(),_skeletonGameProvider));
+                        Sequences.Add(new Credits() { Name = "Credits" });
+                        _skeletonGameProvider.AttractConfig.AttractSequences.Add(new Sequence() { Credits = (Credits)Sequences.Last() });
                         break;
                     case AttractSequenceType.MarkupLayer:
-                        Sequences.Add(new AttractSequenceViewModel(new MarkupLayer(), _skeletonGameProvider));
+                        Sequences.Add(new MarkupLayer() { Name = "MarkupLayer" });
+                        _skeletonGameProvider.AttractConfig.AttractSequences.Add(new Sequence() { MarkupLayer = (MarkupLayer)Sequences.Last() });
                         break;
                     default:
                         break;
-                }                
+                }
             });
         }
 
-        private AttractYaml attractConfig;        
+        private AttractYaml attractConfig;
         public AttractYaml AttractConfig
         {
             get { return attractConfig; }
             set { SetProperty(ref attractConfig, value); }
         }
 
-        private ObservableCollection<AttractSequenceViewModel> sequences;
-        public ObservableCollection<AttractSequenceViewModel> Sequences
+        private ObservableCollection<SequenceBase> sequences;
+        public ObservableCollection<SequenceBase> Sequences
         {
             get { return sequences; }
             set { SetProperty(ref sequences, value); }
         }
 
-        private AttractSequenceViewModel selectedSequence;
-        public AttractSequenceViewModel SelectedSequence
+        private SequenceBase selectedSequence;
+        public SequenceBase SelectedSequence
         {
             get { return selectedSequence; }
             set { SetProperty(ref selectedSequence, value); }
         }
 
         public async override Task OnLoadYamlFilesChanged()
-        {            
-                AttractConfig = _skeletonGameProvider.AttractConfig;
+        {
+            AttractConfig = _skeletonGameProvider.AttractConfig;
+            if (AttractConfig != null)
+            {
+                _skeletonGameAttract.GetAvailableSequences(AttractConfig);
 
-                if (AttractConfig != null)
+                await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {
-                    var _sequences = _skeletonGameAttract.GetAvailableSequences(AttractConfig);
-
-                    await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-                    {
-                        Sequences = new ObservableCollection<AttractSequenceViewModel>();
-
-                        foreach (var sequence in _sequences)
-                        {
-                            Sequences.Add(new AttractSequenceViewModel(sequence, _skeletonGameProvider));
-                        }
-
-                    });
-                    
-                }
+                    Sequences = _skeletonGameProvider.AttractConfig.Sequences;
+                });
+            }
         }
     }
 }

@@ -12,7 +12,7 @@
              mc:Ignorable="d" 
              PresentationTraceSources.TraceLevel="High"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid x:Name="LayoutRoot">
 
         <Grid.Resources>
             <selectors:AttractSequenceSelector x:Key="AttractSequenceSelector" />

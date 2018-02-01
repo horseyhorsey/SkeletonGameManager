@@ -44,8 +44,8 @@
 
     <Style x:Key="Style_FontCombo" BasedOn="{StaticResource Style_AssetCombo}" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Fonts.HdFonts}"/>
-        <Setter Property="SelectedValue" Value="{Binding Sequence.Font,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Fonts.HdFonts, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="SelectedValue" Value="{Binding Font,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -60,8 +60,9 @@
 
     <Style x:Key="Style_FontStyleCombo" BasedOn="{StaticResource Style_AssetCombo}" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Fonts.FontStyles}"/>
-        <Setter Property="SelectedValue" Value="{Binding Sequence.FontStyle,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemsSource" 
+                Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Fonts.FontStyles}"/>
+        <Setter Property="SelectedValue" Value="{Binding FontStyle,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -76,8 +77,9 @@
 
     <Style x:Key="Style_AnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Animations}"/>
-        <Setter Property="SelectedValue" Value="{Binding Sequence.Animation,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemsSource" 
+                Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations}"/>
+        <Setter Property="SelectedValue" Value="{Binding Animation,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -92,8 +94,8 @@
 
     <Style x:Key="Style_AttractAnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Animations}"/>
-        <Setter Property="SelectedValue" Value="{Binding Sequence.Name,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations}"/>
+        <Setter Property="SelectedValue" Value="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -108,8 +110,8 @@
 
     <Style x:Key="Style_SoundsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.Audio.AllAudio}"/>
-        <Setter Property="SelectedValue" Value="{Binding Sequence.Sound,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Audio.AllAudio}"/>
+        <Setter Property="SelectedValue" Value="{Binding Sound,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -124,8 +126,8 @@
 
     <Style x:Key="Style_LampsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding _skeletonGameProvider.AssetsConfig.LampShows}"/>
-        <Setter Property="SelectedValue" Value="{Binding Sequence.lampshow,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.LampShows}"/>
+        <Setter Property="SelectedValue" Value="{Binding lampshow,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -157,7 +159,7 @@
             <ComboBox Style="{StaticResource Style_LampsCombo}"/>
 
             <Label Content="Duration"/>
-            <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+            <xctk:DecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0" ClipValueToMinMax="True"/>
         </StackPanel>
     </Grid>
 
@@ -180,7 +182,7 @@
                 </Grid.RowDefinitions>
 
                 <GroupBox Header="Order">
-                    <ListView ItemsSource="{Binding Sequence.Order}">
+                    <ListView ItemsSource="{Binding Order}">
                     </ListView>
                 </GroupBox>
 
@@ -226,9 +228,9 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel>
-                    <TextBox Text="{Binding Sequence.Text}"/>
-                    <TextBox Text="{Binding Sequence.VJustify}"/>
-                    <TextBox Text="{Binding Sequence.HJustify}"/>
+                    <TextBox Text="{Binding Text}"/>
+                    <TextBox Text="{Binding VJustify}"/>
+                    <TextBox Text="{Binding HJustify}"/>
                 </StackPanel>
 
                 <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
@@ -249,7 +251,7 @@
                 <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
 
                 <Label Content="Duration"/>
-                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
             </StackPanel>
         </GroupBox>
     </DataTemplate>
@@ -257,10 +259,10 @@
     <DataTemplate x:Key="Sequence_RandomText">
         <GroupBox Header="{Binding Name}">
             <StackPanel>
-                <TextBox Text="{Binding Sequence.Header}"/>
+                <TextBox Text="{Binding Header}"/>
                 
                 <ScrollViewer>
-                    <ListView ItemsSource="{Binding Sequence.TextOptions}">
+                    <ListView ItemsSource="{Binding TextOptions}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Text}"/>
@@ -275,13 +277,13 @@
                     </ListView>
                 </ScrollViewer>
                 
-                <TextBox Text="{Binding Sequence.Font}" IsReadOnly="True"/>
-                <TextBox Text="{Binding Sequence.FontStyle}"/>
-                <TextBox Text="{Binding Sequence.Animation}"/>
-                <TextBox Text="{Binding Sequence.lampshow}"/>
-                <TextBox Text="{Binding Sequence.Sound}"/>
+                <TextBox Text="{Binding Font}" IsReadOnly="True"/>
+                <TextBox Text="{Binding FontStyle}"/>
+                <TextBox Text="{Binding Animation}"/>
+                <TextBox Text="{Binding lampshow}"/>
+                <TextBox Text="{Binding Sound}"/>
                 <Label Content="Duration"/>
-                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
             </StackPanel>
         </GroupBox>
     </DataTemplate>
@@ -289,17 +291,17 @@
     <DataTemplate x:Key="Sequence_Markup">
         <GroupBox Header="{Binding Name}">
             <StackPanel>
-                <xctk:IntegerUpDown Value="{Binding Sequence.Width}"/>
+                <xctk:IntegerUpDown Value="{Binding Width}"/>
 
                 <GroupBox Header="Bold">
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Font"/>
                         <ComboBox Style="{StaticResource Style_FontCombo}" 
-                              SelectedValue="{Binding Sequence.Bold.Font}"/>
+                              SelectedValue="{Binding Bold.Font}"/>
 
                         <Label Content="Style"/>
                         <ComboBox Style="{StaticResource Style_FontStyleCombo}"
-                              SelectedValue="{Binding Sequence.Bold.FontStyle}"
+                              SelectedValue="{Binding Bold.FontStyle}"
                               />
                     </StackPanel>
                 </GroupBox>
@@ -308,16 +310,16 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Font"/>
                         <ComboBox Style="{StaticResource Style_FontCombo}" 
-                              SelectedValue="{Binding Sequence.Normal.Font}"/>
+                              SelectedValue="{Binding Normal.Font}"/>
 
                         <Label Content="Style"/>
                         <ComboBox Style="{StaticResource Style_FontStyleCombo}"
-                              SelectedValue="{Binding Sequence.Normal.FontStyle}"
+                              SelectedValue="{Binding Normal.FontStyle}"
                               />
                     </StackPanel>
                 </GroupBox>
 
-                <ListView ItemsSource="{Binding Sequence.Message}">
+                <ListView ItemsSource="{Binding Message}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -328,9 +330,9 @@
                 </ListView>
 
                 <Label Content="Animation"/>
-                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding Sequence.Animation}"/>
+                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding Animation}"/>
 
-                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
             </StackPanel>
         </GroupBox>
     </DataTemplate>
@@ -363,31 +365,31 @@
                     </Grid.Resources>
 
                     <Label Content="Height" Grid.Column="0"/>
-                    <xctk:IntegerUpDown Grid.Column="1" Value="{Binding Sequence.Width}"/>
+                    <xctk:IntegerUpDown Grid.Column="1" Value="{Binding Width}"/>
 
                     <Label Content="Width" Grid.Column="2"/>
-                    <xctk:IntegerUpDown Grid.Column="3" Value="{Binding Sequence.Height}"/>
+                    <xctk:IntegerUpDown Grid.Column="3" Value="{Binding Height}"/>
 
                     <Label Content="Origin X" Grid.Column="4"/>
                     <xctk:IntegerUpDown Grid.Column="5"
-                                        Value="{Binding Sequence.OriginX}"/>
+                                        Value="{Binding OriginX}"/>
 
                     <Label Content="Origin Y" Grid.Column="6"/>
-                    <xctk:IntegerUpDown Grid.Column="7" Value="{Binding Sequence.OriginY}"/>
+                    <xctk:IntegerUpDown Grid.Column="7" Value="{Binding OriginY}"/>
 
                     <!--ROW 1-->
                     <Label Content="Scroll X" Grid.Row="1" />
                     <xctk:IntegerUpDown Grid.Column="1" Grid.Row="1"                                          
-                                        Value="{Binding Sequence.ScrollX}"/>
+                                        Value="{Binding ScrollX}"/>
 
                     <Label Content="Scroll Y" Grid.Row="1" Grid.Column="2"/>
-                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Value="{Binding Sequence.ScrollY}"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Value="{Binding ScrollY}"/>
 
                     <Label Content="Frames Per Movement" Grid.Row="1" Grid.Column="4"/>
-                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="5" Value="{Binding Sequence.FramesPerMovement}"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="5" Value="{Binding FramesPerMovement}"/>
 
                     <Label Content="Bounce" Grid.Row="1" Grid.Column="6"/>
-                    <CheckBox Grid.Row="1" Grid.Column="7" Margin="5" IsChecked="{Binding Sequence.Bounce}"/>
+                    <CheckBox Grid.Row="1" Grid.Column="7" Margin="5" IsChecked="{Binding Bounce}"/>
 
 
                 </Grid>
@@ -399,23 +401,23 @@
                 <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
 
                 <Label Content="Duration"/>
-                <xctk:DecimalUpDown Value="{Binding Sequence.duration}" Increment="0.1" Minimum="1.0"/>
+                <xctk:DecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
 
                 <GroupBox Header="Contents - Grouped Layer">
                     <StackPanel Margin="5">
 
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Width"/>
-                            <xctk:IntegerUpDown Value="{Binding Sequence.Contents.GroupLayer.Width}"/>
+                            <xctk:IntegerUpDown Value="{Binding Contents.GroupLayer.Width}"/>
 
                             <Label Content="Height"/>
-                            <xctk:IntegerUpDown Value="{Binding Sequence.Contents.GroupLayer.Height}"/>
+                            <xctk:IntegerUpDown Value="{Binding Contents.GroupLayer.Height}"/>
                         </StackPanel>
 
                         <Label Content="Layers"/>
 
                         <!---->
-                        <ListView ItemsSource="{Binding Sequence.Contents.GroupLayer.Contents}" 
+                        <ListView ItemsSource="{Binding Contents.GroupLayer.Contents}" 
                                   MinHeight="50"
                                   ItemTemplateSelector="{DynamicResource GroupedLayerSelector}"
                                   />
@@ -433,8 +435,8 @@
                 <Label Content="Name"/>
                 <ComboBox  SelectedValuePath="AnimationLayer.Name"
                            SelectedValue="{Binding Content.AnimationLayer.Name, UpdateSourceTrigger=PropertyChanged}" 
-                           DisplayMemberPath="Key"
-                           ItemsSource="{Binding ElementName=Root,Path=DataContext._skeletonGameProvider.AssetsConfig.Animations}"
+                           DisplayMemberPath="Key"                           
+                           ItemsSource="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.Animations}"
                           />
         </StackPanel>
     </DataTemplate>
@@ -460,11 +462,11 @@
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Font"/>
                     <ComboBox Style="{StaticResource Style_FontCombo}" 
-                            SelectedValue="{Binding Sequence.Normal.Font}"/>
+                            SelectedValue="{Binding Normal.Font}"/>
 
                     <Label Content="Style"/>
                     <ComboBox Style="{StaticResource Style_FontStyleCombo}"
-                            SelectedValue="{Binding Sequence.Normal.FontStyle}"
+                            SelectedValue="{Binding Normal.FontStyle}"
                             />
                 </StackPanel>
             </GroupBox>

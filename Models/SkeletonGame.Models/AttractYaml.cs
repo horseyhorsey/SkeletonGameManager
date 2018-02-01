@@ -8,13 +8,20 @@ namespace SkeletonGame.Models
     public class AttractYaml
     {
         [YamlMember(Alias = "Sequence", ApplyNamingConventions = false)]
-        public List<Sequence> Sequence { get; set; }
+        public List<Sequence> AttractSequences { get; set; }
+
+        [YamlIgnore]
+        public ObservableCollection<SequenceBase> Sequences { get; set; } = new ObservableCollection<SequenceBase>();
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class SequenceBase
     {
+        [YamlIgnore]
+        public string Name { get; set; }
+
         public string lampshow { get; set; }
-        public string duration { get; set; }
+        public decimal duration { get; set; } = 1.0m;
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
@@ -61,8 +68,6 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
         public string Sound { get; set; }
-
-       // public AttractSequenceType GetSequenceType => AttractSequenceType.LastScores;
     }
 
     //C:\P-ROC\Games\jaws
@@ -83,8 +88,6 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
         public string FontStyle { get; set; }
-
-        //public AttractSequenceType GetSequenceType => AttractSequenceType.Combo;
     }
 
     public class TextLayer : SequenceBase
@@ -110,9 +113,9 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "blink_frames", ApplyNamingConventions = false)]
         public string BlinkFrames { get; set; }
 
-       // public AttractSequenceType GetSequenceType => AttractSequenceType.text_layer;
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class RandomText : SequenceBase
     {
         [YamlMember(Alias = "Header", ApplyNamingConventions = false)]
@@ -130,7 +133,6 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
         public string FontStyle { get; set; }
 
-       // public AttractSequenceType GetSequenceType => AttractSequenceType.RandomText;
     }
 
     public class AnimationLayer
@@ -166,6 +168,7 @@ namespace SkeletonGame.Models
         public GroupLayer GroupLayer { get; set; }
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class TextOption
     {
         [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
@@ -180,7 +183,6 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
         public string Sound { get; set; }
 
-        //public AttractSequenceType GetSequenceType => AttractSequenceType.Animation;
     }
 
     public class HighScores : SequenceBase
@@ -196,8 +198,6 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "Order", ApplyNamingConventions = false)]
         public List<string> Order { get; set; }
-
-        ///public AttractSequenceType GetSequenceType => AttractSequenceType.HighScores;
     }
 
     public class Credits : SequenceBase
@@ -210,7 +210,5 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
         public string Sound { get; set; }
-
-        //public AttractSequenceType GetSequenceType => AttractSequenceType.HighScores;
     }
 }

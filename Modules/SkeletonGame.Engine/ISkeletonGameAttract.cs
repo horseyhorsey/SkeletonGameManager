@@ -11,26 +11,22 @@ namespace SkeletonGame.Engine
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns></returns>
-        IEnumerable<SequenceBase> GetAvailableSequences(AttractYaml attractYaml);
+        void GetAvailableSequences(AttractYaml attractYaml);
     }
 
     public class SkeletonGameAttract : ISkeletonGameAttract
     {
-        public IEnumerable<SequenceBase> GetAvailableSequences(AttractYaml attractYaml)
+        public void GetAvailableSequences(AttractYaml attractYaml)
         {
-            List<SequenceBase> sequences = new List<SequenceBase>();
-
-            foreach (var seq in attractYaml.Sequence)
+            foreach (var seq in attractYaml.AttractSequences)
             {
                 var notNullSequence = (SequenceBase)typeof(Sequence).GetProperties()
                           .Select(prop => prop.GetValue(seq, null))
                           .Where(val => val != null).First();
 
-                if (notNullSequence != null)
-                    sequences.Add(notNullSequence);
+                notNullSequence.Name = notNullSequence.GetType().Name;
+                attractYaml.Sequences.Add(notNullSequence);
             }
-
-            return sequences;                 
         }
     }
 }
