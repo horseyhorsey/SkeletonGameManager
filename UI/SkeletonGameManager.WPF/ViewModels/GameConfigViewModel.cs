@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -26,7 +27,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         public GameConfigViewModel(IEventAggregator ea, ISkeletonGameProvider skeletonGameProvider) : base(ea)
         {            
             _skeletonGameProvider = skeletonGameProvider;
-            _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(x => OnLoadYamlFilesChanged());
+            _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x =>await  OnLoadYamlFilesChanged());
 
             SaveCommand = new DelegateCommand(() =>
             {
@@ -36,17 +37,44 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             LaunchGameCommand = new DelegateCommand(() =>
             {
-                var gameEntryPointFile = Path.Combine(_skeletonGameProvider.GameFolder, "game.py");
+                OnLaunchedGame();
+            });
+        }
 
-                if (!File.Exists(gameEntryPointFile))
-                    return;
+        /// <summary>
+        /// Launches the current game. Checks if python  can run from Enviroment. If not, points to download skeletongame.com
+        /// </summary>
+        private void OnLaunchedGame()
+        {
+            var gameEntryPointFile = Path.Combine(_skeletonGameProvider.GameFolder, "game.py");
 
+            if (!File.Exists(gameEntryPointFile))
+                return;
+
+            try
+            {
+                //Check python 27 installed first
+                string getEnv = Environment.GetEnvironmentVariable("path",EnvironmentVariableTarget.Machine);
+                if (!getEnv.Contains(@"C:\Python27"))
+                    throw new FileNotFoundException(@"C:\Python27 python not found in your enviroment");
+
+                //Build args to run the game.py with python
                 var startInfo = new ProcessStartInfo("python");
                 startInfo.WorkingDirectory = _skeletonGameProvider.GameFolder;
                 startInfo.Arguments = $"{gameEntryPointFile}";
-
                 Process.Start(startInfo);
-            });
+            }
+            catch (FileNotFoundException ex)
+            {
+                var result = MessageBox.Show($"{ex.Message}. Download skeleton game installer with python?", "", MessageBoxButton.YesNo);
+
+                if (result == MessageBoxResult.Yes)
+                    Process.Start(@"http://skeletongame.com/step-1-installation-and-testing-the-install-windows/");
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
 
         #endregion
