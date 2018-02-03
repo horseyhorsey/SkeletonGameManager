@@ -52,6 +52,8 @@ namespace SkeletonGameManager.WPF.Selectors
                 return element.FindResource("Sequence_Panning") as DataTemplate;
             else if (type == typeof(MarkupLayer))
                 return element.FindResource("Sequence_Markup") as DataTemplate;
+            else if (type == typeof(ScriptedText))
+                return element.FindResource("Sequence_ScriptedText") as DataTemplate;
 
             else
                 return null;
