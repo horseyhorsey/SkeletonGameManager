@@ -183,11 +183,11 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "y", ApplyNamingConventions = false)]
         public string Y { get; set; }
 
-        [YamlMember(Alias = "v_justify", ApplyNamingConventions = false)]
-        public string VJustify { get; set; }
+        [YamlMember(Alias = "v_justify", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public VJustify VJustify { get; set; }
 
-        [YamlMember(Alias = "h_justify", ApplyNamingConventions = false)]
-        public string HJustify { get; set; }
+        [YamlMember(Alias = "h_justify", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public HJustify HJustify { get; set; }
 
         [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
         public string Text { get; set; }
