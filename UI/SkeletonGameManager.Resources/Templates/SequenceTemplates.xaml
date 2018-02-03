@@ -468,7 +468,35 @@
         </GroupBox>
     </DataTemplate>
     
-        <DataTemplate x:Key="Content_AnimationLayer">
+    <DataTemplate x:Key="Sequence_ScriptedText">
+        <GroupBox Header="{Binding Name}">
+            <Grid>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <ContentPresenter Grid.Row="0" Content="{StaticResource Attract_Standard}"/>
+                
+                <ListView Grid.Row="1" ItemsSource="{Binding TextOptions}">
+                    
+                    <ListView.ItemTemplate>
+                        
+                        <ItemContainerTemplate>
+                            <ListView ItemsSource="{Binding Text}"></ListView>
+                        </ItemContainerTemplate>
+                        
+                    </ListView.ItemTemplate>
+                    
+                </ListView>
+               
+            </Grid>
+            
+        </GroupBox>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="Content_AnimationLayer">
         <StackPanel Orientation="Horizontal" >
                 <Label Content="Name"/>
                 <ComboBox  SelectedValuePath="AnimationLayer.Name"
