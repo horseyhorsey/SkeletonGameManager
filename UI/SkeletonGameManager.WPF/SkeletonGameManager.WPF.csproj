@@ -125,6 +125,11 @@
     <Compile Include="ViewModels\SceneEditViewModels\SceneProcessItemViewModel.cs" />
     <Compile Include="ViewModels\SceneProcessViewModel.cs" />
     <Compile Include="ViewModels\ScenesViewModel.cs" />
+    <Compile Include="ViewModels\SequenceCreateViewModel.cs" />
+    <Compile Include="ViewModels\SequenceViewModelBase.cs" />
+    <Compile Include="Views\SequenceView.xaml.cs">
+      <DependentUpon>SequenceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateNewGameWindow.xaml.cs">
       <DependentUpon>CreateNewGameWindow.xaml</DependentUpon>
     </Compile>
@@ -171,6 +176,10 @@
     <Page Include="Views\AssetViews\VoiceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SequenceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\AttractView.xaml">
       <SubType>Designer</SubType>

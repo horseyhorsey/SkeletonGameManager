@@ -130,6 +130,11 @@
                                         <ContentControl prism:RegionManager.RegionName="AttractRegion"/>
                                     </TabItem>
 
+                                    <!--SKELETON GAME ATTRACT-->
+                                    <TabItem Header="Sequences">
+                                        <ContentControl prism:RegionManager.RegionName="SequencesRegion"/>
+                                    </TabItem>
+
                                     <TabItem Header="Scene Grab">
 
                                         <ContentControl prism:RegionManager.RegionName="ScenesRegion"/>
