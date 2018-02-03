@@ -253,10 +253,20 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel>
+                <!--TEXT TO DISPLAY AND WHERE IT'S JUSTIFIED-->
+                <StackPanel Margin="3">
+                    
                     <TextBox Text="{Binding Text}"/>
-                    <ComboBox ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
-                    <ComboBox ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" />
+
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        
+                        <TextBlock Text="Vert Justify:   " VerticalAlignment="Center"/>
+                        <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="    Horz Justify:   " VerticalAlignment="Center"/>
+                        <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustify, UpdateSourceTrigger=PropertyChanged}"/>
+                        
+                    </StackPanel>
                 </StackPanel>
 
                 <ContentPresenter Content="{StaticResource Attract_Text}" Grid.Row="1"/>
