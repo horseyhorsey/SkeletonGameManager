@@ -266,6 +266,7 @@
                 <StackPanel>
                     <TextBlock Text="Buffer size"/>
                     <ComboBox ItemsSource="{Binding Source={StaticResource BufferSizes}}" SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding GameConfigModel.AudioFrequency}"/>
                 </StackPanel>
             </GroupBox>
 
