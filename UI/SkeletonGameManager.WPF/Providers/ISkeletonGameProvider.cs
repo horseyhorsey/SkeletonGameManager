@@ -123,14 +123,14 @@ namespace SkeletonGameManager.WPF.Providers
                     }
                     catch (FileNotFoundException ex)
                     {
-                        Dispatcher.CurrentDispatcher.Invoke(() =>
+                        await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                         {
                             System.Windows.MessageBox.Show($"{ex.Message}");
                         });
                     }
                     catch (System.Exception ex)
                     {
-                        Dispatcher.CurrentDispatcher.Invoke(() =>
+                        await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                         {
                             System.Windows.MessageBox.Show($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}");
                         });
@@ -161,10 +161,13 @@ namespace SkeletonGameManager.WPF.Providers
             var yamlFile = Path.Combine(GameFolder, YamlFiles[2]);
 
             foreach (var item in combo.Where(x => x!= null))
-            {                
-                item.TextList.Clear();
+            {
+
+                if (item.TextList != null)
+                    item.TextList.Clear();
+
                 item.TextList = item.TextEntries.Select(x => x.TextLine).ToList();
-                //item.TextEntries.Clear();
+                       
             }                  
             //AttractConfig.Sequences
             _skeletonGameSerializer.SerializeYaml(yamlFile, AttractConfig);
