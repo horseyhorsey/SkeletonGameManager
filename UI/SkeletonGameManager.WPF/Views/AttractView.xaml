@@ -48,19 +48,27 @@
                           />
                 
                 <Button Content="+" MinWidth="50" 
-                        Command="{Binding AddNewSequenceCommand}"
+                        Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddNewSequenceCommand}"
                         CommandParameter="{Binding ElementName=SequenceSelector,Path=SelectedItem}"
                     />
             </StackPanel>
         </GroupBox>
 
+        <!--ATTRACT SEQEUENCES-->
         <GroupBox Grid.Row="1" Header="Sequences">
-            <!--ItemTemplateSelector="{StaticResource AttractSequenceSelector}"-->
-            <ListView ItemsSource="{Binding Sequences}"   
-                      DisplayMemberPath="Name"
+
+            <DataGrid ItemsSource="{Binding Sequences}" AutoGenerateColumns="False" xmlns:dd="urn:gong-wpf-dragdrop"
+                      DisplayMemberPath="Name" CanUserResizeRows="False" CanUserAddRows="False"
                       SelectedItem="{Binding SelectedSequence}"
+                      dd:DragDrop.IsDragSource="True"
+                      dd:DragDrop.IsDropTarget="True"
+                      dd:DragDrop.DropHandler="{Binding}"
                   >
-            </ListView>
+                
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </GroupBox>
 
         <!--SELECTED SEQUENCE-->
