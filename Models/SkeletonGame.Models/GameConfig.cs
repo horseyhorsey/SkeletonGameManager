@@ -88,6 +88,9 @@ namespace SkeletonGame.Models {
         [YamlMember(Alias = "audio_buffer_size", ApplyNamingConventions = false)]
         public int AudioBufferSize { get; set; } = 512;
 
+        [YamlMember(Alias = "audio_freq_rate", ApplyNamingConventions = false)]
+        public int AudioFrequency { get; set; } = 24000;
+
         [YamlMember(Alias = "keyboard_switch_map", ApplyNamingConventions = false)]
         public object KeyboardSwitchMap { get; set; }        
     }
@@ -101,34 +104,34 @@ namespace SkeletonGame.Models {
         public string ScoreDisplay { get; set; } = "HD";
 
         [YamlMember(Alias = "bonus_tally", ApplyNamingConventions = false)]
-        public bool BonusTally { get; set; } = true;
+        public string BonusTally { get; set; } = "true";
 
         [YamlMember(Alias = "attract", ApplyNamingConventions = false)]
-        public bool Attract { get; set; } = true;
+        public string Attract { get; set; } = "true";
 
-        [YamlMember(Alias = "osc_input", ApplyNamingConventions = false)]
-        public bool OscInput { get; set; } = true;
+        [YamlMember(Alias = "osc_input", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public string OscInput { get; set; } = "true";
 
         [YamlMember(Alias = "service_mode", ApplyNamingConventions = false)]
-        public bool ServiceMode { get; set; } = true;
+        public string ServiceMode { get; set; } = "true";
 
         [YamlMember(Alias = "ball_search", ApplyNamingConventions = false)]
-        public bool BallSearch { get; set; } = true;
+        public string BallSearch { get; set; } = "true";
 
         [YamlMember(Alias = "ball_search_delay", ApplyNamingConventions = false)]
         public int BallSearchDelay { get; set; } = 30;
 
         [YamlMember(Alias = "tilt_mode", ApplyNamingConventions = false)]
-        public bool TiltMode { get; set; } = true;
+        public string TiltMode { get; set; } = "true";
 
         [YamlMember(Alias = "multiline_highscore_entry", ApplyNamingConventions = false)]
-        public bool MultilineHiscoreEntry { get; set; } = false;
+        public string MultilineHiscoreEntry { get; set; } = "false";
 
         [YamlMember(Alias = "player_profiles", ApplyNamingConventions = false)]
-        public bool PlayerProfiles { get; set; } = false;
+        public string PlayerProfiles { get; set; } = "false";
 
         [YamlMember(Alias = "player_trophys", ApplyNamingConventions = false)]
-        public bool PlayerTrophys { get; set; } = false;
+        public string PlayerTrophys { get; set; } = "false";
 
     }
 }
