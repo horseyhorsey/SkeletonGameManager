@@ -1,8 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using SkeletonGameManager.WPF.Events;
-using System;
 using System.Threading.Tasks;
 
 namespace SkeletonGameManager.WPF.ViewModels
