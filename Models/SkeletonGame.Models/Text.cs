@@ -11,4 +11,18 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "y_center", ApplyNamingConventions = false)]
         public float YCenter { get; set; }
     }
+
+    public enum HJustify
+    {
+        Left,
+        Center, 
+        Right
+    }
+
+    public enum VJustify
+    {
+        Top,
+        Center,
+        Bottom
+    }
 }
