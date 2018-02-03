@@ -2,7 +2,20 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     PresentationTraceSources.TraceLevel="High"
+                    xmlns:model="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
+
+    <ObjectDataProvider x:Key="VJustifyOptions" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="model:VJustify"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider x:Key="HJustifyOptions" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="model:HJustify"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
 
     <DataTemplate x:Key="SequenceTemplate">
         <GroupBox Header="{Binding}">
@@ -78,7 +91,7 @@
     <Style x:Key="Style_AnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
            TargetType="ComboBox">
         <Setter Property="ItemsSource" 
-                Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations}"/>
+                Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations, UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="SelectedValue" Value="{Binding Animation,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
@@ -163,10 +176,29 @@
         </StackPanel>
     </Grid>
 
+    <Grid x:Key="Attract_Text">
+        <StackPanel>
+            <Label Content="Font"/>
+            <ComboBox Style="{StaticResource Style_FontCombo}"/>
+
+            <Label Content="Style"/>
+            <ComboBox Style="{StaticResource Style_FontStyleCombo}"/>
+
+            <Label Content="Sound"/>
+            <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
+
+            <Label Content="Lampshow"/>
+            <ComboBox Style="{StaticResource Style_LampsCombo}"/>
+
+            <Label Content="Duration"/>
+            <xctk:DecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0" ClipValueToMinMax="True"/>
+        </StackPanel>
+    </Grid>
+
     <DataTemplate x:Key="Sequence_LastScores">
         <GroupBox Header="{Binding Name}">
             <Grid>
-                <ContentPresenter Content="{StaticResource Attract_Standard}"/>
+                <ContentPresenter Content="{StaticResource Attract_Text}"/>
             </Grid>
         </GroupBox>
     </DataTemplate>
@@ -207,7 +239,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
 
-                <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
+                <ContentPresenter Content="{StaticResource Attract_Text}" Grid.Row="1"/>
 
             </Grid>
         </GroupBox>
@@ -223,11 +255,11 @@
 
                 <StackPanel>
                     <TextBox Text="{Binding Text}"/>
-                    <TextBox Text="{Binding VJustify}"/>
-                    <TextBox Text="{Binding HJustify}"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" />
                 </StackPanel>
 
-                <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
+                <ContentPresenter Content="{StaticResource Attract_Text}" Grid.Row="1"/>
             </Grid>
         </GroupBox>
     </DataTemplate>
@@ -402,21 +434,23 @@
 
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Width"/>
-                            <xctk:IntegerUpDown Value="{Binding Contents.GroupLayer.Width}"/>
+                            <xctk:IntegerUpDown Value="{Binding Width}"/>
 
                             <Label Content="Height"/>
-                            <xctk:IntegerUpDown Value="{Binding Contents.GroupLayer.Height}"/>
+                            <xctk:IntegerUpDown Value="{Binding Height}"/>
                         </StackPanel>
 
                         <Label Content="Layers"/>
 
                         <!---->
-                        <ListView ItemsSource="{Binding Contents.GroupLayer.Contents}" 
+                        <ListView x:Name="GroupedLayers" ItemsSource="{Binding Contents.Content}" 
                                   MinHeight="50"
                                   ItemTemplateSelector="{DynamicResource GroupedLayerSelector}"
                                   />
                         
                         <Button Content="+" Margin="3" MinWidth="50" 
+                                Command="{Binding ElementName=LayoutRoot, Path=DataContext.AddToGroupLayerCommand}"
+                                CommandParameter="{Binding ElementName=GroupedLayers, Path=ItemsSource}"
                                 VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </GroupBox>

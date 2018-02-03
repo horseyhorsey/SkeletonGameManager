@@ -124,5 +124,11 @@
   <ItemGroup>
     <Resource Include="Image\paper.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\SkeletonGame.Models\SkeletonGame.Models.csproj">
+      <Project>{47f8bad2-2140-493d-ab7d-e4f99734a69f}</Project>
+      <Name>SkeletonGame.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
