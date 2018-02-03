@@ -14,6 +14,7 @@ namespace SkeletonGame.Models
         List<string> TextList { get; set; }
 
         ObservableCollection<TextListViewModel> TextEntries { get; set; }
+
     }
 
     public class AttractYaml
@@ -33,6 +34,16 @@ namespace SkeletonGame.Models
 
         public string lampshow { get; set; }
         public decimal duration { get; set; } = 1.0m;
+
+        [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
+        public string Sound { get; set; }
+
+
+        //[YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
+        //public AnimationLayer AnimationLayer { get; set; } = null;
+
+        [YamlMember(Alias = "markup_layer", ApplyNamingConventions = false)]
+        public MarkupLayer MarkupLayer { get; set; } = null;
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
@@ -54,7 +65,7 @@ namespace SkeletonGame.Models
         public RandomText RandomText { get; set; }
 
         [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
-        public AttractAnimation Animation { get; set; }
+        public AttractAnimation AttractAnimation { get; set; }
 
         [YamlMember(Alias = "HighScores", ApplyNamingConventions = false)]
         public HighScores HighScores { get; set; }
@@ -64,7 +75,42 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "markup_layer", ApplyNamingConventions = false)]
         public MarkupLayer MarkupLayer { get; set; }
+
+        [YamlMember(Alias = "group_layer", ApplyNamingConventions = false)]
+        public GroupLayer GroupLayer { get; set; }
+
+        [YamlMember(Alias = "ScriptedText", ApplyNamingConventions = false)]
+        public ScriptedText ScriptedText { get; set; }
     }
+
+    public class ScriptedText : SequenceBase
+    {
+        [YamlMember(Alias = "Name", ApplyNamingConventions = false)]
+        public new string Name { get; set; }
+
+        [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
+        public string Font { get; set; }
+
+        [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
+        public string FontStyle { get; set; }
+
+        [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
+        public string Animation { get; set; }
+
+        [YamlMember(Alias = "flashing", ApplyNamingConventions = false)]
+        public bool Flashing { get; set; }
+
+        [YamlMember(Alias = "TextOptions", ApplyNamingConventions = false)]
+        public List<TextOption> TextOptions { get; set; }
+
+    }
+
+    public class Message
+    {
+        [YamlMember(Alias = "TextOptions", ApplyNamingConventions = false)]
+        public List<TextOption> TextOptions { get; set; }
+    }
+
 
     public class LastScores : SequenceBase
     {
@@ -76,15 +122,21 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
         public string Animation { get; set; }
-
-        [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
-        public string Sound { get; set; }
     }
 
     //C:\P-ROC\Games\jaws
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class Combo : SequenceBase, ITextEntries
     {
+        [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
+        public string Animation { get; set; }
+
+        [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
+        public string Font { get; set; } = string.Empty;
+
+        [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
+        public string FontStyle { get; set; }
+
         private List<string> _textList;
         [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
         public List<string> TextList
@@ -115,25 +167,14 @@ namespace SkeletonGame.Models
 
         [YamlIgnore]
         public ObservableCollection<TextListViewModel> TextEntries { get; set; } = new ObservableCollection<TextListViewModel>();
-
-        [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
-        public string Animation { get; set; }
-
-        [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
-        public string Sound { get; set; }
-
-        [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
-        public string Font { get; set; }
-
-        [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
-        public string FontStyle { get; set; }
     }
-
+    
     public class TextListViewModel
     {
         public string TextLine { get; set; }
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class TextLayer : SequenceBase
     {
         [YamlMember(Alias = "x", ApplyNamingConventions = false)]
@@ -154,8 +195,14 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
         public string Font { get; set; }
 
+        [YamlMember(Alias = "Background", ApplyNamingConventions = false)]
+        public string Animation { get; set; }
+
         [YamlMember(Alias = "blink_frames", ApplyNamingConventions = false)]
         public string BlinkFrames { get; set; }
+
+        [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
+        public string FontStyle { get; set; }
 
     }
 
@@ -179,22 +226,29 @@ namespace SkeletonGame.Models
 
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class AnimationLayer
     {
-        [YamlMember(Alias = "name", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "Name", ApplyNamingConventions = false)]
         public string Name { get; set; }
     }
 
-    public class Content
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
+    public class Content : SequenceBase
     {
-        [YamlMember(Alias = "animation_layer", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
         public AnimationLayer AnimationLayer { get; set; }
 
         [YamlMember(Alias = "markup_layer", ApplyNamingConventions = false)]
         public MarkupLayer MarkupLayer { get; set; }
     }
 
-    public class GroupLayer
+    public abstract class GroupBaseLayer : SequenceBase
+    {
+    }
+
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
+    public class GroupLayer : GroupBaseLayer
     {
         [YamlMember(Alias = "width", ApplyNamingConventions = false)]
         public string Width { get; set; }
@@ -202,14 +256,21 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "height", ApplyNamingConventions = false)]
         public string Height { get; set; }
 
+        [YamlMember(Alias = "opaque", ApplyNamingConventions = false)]
+        public string Opaque { get; set; } = null;
+
+        [YamlMember(Alias = "fill_color", ApplyNamingConventions = false)]
+        public byte[] FillColor { get; set; } = null;
+
         [YamlMember(Alias = "contents", ApplyNamingConventions = false)]
-        public List<Content> Contents { get; set; }
+        public List<Content> Layers { get; set; } = new List<Content>();
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class Contents
     {
         [YamlMember(Alias = "group_layer", ApplyNamingConventions = false)]
-        public GroupLayer GroupLayer { get; set; }
+        public GroupLayer GroupedLayer { get; set; } = new GroupLayer();
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
@@ -221,16 +282,14 @@ namespace SkeletonGame.Models
         public ObservableCollection<TextListViewModel> TextEntries { get; set; }
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class AttractAnimation : SequenceBase
     {
         [YamlMember(Alias = "Name", ApplyNamingConventions = false)]
-        public string Name { get; set; }
-
-        [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
-        public string Sound { get; set; }
-
+        public new string Name { get; set; }
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class HighScores : SequenceBase
     {
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
@@ -246,6 +305,7 @@ namespace SkeletonGame.Models
         public List<string> Order { get; set; }
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class Credits : SequenceBase
     {
         [YamlMember(Alias = "Image", ApplyNamingConventions = false)]
@@ -253,8 +313,5 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
         public string Animation { get; set; }
-
-        [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
-        public string Sound { get; set; }
     }
 }
