@@ -17,7 +17,9 @@ namespace SkeletonGame.Engine
     public class SkeletonGameAttract : ISkeletonGameAttract
     {
         public void GetAvailableSequences(AttractYaml attractYaml)
-        {
+        {            
+            attractYaml.Sequences.Clear();
+
             foreach (var seq in attractYaml.AttractSequences)
             {
                 var notNullSequence = (SequenceBase)typeof(Sequence).GetProperties()
