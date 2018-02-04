@@ -122,7 +122,7 @@
 
     <Style x:Key="Style_AttractAnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations}"/>
+        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations, UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="SelectedValue" Value="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
@@ -193,6 +193,16 @@
         </StackPanel>
     </Grid>
 
+    <Grid x:Key="Transition_Standard">
+        <GroupBox Header="Transition">
+            <StackPanel>
+                <ComboBox ItemsSource="{Binding Source={StaticResource Transitions}}" SelectedItem="{Binding Transition}"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource TransParams}}" SelectedItem="{Binding TransParam}"/>
+                <xctk:IntegerUpDown Value="{Binding TransLength}" Minimum="1" ClipValueToMinMax="True"/>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+
     <Grid x:Key="Attract_Text">
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
@@ -217,7 +227,7 @@
     <DataTemplate x:Key="Sequence_LastScores">
         <GroupBox Header="{Binding Name}">
             <Grid>
-                <ContentPresenter Content="{StaticResource Attract_Text}"/>
+                <ContentPresenter Content="{StaticResource Attract_Standard}"/>
             </Grid>
         </GroupBox>
     </DataTemplate>
@@ -249,7 +259,13 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+               
+                <!--<ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" Grid.Row="3"/>-->
+
+                    <ContentPresenter Content="{StaticResource Transition_Standard}" Grid.Row="2"/>
 
                 <GroupBox Header="Text Lines"  Grid.Row="0" Margin="5" FontSize="14">
                     <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}"
@@ -261,8 +277,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>
-
+                
                 <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
+
 
             </Grid>
         </GroupBox>
@@ -428,6 +445,8 @@
                 <Label Content="Animation"/>
                 <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding Animation}"/>
 
+                <ContentPresenter Content="{StaticResource Transition_Standard}" Grid.Row="1"/>
+
                 <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
             </StackPanel>
         </GroupBox>
@@ -561,39 +580,43 @@
                 </Grid.RowDefinitions>
                 
                 <ContentPresenter Grid.Row="0" Content="{StaticResource Attract_Standard}"/>
-                
-                <GroupBox Header="Script" Grid.Row="1">                    
+
+
+                <ContentPresenter Content="{StaticResource Transition_Standard}" Grid.Row="1"/>
+
+                <GroupBox Header="Script" Grid.Row="2">                    
                     <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
-                </Grid.RowDefinitions>
-                    
-                <DataGrid Grid.Row="0" x:Name="TextOptionsListView" Margin="5" ItemsSource="{Binding TextOptions, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Width="1*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding TextEntries[0].TextLine}"/>
-                                            <TextBlock Text="{Binding TextEntries[1].TextLine, StringFormat={}| {0}}"/>
-                                            <TextBlock Text="{Binding TextEntries[2].TextLine, StringFormat={}| {0}}"/>
-                                            <TextBlock Text="{Binding TextEntries[3].TextLine, StringFormat={}| {0}}"/>
-                                        </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                            
-                </DataGrid>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-                <DataGrid Grid.Row="1" ItemsSource="{Binding ElementName=TextOptionsListView,Path=SelectedItem.TextEntries,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=TextLine}" Width="1*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-                    
-                </Grid>
+                        <DataGrid Grid.Row="0" x:Name="TextOptionsListView" Margin="5" ItemsSource="{Binding TextOptions, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Width="1*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TextEntries[0].TextLine}"/>
+                                                <TextBlock Text="{Binding TextEntries[1].TextLine, StringFormat={}| {0}}"/>
+                                                <TextBlock Text="{Binding TextEntries[2].TextLine, StringFormat={}| {0}}"/>
+                                                <TextBlock Text="{Binding TextEntries[3].TextLine, StringFormat={}| {0}}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                        <DataGrid Grid.Row="2" ItemsSource="{Binding ElementName=TextOptionsListView,Path=SelectedItem.TextEntries,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Path=TextLine}" Width="1*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
                 </GroupBox>
 
         </Grid>
