@@ -17,6 +17,18 @@
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
 
+    <ObjectDataProvider x:Key="Transitions" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="model:TransitionType"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider x:Key="TransParams" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="model:TransitionParam"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
     <DataTemplate x:Key="SequenceTemplate">
         <GroupBox Header="{Binding}">
             <StackPanel>
@@ -601,29 +613,44 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
-                <xctk:DecimalUpDown Value="{Binding duration}"/>
+                
+
+                <StackPanel>
+                    <xctk:DecimalUpDown Value="{Binding duration}"/>
+                    <GroupBox Header="Transition">
+                        <StackPanel>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource Transitions}}" SelectedItem="{Binding Transition}"/>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource TransParams}}" SelectedItem="{Binding TransParam}"/>
+                            <xctk:IntegerUpDown Value="{Binding TransLength}" Minimum="1" ClipValueToMinMax="True"/>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
                 
                 <!--<ContentPresenter Grid.Row="0" Content="{StaticResource Attract_Standard}"/>-->
 
-                        <DockPanel Grid.Row="1">
-                            <ComboBox x:Name="LayerCombobox" Margin="3" SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top">
-                                <ComboBox.Items>
-                                    <ComboBoxItem Content="Animation" IsSelected="True"/>
-                                    <ComboBoxItem Content="Markup"/>
-                                    <ComboBoxItem Content="Text"/>
-                                    <ComboBoxItem Content="Combo"/>
-                                </ComboBox.Items>
-                            </ComboBox>
+                <GroupBox Grid.Row="1" Header="Add layer">
+                    <DockPanel>
+                        <ComboBox x:Name="LayerCombobox" Margin="3" SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left">
+                            <ComboBox.Items>
+                                <ComboBoxItem Content="Animation" IsSelected="True"/>
+                                <ComboBoxItem Content="Markup"/>
+                                <ComboBoxItem Content="Text"/>
+                                <ComboBoxItem Content="Combo"/>
+                            </ComboBox.Items>
+                        </ComboBox>
 
-                            <Button Margin="3"
-                        Content="+" Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddLayerCommand }"
-                                    CommandParameter="{Binding ElementName=LayerCombobox, Path=SelectedItem.DataContext,UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Bottom"/>
-                        </DockPanel>
+                        <Button Margin="3" 
+                Content="+" Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddLayerCommand }"
+                            CommandParameter="{Binding ElementName=LayerCombobox, Path=SelectedItem.DataContext,UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right"/>
+                    </DockPanel>
+                </GroupBox>
 
-                        <DataGrid ItemsSource="{Binding Contents}" x:Name="GroupedLayerDataGrid" Grid.Row="3"
-                            CanUserAddRows="False" CanUserDeleteRows="True"
+                <DataGrid ItemsSource="{Binding Contents}" x:Name="GroupedLayerDataGrid" Grid.Row="3"
+                            CanUserAddRows="False" CanUserDeleteRows="True" AutoGenerateColumns="False"
                             >
-
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding SeqType}" Width="1*" IsReadOnly="True"/>
+                    </DataGrid.Columns>
                 </DataGrid>
 
                         <GroupBox Header="Layer Options" Grid.Row="4" Margin="0,50">
