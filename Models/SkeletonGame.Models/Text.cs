@@ -14,15 +14,15 @@ namespace SkeletonGame.Models
 
     public enum HJustify
     {
-        Left,
-        Center, 
-        Right
+        left,
+        center, 
+        right
     }
 
     public enum VJustify
     {
-        Top,
-        Center,
-        Bottom
+        top,
+        center,
+        bottom
     }
 }
