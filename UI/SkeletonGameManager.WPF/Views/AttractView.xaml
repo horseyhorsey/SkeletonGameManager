@@ -57,16 +57,33 @@
         <!--ATTRACT SEQEUENCES-->
         <GroupBox Grid.Row="1" Header="Sequences">
 
-            <DataGrid ItemsSource="{Binding Sequences}" AutoGenerateColumns="False" xmlns:dd="urn:gong-wpf-dragdrop"
-                      DisplayMemberPath="Name" CanUserResizeRows="False" CanUserAddRows="False"
+            <DataGrid ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"
+                      AutoGenerateColumns="False" xmlns:dd="urn:gong-wpf-dragdrop"
+                      CanUserResizeRows="False" CanUserAddRows="False"
+                      
                       SelectedItem="{Binding SelectedSequence}"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding}"
                   >
-                
+                                
                 <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" Width="2*"/>
+                    <DataGridTemplateColumn IsReadOnly="True"                                          
+                                        Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    
+                                    <TextBlock Text="{Binding SeqType}"/>
+                                    <TextBlock Text="{Binding duration}" Grid.Column="1"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
