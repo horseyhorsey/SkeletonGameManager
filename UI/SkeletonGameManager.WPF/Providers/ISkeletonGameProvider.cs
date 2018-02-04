@@ -105,7 +105,7 @@ namespace SkeletonGameManager.WPF.Providers
                 try
                 {
                     GameConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<GameConfig>(Path.Combine(GameFolder, YamlFiles[0]));
-                    AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
+                    AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));                    
                     AttractConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AttractYaml>(Path.Combine(GameFolder, YamlFiles[2]));
 
                     var newScoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[3]);
@@ -123,14 +123,14 @@ namespace SkeletonGameManager.WPF.Providers
                     }
                     catch (FileNotFoundException ex)
                     {
-                        await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                        Dispatcher.CurrentDispatcher.Invoke(() =>
                         {
                             System.Windows.MessageBox.Show($"{ex.Message}");
                         });
                     }
                     catch (System.Exception ex)
                     {
-                        await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                        Dispatcher.CurrentDispatcher.Invoke(() =>
                         {
                             System.Windows.MessageBox.Show($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}");
                         });
@@ -158,7 +158,68 @@ namespace SkeletonGameManager.WPF.Providers
             var combo = AttractConfig.AttractSequences
                 .Select(x => x.Combo);
 
+            var grouped = AttractConfig.AttractSequences
+                .Select(x => x.GroupLayer);
+
+            var markup = AttractConfig.AttractSequences
+                .Select(x => x.MarkupLayer);
+
+            var scripted = AttractConfig.AttractSequences
+                        .Select(x => x.ScriptedText);
+
+            var randomtxt = AttractConfig.AttractSequences
+            .Select(x => x.RandomText);
+
+            foreach (var group in grouped.Where(x => x != null))
+            {
+                foreach (var item in group.Contents.Where(x => x.markup_layer !=null))
+                {
+                    item.markup_layer.TextList.Clear();                    
+                    if (item.markup_layer.TextList != null)
+                        item.markup_layer.TextList.Clear();
+
+                    item.markup_layer.duration = null;
+                    item.markup_layer.TextList = item.markup_layer.TextEntries.Select(x => x.TextLine).ToList();
+                }
+
+                foreach (var item in group.Contents.Where(x => x.combo_layer != null))
+                {                    
+                    if (item.combo_layer.TextList != null)
+                        item.combo_layer.TextList.Clear();
+
+                    item.combo_layer.duration = null;
+                    item.combo_layer.TextList = item.combo_layer.TextEntries.Select(x => x.TextLine).ToList();
+                }
+            }
+
             var yamlFile = Path.Combine(GameFolder, YamlFiles[2]);
+
+            //Assign markup  text lists
+            foreach (var item in markup.Where(x => x != null))
+            {
+                if (item.TextList != null)
+                    item.TextList.Clear();
+
+                item.TextList = item.TextEntries.Select(x => x.TextLine).ToList();
+            }
+
+            //Assign scripted text lists
+            foreach (var item in scripted.Where(x => x != null))
+            {
+                foreach (var item2 in item.TextOptions)
+                {
+                    item2.TextList = item2.TextEntries.Select(x=> x.TextLine).ToList();
+                }
+            }
+
+            //Assign random text lists
+            foreach (var item in randomtxt.Where(x => x != null))
+            {
+                foreach (var item2 in item.TextOptions)
+                {
+                    item2.TextList = item2.TextEntries.Select(x => x.TextLine).ToList();
+                }
+            }
 
             foreach (var item in combo.Where(x => x!= null))
             {
