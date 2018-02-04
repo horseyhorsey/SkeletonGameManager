@@ -20,7 +20,17 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             _skeletonGameProvider = skeletonGameProvider;
 
             //Just assign this collection, don't create a new observable
-            Animations = new ObservableCollection<Animation> (_skeletonGameProvider.AssetsConfig.Animations);
+            Animations =_skeletonGameProvider.AssetsConfig.Animations;
+            Animations.CollectionChanged += Animations_CollectionChanged;
+        }
+
+        private void Animations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+
+        {
+            //if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            //    _skeletonGameProvider.AssetsConfig.Animations.Add(new Animation());
+            //else if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            //    _skeletonGameProvider.AssetsConfig.Animations.RemoveAt(e.OldStartingIndex);
         }
 
         private ObservableCollection<Animation> animation;        

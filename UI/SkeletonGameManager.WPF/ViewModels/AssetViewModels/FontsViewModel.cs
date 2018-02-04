@@ -20,10 +20,9 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonGameFiles = skeletonGameFiles;
 
-            FontStyles = new ObservableCollection<FontStyle>(_skeletonGameProvider.AssetsConfig.Fonts.FontStyles);
+            FontStyles = _skeletonGameProvider.AssetsConfig.Fonts.FontStyles;
 
-            HdFonts = new ObservableCollection<HdFont>
-                (_skeletonGameProvider.AssetsConfig.Fonts.HdFonts);
+            HdFonts = _skeletonGameProvider.AssetsConfig.Fonts.HdFonts;
 
         }
 
