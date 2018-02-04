@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models
@@ -6,10 +7,10 @@ namespace SkeletonGame.Models
     public class Font
     {
         [YamlMember(Alias = "FontStyles", ApplyNamingConventions = false)]
-        public List<FontStyle> FontStyles { get; set; }
+        public ObservableCollection<FontStyle> FontStyles { get; set; }
 
         [YamlMember(Alias = "HDFonts", ApplyNamingConventions = false)]
-        public List<HdFont> HdFonts { get; set; }
+        public ObservableCollection<HdFont> HdFonts { get; set; }
 
         [YamlMember(Alias = "DMDFonts", ApplyNamingConventions = false)]
         public DMDFont DmdFonts { get; set; }
