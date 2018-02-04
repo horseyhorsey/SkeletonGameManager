@@ -131,7 +131,7 @@
                                     </TabItem>
 
                                     <!--SKELETON GAME ATTRACT-->
-                                    <TabItem Header="Sequences">
+                                    <TabItem Header="Sequences" IsEnabled="False">
                                         <ContentControl prism:RegionManager.RegionName="SequencesRegion"/>
                                     </TabItem>
 
