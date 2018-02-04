@@ -26,13 +26,22 @@ namespace SkeletonGame.Models
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
-    public class ScriptedText : SequenceTextAnimationBase
+    public class ScriptedText : SequenceTextAnimationBase, ITransitionLayer
     {
         [YamlMember(Alias = "Name", ApplyNamingConventions = false)]
         public new string Name { get; set; }
 
         [YamlMember(Alias = "flashing", ApplyNamingConventions = false)]
         public bool Flashing { get; set; }
+
+        [YamlMember(Alias = "transition", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public TransitionType Transition { get; set; } = TransitionType.None;
+
+        [YamlMember(Alias = "trans_param", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public TransitionParam TransParam { get; set; } = TransitionParam.None;
+
+        [YamlMember(Alias = "trans_length", ApplyNamingConventions = false)]
+        public int TransLength { get; set; } = 30;
 
         [YamlMember(Alias = "TextOptions", ApplyNamingConventions = false)]
         public ObservableCollection<TextOption> TextOptions { get; set; } = new ObservableCollection<TextOption>();
@@ -41,6 +50,32 @@ namespace SkeletonGame.Models
         {
             this.SeqType = AttractSequenceType.ScriptedText;
         }
+    }
+
+    public enum TransitionType
+    {
+        None,
+        CrossFadeTransition,
+        ExpandTransition,
+        FadeTransition,
+        ObscuredWipeTransition,
+        PushTransition,
+        SlideOverTransition,
+        WipeTransition
+    }
+
+    public enum TransitionParam
+    {
+        None,
+        horizontal,
+        vertical,
+        north,
+        south,
+        west,
+        east,
+        WipeTransition,
+        In,
+        Out
     }
 
     public class Message
@@ -60,7 +95,7 @@ namespace SkeletonGame.Models
 
     //C:\P-ROC\Games\jaws
     [PropertyChanged.AddINotifyPropertyChangedInterface]
-    public class Combo : SequenceTextAnimationBase, ITextEntries
+    public class Combo : SequenceTextAnimationBase, ITextEntries, ITransitionLayer
     {
         private List<string> _textList;
         [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
@@ -92,6 +127,16 @@ namespace SkeletonGame.Models
 
         [YamlIgnore]
         public ObservableCollection<TextListViewModel> TextEntries { get; set; } = new ObservableCollection<TextListViewModel>();
+
+
+        [YamlMember(Alias = "transition", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public TransitionType Transition { get; set; } = TransitionType.None;
+
+        [YamlMember(Alias = "trans_param", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public TransitionParam TransParam { get; set; } = TransitionParam.None;
+
+        [YamlMember(Alias = "trans_length", ApplyNamingConventions = false)]
+        public int TransLength { get; set; } = 30;
 
         public Combo()
         {
@@ -212,18 +257,26 @@ namespace SkeletonGame.Models
         public MarkupLayer markup_layer { get; set; }
 
         [YamlMember(Alias = "text_layer", ApplyNamingConventions = false)]
-        public TextLayer text_layer { get; set; }
+            public TextLayer text_layer { get; set; }
 
         [YamlMember(Alias = "Combo", ApplyNamingConventions = false)]
-        public Combo combo_layer { get; set; }
+            public Combo combo_layer { get; set; }
     }
 
-    public abstract class GroupBaseLayer : SequenceBase
+    public abstract class TransitionBaseLayer : SequenceBase, ITransitionLayer
     {
+        [YamlMember(Alias = "transition", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public TransitionType Transition { get; set; }
+
+        [YamlMember(Alias = "trans_param", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public TransitionParam TransParam{get; set;}
+
+        [YamlMember(Alias = "trans_length", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public int TransLength { get; set; }
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
-    public class GroupLayer : GroupBaseLayer
+    public class GroupLayer : TransitionBaseLayer
     {
         [YamlMember(Alias = "Name", ApplyNamingConventions = false)]
         public string Name { get; set; }
@@ -247,6 +300,22 @@ namespace SkeletonGame.Models
         {
             this.SeqType = AttractSequenceType.GroupLayer;
         }
+
+        public GroupLayer(SequenceBase sequenceBase)
+        {            
+        }
+    }
+
+    internal interface ITransitionLayer
+    {
+        [YamlMember(Alias = "transition", ApplyNamingConventions = false)]
+        TransitionType Transition { get; set; }
+
+        [YamlMember(Alias = "trans_param", ApplyNamingConventions = false)]
+        TransitionParam TransParam { get; set; }
+
+        [YamlMember(Alias = "trans_length", ApplyNamingConventions = false)]
+        int TransLength { get; set; }
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
