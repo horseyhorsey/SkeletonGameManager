@@ -1,34 +1,49 @@
-﻿using YamlDotNet.Serialization;
+﻿using System.Collections.ObjectModel;
+using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Attract
 {
-    public class PanningLayer : SequenceBase
+    public class Contents
     {
+        [YamlMember(Alias = "group_layer", ApplyNamingConventions = false)]
+        public GroupLayer group_layer { get; set; }
+    }
+
+    public class PanningLayer : SequenceBase
+    { 
+
         [YamlMember(Alias = "width", ApplyNamingConventions = false)]
-        public string Width { get; set; }
+        public int Width { get; set; } = 500;
 
         [YamlMember(Alias = "height", ApplyNamingConventions = false)]
-        public string Height { get; set; }
+        public int Height { get; set; } = 500;
 
-        [YamlMember(Alias = "origin_x", ApplyNamingConventions = false)]
-        public string OriginX { get; set; }
+        [YamlMember(Alias = "origin_x", ApplyNamingConventions = false, SerializeAs =typeof(string))]
+        public int? OriginX { get; set; } = -1;
 
         [YamlMember(Alias = "origin_y", ApplyNamingConventions = false)]
-        public string OriginY { get; set; }
+        public int OriginY { get; set; } = -130;
 
         [YamlMember(Alias = "scroll_x", ApplyNamingConventions = false)]
-        public string ScrollX { get; set; }
+        public int ScrollX { get; set; }
 
         [YamlMember(Alias = "scroll_y", ApplyNamingConventions = false)]
-        public string ScrollY { get; set; }
+        public int ScrollY { get; set; } = 2;
 
         [YamlMember(Alias = "frames_per_movement", ApplyNamingConventions = false)]
-        public string FramesPerMovement { get; set; }
+        public int FramesPerMovement { get; set; } = 1;
 
         [YamlMember(Alias = "bounce", ApplyNamingConventions = false)]
-        public bool Bounce { get; set; }
+        public string Bounce { get; set; } = "false";    
 
         [YamlMember(Alias = "contents", ApplyNamingConventions = false)]
-        public Contents Contents { get; set; }        
+        public Contents Contents { get; set; } = new Contents();
+
+        public PanningLayer()
+        {
+            this.SeqType = AttractSequenceType.PanningLayer;
+
+            //Contents.Add(new Content() { group_layer = new GroupLayer() });            
+        }
     }
 }
