@@ -10,6 +10,7 @@ using System.Windows.Threading;
 using GongSolutions.Wpf.DragDrop;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -19,6 +20,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         private ISkeletonGameAttract _skeletonGameAttract;
 
         public DelegateCommand<object> AddNewSequenceCommand { get; set; }
+        public DelegateCommand<object> DuplicateSequenceCommand { get; set; }        
         public DelegateCommand<object> AddLayerCommand { get; set; }
         
         public DelegateCommand SaveAttractCommand { get; set; }
@@ -90,6 +92,32 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                 //Save to yaml
                 skeletonGameProvider.SaveAttractFile();
+            });
+
+            DuplicateSequenceCommand = new DelegateCommand<object>((x) =>
+            {
+                var seqbase = x as SequenceBase;                
+
+                if (seqbase != null)
+                {
+                    if (seqbase.SeqType == AttractSequenceType.GroupLayer)
+                    {
+                        var  groupBase =  (GroupLayer)seqbase;
+
+                        var newGroup = new GroupLayer();
+
+                        foreach (var item in groupBase.Contents.ToList())
+                        {
+                            newGroup.Contents.Add(new Content
+                            {
+                                animation_layer = item.animation_layer
+                            });
+                        }                            
+
+                        this.Sequences.Add(newGroup);
+                    }
+                }
+                    
             });
 
             AddNewSequenceCommand = new DelegateCommand<object>((x) =>
@@ -175,13 +203,13 @@ namespace SkeletonGameManager.WPF.ViewModels
                 if (group != null)
                 {
                     if (SelectedGroupLayerType == "0")
-                        group.Contents.Add(new Content() { animation_layer = new AttractAnimation() });
+                        group.Contents.Add(new Content() { animation_layer = new AttractAnimation() , SeqType = AttractSequenceType.Animation});
                     else if (SelectedGroupLayerType == "1")
-                        group.Contents.Add(new Content() { markup_layer = new MarkupLayer() });
+                        group.Contents.Add(new Content() { markup_layer = new MarkupLayer(), SeqType = AttractSequenceType.MarkupLayer });
                     else if (SelectedGroupLayerType == "2")
-                        group.Contents.Add(new Content() { text_layer = new TextLayer() });
+                        group.Contents.Add(new Content() { text_layer = new TextLayer(), SeqType = AttractSequenceType.TextLayer });
                     else if (SelectedGroupLayerType == "3")
-                        group.Contents.Add(new Content() { combo_layer = new Combo() });
+                        group.Contents.Add(new Content() { combo_layer = new Combo(), SeqType = AttractSequenceType.Combo });
                 }
                 
                 //x.DataContext as DataContext
