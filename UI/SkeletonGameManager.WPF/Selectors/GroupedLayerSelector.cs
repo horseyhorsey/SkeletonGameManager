@@ -15,12 +15,18 @@ namespace SkeletonGameManager.WPF.Selectors
 
             var groupedContent = item as Content;
 
+            if (groupedContent != null)
+            {
+                if (groupedContent.animation_layer != null)
+                    _template = element.FindResource("Content_AnimationLayer") as DataTemplate;
+                else if (groupedContent.markup_layer != null)
+                    _template = element.FindResource("Content_MarkupLayer") as DataTemplate;
+                else if (groupedContent.text_layer != null)
+                    _template = element.FindResource("Content_TextLayer") as DataTemplate;
+                else if (groupedContent.combo_layer != null)
+                    _template = element.FindResource("Content_Combo") as DataTemplate;
+            }
             
-
-            if (groupedContent.AnimationLayer != null)
-                _template = element.FindResource("Content_AnimationLayer") as DataTemplate;
-            else if (groupedContent.MarkupLayer != null)
-                _template = element.FindResource("Content_MarkupLayer") as DataTemplate;
             return _template;
 
             //return base.SelectTemplate(item, container);
