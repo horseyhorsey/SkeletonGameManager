@@ -5,7 +5,7 @@ using YamlDotNet.Serialization;
 namespace SkeletonGame.Models.Attract
 {
     [PropertyChanged.AddINotifyPropertyChangedInterface]
-    public class MarkupLayer : SequenceBase
+    public class MarkupLayer : TransitionBaseLayer
     {
         [YamlMember(Alias = "width", ApplyNamingConventions = false)]
         public string Width { get; set; }
