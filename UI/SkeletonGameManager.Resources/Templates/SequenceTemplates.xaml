@@ -65,6 +65,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Size, StringFormat={} Size: {0}}"/>
                         <TextBlock Text="{Binding Key, StringFormat={} Key: {0}}"/>
+                        <TextBlock Text="{Binding File, StringFormat={} Key: {0}}"/>
                     </StackPanel>
                 </DataTemplate>
             </Setter.Value>
@@ -91,7 +92,9 @@
     <Style x:Key="Style_AnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
            TargetType="ComboBox">
         <Setter Property="ItemsSource" 
-                Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations, UpdateSourceTrigger=PropertyChanged}"/>
+                Value="{Binding ElementName=LayoutRoot, 
+            Path=DataContext._skeletonGameProvider.AssetsConfig.Animations, 
+            UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="SelectedValue" Value="{Binding Animation,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
@@ -156,11 +159,13 @@
     <Grid x:Key="Attract_Standard">
         <StackPanel>
 
-            <Label Content="Font"/>
-            <ComboBox Style="{StaticResource Style_FontCombo}"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Font"/>
+                <ComboBox Style="{StaticResource Style_FontCombo}"/>
 
-            <Label Content="Style"/>
-            <ComboBox Style="{StaticResource Style_FontStyleCombo}"/>
+                <Label Content="Style"/>
+                <ComboBox Style="{StaticResource Style_FontStyleCombo}"/>
+            </StackPanel>
 
             <Label Content="Animation"/>
             <ComboBox Style="{StaticResource Style_AnimationsCombo}"/>
@@ -178,11 +183,13 @@
 
     <Grid x:Key="Attract_Text">
         <StackPanel>
-            <Label Content="Font"/>
-            <ComboBox Style="{StaticResource Style_FontCombo}"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="5">
+                <Label Content="Font"/>
+                <ComboBox Style="{StaticResource Style_FontCombo}"/>
 
-            <Label Content="Style"/>
-            <ComboBox Style="{StaticResource Style_FontStyleCombo}"/>
+                <Label Content="Style"/>
+                <ComboBox Style="{StaticResource Style_FontStyleCombo}"/>
+            </StackPanel>
 
             <Label Content="Sound"/>
             <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
@@ -232,14 +239,18 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding TextLine, TargetNullValue=null, 
+                <GroupBox Header="Text Lines"  Grid.Row="0" Margin="5" FontSize="14">
+                    <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}"
+                              AutoGenerateColumns="False"
+                              >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding TextLine, TargetNullValue=null, 
                             UpdateSourceTrigger=PropertyChanged}" Width="5*"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
 
-                <ContentPresenter Content="{StaticResource Attract_Text}" Grid.Row="1"/>
+                <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
 
             </Grid>
         </GroupBox>
@@ -257,6 +268,10 @@
                 <StackPanel Margin="3">
                     
                     <TextBox Text="{Binding Text}"/>
+
+                    <xctk:IntegerUpDown Value="{Binding X}" Minimum="0" ClipValueToMinMax="True"/>
+                    <xctk:IntegerUpDown Value="{Binding Y}" Minimum="0" ClipValueToMinMax="True"/>
+                    <CheckBox IsChecked="{Binding BlinkFrames}"></CheckBox>
 
                     <StackPanel Orientation="Horizontal" Margin="5">
                         
@@ -312,14 +327,42 @@
                         </ListView.ItemsPanel>
                     </ListView>
                 </ScrollViewer>
+
+                <ContentPresenter Grid.Row="0" Content="{StaticResource Attract_Standard}"/>
                 
-                <TextBox Text="{Binding Font}" IsReadOnly="True"/>
-                <TextBox Text="{Binding FontStyle}"/>
-                <TextBox Text="{Binding Animation}"/>
-                <TextBox Text="{Binding lampshow}"/>
-                <TextBox Text="{Binding Sound}"/>
-                <Label Content="Duration"/>
-                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
+                <GroupBox Header="Script" Grid.Row="1">                    
+                    <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                    
+                <DataGrid Grid.Row="0" x:Name="TextOptionsListView" Margin="5" ItemsSource="{Binding TextOptions, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding TextEntries[0].TextLine}"/>
+                                            <TextBlock Text="{Binding TextEntries[1].TextLine, StringFormat={}| {0}}"/>
+                                            <TextBlock Text="{Binding TextEntries[2].TextLine, StringFormat={}| {0}}"/>
+                                            <TextBlock Text="{Binding TextEntries[3].TextLine, StringFormat={}| {0}}"/>
+                                        </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                            
+                </DataGrid>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding ElementName=TextOptionsListView,Path=SelectedItem.TextEntries,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=TextLine}" Width="1*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                    
+                </Grid>
+                </GroupBox>
             </StackPanel>
         </GroupBox>
     </DataTemplate>
@@ -333,7 +376,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Content="Font"/>
                         <ComboBox Style="{StaticResource Style_FontCombo}" 
-                              SelectedValue="{Binding Bold.Font}"/>
+                              SelectedValue="{Binding Bold.Font,UpdateSourceTrigger=PropertyChanged}"/>
 
                         <Label Content="Style"/>
                         <ComboBox Style="{StaticResource Style_FontStyleCombo}"
@@ -355,15 +398,20 @@
                     </StackPanel>
                 </GroupBox>
 
-                <ListView ItemsSource="{Binding Message}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBox Text="{Binding}" HorizontalAlignment="Stretch"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="True" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding TextLine}" Width="1*"></DataGridTextColumn>
+                        <!--<DataGridTemplateColumn Width="1*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    
+                                        <TextBox Text="{Binding TextLine,UpdateSourceTrigger=PropertyChanged}"/>
+                                    
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>-->
+                    </DataGrid.Columns>
+                </DataGrid>
 
                 <Label Content="Animation"/>
                 <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding Animation}"/>
@@ -416,7 +464,7 @@
                     <!--ROW 1-->
                     <Label Content="Scroll X" Grid.Row="1" />
                     <xctk:IntegerUpDown Grid.Column="1" Grid.Row="1"                                          
-                                        Value="{Binding ScrollX}"/>
+                                        Text="{Binding ScrollX, UpdateSourceTrigger=PropertyChanged}"/>
 
                     <Label Content="Scroll Y" Grid.Row="1" Grid.Column="2"/>
                     <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Value="{Binding ScrollY}"/>
@@ -452,16 +500,36 @@
 
                         <Label Content="Layers"/>
 
+                        <DockPanel Grid.Row="1">
+                            <ComboBox x:Name="LayerComboboxPanning" Margin="3" SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}" 
+                                      DockPanel.Dock="Top">
+                                <ComboBox.Items>
+                                    <ComboBoxItem Content="Animation" IsSelected="True"/>
+                                    <ComboBoxItem Content="Markup"/>
+                                    <ComboBoxItem Content="Text"/>
+                                </ComboBox.Items>
+                            </ComboBox>
+
+                           <Button Margin="3"
+                            Content="+" Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddLayerCommand }"            
+                                   CommandParameter="{Binding Contents.group_layer,UpdateSourceTrigger=PropertyChanged}"
+                                         DockPanel.Dock="Bottom"/>
+                        </DockPanel>
+
                         <!---->
-                        <ListView x:Name="GroupedLayers" ItemsSource="{Binding Contents.Content}" 
+                        <!---->
+                        <DataGrid x:Name="GroupedLayers" ItemsSource="{Binding Contents.group_layer.Contents}" 
                                   MinHeight="50"
                                   ItemTemplateSelector="{DynamicResource GroupedLayerSelector}"
                                   />
-                        
-                        <Button Content="+" Margin="3" MinWidth="50" 
-                                Command="{Binding ElementName=LayoutRoot, Path=DataContext.AddToGroupLayerCommand}"
-                                CommandParameter="{Binding ElementName=GroupedLayers, Path=ItemsSource}"
-                                VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                        <GroupBox Header="Layer Options" Grid.Row="4" Margin="0,50">
+                            <Grid  Background="White" >
+                                <ContentPresenter ContentTemplateSelector="{DynamicResource GroupedLayerSelector}" 
+                                        Content="{Binding ElementName=GroupedLayers,Path=SelectedItem}"/>
+                            </Grid>
+                        </GroupBox>
+
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
@@ -475,73 +543,245 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 
                 <ContentPresenter Grid.Row="0" Content="{StaticResource Attract_Standard}"/>
                 
-                <ListView Grid.Row="1" ItemsSource="{Binding TextOptions}">
+                <GroupBox Header="Script" Grid.Row="1">                    
+                    <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
                     
-                    <ListView.ItemTemplate>
-                        
-                        <ItemContainerTemplate>
-                            <ListView ItemsSource="{Binding Text}"></ListView>
-                        </ItemContainerTemplate>
-                        
-                    </ListView.ItemTemplate>
+                <DataGrid Grid.Row="0" x:Name="TextOptionsListView" Margin="5" ItemsSource="{Binding TextOptions, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="1*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding TextEntries[0].TextLine}"/>
+                                            <TextBlock Text="{Binding TextEntries[1].TextLine, StringFormat={}| {0}}"/>
+                                            <TextBlock Text="{Binding TextEntries[2].TextLine, StringFormat={}| {0}}"/>
+                                            <TextBlock Text="{Binding TextEntries[3].TextLine, StringFormat={}| {0}}"/>
+                                        </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                            
+                </DataGrid>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding ElementName=TextOptionsListView,Path=SelectedItem.TextEntries,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Path=TextLine}" Width="1*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
                     
-                </ListView>
-               
-            </Grid>
+                </Grid>
+                </GroupBox>
+
+        </Grid>
             
+        </GroupBox>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="Sequence_GroupLayer">
+        <GroupBox Header="{Binding Name}">
+            <Grid>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <xctk:DecimalUpDown Value="{Binding duration}"/>
+                
+                <!--<ContentPresenter Grid.Row="0" Content="{StaticResource Attract_Standard}"/>-->
+
+                        <DockPanel Grid.Row="1">
+                            <ComboBox x:Name="LayerCombobox" Margin="3" SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Top">
+                                <ComboBox.Items>
+                                    <ComboBoxItem Content="Animation" IsSelected="True"/>
+                                    <ComboBoxItem Content="Markup"/>
+                                    <ComboBoxItem Content="Text"/>
+                                    <ComboBoxItem Content="Combo"/>
+                                </ComboBox.Items>
+                            </ComboBox>
+
+                            <Button Margin="3"
+                        Content="+" Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddLayerCommand }"
+                                    CommandParameter="{Binding ElementName=LayerCombobox, Path=SelectedItem.DataContext,UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Bottom"/>
+                        </DockPanel>
+
+                        <DataGrid ItemsSource="{Binding Contents}" x:Name="GroupedLayerDataGrid" Grid.Row="3"
+                            CanUserAddRows="False" CanUserDeleteRows="True"
+                            >
+
+                </DataGrid>
+
+                        <GroupBox Header="Layer Options" Grid.Row="4" Margin="0,50">
+                            <Grid  Background="White" >
+                                <ContentPresenter ContentTemplateSelector="{DynamicResource GroupedLayerSelector}" 
+                                        Content="{Binding ElementName=GroupedLayerDataGrid,Path=SelectedItem}"/>
+                            </Grid>
+                        </GroupBox>
+            </Grid>
         </GroupBox>
     </DataTemplate>
     
     <DataTemplate x:Key="Content_AnimationLayer">
-        <StackPanel Orientation="Horizontal" >
-                <Label Content="Name"/>
-                <ComboBox  SelectedValuePath="AnimationLayer.Name"
-                           SelectedValue="{Binding Content.AnimationLayer.Name, UpdateSourceTrigger=PropertyChanged}" 
-                           DisplayMemberPath="Key"                           
-                           ItemsSource="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.Animations}"
-                          />
+        <StackPanel>
+            
+            <StackPanel Orientation="Horizontal" >
+
+                <Label Content="Animation"/>
+                <ComboBox Style="{StaticResource Style_AnimationsCombo}" SelectedValue="{Binding animation_layer.Name}"/>
+
+                <Label Content="X"/>
+                <xctk:IntegerUpDown Value="{Binding animation_layer.X}" Minimum="0" ClipValueToMinMax="True"/>
+
+                <Label Content="Y"/>
+                <xctk:IntegerUpDown Value="{Binding animation_layer.Y}" Minimum="0" ClipValueToMinMax="True"/>
+
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10">
+                <CheckBox Content="Repeat" Margin="3" IsChecked="{Binding animation_layer.Repeat}"/>
+
+                <CheckBox Content="Hold" Margin="3" IsChecked="{Binding animation_layer.Hold}"/>
+
+                <CheckBox Content="Opaque" Margin="3" IsChecked="{Binding animation_layer.Opaque}"/>
+            </StackPanel>
         </StackPanel>
     </DataTemplate>
     
     <DataTemplate x:Key="Content_MarkupLayer">
-        
-        <GroupBox Header="MarkUpLayer">
-        <StackPanel>            
-            <xctk:IntegerUpDown Value="{Binding MarkupLayer.Width}"/>
-            
-            <GroupBox Header="Bold">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Font"/>
-                    <ComboBox Style="{StaticResource Style_FontCombo}" 
-                              SelectedValue="{Binding MarkupLayer.Bold.Font}"/>
 
-                    <Label Content="Style"/>
-                    <ComboBox Style="{StaticResource Style_FontStyleCombo}"/>
-                </StackPanel>   
-            </GroupBox>
-            
-            <GroupBox Header="Normal">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Font"/>
-                    <ComboBox Style="{StaticResource Style_FontCombo}" 
-                            SelectedValue="{Binding Normal.Font}"/>
+        <GroupBox Header="{Binding Name}">
+            <StackPanel>
+                <xctk:IntegerUpDown Value="{Binding markup_layer.Width}"/>
 
-                    <Label Content="Style"/>
-                    <ComboBox Style="{StaticResource Style_FontStyleCombo}"
-                            SelectedValue="{Binding Normal.FontStyle}"
-                            />
-                </StackPanel>
-            </GroupBox>
-            
-            
-        </StackPanel>    
+                <GroupBox Header="Bold">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Font"/>
+                        <ComboBox Style="{StaticResource Style_FontCombo}" 
+                              SelectedValue="{Binding markup_layer.Bold.Font,UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Label Content="Style"/>
+                        <ComboBox Style="{StaticResource Style_FontStyleCombo}"
+                              SelectedValue="{Binding markup_layer.Bold.FontStyle}"
+                              />
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Normal">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Font"/>
+                        <ComboBox Style="{StaticResource Style_FontCombo}" 
+                              SelectedValue="{Binding markup_layer.Normal.Font}"/>
+
+                        <Label Content="Style"/>
+                        <ComboBox Style="{StaticResource Style_FontStyleCombo}"
+                              SelectedValue="{Binding markup_layer.Normal.FontStyle}"
+                              />
+                    </StackPanel>
+                </GroupBox>
+
+                <DataGrid ItemsSource="{Binding markup_layer.TextEntries, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="True" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding TextLine}" Width="1*"></DataGridTextColumn>
+                        <!--<DataGridTemplateColumn Width="1*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    
+                                        <TextBox Text="{Binding TextLine,UpdateSourceTrigger=PropertyChanged}"/>
+                                    
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>-->
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Label Content="Animation"/>
+                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding markup_layer.Animation}"/>
+
+                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding markup_layer.duration}" Increment="0.1" Minimum="1.0"/>
+            </StackPanel>
         </GroupBox>
-        
+
     </DataTemplate>
+
+    <DataTemplate x:Key="Content_TextLayer">
+        <StackPanel Margin="3" DataContext="{Binding text_layer}">
+
+            <TextBox Text="{Binding Text}"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Font"/>
+                <ComboBox Style="{StaticResource Style_FontCombo}" 
+                            SelectedValue="{Binding Font}"/>
+
+                <Label Content="Style"/>
+                <ComboBox Style="{StaticResource Style_FontStyleCombo}"
+                            SelectedValue="{Binding FontStyle}"
+                            />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <xctk:IntegerUpDown Value="{Binding X}"  ClipValueToMinMax="True"/>
+                <xctk:IntegerUpDown Value="{Binding Y}"  ClipValueToMinMax="True"/>
+                <!--<xctk:IntegerUpDown Value="{Binding Width}" Minimum="0" ClipValueToMinMax="True"/>
+                <xctk:IntegerUpDown Value="{Binding Height}" Minimum="0" ClipValueToMinMax="True"/>-->
+            </StackPanel>
+            <CheckBox IsChecked="{Binding BlinkFrames}"></CheckBox>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+
+                <TextBlock Text="Vert Justify:   " VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="    Horz Justify:   " VerticalAlignment="Center"/>
+                <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustify, UpdateSourceTrigger=PropertyChanged}"/>
+
+            </StackPanel>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Content_Combo">
+        <StackPanel Margin="3" DataContext="{Binding combo_layer}">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <GroupBox Header="Text Lines"  Grid.Row="0" Margin="5" FontSize="14">
+                    <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}"
+                              AutoGenerateColumns="False"
+                              >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding TextLine, TargetNullValue=null, 
+                            UpdateSourceTrigger=PropertyChanged}" Width="5*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+
+                <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
+
+            </Grid>
+
+        </StackPanel>
+    </DataTemplate>
+
+
 
 </ResourceDictionary>
     
