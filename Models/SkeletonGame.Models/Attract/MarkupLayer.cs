@@ -59,18 +59,18 @@ namespace SkeletonGame.Models.Attract
     public class Bold
     {
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
-        public string Font { get; set; }
+        public string Font { get; set; } = "default";
 
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
-        public string FontStyle { get; set; }
+        public string FontStyle { get; set; } = "default";
     }
 
     public class Normal
     {
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
-        public string Font { get; set; }
+        public string Font { get; set; } = "default";
 
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
-        public string FontStyle { get; set; }
+        public string FontStyle { get; set; } = "default";
     }
 }
