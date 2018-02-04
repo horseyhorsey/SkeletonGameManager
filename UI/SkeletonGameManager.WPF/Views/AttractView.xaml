@@ -37,10 +37,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Add">
+        <GroupBox Header="Options">
             <StackPanel Orientation="Horizontal">
 
-                <Label Content="Add sequence"/>
+                <Label Content="Add"/>
                 
                 <ComboBox x:Name="SequenceSelector"
                           MinWidth="150"                           
@@ -51,13 +51,20 @@
                         Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddNewSequenceCommand}"
                         CommandParameter="{Binding ElementName=SequenceSelector,Path=SelectedItem}"
                     />
+
+                <Label Content="Duplicate"/>
+
+                <Button Content="+" MinWidth="50" IsEnabled="False"
+                        Command="{Binding ElementName=LayoutRoot,Path=DataContext.DuplicateSequenceCommand}"
+                        CommandParameter="{Binding ElementName=DataGridSequences,Path=SelectedItem}"
+                    />
             </StackPanel>
         </GroupBox>
 
         <!--ATTRACT SEQEUENCES-->
         <GroupBox Grid.Row="1" Header="Sequences">
 
-            <DataGrid ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"
+            <DataGrid x:Name="DataGridSequences" ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"
                       AutoGenerateColumns="False" xmlns:dd="urn:gong-wpf-dragdrop"
                       CanUserResizeRows="False" CanUserAddRows="False"
                       
