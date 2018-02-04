@@ -24,8 +24,8 @@ namespace SkeletonGame.Models.Attract
         [YamlMember(Alias = "origin_y", ApplyNamingConventions = false)]
         public int OriginY { get; set; } = -130;
 
-        [YamlMember(Alias = "scroll_x", ApplyNamingConventions = false)]
-        public int ScrollX { get; set; }
+        [YamlMember(Alias = "scroll_x", ApplyNamingConventions = false,SerializeAs = typeof(string))]
+        public string ScrollX { get; set; } = "0";
 
         [YamlMember(Alias = "scroll_y", ApplyNamingConventions = false)]
         public int ScrollY { get; set; } = 2;
