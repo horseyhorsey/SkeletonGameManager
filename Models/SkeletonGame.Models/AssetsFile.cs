@@ -14,7 +14,7 @@ namespace SkeletonGame.Models
         public List<LampShow> LampShows { get; set; } = new List<LampShow>();
 
         [YamlMember(Alias = "Animations", ApplyNamingConventions = false)]
-        public List<Animation> Animations { get; set; } = new List<Animation>();
+        public ObservableCollection<Animation> Animations { get; set; } = new ObservableCollection<Animation>();
 
         [YamlMember(Alias = "Fonts", ApplyNamingConventions = false)]
         public Font Fonts { get; set; }
