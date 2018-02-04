@@ -22,14 +22,14 @@
         <ListView ItemsSource="{Binding AssetFiles}" Grid.RowSpan="2"/>
 
         <DataGrid Grid.Column="1" ItemsSource="{Binding HdFonts}" 
-                  AutoGenerateColumns="False" CanUserAddRows="False">
+                  AutoGenerateColumns="False" CanUserAddRows="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Size}"/>
                 <DataGridTextColumn Binding="{Binding Key}" Width="3*"/>
                 <DataGridTextColumn Binding="{Binding File}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Expander Grid.Column="1" Grid.Row="1" Header="Styles">
+        <Expander Grid.Column="1" Grid.Row="1" Header="Styles" IsExpanded="True">
             <DataGrid ItemsSource="{Binding FontStyles}" AutoGenerateColumns="False">
 
                 <DataGrid.Columns>
