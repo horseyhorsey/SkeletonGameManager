@@ -12,10 +12,14 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <ListView ItemsSource="{Binding AssetFiles}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListView ItemsSource="{Binding AssetFiles}" Grid.RowSpan="2"/>
 
         <DataGrid Grid.Column="1" ItemsSource="{Binding HdFonts}" 
                   AutoGenerateColumns="False" CanUserAddRows="False">
@@ -25,30 +29,31 @@
                 <DataGridTextColumn Binding="{Binding File}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Expander Grid.Column="1" Grid.Row="1" Header="Styles">
+            <DataGrid ItemsSource="{Binding FontStyles}" AutoGenerateColumns="False">
 
-        <DataGrid Grid.Column="2" ItemsSource="{Binding FontStyles}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Key}" Width="2*" Header="Key"/>
+                    <DataGridTextColumn Binding="{Binding LineWidth}" Header="Line Width"/>
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Key}" Width="2*" Header="Key"/>
-                <DataGridTextColumn Binding="{Binding LineWidth}" Header="Line Width"/>
-                
-                <DataGridTemplateColumn Header="Fill">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <xctk:ColorPicker SelectedColor="{Binding InteriorColor, Converter={StaticResource ListToColorConv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn Header="Stroke">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <xctk:ColorPicker SelectedColor="{Binding LineColor, Converter={StaticResource ListToColorConv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-            
-        </DataGrid>
+                    <DataGridTemplateColumn Header="Fill">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <xctk:ColorPicker SelectedColor="{Binding InteriorColor, Converter={StaticResource ListToColorConv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Stroke">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <xctk:ColorPicker SelectedColor="{Binding LineColor, Converter={StaticResource ListToColorConv}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Expander>
     </Grid>
 </UserControl>
