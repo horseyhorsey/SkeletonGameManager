@@ -12,6 +12,11 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         }
 
+        private void Sequences_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            
+        }
+
         private ObservableCollection<SequenceBase> sequences;
         public ObservableCollection<SequenceBase> Sequences
         {
@@ -27,9 +32,5 @@ namespace SkeletonGameManager.WPF.ViewModels
             set { SetProperty(ref selectedSequence, value); }
         }
 
-        public override Task OnLoadYamlFilesChanged()
-        {
-            return null;
-        }
     }
 }
