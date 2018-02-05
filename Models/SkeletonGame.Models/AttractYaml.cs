@@ -191,10 +191,10 @@ namespace SkeletonGame.Models
     public class TextLayer : SequenceTextBase
     {
         [YamlMember(Alias = "x", ApplyNamingConventions = false)]
-        public int X { get; set; } = 0;
+        public decimal X { get; set; } = 0;
 
         [YamlMember(Alias = "y", ApplyNamingConventions = false)]
-        public int Y { get; set; }
+        public decimal Y { get; set; } = 0;
 
         [YamlMember(Alias = "width", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public int Width { get; set; } = 0;
