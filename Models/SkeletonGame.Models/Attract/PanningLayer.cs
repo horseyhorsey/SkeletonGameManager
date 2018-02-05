@@ -41,7 +41,7 @@ namespace SkeletonGame.Models.Attract
 
         public PanningLayer()
         {
-            this.SeqType = AttractSequenceType.PanningLayer;
+            this.SeqType = SequenceType.PanningLayer;
 
             //Contents.Add(new Content() { group_layer = new GroupLayer() });            
         }

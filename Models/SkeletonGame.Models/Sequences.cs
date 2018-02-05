@@ -16,7 +16,7 @@ namespace SkeletonGame.Models
         public string Name { get; set; }
 
         [YamlIgnore]
-        public AttractSequenceType SeqType { get; set; }
+        public SequenceType SeqType { get; set; }
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
@@ -68,37 +68,37 @@ namespace SkeletonGame.Models
         {
             switch (sequenceBase.SeqType)
             {
-                case AttractSequenceType.Animation:
+                case SequenceType.Animation:
                     AttractAnimation = (AttractAnimation)sequenceBase;
                     break;
-                case AttractSequenceType.Combo:
+                case SequenceType.Combo:
                     Combo = (Combo)sequenceBase;
                     break;
-                case AttractSequenceType.Credits:
+                case SequenceType.Credits:
                     Credits = (Credits)sequenceBase;
                     break;
-                case AttractSequenceType.GroupLayer:
+                case SequenceType.GroupLayer:
                     GroupLayer = (GroupLayer)sequenceBase;
                     break;
-                case AttractSequenceType.HighScores:
+                case SequenceType.HighScores:
                     HighScores = (HighScores)sequenceBase;
                     break;
-                case AttractSequenceType.LastScores:
+                case SequenceType.LastScores:
                     LastScores = (LastScores)sequenceBase;
                     break;
-                case AttractSequenceType.MarkupLayer:
+                case SequenceType.MarkupLayer:
                     MarkupLayer = (MarkupLayer)sequenceBase;
                     break;
-                case AttractSequenceType.PanningLayer:
+                case SequenceType.PanningLayer:
                     panning_layer = (PanningLayer)sequenceBase;
                     break;
-                case AttractSequenceType.RandomText:
+                case SequenceType.RandomText:
                     RandomText = (RandomText)sequenceBase;
                     break;
-                case AttractSequenceType.ScriptedText:
+                case SequenceType.ScriptedText:
                     ScriptedText = (ScriptedText)sequenceBase;
                     break;
-                case AttractSequenceType.TextLayer:
+                case SequenceType.TextLayer:
                     text_layer = (TextLayer)sequenceBase;
                     break;
                 default:

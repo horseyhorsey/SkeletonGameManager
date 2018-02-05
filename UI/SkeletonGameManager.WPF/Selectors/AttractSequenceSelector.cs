@@ -9,7 +9,7 @@ namespace SkeletonGameManager.WPF.Selectors
 {
     public class AttractSequenceSelector : DataTemplateSelector
     {
-        public static AttractSequenceType AttractSequenceType { get; set; }
+        public static SequenceType AttractSequenceType { get; set; }
 
         /// <summary>
         /// Gets a template based on the Sequence type for building attract modes

@@ -21,7 +21,7 @@
             <ObjectDataProvider x:Key="SequenceTypes"
                                 MethodName="GetValues" ObjectType="{x:Type system:Enum}">
                 <ObjectDataProvider.MethodParameters>
-                    <x:Type TypeName="model:AttractSequenceType"/>
+                    <x:Type TypeName="model:SequenceType"/>
                 </ObjectDataProvider.MethodParameters>
             </ObjectDataProvider>
         </Grid.Resources>

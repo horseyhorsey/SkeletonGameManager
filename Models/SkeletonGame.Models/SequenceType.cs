@@ -1,6 +1,6 @@
 ﻿namespace SkeletonGame.Models
 {
-    public enum AttractSequenceType
+    public enum SequenceType
     {
         Animation,
         Combo,

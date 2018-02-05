@@ -52,7 +52,7 @@ namespace SkeletonGame.Models.Attract
 
         public MarkupLayer()
         {
-            this.SeqType = AttractSequenceType.MarkupLayer;
+            this.SeqType = SequenceType.MarkupLayer;
         }
     }
 

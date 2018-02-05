@@ -48,7 +48,7 @@ namespace SkeletonGame.Models
 
         public ScriptedText()
         {
-            this.SeqType = AttractSequenceType.ScriptedText;
+            this.SeqType = SequenceType.ScriptedText;
         }
     }
 
@@ -89,7 +89,7 @@ namespace SkeletonGame.Models
     {
         public LastScores()
         {
-            this.SeqType = AttractSequenceType.LastScores;
+            this.SeqType = SequenceType.LastScores;
         }
     }
 
@@ -140,7 +140,7 @@ namespace SkeletonGame.Models
 
         public Combo()
         {
-            this.SeqType = AttractSequenceType.Combo;
+            this.SeqType = SequenceType.Combo;
         }
     }
 
@@ -216,7 +216,7 @@ namespace SkeletonGame.Models
 
         public TextLayer()
         {
-            this.SeqType = AttractSequenceType.TextLayer;
+            this.SeqType = SequenceType.TextLayer;
         }
 
     }
@@ -232,7 +232,7 @@ namespace SkeletonGame.Models
 
         public RandomText()
         {
-            this.SeqType = AttractSequenceType.RandomText;
+            this.SeqType = SequenceType.RandomText;
         }
 
     }
@@ -298,7 +298,7 @@ namespace SkeletonGame.Models
 
         public GroupLayer()
         {
-            this.SeqType = AttractSequenceType.GroupLayer;
+            this.SeqType = SequenceType.GroupLayer;
         }
 
         public GroupLayer(SequenceBase sequenceBase)
@@ -349,7 +349,7 @@ namespace SkeletonGame.Models
         public AttractAnimation()
         {
             this.Name = "missing";
-            this.SeqType = AttractSequenceType.Animation;
+            this.SeqType = SequenceType.Animation;
         }
     }
 
@@ -362,7 +362,7 @@ namespace SkeletonGame.Models
 
         public HighScores()
         {
-            this.SeqType = AttractSequenceType.HighScores;
+            this.SeqType = SequenceType.HighScores;
         }
     }
 
@@ -377,7 +377,7 @@ namespace SkeletonGame.Models
 
         public Credits()
         {
-            this.SeqType = AttractSequenceType.Credits;
+            this.SeqType = SequenceType.Credits;
         }
     }
 }
