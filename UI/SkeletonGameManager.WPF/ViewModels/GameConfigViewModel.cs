@@ -54,8 +54,8 @@ namespace SkeletonGameManager.WPF.ViewModels
             try
             {
                 //Check python 27 installed first
-                string getEnv = Environment.GetEnvironmentVariable("path",EnvironmentVariableTarget.Machine);
-                if (!getEnv.Contains(@"C:\Python27"))
+                string getUserEnv = Environment.GetEnvironmentVariable("path",EnvironmentVariableTarget.User);
+                if (!getUserEnv.Contains(@"C:\Python27"))
                     throw new FileNotFoundException(@"C:\Python27 python not found in your enviroment");
 
                 //Build args to run the game.py with python
