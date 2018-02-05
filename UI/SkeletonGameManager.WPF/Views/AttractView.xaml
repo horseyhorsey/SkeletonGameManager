@@ -87,10 +87,7 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBox Style="{StaticResource InitialLabelControl}" 
-                                             Text="{Binding SeqType}" 
-                                             Background="Green" Foreground="White"/>
-                                    
+                                    <Label Template="{StaticResource SequenceLabel}"/>
                                     <TextBlock Text="{Binding SeqType}" Grid.Column="1"/>
                                     <TextBlock Text="{Binding duration}" Grid.Column="2"/>
                                 </Grid>
