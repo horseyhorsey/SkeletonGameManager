@@ -277,5 +277,23 @@
 
 
     <!--#endregion-->
+    
+    <!--LABELS-->
+    <Style x:Key="InitialLabelControl" TargetType="TextBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border BorderBrush="White" BorderThickness="2">
+                        <Grid>
+                            <Rectangle Fill="{TemplateBinding Background}"/>
+                            <TextBlock Text="{TemplateBinding Text}" 
+                                       HorizontalAlignment="Center" FontWeight="DemiBold"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 
 </ResourceDictionary>

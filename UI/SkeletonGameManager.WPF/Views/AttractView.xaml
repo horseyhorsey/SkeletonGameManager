@@ -64,10 +64,11 @@
         <!--ATTRACT SEQEUENCES-->
         <GroupBox Grid.Row="1" Header="Sequences">
 
-            <DataGrid x:Name="DataGridSequences" ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"
+            <!--MAIN ITEMS SOURCE OF THE ATTRACT YAML-->
+            <DataGrid x:Name="DataGridSequences" 
+                      ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"
                       AutoGenerateColumns="False" xmlns:dd="urn:gong-wpf-dragdrop"
-                      CanUserResizeRows="False" CanUserAddRows="False"
-                      
+                      CanUserResizeRows="False" CanUserAddRows="False"                      
                       SelectedItem="{Binding SelectedSequence}"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
@@ -81,12 +82,17 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
+                                        <ColumnDefinition MaxWidth="35"/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
+
+                                    <TextBox Style="{StaticResource InitialLabelControl}" 
+                                             Text="{Binding SeqType}" 
+                                             Background="Green" Foreground="White"/>
                                     
-                                    <TextBlock Text="{Binding SeqType}"/>
-                                    <TextBlock Text="{Binding duration}" Grid.Column="1"/>
+                                    <TextBlock Text="{Binding SeqType}" Grid.Column="1"/>
+                                    <TextBlock Text="{Binding duration}" Grid.Column="2"/>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
