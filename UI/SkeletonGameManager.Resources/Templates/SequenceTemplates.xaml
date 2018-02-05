@@ -32,12 +32,12 @@
     <DataTemplate x:Key="SequenceTemplate">
         <GroupBox Header="{Binding}">
             <StackPanel>
-                <TextBox Text="{Binding duration}"/>
-                <TextBox Text="{Binding lampshow}"/>
-                <TextBox Text="{Binding Sound}"/>
-                <TextBox Text="{Binding Font}"/>
-                <TextBox Text="{Binding FontStyle}"/>
-                <TextBox Text="{Binding Animation}"/>
+                <TextBox Text="{Binding Sequence.duration}"/>
+                <TextBox Text="{Binding Sequence.lampshow}"/>
+                <TextBox Text="{Binding Sequence.Sound}"/>
+                <TextBox Text="{Binding Sequence.Font}"/>
+                <TextBox Text="{Binding Sequence.FontStyle}"/>
+                <TextBox Text="{Binding Sequence.Animation}"/>
             </StackPanel>
         </GroupBox>
     </DataTemplate>
@@ -171,25 +171,30 @@
     <Grid x:Key="Attract_Standard">
         <StackPanel>
 
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Font"/>
-                <ComboBox Style="{StaticResource Style_FontCombo}"/>
+            <StackPanel Orientation="Horizontal" Margin="0,3">
+                <Label Content="Font: "/>
+                <ComboBox Style="{StaticResource Style_FontCombo}" MaxWidth="220" Margin="3"/>
 
-                <Label Content="Style"/>
-                <ComboBox Style="{StaticResource Style_FontStyleCombo}"/>
+                <Label Content="Style: "/>
+                <ComboBox Style="{StaticResource Style_FontStyleCombo}" Margin="3"/>
             </StackPanel>
 
-            <Label Content="Animation"/>
-            <ComboBox Style="{StaticResource Style_AnimationsCombo}"/>
+            <StackPanel Orientation="Horizontal" Margin="0,3">
 
-            <Label Content="Sound"/>
-            <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
+                <Label Content="Duration"/>
+                <xctk:DecimalUpDown Value="{Binding duration, UpdateSourceTrigger=PropertyChanged}" 
+                                    MinWidth="55" Increment="0.1" Minimum="1.0" 
+                                    ClipValueToMinMax="True"/>
+                
+                <Label Content="Animation"/>
+                <ComboBox Style="{StaticResource Style_AnimationsCombo}"/>
+
+                <Label Content="Sound"/>
+                <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
+            </StackPanel>
 
             <Label Content="Lampshow"/>
             <ComboBox Style="{StaticResource Style_LampsCombo}"/>
-
-            <Label Content="Duration"/>
-            <xctk:DecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0" ClipValueToMinMax="True"/>
         </StackPanel>
     </Grid>
 
@@ -225,7 +230,7 @@
     </Grid>
 
     <DataTemplate x:Key="Sequence_LastScores">
-        <GroupBox Header="{Binding Name}">
+        <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
             <Grid>
                 <ContentPresenter Content="{StaticResource Attract_Standard}"/>
             </Grid>
@@ -233,7 +238,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_HighScores">
-        <GroupBox Header="{Binding Name}">
+        <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
 
             <Grid>
 
@@ -253,7 +258,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_Combo">
-        <GroupBox Header="{Binding Name}" x:Name="LayoutRoot">
+        <GroupBox Header="{Binding Name}" x:Name="LayoutRoot" DataContext="{Binding Sequence}">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -286,7 +291,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_TextLayer">
-        <GroupBox Header="{Binding Name}">
+        <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -319,7 +324,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_Animation">
-        <GroupBox Header="{Binding Name}">
+        <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
             <StackPanel>
                 <Label Content="Name"/>
                 <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}"/>
@@ -337,7 +342,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_RandomText">
-        <GroupBox Header="{Binding Name}">
+        <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
             <StackPanel>
                 <TextBox Text="{Binding Header}"/>
                 
@@ -397,7 +402,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_Markup">
-        <GroupBox Header="{Binding Name}">
+        <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
             <StackPanel>
                 <xctk:IntegerUpDown Value="{Binding Width}"/>
 
@@ -453,7 +458,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_Panning">
-        <GroupBox Header="{Binding Name}" x:Name="Root">
+        <GroupBox Header="{Binding Name}" x:Name="Root" DataContext="{Binding Sequence}">
             <StackPanel>
 
                 <Grid>
@@ -566,9 +571,9 @@
             </StackPanel>
         </GroupBox>
     </DataTemplate>
-    
-    <DataTemplate x:Key="Sequence_ScriptedText">
-        <GroupBox Header="{Binding Name}">
+
+    <DataTemplate x:Key="Sequence_ScriptedText" >
+        <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
             <Grid>
                 
                 <Grid.RowDefinitions>
@@ -625,7 +630,7 @@
     </DataTemplate>
     
     <DataTemplate x:Key="Sequence_GroupLayer">
-        <GroupBox Header="{Binding Name}">
+        <GroupBox Header="{Binding Name, StringFormat={}Sequence : {0}}" DataContext="{Binding Sequence}">
             <Grid>
                 
                 <Grid.RowDefinitions>

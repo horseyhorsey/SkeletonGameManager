@@ -88,8 +88,8 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Template="{StaticResource SequenceLabel}"/>
-                                    <TextBlock Text="{Binding SeqType}" Grid.Column="1"/>
-                                    <TextBlock Text="{Binding duration}" Grid.Column="2"/>
+                                    <TextBlock Text="{Binding Sequence.SeqType}" Grid.Column="1"/>
+                                    <TextBlock Text="{Binding Sequence.duration}" Grid.Column="2"/>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

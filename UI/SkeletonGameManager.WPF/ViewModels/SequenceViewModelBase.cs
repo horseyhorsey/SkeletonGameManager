@@ -17,16 +17,15 @@ namespace SkeletonGameManager.WPF.ViewModels
             
         }
 
-        private ObservableCollection<SequenceBase> sequences;
-        public ObservableCollection<SequenceBase> Sequences
+        private ObservableCollection<SequenceItemViewModel> sequences;
+        public ObservableCollection<SequenceItemViewModel> Sequences
         {
             get { return sequences; }
             set { SetProperty(ref sequences, value); }
         }
 
-        private SequenceBase selectedSequence;
-
-        public SequenceBase SelectedSequence
+        private SequenceItemViewModel selectedSequence;
+        public SequenceItemViewModel SelectedSequence
         {
             get { return selectedSequence; }
             set { SetProperty(ref selectedSequence, value); }

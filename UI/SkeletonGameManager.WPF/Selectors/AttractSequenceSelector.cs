@@ -25,9 +25,9 @@ namespace SkeletonGameManager.WPF.Selectors
 
             if (item == null) return _template;                       
 
-            var sequenceItem = item as SequenceBase;
+            var sequenceItem = item as SequenceItemViewModel;
 
-            var type = sequenceItem.GetType();
+            var type = sequenceItem.Sequence.GetType();
 
             return GetTemplate(type, container);
         }

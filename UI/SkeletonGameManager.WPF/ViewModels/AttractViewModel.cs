@@ -76,8 +76,8 @@ namespace SkeletonGameManager.WPF.ViewModels
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonGameAttract = new SkeletonGameAttract();
 
-            Sequences = new ObservableCollection<SequenceBase>();
-            Sequences.CollectionChanged += Sequences_CollectionChanged; ;
+            Sequences = new ObservableCollection<SequenceItemViewModel>();
+            Sequences.CollectionChanged += Sequences_CollectionChanged;
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
 
@@ -85,9 +85,9 @@ namespace SkeletonGameManager.WPF.ViewModels
             {
                 //Clear old Sequence and replace with new.
                 AttractConfig.AttractSequences.Clear();
-                foreach (var item in Sequences)
+                foreach (var sequence in Sequences)
                 {
-                    AttractConfig.AttractSequences.Add(new Sequence(item));
+                    AttractConfig.AttractSequences.Add(new Sequence(sequence.Sequence));
                 }
 
                 //Save to yaml
@@ -114,7 +114,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                             });
                         }                            
 
-                        this.Sequences.Add(newGroup);
+                        this.Sequences.Add(new SequenceItemViewModel(newGroup));
                     }
                 }
                     
@@ -237,7 +237,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                 if (dropInfo.IsSameDragDropContextAsSource)
                 {
                     this.Sequences.RemoveAt(dropInfo.DragInfo.SourceIndex);
-                    this.Sequences.Insert(dropInfo.InsertIndex, dropInfo.Data as SequenceBase);
+                    this.Sequences.Insert(dropInfo.InsertIndex, dropInfo.Data as SequenceItemViewModel);
                 }
             }
             catch { }
@@ -264,31 +264,26 @@ namespace SkeletonGameManager.WPF.ViewModels
         /// <returns></returns>
         public async override Task OnLoadYamlFilesChanged()
         {
+            //Assign the attract config
             if (AttractConfig == null)
                 AttractConfig = _skeletonGameProvider.AttractConfig;
-            else
-            {
-                //_skeletonGameProvider.AttractConfig.Sequences.Clear();
-            }
-
-            //await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-            //{
-            //    if (Sequences == null)
-            //        Sequences = new System.Collections.ObjectModel.ObservableCollection<SequenceBase>();
-            //    else
-            //        Sequences.Clear();
-            //});            
 
             if (AttractConfig != null)
             {
+                //Assign the attract config
                 AttractConfig = _skeletonGameProvider.AttractConfig;
+
+                //Clear sequences and convert the attract configs values to sequence item view models
                 await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {                    
                     Sequences?.Clear();
 
                     _skeletonGameAttract.GetAvailableSequences(AttractConfig);
 
-                    Sequences = AttractConfig.Sequences;
+                    foreach (var attractSeq in AttractConfig.Sequences)
+                    {
+                        Sequences.Add(new SequenceItemViewModel(attractSeq));
+                    }                    
                 });
             }
         }
