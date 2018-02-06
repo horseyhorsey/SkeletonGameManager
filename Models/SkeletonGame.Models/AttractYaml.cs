@@ -268,6 +268,9 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "ScriptedText", ApplyNamingConventions = false)]
         public ScriptedText scripted_text_layer { get; set; }
+
+        [YamlMember(Alias = "LastScores", ApplyNamingConventions = false)]
+        public LastScores last_scores { get; set; }
     }
 
     public class MoveLayer : Combo
