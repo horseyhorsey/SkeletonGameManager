@@ -11,6 +11,8 @@ using GongSolutions.Wpf.DragDrop;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System;
+using System.Windows.Controls;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -219,22 +221,63 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                 if (group != null)
                 {
-                    if (SelectedGroupLayerType == "0")
-                        group.Contents.Add(new Content() { animation_layer = new AttractAnimation() , SeqType = SequenceType.Animation});
-                    else if (SelectedGroupLayerType == "1")
-                        group.Contents.Add(new Content() { markup_layer = new MarkupLayer(), SeqType = SequenceType.MarkupLayer });
-                    else if (SelectedGroupLayerType == "2")
-                        group.Contents.Add(new Content() { text_layer = new TextLayer(), SeqType = SequenceType.TextLayer });
-                    else if (SelectedGroupLayerType == "3")
-                        group.Contents.Add(new Content() { combo_layer = new Combo(), SeqType = SequenceType.Combo });
-                    else if (SelectedGroupLayerType == "4")
-                        group.Contents.Add(new Content() { scripted_text_layer= new ScriptedText(), SeqType = SequenceType.ScriptedText });                    
+                    //Get enum from selectedIndex of combobox
+                    SequenceType seqType = (SequenceType)Convert.ToInt32(SelectedGroupLayerType);
+
+                    //Add layer depending if we got type or not
+                    switch (seqType)
+                    {
+                        case SequenceType.Animation:
+                            group.Contents.Add(new Content() { animation_layer = new AttractAnimation(), SeqType = seqType,
+                                SequenceName = seqType + "SequenceStyle" });
+                            break;
+                        case SequenceType.Combo:
+                            break;
+                        case SequenceType.Credits:
+                            break;
+                        case SequenceType.GroupLayer:
+                            break;
+                        case SequenceType.HighScores:
+                            break;
+                        case SequenceType.LastScores:
+                            group.Contents.Add(new Content() { last_scores = new LastScores(),          SeqType = seqType,
+                               SequenceName = seqType + "SequenceStyle"
+                            });
+                            break;
+                        case SequenceType.MarkupLayer:
+                            group.Contents.Add(new Content() { markup_layer = new MarkupLayer(),
+                                SeqType = seqType,
+                                SequenceName = seqType + "SequenceStyle"
+                            });
+                            break;
+                        case SequenceType.PanningLayer:
+                            break;
+                        case SequenceType.RandomText:
+                            break;
+                        case SequenceType.ScriptedText:
+                            group.Contents.Add(new Content() { scripted_text_layer = new     ScriptedText(),
+                                SeqType = seqType,
+                                SequenceName = seqType + "SequenceStyle"
+                            });
+                            break;
+                        case SequenceType.TextLayer:
+                            group.Contents.Add(new Content() { text_layer = new TextLayer(),
+                                SeqType = seqType,
+                                SequenceName = seqType + "SequenceStyle"
+                            });
+                            break;
+                        case SequenceType.MoveLayer:
+                            group.Contents.Add(new Content() { move_layer = new MoveLayer(),
+                                SeqType = seqType,
+                                SequenceName = seqType + "SequenceStyle"
+                            });
+                            break;
+                        default:
+                            break;
+                    }
 
                 }
-                
-                //x.DataContext as DataContext
-                //Don't do anything if null list
-                //x?.Add(new Sequence() { LastScores = new LastScores() { Name = "LastScores" }});
+
             });
         }
 
