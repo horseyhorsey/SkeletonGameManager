@@ -49,7 +49,7 @@
             </MultiTrigger>
         </Style.Triggers>
     </Style>
-    
+
     <!--#region TAB STYLES -->
 
     <Style x:Key="FocusVisual">
@@ -61,7 +61,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <LinearGradientBrush x:Key="TabItem.Static.Background" EndPoint="0,1" StartPoint="0,0">
         <GradientStop Color="#F0F0F0" Offset="0.0"/>
         <GradientStop Color="#E5E5E5" Offset="1.0"/>
@@ -275,14 +275,84 @@
         </Setter>
     </Style>
 
+    <!--#endregion-->    
+
+    <!--SEQUENCE STYLE-->
+
+    <!--#region Sequence Brushes-->
+    <SolidColorBrush x:Key="Brush_ComboLayer" Color="LightCoral"/>
+    <SolidColorBrush x:Key="Brush_GroupLayer" Color="Green"/>
+    <SolidColorBrush x:Key="Brush_LastScores" Color="Red"/>
+    <SolidColorBrush x:Key="Brush_MarkupLayer" Color="Navy"/>
+    <SolidColorBrush x:Key="Brush_MoveLayer" Color="LightBlue"/>
+    <SolidColorBrush x:Key="Brush_PanningLayer" Color="Blue"/>
+    <SolidColorBrush x:Key="Brush_RandomText" Color="SandyBrown"/>
+    <SolidColorBrush x:Key="Brush_ScriptedText" Color="SandyBrown"/>
+    <SolidColorBrush x:Key="Brush_TextLayer" Color="SandyBrown"/>
     <!--#endregion-->
-    
 
-    <ControlTemplate x:Key="SequenceLabel" TargetType="{x:Type Label}">
-        <Grid Background="Green">
-            <TextBlock Text="{Binding SeqType}" Foreground="White"/>
-        </Grid>
-    </ControlTemplate>
+    <!--#region SEQUENCE LABLE STYLE-->
+    <Style x:Key="SequenceLabelStyle" TargetType="Label">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Label">
+                    <Grid Background="{TemplateBinding Background}">
+                        <TextBlock Text="{TemplateBinding Content}" Foreground="White" HorizontalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
+    <Style x:Key="AnimationSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_MoveLayer}"/>
+        <Setter Property="Content" Value="A"/>
+    </Style>
+
+    <Style x:Key="GroupLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_GroupLayer}"/>
+        <Setter Property="Content" Value="G"/>
+    </Style>
+
+    <Style x:Key="LastScoresSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_LastScores}"/>
+        <Setter Property="Content" Value="LS"/>
+    </Style>
+
+    <Style x:Key="ComboSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_ComboLayer}"/>
+        <Setter Property="Content" Value="C"/>
+    </Style>
+
+    <Style x:Key="MarkupLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_MarkupLayer}"/>
+        <Setter Property="Content" Value="MU"/>
+    </Style>
+
+    <Style x:Key="ScriptedTextSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_ScriptedText}"/>
+        <Setter Property="Content" Value="ST"/>
+    </Style>
+
+    <Style x:Key="TextLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_TextLayer}"/>
+        <Setter Property="Content" Value="T"/>
+    </Style>
+
+    <Style x:Key="RandomTextSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_RandomText}"/>
+        <Setter Property="Content" Value="RT"/>
+    </Style>
+
+    <Style x:Key="PanningLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_PanningLayer}"/>
+        <Setter Property="Content" Value="P"/>
+    </Style>
+
+    <Style x:Key="MoveLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_MoveLayer}"/>
+        <Setter Property="Content" Value="M"/>
+    </Style>
+    <!--#endregion-->
 
 </ResourceDictionary>
