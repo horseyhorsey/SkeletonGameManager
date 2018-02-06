@@ -130,59 +130,76 @@ namespace SkeletonGameManager.WPF.ViewModels
                 switch (seqType)
                 {
                     case SequenceType.LastScores:
-                        var lastScores = new LastScores() { Name = "LastScores"};
+                        var lastScores = new LastScores() { SequenceName = "LastScores"};
                         seq = new Sequence() { LastScores = lastScores };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.LastScores);
+                        Sequences.Add(new SequenceItemViewModel(seq.LastScores));
                         break;
                     case SequenceType.Combo:
-                        var combo = new Combo() { Name = "Combo"};                        
+                        var combo = new Combo() { SequenceName = "Combo"};                        
                         seq = new Sequence() { Combo = combo };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.Combo);
+                        Sequences.Add(new SequenceItemViewModel(seq.Combo));
                         break;
                     case SequenceType.TextLayer:
-                        var txtLayr = new TextLayer() { Name = "TextLayer" };                        
+                        var txtLayr = new TextLayer() { SequenceName = "TextLayer" };                        
                         seq = new Sequence() { text_layer = txtLayr };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.text_layer);
+                        Sequences.Add(new SequenceItemViewModel(seq.text_layer));
                         break;
                     case SequenceType.PanningLayer:
-                        var panning_layer = new PanningLayer() { Name = "panning_layer" };
+                        var panning_layer = new PanningLayer() { SequenceName = "panning_layer" };
                         seq = new Sequence() { panning_layer = panning_layer };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.panning_layer);
+                        Sequences.Add(new SequenceItemViewModel(seq.panning_layer));
                         break;
                     case SequenceType.RandomText:
-                        var rndText = new RandomText() { Name = "RandomText" };                        
+                        var rndText = new RandomText() { SequenceName = "RandomText" };                        
                         seq = new Sequence() { RandomText = rndText };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.RandomText);
+                        Sequences.Add(new SequenceItemViewModel(seq.RandomText));
                         break;
                     case SequenceType.Animation:
                         var attAnim = new AttractAnimation() { Name = "Animation" };                        
                         seq = new Sequence() { AttractAnimation = attAnim };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.AttractAnimation);
+                        Sequences.Add(new SequenceItemViewModel(seq.AttractAnimation));
                         break;
                     case SequenceType.HighScores:
-                        var hiScore = new HighScores() { Name = "HighScores" };                        
+                        var hiScore = new HighScores() { SequenceName = "HighScores" };                        
                         seq = new Sequence() { HighScores = hiScore };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.HighScores);
+                        Sequences.Add(new SequenceItemViewModel(seq.HighScores));
                         break;
                     case SequenceType.Credits:
-                        var credits = new Credits() { Name = "Credits" };  
+                        var credits = new Credits() { SequenceName = "Credits" };  
                         seq = new Sequence() { Credits = credits};                        
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.Credits);
+                        Sequences.Add(new SequenceItemViewModel(seq.Credits));
                         break;
                     case SequenceType.MarkupLayer:
-                        var markup = new MarkupLayer() { Name = "MarkupLayer" };                        
+                        var markup = new MarkupLayer() { SequenceName = "MarkupLayer" };                        
                         seq = new Sequence() { MarkupLayer = markup };                        
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.MarkupLayer);
+                        Sequences.Add(new SequenceItemViewModel(seq.MarkupLayer));
                         break;
                     case SequenceType.ScriptedText:
                         var scriptedText = new ScriptedText() { Name = "ScriptedText" };
                         seq = new Sequence() { ScriptedText = scriptedText };
-                        _skeletonGameProvider.AttractConfig.Sequences.Add(seq.ScriptedText);                        
+                        _skeletonGameProvider.AttractConfig.Sequences.Add(seq.ScriptedText);
+                        Sequences.Add(new SequenceItemViewModel(seq.ScriptedText));
                         break;
                     case SequenceType.GroupLayer:
                         var groupLayer = new GroupLayer() { Name = "GroupLayer" };
                         seq = new Sequence() { GroupLayer = groupLayer };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.GroupLayer);
+                        Sequences.Add(new SequenceItemViewModel(seq.GroupLayer));
+                        break;
+                    case SequenceType.MoveLayer:
+                        var moveLayer = new MoveLayer() { SequenceName = "MoveLayer" };
+                        seq = new Sequence() { MoveLayer = moveLayer };
+                        _skeletonGameProvider.AttractConfig.Sequences.Add(seq.MoveLayer);
+                        Sequences.Add(new SequenceItemViewModel(seq.MoveLayer));
                         break;
                     default:
                         break;
@@ -210,6 +227,9 @@ namespace SkeletonGameManager.WPF.ViewModels
                         group.Contents.Add(new Content() { text_layer = new TextLayer(), SeqType = SequenceType.TextLayer });
                     else if (SelectedGroupLayerType == "3")
                         group.Contents.Add(new Content() { combo_layer = new Combo(), SeqType = SequenceType.Combo });
+                    else if (SelectedGroupLayerType == "4")
+                        group.Contents.Add(new Content() { scripted_text_layer= new ScriptedText(), SeqType = SequenceType.ScriptedText });                    
+
                 }
                 
                 //x.DataContext as DataContext

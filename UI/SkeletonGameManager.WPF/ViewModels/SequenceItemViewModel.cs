@@ -9,8 +9,12 @@ namespace SkeletonGameManager.WPF.ViewModels
         public SequenceItemViewModel(SequenceBase sequence)
         {
             Sequence = sequence;
+
+            Sequence.SequenceName = Sequence.SeqType + "SequenceStyle";
         }
 
         public SequenceBase Sequence { get; set; }
+
+        public string Name { get; private set; }
     }
 }
