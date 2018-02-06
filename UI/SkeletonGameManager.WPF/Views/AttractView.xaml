@@ -8,7 +8,7 @@
              xmlns:selectors="clr-namespace:SkeletonGameManager.WPF.Selectors"
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:model="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"             
              mc:Ignorable="d" 
              PresentationTraceSources.TraceLevel="High"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -67,9 +67,10 @@
             <!--MAIN ITEMS SOURCE OF THE ATTRACT YAML-->
             <DataGrid x:Name="DataGridSequences" 
                       ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"
-                      AutoGenerateColumns="False" xmlns:dd="urn:gong-wpf-dragdrop"
+                      AutoGenerateColumns="False"
                       CanUserResizeRows="False" CanUserAddRows="False"                      
                       SelectedItem="{Binding SelectedSequence}"
+                      xmlns:dd="urn:gong-wpf-dragdrop"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding}"
@@ -82,12 +83,22 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition MaxWidth="35"/>
+                                        <ColumnDefinition MaxWidth="55"/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Label Template="{StaticResource SequenceLabel}"/>
+                                    <Label Height="20">
+                                        <Label.Style>
+                                            <MultiBinding Converter="{StaticResource StyleConverter}">
+                                                <MultiBinding.Bindings>
+                                                    <Binding RelativeSource="{RelativeSource Self}"/>
+                                                    <Binding Path="Sequence.SequenceName"/>
+                                                </MultiBinding.Bindings>
+                                            </MultiBinding>
+                                        </Label.Style>
+                                    </Label>
+
                                     <TextBlock Text="{Binding Sequence.SeqType}" Grid.Column="1"/>
                                     <TextBlock Text="{Binding Sequence.duration}" Grid.Column="2"/>
                                 </Grid>

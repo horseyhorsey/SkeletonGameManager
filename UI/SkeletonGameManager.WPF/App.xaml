@@ -17,6 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <converters:ListToColorConverter x:Key="ListToColorConv"/>
+            <converters:StyleConverter x:Key="StyleConverter"/>
         </ResourceDictionary>
 
     </Application.Resources>

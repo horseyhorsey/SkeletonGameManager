@@ -114,6 +114,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\UniformGridWithOrientation.cs" />
+    <Compile Include="Converters\StyleConverter.cs" />
     <Compile Include="Interfaces\IMediaPlayer.cs" />
     <Compile Include="Model\TrimVideo.cs" />
     <Compile Include="ViewModels\CreateNewGameWindowViewModel.cs" />
