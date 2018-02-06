@@ -25,6 +25,12 @@ namespace SkeletonGameManager.WPF.Selectors
                     _template = element.FindResource("Content_TextLayer") as DataTemplate;
                 else if (groupedContent.combo_layer != null)
                     _template = element.FindResource("Content_Combo") as DataTemplate;
+                else if (groupedContent.scripted_text_layer != null)
+                    _template = element.FindResource("Content_ScriptedText") as DataTemplate;
+                else if (groupedContent.group_layer != null)
+                    _template = element.FindResource("Content_GroupLayer") as DataTemplate;
+                else if (groupedContent.move_layer != null)
+                    _template = element.FindResource("Content_MoveLayer") as DataTemplate;
             }
             
             return _template;
