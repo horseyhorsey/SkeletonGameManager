@@ -671,6 +671,75 @@
         </GroupBox>
     </DataTemplate>
 
+    <DataTemplate x:Key="Content_MoveLayer">
+        <GroupBox Header="{Binding Name}" x:Name="Root" DataContext="{Binding move_layer}">
+            <StackPanel>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type xctk:IntegerUpDown}">
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Label Content="StartX" Grid.Column="0"/>
+                    <xctk:IntegerUpDown Grid.Column="1"
+                                        Value="{Binding start_x}"/>
+
+                    <Label Content="StartY" Grid.Column="2"/>
+                    <xctk:IntegerUpDown Grid.Column="3" Value="{Binding start_y}"/>
+
+                    <!--ROW 1-->
+                    <Label Content="TargetX" Grid.Column="0" Grid.Row="1"/>
+                    <xctk:IntegerUpDown Grid.Column="1"  Grid.Row="1"
+                                        Text="{Binding target_x, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Label Content="TargetY" Grid.Row="1" Grid.Column="2"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Value="{Binding target_y}"/>
+
+                    <Label Content="Frames" Grid.Row="2" Grid.Column="0"/>
+                    <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Value="{Binding frames}"/>
+
+                    <CheckBox Grid.Row="2" Grid.Column="2" Margin="5" Content="Move Anim"  IsChecked="{Binding move_anim}" VerticalAlignment="Center"/>
+                    <CheckBox Grid.Row="2" Grid.Column="3" Margin="5" Content="Move Text" IsChecked="{Binding move_text}" VerticalAlignment="Center"/>
+
+                </Grid>
+
+                <ContentPresenter Content="{StaticResource Attract_Standard}"/>
+
+                <GroupBox Header="Text Lines"  Grid.Row="0" Margin="5" FontSize="14">
+                    <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}"
+                              AutoGenerateColumns="False"
+                              >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding TextLine, TargetNullValue=null, 
+                            UpdateSourceTrigger=PropertyChanged}" Width="5*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+
+
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+
     <DataTemplate x:Key="Sequence_ScriptedText" >
         <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
             <Grid>
@@ -754,13 +823,21 @@
 
                 <GroupBox Grid.Row="1" Header="Add layer">
                     <DockPanel>
-                        <ComboBox x:Name="LayerCombobox" Margin="3" SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left">
+                        <ComboBox x:Name="LayerCombobox" Margin="3"                                                                                                       
+                                  SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left">
                             <ComboBox.Items>
                                 <ComboBoxItem Content="Animation" IsSelected="True"/>
-                                <ComboBoxItem Content="Markup"/>
-                                <ComboBoxItem Content="Text"/>
-                                <!--<ComboBoxItem Content="Combo"/>-->
-                                <!--<ComboBoxItem Content="ScriptedText"/>-->
+                                <ComboBoxItem Content="Combo" IsEnabled="False"/>
+                                <ComboBoxItem Content="Credits" IsEnabled="False"/>
+                                <ComboBoxItem Content="GroupLayer" IsEnabled="False"/>
+                                <ComboBoxItem Content="HighScores" IsEnabled="False"/>
+                                <ComboBoxItem Content="LastScores" IsEnabled="False"/>
+                                <ComboBoxItem Content="MarkupLayer"/>
+                                <ComboBoxItem Content="MoveLayer"/>
+                                <ComboBoxItem Content="PanningLayer" IsEnabled="False"/>
+                                <ComboBoxItem Content="RandomText" IsEnabled="False"/>
+                                <ComboBoxItem Content="ScriptedText" IsEnabled="False"/>
+                                <ComboBoxItem Content="TextLayer"/>
                             </ComboBox.Items>
                         </ComboBox>
 
