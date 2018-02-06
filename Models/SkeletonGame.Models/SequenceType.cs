@@ -9,10 +9,10 @@
         HighScores,
         LastScores,
         MarkupLayer,
+        MoveLayer,
         PanningLayer,
         RandomText,
         ScriptedText,
-        TextLayer,
-        MoveLayer,
+        TextLayer,        
     }
 }
