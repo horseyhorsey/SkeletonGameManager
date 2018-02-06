@@ -56,6 +56,8 @@ namespace SkeletonGameManager.WPF.Selectors
                 return element.FindResource("Sequence_ScriptedText") as DataTemplate;
             else if (type == typeof(GroupLayer))
                 return element.FindResource("Sequence_GroupLayer") as DataTemplate;
+            else if (type == typeof(MoveLayer))
+                return element.FindResource("Sequence_MoveLayer") as DataTemplate;
 
             else
                 return null;

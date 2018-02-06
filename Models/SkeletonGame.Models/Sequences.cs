@@ -7,13 +7,13 @@ namespace SkeletonGame.Models
     public class SequenceBase
     {
         public string lampshow { get; set; }
-        public decimal? duration { get; set; } = 1.0m;
+        public decimal? duration { get; set; } = null;
 
         [YamlMember(Alias = "sound", ApplyNamingConventions = false)]
         public string Sound { get; set; }
 
         [YamlIgnore]
-        public string Name { get; set; }
+        public string SequenceName { get; set; }
 
         [YamlIgnore]
         public SequenceType SeqType { get; set; }
@@ -54,6 +54,9 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "ScriptedText", ApplyNamingConventions = false)]
         public ScriptedText ScriptedText { get; set; }
+
+        [YamlMember(Alias = "move_layer", ApplyNamingConventions = false)]
+        public MoveLayer MoveLayer { get; set; }
 
         public Sequence()
         {
@@ -101,6 +104,9 @@ namespace SkeletonGame.Models
                 case SequenceType.TextLayer:
                     text_layer = (TextLayer)sequenceBase;
                     break;
+                case SequenceType.MoveLayer:
+                    MoveLayer = (MoveLayer)sequenceBase;
+                    break;
                 default:
                     break;
             }
@@ -110,10 +116,10 @@ namespace SkeletonGame.Models
     public class SequenceTextBase : SequenceBase
     {
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
-        public string Font { get; set; }
+        public string Font { get; set; } = "default";
 
         [YamlMember(Alias = "FontStyle", ApplyNamingConventions = false)]
-        public string FontStyle { get; set; }
+        public string FontStyle { get; set; } = "default";
     }
 
     public class SequenceTextAnimationBase : SequenceTextBase

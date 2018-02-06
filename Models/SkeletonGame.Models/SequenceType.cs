@@ -13,5 +13,6 @@
         RandomText,
         ScriptedText,
         TextLayer,
+        MoveLayer,
     }
 }

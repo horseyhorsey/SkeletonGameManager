@@ -158,6 +158,9 @@ namespace SkeletonGameManager.WPF.Providers
             var combo = AttractConfig.AttractSequences
                 .Select(x => x.Combo);
 
+            var move = AttractConfig.AttractSequences
+                .Select(x => x.MoveLayer);  
+
             var grouped = AttractConfig.AttractSequences
                 .Select(x => x.GroupLayer);
 
@@ -229,7 +232,16 @@ namespace SkeletonGameManager.WPF.Providers
 
                 item.TextList = item.TextEntries.Select(x => x.TextLine).ToList();
                        
-            }                  
+            }
+
+            foreach (var item in move.Where(x => x != null))
+            {
+
+                if (item.TextList != null)
+                    item.TextList.Clear();
+
+                item.TextList = item.TextEntries.Select(x => x.TextLine).ToList();
+            }
             //AttractConfig.Sequences
             _skeletonGameSerializer.SerializeYaml(yamlFile, AttractConfig);
 
