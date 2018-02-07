@@ -171,14 +171,6 @@
         </Setter>
     </Style>
 
-    <DataTemplate  x:Key="TextLayerOptions">
-        <StackPanel Orientation="Horizontal">
-            <xctk:IntegerUpDown Value="{Binding X}"  ClipValueToMinMax="True"/>
-            <xctk:IntegerUpDown Value="{Binding Y}"  ClipValueToMinMax="True"/>
-            <CheckBox IsChecked="{Binding BlinkFrames}"></CheckBox>
-        </StackPanel>
-    </DataTemplate>
-
     <Grid x:Key="FontOptionsGrid">
 
         <GroupBox Header="Font">
@@ -996,11 +988,9 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Content_TextLayer">
-        <StackPanel Margin="3" DataContext="{Binding text_layer}">
+        <StackPanel Margin="3" DataContext="{Binding text_layer}" x:Name="StackTextLayerPanel">
 
             <TextBox Text="{Binding Text}"/>
-
-
 
             <StackPanel Orientation="Horizontal">
                 <Label Content="Font"/>
@@ -1013,8 +1003,6 @@
                             />
             </StackPanel>
 
-
-
             <StackPanel Orientation="Horizontal" Margin="5">
 
                 <TextBlock Text="Vert Justify:   " VerticalAlignment="Center"/>
@@ -1024,6 +1012,15 @@
                 <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustify, UpdateSourceTrigger=PropertyChanged}"/>
 
             </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <DockPanel>
+                    <xctk:IntegerUpDown Value="{Binding X}"  ClipValueToMinMax="True"/>
+                    <xctk:IntegerUpDown Value="{Binding Y}"  ClipValueToMinMax="True"/>
+                </DockPanel>
+                <CheckBox IsChecked="{Binding BlinkFrames}" Content="Flashing"></CheckBox>
+            </StackPanel>
+
         </StackPanel>
     </DataTemplate>
 
