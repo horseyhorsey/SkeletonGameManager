@@ -7,6 +7,7 @@
         Music,
         Voice,
         Sfx,
-        Animations
+        Animations,
+        Sequences
     }
 }

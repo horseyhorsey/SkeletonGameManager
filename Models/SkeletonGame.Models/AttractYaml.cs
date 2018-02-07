@@ -16,7 +16,7 @@ namespace SkeletonGame.Models
         ObservableCollection<TextListViewModel> TextEntries { get; set; }
     }
 
-    public class AttractYaml
+    public class SequenceYaml
     {
         [YamlMember(Alias = "Sequence", ApplyNamingConventions = false)]
         public ObservableCollection<Sequence> AttractSequences { get; set; }
@@ -141,7 +141,6 @@ namespace SkeletonGame.Models
         public Combo()
         {
             this.SeqType = SequenceType.Combo;
-            this.duration = 2.0m;
         }
     }
 
@@ -233,7 +232,7 @@ namespace SkeletonGame.Models
 
         public RandomText()
         {
-            this.SeqType = SequenceType.RandomText;
+            this.SeqType = SequenceType.RandomText;            
         }
 
     }
@@ -243,6 +242,7 @@ namespace SkeletonGame.Models
     {
         [YamlMember(Alias = "name", ApplyNamingConventions = false)]
         public string Name { get; set; }
+
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
@@ -281,6 +281,9 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "frames", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public int frames { get; set; } = 15;
 
+        [YamlMember(Alias = "loop", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public bool loop { get; set; } = false;
+
         [YamlMember(Alias = "target_x", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public string target_x { get; set; } = "0";
 
@@ -296,9 +299,11 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "move_anim", ApplyNamingConventions = false)]
         public bool move_anim { get; set; } = true;
 
+
+
         public MoveLayer()
         {
-            this.SeqType = SequenceType.MoveLayer;
+            this.SeqType = SequenceType.MoveLayer;            
         }
     }
 
