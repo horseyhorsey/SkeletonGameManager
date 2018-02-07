@@ -216,6 +216,15 @@ namespace SkeletonGameManager.WPF.Providers
                     item.combo_layer.duration = null;
                     item.combo_layer.TextList = item.combo_layer.TextEntries.Select(x => x.TextLine).ToList();
                 }
+
+                foreach (var item in group.Contents.Where(x => x.move_layer != null))
+                {
+                    if (item.move_layer.TextList != null)
+                        item.move_layer.TextList.Clear();
+
+                    item.move_layer.duration = null;
+                    item.move_layer.TextList = item.move_layer.TextEntries.Select(x => x.TextLine).ToList();
+                }
             }
 
             var yamlFile = Path.Combine(GameFolder, YamlFiles[2]);
