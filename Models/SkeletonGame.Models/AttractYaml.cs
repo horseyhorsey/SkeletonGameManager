@@ -190,11 +190,11 @@ namespace SkeletonGame.Models
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class TextLayer : SequenceTextBase
     {
-        [YamlMember(Alias = "x", ApplyNamingConventions = false)]
-        public decimal X { get; set; } = 0;
+        [YamlMember(Alias = "x", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public string X { get; set; } = "0";
 
-        [YamlMember(Alias = "y", ApplyNamingConventions = false)]
-        public decimal Y { get; set; } = 0;
+        [YamlMember(Alias = "y", ApplyNamingConventions = false, SerializeAs =typeof(string))]
+        public string Y { get; set; } = "0";
 
         [YamlMember(Alias = "width", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public int Width { get; set; } = 0;
@@ -211,8 +211,8 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
         public string Text { get; set; } = "TEXT LAYER";
 
-        [YamlMember(Alias = "blink_frames", ApplyNamingConventions = false)]
-        public string BlinkFrames { get; set; }
+        [YamlMember(Alias = "blink_frames", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public bool BlinkFrames { get; set; } = false;
 
         public TextLayer()
         {
