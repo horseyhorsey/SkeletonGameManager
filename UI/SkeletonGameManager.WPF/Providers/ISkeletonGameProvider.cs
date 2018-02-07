@@ -3,6 +3,7 @@ using SkeletonGame.Models;
 using SkeletonGame.Models.Machine;
 using SkeletonGame.Models.Score;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,17 +32,21 @@ namespace SkeletonGameManager.WPF.Providers
 
         AssetsFile AssetsConfig { get; set; }
 
-        AttractYaml AttractConfig { get; set; }
+        SequenceYaml AttractConfig { get; set; }
 
         ScoreDisplay ScoreDisplayConfig { get; set; }
 
         MachineConfig MachineConfig { get; set; }
 
+        ObservableCollection<string> SequenceYamls { get; set; }
+
+        SequenceYaml GetSequence(string yamlPath);
+
         void SaveAssetsFile(AssetsFile assetsFile);
 
         void SaveGameConfig(GameConfig config);
 
-        void SaveAttractFile();
+        void SaveSequenceFile(SequenceYaml sequenceYaml, string saveFile);
 
         void SaveMachineConfig(MachineConfig mConfig);
     }
@@ -54,13 +59,15 @@ namespace SkeletonGameManager.WPF.Providers
     {
         #region Fields
         private ISkeletonGameSerializer _skeletonGameSerializer;
+        private ISkeletonGameFiles _skeletonGameFiles;
         #endregion
 
         #region Constructors
 
-        public SkeletonGameProvider(ISkeletonGameSerializer skeletonGameSerializer)
+        public SkeletonGameProvider(ISkeletonGameSerializer skeletonGameSerializer, ISkeletonGameFiles skeletonGameFiles)
         {
             _skeletonGameSerializer = skeletonGameSerializer;
+            _skeletonGameFiles = skeletonGameFiles;
         }
 
         #endregion
@@ -72,7 +79,9 @@ namespace SkeletonGameManager.WPF.Providers
 
         public GameConfig GameConfig { get; set; }
 
-        public AttractYaml AttractConfig { get; set; }
+        public SequenceYaml AttractConfig { get; set; }
+
+        public ObservableCollection<string> SequenceYamls { get; set; } = new ObservableCollection<string>();
 
         public AssetsFile AssetsConfig { get; set; }
 
@@ -105,8 +114,8 @@ namespace SkeletonGameManager.WPF.Providers
                 try
                 {
                     GameConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<GameConfig>(Path.Combine(GameFolder, YamlFiles[0]));
-                    AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));                    
-                    AttractConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AttractYaml>(Path.Combine(GameFolder, YamlFiles[2]));
+                    AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
+                    AttractConfig = GetSequence(Path.Combine(GameFolder, YamlFiles[2]));
 
                     var newScoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[3]);
                     var scoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[4]);
@@ -136,6 +145,15 @@ namespace SkeletonGameManager.WPF.Providers
                         });
                     }
 
+                    //Get sequence files and add to list       
+                    var seqDir = Path.Combine(GameFolder, @"config\sequences");
+                    Directory.CreateDirectory(seqDir);
+                    var seqFiles = await _skeletonGameFiles.GetFilesAsync(seqDir, AssetTypes.Sequences);
+                    SequenceYamls.Clear();
+                    foreach (var item in seqFiles)
+                    {
+                        SequenceYamls.Add(item);
+                    }
                 }
                 catch (System.Exception ex)
                 {
@@ -147,30 +165,35 @@ namespace SkeletonGameManager.WPF.Providers
             });
         }
 
+        public SequenceYaml GetSequence(string yamlPath)
+        {
+            return _skeletonGameSerializer.DeserializeSkeletonYaml<SequenceYaml>(yamlPath);
+        }
+
         public void SaveAssetsFile(AssetsFile assetsFile)
         {
             var yamlFile = Path.Combine(GameFolder, YamlFiles[1]);
             _skeletonGameSerializer.SerializeYaml(yamlFile, assetsFile);
         }
 
-        public void SaveAttractFile()
+        public void SaveSequenceFile(SequenceYaml sequenceYaml, string saveFile)
         {
-            var combo = AttractConfig.AttractSequences
+            var combo = sequenceYaml.AttractSequences
                 .Select(x => x.Combo);
 
-            var move = AttractConfig.AttractSequences
+            var move = sequenceYaml.AttractSequences
                 .Select(x => x.MoveLayer);  
 
-            var grouped = AttractConfig.AttractSequences
+            var grouped = sequenceYaml.AttractSequences
                 .Select(x => x.GroupLayer);
 
-            var markup = AttractConfig.AttractSequences
+            var markup = sequenceYaml.AttractSequences
                 .Select(x => x.MarkupLayer);
 
-            var scripted = AttractConfig.AttractSequences
+            var scripted = sequenceYaml.AttractSequences
                         .Select(x => x.ScriptedText);
 
-            var randomtxt = AttractConfig.AttractSequences
+            var randomtxt = sequenceYaml.AttractSequences
             .Select(x => x.RandomText);
 
             foreach (var group in grouped.Where(x => x != null))
@@ -243,7 +266,7 @@ namespace SkeletonGameManager.WPF.Providers
                 item.TextList = item.TextEntries.Select(x => x.TextLine).ToList();
             }
             //AttractConfig.Sequences
-            _skeletonGameSerializer.SerializeYaml(yamlFile, AttractConfig);
+            _skeletonGameSerializer.SerializeYaml(saveFile, sequenceYaml);
 
         }
 
@@ -256,7 +279,7 @@ namespace SkeletonGameManager.WPF.Providers
         public void SaveMachineConfig(MachineConfig mConfig)
         {
             //var yamlFile = Path.Combine(GameFolder, YamlFiles[6]);
-            _skeletonGameSerializer.SerializeYaml("machine.yaml", mConfig);
+            _skeletonGameSerializer.SerializeYaml(GameFolder + "\\" + YamlFiles[5], mConfig);
             //_skeletonGameSerializer.SerializeYaml(yamlFile, mConfig);
         }
 

@@ -48,7 +48,7 @@ namespace SkeletonGame.Tests
         {
             var attractFilePath = "TestData/" + gameFolder + "/config/attract.yaml";
 
-            var attract = _skeleSerializer.DeserializeSkeletonYaml<AttractYaml>(@"TestData/" + gameFolder + "/config/attract.yaml");
+            var attract = _skeleSerializer.DeserializeSkeletonYaml<SequenceYaml>(@"TestData/" + gameFolder + "/config/attract.yaml");
 
             Assert.NotNull(attract);
         }

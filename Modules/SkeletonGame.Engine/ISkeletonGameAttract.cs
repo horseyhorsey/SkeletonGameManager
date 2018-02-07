@@ -12,7 +12,7 @@ namespace SkeletonGame.Engine
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns></returns>
-        void GetAvailableSequences(AttractYaml attractYaml);
+        void GetAvailableSequences(SequenceYaml attractYaml);
     }
 
     public class SkeletonGameAttract : ISkeletonGameAttract
@@ -21,7 +21,7 @@ namespace SkeletonGame.Engine
         /// Gets the available sequences. A sequence contains all types, but only one type is set at a time. Get the sequence base value where not null in lists.
         /// </summary>
         /// <param name="attractYaml"></param>
-        public void GetAvailableSequences(AttractYaml attractYaml)
+        public void GetAvailableSequences(SequenceYaml attractYaml)
         {            
             attractYaml.Sequences.Clear();
 

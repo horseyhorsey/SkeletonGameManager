@@ -37,35 +37,35 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Options">
-            <StackPanel Orientation="Horizontal">
-
-                <Label Content="Add"/>
-                
-                <ComboBox x:Name="SequenceSelector"
-                          MinWidth="150"                           
-                          ItemsSource="{Binding Source={StaticResource SequenceTypes}}"
-                          />
-                
-                <Button Content="+" MinWidth="50" 
-                        Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddNewSequenceCommand}"
-                        CommandParameter="{Binding ElementName=SequenceSelector,Path=SelectedItem}"
-                    />
-
-                <Label Content="Duplicate"/>
-
-                <Button Content="+" MinWidth="50" IsEnabled="False"
-                        Command="{Binding ElementName=LayoutRoot,Path=DataContext.DuplicateSequenceCommand}"
-                        CommandParameter="{Binding ElementName=DataGridSequences,Path=SelectedItem}"
-                    />
-            </StackPanel>
+        <GroupBox Header="Options" Grid.ColumnSpan="2">
+            <ComboBox ItemsSource="{Binding SequenceYamls}" DisplayMemberPath="Filename"
+                      SelectedIndex="0"
+                      SelectedItem="{Binding SelectedSequenceFile}"                      
+                      />
         </GroupBox>
 
         <!--ATTRACT SEQEUENCES-->
         <GroupBox Grid.Row="1" Header="Sequences">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
 
-            <!--MAIN ITEMS SOURCE OF THE ATTRACT YAML-->
-            <DataGrid x:Name="DataGridSequences" 
+                    <ComboBox x:Name="SequenceSelector" MinWidth="45"                          
+                          ItemsSource="{Binding Source={StaticResource SequenceTypes}}"
+                          />
+
+                    <Button Content="+" MinWidth="25"
+                        Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddNewSequenceCommand}"
+                        CommandParameter="{Binding ElementName=SequenceSelector,Path=SelectedItem}"
+                    />
+
+                    <Button Content="+" MinWidth="25" IsEnabled="False"
+                        Command="{Binding ElementName=LayoutRoot,Path=DataContext.DuplicateSequenceCommand}"
+                        CommandParameter="{Binding ElementName=DataGridSequences,Path=SelectedItem}"
+                    />
+                </StackPanel>
+
+                <!--MAIN ITEMS SOURCE OF THE ATTRACT YAML-->
+                <DataGrid x:Name="DataGridSequences" 
                       ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"
                       AutoGenerateColumns="False"
                       CanUserResizeRows="False" CanUserAddRows="False"                      
@@ -75,38 +75,39 @@
                       dd:DragDrop.IsDropTarget="True"
                       dd:DragDrop.DropHandler="{Binding}"
                   >
-                                
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn IsReadOnly="True"                                          
+
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn IsReadOnly="True"                                          
                                         Width="2*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition MaxWidth="55"/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition MaxWidth="55"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <Label Height="20">
-                                        <Label.Style>
-                                            <MultiBinding Converter="{StaticResource StyleConverter}">
-                                                <MultiBinding.Bindings>
-                                                    <Binding RelativeSource="{RelativeSource Self}"/>
-                                                    <Binding Path="Sequence.SequenceName"/>
-                                                </MultiBinding.Bindings>
-                                            </MultiBinding>
-                                        </Label.Style>
-                                    </Label>
+                                        <Label Height="20">
+                                            <Label.Style>
+                                                <MultiBinding Converter="{StaticResource StyleConverter}">
+                                                    <MultiBinding.Bindings>
+                                                        <Binding RelativeSource="{RelativeSource Self}"/>
+                                                        <Binding Path="Sequence.SequenceName"/>
+                                                    </MultiBinding.Bindings>
+                                                </MultiBinding>
+                                            </Label.Style>
+                                        </Label>
 
-                                    <TextBlock Text="{Binding Sequence.SeqType}" Grid.Column="1"/>
-                                    <TextBlock Text="{Binding Sequence.duration}" Grid.Column="2"/>
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                                        <TextBlock Text="{Binding Sequence.SeqType}" Grid.Column="1"/>
+                                        <TextBlock Text="{Binding Sequence.duration}" Grid.Column="2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
         </GroupBox>
 
         <!--SELECTED SEQUENCE-->
@@ -120,7 +121,8 @@
             </ScrollViewer>
         </Grid>
 
-        <Button Content="Save Attract" Grid.Row="2" Command="{Binding SaveAttractCommand}" HorizontalAlignment="Right"/>
+        <Button Content="Save Sequences" Grid.Row="2" Grid.ColumnSpan="2" Margin="3"
+                Command="{Binding SaveAttractCommand}" HorizontalAlignment="Right"/>
 
     </Grid>
 </UserControl>

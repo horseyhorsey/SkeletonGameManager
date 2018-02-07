@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\SequenceCreateViewModel.cs" />
     <Compile Include="ViewModels\SequenceItemViewModel.cs" />
     <Compile Include="ViewModels\SequenceViewModelBase.cs" />
+    <Compile Include="ViewModels\SequenceYamlItemViewModel.cs" />
     <Compile Include="Views\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
     </Compile>

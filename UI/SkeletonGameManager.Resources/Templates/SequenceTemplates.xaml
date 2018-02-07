@@ -434,7 +434,15 @@
     <DataTemplate x:Key="Sequence_Markup">
         <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
             <StackPanel>
-                <xctk:IntegerUpDown Value="{Binding Width}"/>
+                
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Name" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding Name}" MinWidth="100" Margin="10"/>
+
+                    <Label Content="Width" VerticalAlignment="Center"/>
+                    <xctk:IntegerUpDown Value="{Binding Width}" Margin="10"/>
+                    
+                </StackPanel>
 
                 <GroupBox Header="Bold">
                     <StackPanel Orientation="Horizontal">
@@ -650,6 +658,7 @@
 
                     <CheckBox Grid.Row="2" Grid.Column="2" Margin="5" Content="Move Anim"  IsChecked="{Binding move_anim}" VerticalAlignment="Center"/>
                     <CheckBox Grid.Row="2" Grid.Column="3" Margin="5" Content="Move Text" IsChecked="{Binding move_text}" VerticalAlignment="Center"/>
+                    <CheckBox Grid.Row="2" Grid.Column="4" Margin="5" Content="Loop?" IsChecked="{Binding loop}" VerticalAlignment="Center"/>
 
                 </Grid>
 
@@ -674,6 +683,8 @@
     <DataTemplate x:Key="Content_MoveLayer">
         <GroupBox Header="{Binding Name}" x:Name="Root" DataContext="{Binding move_layer}">
             <StackPanel>
+
+                <TextBox Text="{Binding Name}"/>
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -719,6 +730,7 @@
 
                     <CheckBox Grid.Row="2" Grid.Column="2" Margin="5" Content="Move Anim"  IsChecked="{Binding move_anim}" VerticalAlignment="Center"/>
                     <CheckBox Grid.Row="2" Grid.Column="3" Margin="5" Content="Move Text" IsChecked="{Binding move_text}" VerticalAlignment="Center"/>
+                    <CheckBox Grid.Row="2" Grid.Column="4" Margin="5" Content="Loop?" IsChecked="{Binding loop}" VerticalAlignment="Center"/>
 
                 </Grid>
 
@@ -809,7 +821,8 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel>
-                    <xctk:DecimalUpDown Value="{Binding duration}"/>
+                    <TextBox Text="{Binding Name}"/>
+                    <xctk:DecimalUpDown Value="{Binding duration}" MaxWidth="50" HorizontalAlignment="Right"/>
                     <GroupBox Header="Transition">
                         <StackPanel>
                             <ComboBox ItemsSource="{Binding Source={StaticResource Transitions}}" SelectedItem="{Binding Transition}"/>
@@ -890,6 +903,8 @@
 
     <DataTemplate x:Key="Content_AnimationLayer">
         <StackPanel>
+
+            
 
             <StackPanel Orientation="Horizontal" >
 

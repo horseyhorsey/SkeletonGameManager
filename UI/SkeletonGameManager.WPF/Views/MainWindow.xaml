@@ -126,14 +126,14 @@
                                     </TabItem>
 
                                     <!--SKELETON GAME ATTRACT-->
-                                    <TabItem Header="Attract.yaml">
+                                    <TabItem Header="Sequences">
                                         <ContentControl prism:RegionManager.RegionName="AttractRegion"/>
                                     </TabItem>
 
-                                    <!--SKELETON GAME ATTRACT-->
-                                    <TabItem Header="Sequences" IsEnabled="False">
+                                    <!--SKELETON GAME ATTRACT--><!--
+                                    <TabItem Header="Sequences" IsEnabled="True">
                                         <ContentControl prism:RegionManager.RegionName="SequencesRegion"/>
-                                    </TabItem>
+                                    </TabItem>-->
 
                                     <TabItem Header="Scene Grab">
 
