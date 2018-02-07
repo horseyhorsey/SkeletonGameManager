@@ -1,8 +1,10 @@
-﻿using SkeletonGame.Engine;
+﻿using Prism.Commands;
+using SkeletonGame.Engine;
 using SkeletonGame.Models;
 using SkeletonGameManager.WPF.Providers;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -22,6 +24,8 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             //Just assign this collection, don't create a new observable
             Animations =_skeletonGameProvider.AssetsConfig.Animations;
             Animations.CollectionChanged += Animations_CollectionChanged;
+
+            OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_dmdPath.AbsolutePath));
         }
 
         private void Animations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

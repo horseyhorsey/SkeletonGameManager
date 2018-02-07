@@ -15,13 +15,28 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListView ItemsSource="{Binding AssetFiles}" Grid.RowSpan="2"/>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="{StaticResource Path_Dir}"
+                    ToolTip="{StaticResource OpenDir}"
+                    VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
+        </StackPanel>
 
-        <DataGrid Grid.Column="1" ItemsSource="{Binding HdFonts}" 
+        <StackPanel Orientation="Horizontal"  Grid.Row="1">
+            <TextBlock FontStyle="Italic" Text="{StaticResource DropFilesInfo}"/>
+            <TextBlock Text=" - " />
+            <TextBlock FontStyle="Italic" Text="{StaticResource FileOptionInfo}" 
+                       Margin="10,0"/>
+        </StackPanel>
+
+        <ListView ItemsSource="{Binding AssetFiles}" Grid.Row="2" Grid.RowSpan="2"/>
+
+        <DataGrid Grid.Column="1" Grid.Row="2" ItemsSource="{Binding HdFonts}" 
                   AutoGenerateColumns="False" CanUserAddRows="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Size}"/>
@@ -29,7 +44,8 @@
                 <DataGridTextColumn Binding="{Binding File}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Expander Grid.Column="1" Grid.Row="1" Header="Styles" IsExpanded="True">
+        
+        <Expander Grid.Column="1" Grid.Row="3" Header="Styles" IsExpanded="True">
             <DataGrid ItemsSource="{Binding FontStyles}" AutoGenerateColumns="False">
 
                 <DataGrid.Columns>

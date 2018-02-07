@@ -22,7 +22,7 @@
         <StackPanel Orientation="Horizontal">
             <Button Content="{StaticResource Path_Dir}"
                     ToolTip="{StaticResource OpenDir}"
-                    VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenSoundDirectoryCommand}"/>
+                    VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"  Grid.Row="1">

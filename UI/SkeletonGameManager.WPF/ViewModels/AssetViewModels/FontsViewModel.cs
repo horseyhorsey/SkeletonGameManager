@@ -1,4 +1,5 @@
-﻿using SkeletonGame.Engine;
+﻿using Prism.Commands;
+using SkeletonGame.Engine;
 using SkeletonGame.Models;
 using SkeletonGameManager.WPF.Providers;
 using System;
@@ -23,6 +24,8 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             FontStyles = _skeletonGameProvider.AssetsConfig.Fonts.FontStyles;
 
             HdFonts = _skeletonGameProvider.AssetsConfig.Fonts.HdFonts;
+
+            OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_fontPath.AbsolutePath));
 
         }
 

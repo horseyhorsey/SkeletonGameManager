@@ -2,12 +2,21 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 {
     public abstract class AssetFileBaseViewModel : BindableBase, IDropTarget
     {
+        public ICommand OpenDirectoryCommand { get; set; }
+
+        public void OpenDirectory(string path)
+        {
+            Process.Start(path);
+        }
+
         private ObservableCollection<string> assetFiles = new ObservableCollection<string>();
         public ObservableCollection<string> AssetFiles
         {

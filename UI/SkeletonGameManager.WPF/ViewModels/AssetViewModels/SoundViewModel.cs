@@ -29,7 +29,6 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 
         #region Commands
         public ICommand OpenSoundCommand { get; set; }
-        public ICommand OpenSoundDirectoryCommand { get; set; }
         
         #endregion
 
@@ -44,7 +43,7 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
                 Process.Start(s);
             });
 
-            OpenSoundDirectoryCommand = new DelegateCommand(() => Process.Start(_audioPathFull.AbsolutePath));
+            OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_audioPathFull.AbsolutePath));
 
             InitCollectionByAudiotType(audioType);
         }

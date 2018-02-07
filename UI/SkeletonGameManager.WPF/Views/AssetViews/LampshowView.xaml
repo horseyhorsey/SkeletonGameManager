@@ -10,6 +10,8 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -18,13 +20,19 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <StackPanel Orientation="Horizontal">
+            <Button Content="{StaticResource Path_Dir}"
+                    ToolTip="{StaticResource OpenDir}"
+                    VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
+        </StackPanel>
+
         <!--TITLE AND HELP-->
-        <StackPanel  Orientation="Horizontal">
+        <StackPanel  Orientation="Horizontal" Grid.Row="2">
             <Label Content="Available Show files"/>
             <Label Content="Drag/Drop lampshows to add to this list" FontStyle="Italic" FontSize="12"/>
         </StackPanel>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="3">
             <ListView ItemsSource="{Binding AssetFiles, UpdateSourceTrigger=PropertyChanged}"
                                   dd:DragDrop.IsDragSource="True"
                                   dd:DragDrop.IsDropTarget="True"
@@ -33,12 +41,12 @@
         </Grid>
 
         <!--Lampshows in asset_list-->
-        <StackPanel Grid.Column="1" Orientation="Horizontal">
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="2">
             <Label Content="Applied" />
             <Label Content="Use delete key to remove from saved list" FontStyle="Italic" FontSize="12"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="1" Grid.Column="1" 
+        <DataGrid Grid.Row="3" Grid.Column="1" 
                               AutoGenerateColumns="False" CanUserAddRows="False"
                               dd:DragDrop.IsDropTarget="True"
                               dd:DragDrop.DropHandler="{Binding}"

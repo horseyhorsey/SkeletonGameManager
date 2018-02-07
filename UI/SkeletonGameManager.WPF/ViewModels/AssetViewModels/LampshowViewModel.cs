@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using SkeletonGame.Engine;
 using SkeletonGameManager.WPF.Providers;
 using System.Windows.Threading;
+using Prism.Commands;
 
 namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 {
@@ -28,6 +29,8 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 
             LampShows = new ObservableCollection<LampShow>(_skeletonGameProvider.AssetsConfig.LampShows ?? new List<LampShow>());
             LampShows.CollectionChanged += LampShows_CollectionChanged;
+
+            OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_lampshowPath));
         }
 
         private void LampShows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
