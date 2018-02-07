@@ -125,6 +125,6 @@ namespace SkeletonGame.Models
     public class SequenceTextAnimationBase : SequenceTextBase
     {
         [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
-        public string Animation { get; set; } = "missing";
+        public string Animation { get; set; } = null;
     }
 }
