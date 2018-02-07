@@ -34,6 +34,8 @@ namespace SkeletonGame.Engine
                     case AssetTypes.Animations:
                         var animFileFilters = new List<string> { "*.png", "*.jpg", "*.mp4", "*.avi" };
                         return GetFiles(path, animFileFilters);
+                    case AssetTypes.Sequences:
+                        return Directory.EnumerateFiles(path, @"*.yaml");
                     default:
                         return null;
                 }
