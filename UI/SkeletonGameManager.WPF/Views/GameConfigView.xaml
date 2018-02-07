@@ -15,8 +15,9 @@
 
         <!--ROUNDED TEXTBOX-->
         <Style TargetType="TextBox" BasedOn="{StaticResource TextBox_Rounded}">
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
         </Style>
 
         <ObjectDataProvider x:Key="BufferSizes" MethodName="GetValues" 
@@ -69,7 +70,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox Header="Paths">
+        <GroupBox BorderThickness="3" Grid.Column="1">
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <ContentPresenter Content="{DynamicResource Path_Dir}"/>
+                    <TextBlock Text="Paths" FontWeight="DemiBold"/>
+                </DockPanel>
+            </GroupBox.Header>
 
             <StackPanel>
                 <TextBlock Text="DMD Path"/>
@@ -96,7 +104,14 @@
 
         </GroupBox>
 
-        <GroupBox Header="Default Modes" Grid.Column="0" Grid.Row="2">
+        <GroupBox  Grid.Column="0" Grid.Row="2" BorderThickness="3">
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <ContentPresenter Content="{DynamicResource Path_Progress}"/>
+                    <TextBlock Text="Default Modes" FontWeight="DemiBold"/>
+                </DockPanel>
+            </GroupBox.Header>
 
             <Grid>
 
@@ -155,25 +170,40 @@
 
         </GroupBox>
 
-        <GroupBox Header="Game Launch" Grid.Row="3" Height="50" VerticalAlignment="Top" Margin="5">
-            <Button Content="{StaticResource Path_Game}" Width="25" Height="25"
-                    ToolTip="{StaticResource GameLaunchInfo}"
-                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Command="{Binding LaunchGameCommand}"/>
-        </GroupBox>
-
 
         <Button Grid.Row="4" Margin="15" VerticalAlignment="Bottom" Grid.ColumnSpan="3" 
                 HorizontalAlignment="Center" Width="100" Height="60"
                 Command="{Binding SaveCommand}" Content="Save Config" ToolTip="Overwrites the config.yaml."/>
 
         <!--DMD OPTIONS-->
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="0">
 
+            <GroupBox Grid.Row="3" VerticalAlignment="Top" Margin="5">
+
+                <GroupBox.Header>
+                    <DockPanel>
+                        <ContentPresenter Content="{DynamicResource Path_Game}"/>
+                        <TextBlock Text="Game Launch" FontWeight="DemiBold"/>
+                    </DockPanel>
+                </GroupBox.Header>
+
+                <Button Content="{StaticResource Path_Game}" Width="25" Height="25"
+                    Margin="10"
+                    ToolTip="{StaticResource GameLaunchInfo}"
+                    HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Command="{Binding LaunchGameCommand}"/>
+            </GroupBox>
 
             <!--DISPLAY ( DMD )-->
-            <GroupBox Header="Display (Dmd)" Grid.Column="1" Grid.Row="0">
+            <GroupBox Grid.Column="1" Grid.Row="0" BorderThickness="3">
 
+                <GroupBox.Header>
+                    <DockPanel>
+                        <ContentPresenter Content="{DynamicResource Path_Attract}"/>
+                        <TextBlock Text="Display (Dmd)" FontWeight="DemiBold"/>
+                    </DockPanel>
+                </GroupBox.Header>
+                
                 <StackPanel Margin="3">
 
                     <TextBlock Text="Dmd Grid Path"/>
@@ -262,7 +292,15 @@
             </GroupBox>
 
             <!--AUDIO OPTIONS-->
-            <GroupBox Header="Audio" Grid.Row="2">
+            <GroupBox Grid.Row="2" BorderThickness="3">
+
+                <GroupBox.Header>
+                    <DockPanel>
+                        <ContentPresenter Content="{DynamicResource Path_Sound}"/>
+                        <TextBlock Text="Audio" FontWeight="DemiBold"/>
+                    </DockPanel>
+                </GroupBox.Header>
+                
                 <StackPanel>
                     <TextBlock Text="Buffer size"/>
                     <ComboBox ItemsSource="{Binding Source={StaticResource BufferSizes}}" SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
