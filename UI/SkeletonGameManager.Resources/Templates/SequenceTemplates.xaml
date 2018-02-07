@@ -823,6 +823,17 @@
                 <StackPanel>
                     <TextBox Text="{Binding Name}"/>
                     <xctk:DecimalUpDown Value="{Binding duration}" MaxWidth="50" HorizontalAlignment="Right"/>
+
+                    <DockPanel Margin="5">
+                        <Label Content="Sound:       "/>
+                        <ComboBox Style="{StaticResource Style_SoundsCombo}" HorizontalAlignment="Stretch"/>
+                    </DockPanel>
+
+                    <DockPanel>
+                        <Label Content="Lampshow: "/>
+                        <ComboBox Style="{StaticResource Style_LampsCombo}"/>
+                    </DockPanel>
+
                     <GroupBox Header="Transition">
                         <StackPanel>
                             <ComboBox ItemsSource="{Binding Source={StaticResource Transitions}}" SelectedItem="{Binding Transition}"/>
