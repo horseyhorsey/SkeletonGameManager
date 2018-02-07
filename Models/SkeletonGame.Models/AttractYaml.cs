@@ -343,10 +343,12 @@ namespace SkeletonGame.Models
         public GroupLayer()
         {
             this.SeqType = SequenceType.GroupLayer;
+            this.duration = 5.0m;
         }
 
-        public GroupLayer(SequenceBase sequenceBase)
-        {            
+        public GroupLayer(SequenceBase sequenceBase) :base()
+        {
+            
         }
     }
 
