@@ -83,6 +83,8 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
 
+            SequenceYamls.CollectionChanged += SequenceYamls_CollectionChanged;
+
             SaveAttractCommand = new DelegateCommand(() =>
             {
 
@@ -149,7 +151,8 @@ namespace SkeletonGameManager.WPF.ViewModels
                     case SequenceType.TextLayer:
                         var txtLayr = new TextLayer() { SequenceName = "TextLayer", duration = 3.0m };                        
                         seq = new Sequence() { text_layer = txtLayr };
-                        _skeletonGameProvider.AttractConfig.Sequences.Add(seq.text_layer);
+                        //_skeletonGameProvider.AttractConfig.Sequences.Add(seq.text_layer);
+                        this.SelectedSequenceFile.SequenceYaml.AttractSequences.Add(seq);
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.text_layer);
                         Sequences.Add(new SequenceItemViewModel(seq.text_layer));
                         break;
@@ -218,11 +221,6 @@ namespace SkeletonGameManager.WPF.ViewModels
                         break;
                     default:
                         break;
-                }
-
-                if (seq != null)
-                {
-                    _skeletonGameProvider.AttractConfig.AttractSequences.Add(seq);
                 }
             });
 
@@ -294,10 +292,19 @@ namespace SkeletonGameManager.WPF.ViewModels
             });
         }
 
+        private void SequenceYamls_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            
+        }
+
         private void Sequences_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {                
                 this.SelectedSequenceFile.SequenceYaml.Sequences.RemoveAt(e.OldStartingIndex);
+                this.SelectedSequenceFile.SequenceYaml.AttractSequences.RemoveAt(e.OldStartingIndex);
+            }
+                
         }
 
         public virtual void DragOver(IDropInfo dropInfo)
@@ -374,9 +381,10 @@ namespace SkeletonGameManager.WPF.ViewModels
                 foreach (var item in _skeletonGameProvider.SequenceYamls)
                 {
                     SequenceYamls.Add(new SequenceYamlItemViewModel(item, _skeletonGameProvider.GetSequence(item)));
+                    _skeletonGameAttract.GetAvailableSequences(SequenceYamls.Last().SequenceYaml);
                 }
 
-                this.SelectedSequenceFile = SequenceYamls[0];
+                this.SelectedSequenceFile = SequenceYamls[0];                          
 
             }
         }
@@ -389,7 +397,6 @@ namespace SkeletonGameManager.WPF.ViewModels
             await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 Sequences?.Clear();
-
                 _skeletonGameAttract.GetAvailableSequences(SelectedSequenceFile.SequenceYaml);
 
                 foreach (var sequence in SelectedSequenceFile.SequenceYaml.Sequences)
