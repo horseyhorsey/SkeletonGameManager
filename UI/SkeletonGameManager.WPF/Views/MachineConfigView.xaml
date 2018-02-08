@@ -23,6 +23,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid.Resources>
@@ -225,9 +226,6 @@
 
                 <TextBlock Text="{Binding MachineConfig.PRGame.NumBalls, StringFormat={} Balls in Machine: {0}}" Margin="50,0"/>
 
-                <!--SAVE MACHINE BUTTON-->
-                <Button Command="{Binding SaveMachineConfigCommand}" Grid.Row="2" Content="Save Machine.yaml" ToolTip="Saves all the machine configuration"/>
-
             </StackPanel>
         </GroupBox>
 
@@ -244,9 +242,16 @@
                 
             </StackPanel>
         </GroupBox>
+
+        <GroupBox Header="Save" Grid.Column="2" MaxHeight="50">
+            <!--SAVE MACHINE BUTTON-->
+            <Button Command="{Binding SaveMachineConfigCommand}" Grid.Row="2" HorizontalAlignment="Left"
+                        Height="25" Width="50"
+                        Content="{StaticResource Path_Save}" ToolTip="Saves all the machine configuration"/>
+        </GroupBox>
         
          <!--MAIN TAB CONTROL-->
-        <TabControl Grid.Row="1" Grid.ColumnSpan="2" Background="{StaticResource Brush_Paper}">
+        <TabControl Grid.Row="1" Grid.ColumnSpan="3" Background="{StaticResource Brush_Paper}">
 
             <!--SWITCHES - THE STYLE CHANGES DEPENDING ON THE MACHINE TYPE-->
             <TabItem Header="Switches">

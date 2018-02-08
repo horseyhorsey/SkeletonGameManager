@@ -38,10 +38,17 @@
         </Grid.RowDefinitions>
 
         <GroupBox Header="Options" Grid.ColumnSpan="2">
-            <ComboBox ItemsSource="{Binding SequenceYamls}" DisplayMemberPath="Filename"
-                      SelectedIndex="0"
+            <DockPanel>
+                
+                <ComboBox ItemsSource="{Binding SequenceYamls}" DisplayMemberPath="Filename"
+                      SelectedIndex="0" MaxHeight="25"
                       SelectedItem="{Binding SelectedSequenceFile}"                      
                       />
+
+                <Button Content="{StaticResource Path_Save}" Grid.Row="2" Grid.ColumnSpan="2" Margin="3"
+                        Height="30" Width="50" ToolTip="Saves the attract and all other sequence files."
+                        Command="{Binding SaveAttractCommand}"  HorizontalAlignment="Right"/>
+            </DockPanel>
         </GroupBox>
 
         <!--ATTRACT SEQEUENCES-->
@@ -114,15 +121,12 @@
         <Grid Grid.Column="1" Background="White" Grid.Row="1">
 
             <ScrollViewer>
-            <ContentPresenter ContentTemplateSelector="{StaticResource AttractSequenceSelector}"
+                <ContentPresenter ContentTemplateSelector="{StaticResource AttractSequenceSelector}"
                               Content="{Binding SelectedSequence}"
                               />
 
             </ScrollViewer>
         </Grid>
-
-        <Button Content="Save Sequences" Grid.Row="2" Grid.ColumnSpan="2" Margin="3"
-                Command="{Binding SaveAttractCommand}" HorizontalAlignment="Right"/>
 
     </Grid>
 </UserControl>
