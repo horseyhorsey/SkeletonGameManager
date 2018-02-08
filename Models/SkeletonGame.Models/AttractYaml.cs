@@ -403,8 +403,8 @@ namespace SkeletonGame.Models
     public class HighScores : SequenceTextAnimationBase
     {
 
-        [YamlMember(Alias = "Order", ApplyNamingConventions = false)]
-        public List<string> Order { get; set; }
+        [YamlMember(Alias = "Order", ApplyNamingConventions = false, SerializeAs = typeof(List<string>))]
+        public ObservableCollection<string> Order { get; set; } = new ObservableCollection<string> { "player", "category", "score" };
 
         public HighScores()
         {

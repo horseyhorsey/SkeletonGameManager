@@ -270,7 +270,11 @@
                 </Grid.RowDefinitions>
 
                 <GroupBox Header="Order">
-                    <ListView ItemsSource="{Binding Order}">
+                    <ListView ItemsSource="{Binding Order}"                       
+                      xmlns:dd="urn:gong-wpf-dragdrop"
+                      dd:DragDrop.IsDragSource="True"
+                      dd:DragDrop.IsDropTarget="True"
+                      dd:DragDrop.DropHandler="{Binding}">
                     </ListView>
                 </GroupBox>
 
