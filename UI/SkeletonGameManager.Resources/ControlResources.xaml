@@ -292,6 +292,20 @@
     <SolidColorBrush x:Key="Brush_TextLayer" Color="SandyBrown"/>
     <!--#endregion-->
 
+    <ControlTemplate x:Key="ToolTips" TargetType="ToolTip">
+        <Border BorderThickness="2" BorderBrush="DarkSlateGray">
+            <Grid MaxWidth="250" Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Rectangle Fill="{TemplateBinding Background}" Height="20" Width="250"/>
+                <TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}" Grid.Row="1"/>
+            </Grid>
+        </Border>
+    </ControlTemplate>
+
     <!--#region SEQUENCE LABLE STYLE-->
     <Style x:Key="SequenceLabelStyle" TargetType="Label">
         <Setter Property="Template">
@@ -308,61 +322,121 @@
     <Style x:Key="AnimationSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_MoveLayer}"/>
         <Setter Property="Content" Value="A"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqAnimation}" Background="{StaticResource Brush_PanningLayer}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="GroupLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_GroupLayer}"/>
         <Setter Property="Content" Value="G"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqGroupLayer}" Background="{StaticResource Brush_GroupLayer}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="LastScoresSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_LastScores}"/>
         <Setter Property="Content" Value="LS"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqLastScores}" Background="{StaticResource Brush_LastScores}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="ComboSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_ComboLayer}"/>
         <Setter Property="Content" Value="C"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqCombo}" Background="{StaticResource Brush_ComboLayer}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="MarkupLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_MarkupLayer}"/>
         <Setter Property="Content" Value="MU"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqMarkupLayer}" Background="{StaticResource Brush_MarkupLayer}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="ScriptedTextSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_ScriptedText}"/>
         <Setter Property="Content" Value="ST"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqScriptedText}" Background="{StaticResource Brush_GroupLayer}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="TextLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_TextLayer}"/>
         <Setter Property="Content" Value="T"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqTextLayer}" Background="{StaticResource Brush_TextLayer}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="RandomTextSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_RandomText}"/>
         <Setter Property="Content" Value="RT"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqRandomText}" Background="{StaticResource Brush_RandomText}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="PanningLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_PanningLayer}"/>
         <Setter Property="Content" Value="P"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqPanningLayer}" Background="{StaticResource Brush_PanningLayer}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="MoveLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_MoveLayer}"/>
         <Setter Property="Content" Value="M"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqMoveLayer}" Background="{StaticResource Brush_MoveLayer}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="HighScoresSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_HighScores}"/>
         <Setter Property="Content" Value="HS"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqHighScores}" Background="{StaticResource Brush_HighScores}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="CreditsSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_HighScores}"/>
         <Setter Property="Content" Value="HS"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqCredits}" Background="{StaticResource Brush_ScriptedText}"/>
+            </Setter.Value>
+        </Setter>
     </Style>
     <!--#endregion-->
 
