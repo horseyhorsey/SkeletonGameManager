@@ -136,6 +136,8 @@ namespace SkeletonGameManager.WPF.ViewModels
                 }
 
                 //Switches
+                DedicatedSwitches?.Clear();
+                FlippersSwitches?.Clear();
                 foreach (var prSwitch in MachineConfig.PRSwitches)
                 {
                     if (prSwitch.Number.Contains("D"))

@@ -291,7 +291,40 @@
 
                     <!--TODO - MAYBE JUST MOVE THESE INTO AN EXPANDER IN THE SAME TAB?-->
                     <TabItem Header="Dedicated">
+                        <ItemsControl ItemsSource="{Binding DedicatedSwitches}">
 
+                            <ItemsControl.Resources>
+
+                                <!--STERN SAM 1-64 switches (10 x)-->
+                                <ItemsPanelTemplate x:Key="SAM_Matrix">
+                                    <UniformGrid Columns="8" Rows="8" IsItemsHost="True"/>
+                                </ItemsPanelTemplate>
+
+                                <ItemsPanelTemplate x:Key="STD_Matrix">
+                                    <ui:UniformGridWithOrientation Columns="8" Rows="8" IsItemsHost="True"/>
+                                </ItemsPanelTemplate>
+
+                            </ItemsControl.Resources>
+
+                            <!--STYLE-->
+                            <ItemsControl.Style>
+
+                                <Style TargetType="ItemsControl" BasedOn="{StaticResource PinballSwitchMatrix}">
+
+                                    <Setter Property="ItemsPanel" Value="{StaticResource STD_Matrix}"/>
+
+                                    <!--CHANGE THE STYLE IF USING A SAM CONFIG-->
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
+                                            <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+
+                                </Style>
+
+                            </ItemsControl.Style>
+
+                        </ItemsControl>
                     </TabItem>
 
                 </TabControl>
