@@ -282,6 +282,7 @@
     <!--#region Sequence Brushes-->
     <SolidColorBrush x:Key="Brush_ComboLayer" Color="LightCoral"/>
     <SolidColorBrush x:Key="Brush_GroupLayer" Color="Green"/>
+    <SolidColorBrush x:Key="Brush_HighScores" Color="OrangeRed"/>
     <SolidColorBrush x:Key="Brush_LastScores" Color="Red"/>
     <SolidColorBrush x:Key="Brush_MarkupLayer" Color="Navy"/>
     <SolidColorBrush x:Key="Brush_MoveLayer" Color="LightBlue"/>
@@ -352,6 +353,16 @@
     <Style x:Key="MoveLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_MoveLayer}"/>
         <Setter Property="Content" Value="M"/>
+    </Style>
+
+    <Style x:Key="HighScoresSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_HighScores}"/>
+        <Setter Property="Content" Value="HS"/>
+    </Style>
+
+    <Style x:Key="CreditsSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_HighScores}"/>
+        <Setter Property="Content" Value="HS"/>
     </Style>
     <!--#endregion-->
 
