@@ -8,7 +8,7 @@ namespace SkeletonGame.Models.Attract
     public class MarkupLayer : TransitionBaseLayer
     {
         [YamlMember(Alias = "width", ApplyNamingConventions = false)]
-        public string Width { get; set; }
+        public string Width { get; set; } = "100";
 
         [YamlMember(Alias = "Bold", ApplyNamingConventions = false)]
         public Bold Bold { get; set; } = new Bold() { Font = "default" };
