@@ -178,7 +178,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         Sequences.Add(new SequenceItemViewModel(seq.AttractAnimation));
                         break;
                     case SequenceType.HighScores:
-                        var hiScore = new HighScores() { SequenceName = "HighScores", duration = 3.0m };                        
+                        var hiScore = new HighScores() { SequenceName = "HighScores", duration = 1.0m };                        
                         seq = new Sequence() { HighScores = hiScore };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.HighScores);
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.HighScores);
@@ -300,9 +300,13 @@ namespace SkeletonGameManager.WPF.ViewModels
         private void Sequences_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-            {                
-                this.SelectedSequenceFile.SequenceYaml.Sequences.RemoveAt(e.OldStartingIndex);
-                this.SelectedSequenceFile.SequenceYaml.AttractSequences.RemoveAt(e.OldStartingIndex);
+            {
+                try
+                {
+                    this.SelectedSequenceFile.SequenceYaml.Sequences.RemoveAt(e.OldStartingIndex);
+                    this.SelectedSequenceFile.SequenceYaml.AttractSequences.RemoveAt(e.OldStartingIndex);
+                }
+                catch { }                
             }
                 
         }
