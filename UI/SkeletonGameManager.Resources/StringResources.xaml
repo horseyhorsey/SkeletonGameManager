@@ -72,6 +72,60 @@
     <sys:String x:Key="Tip_Trophys">
         Enables a mode that displays trophys when complete. See the trophy_default_data.
     </sys:String>
+    
+    <!--#region SEQUENCES-->
+
+    <sys:String x:Key="Tip_SeqLastScores">
+        Displays the last games scores.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqAnimation">
+        An animation layer, no text.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqHighScores">
+        Displays the high scores.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqCombo">
+       A multi-line text layer and animation Combo.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqCredits">
+        A static animation with a moving image(credit scroll) that scrolls over animation.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqMarkupLayer">
+        Has a Bold # and Normal [ font. eg:
+        # Left, Right #, # Center #
+        [ Left, Right ], [ Center ]
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqMoveLayer">
+        Moves an animation or text.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqPanningLayer">
+        TODO
+    </sys:String>
+    
+    <sys:String x:Key="Tip_SeqRandomText">
+        Create a list of sentances to display at random when this layer is used.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqTextLayer">
+        A text layer with no animation.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqGroupLayer">
+        Groups multiple display layers together.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqScriptedText">
+        Runs a script of text lists. Duration is how long each text list will be displayed. If an animation is set to play with the layers and the duration of the animation is longer than the text script, then the duration is set to let the whole animtion finish.
+    </sys:String>
+
+    <!--#endregion-->
 
 </ResourceDictionary>
     
