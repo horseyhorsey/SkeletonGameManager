@@ -51,14 +51,17 @@
                                 <!--TITLE-->
                                 <StackPanel Orientation="Horizontal">
                                     
-                                    <ContentPresenter Margin="5" Content="{StaticResource Path_Skele}"/>
+                                    <ContentPresenter Margin="5" 
+                                                      VerticalAlignment="Bottom"
+                                                      Content="{StaticResource Path_Skele}"/>
                                     
                                     <TextBlock Grid.Row="0" Text="SkeletonGame Manager" 
                                                FontSize="24" FontStyle="Italic"
+                                               VerticalAlignment="Bottom"
                                                FontWeight="DemiBold" Margin="5,10,0,0"
                                                />
 
-                                    <DockPanel Margin="3" Grid.Row="2" VerticalAlignment="Bottom">
+                                    <DockPanel Margin="20,3" Grid.Row="2" VerticalAlignment="Bottom">
 
                                         <Menu VerticalAlignment="Bottom">
                                             
@@ -77,20 +80,31 @@
                                         <!--GAME FOLDER-->
                                         <TextBox Text="{Binding GameFolder, UpdateSourceTrigger=PropertyChanged}" 
                                             MinWidth="300" MaxHeight="20" DockPanel.Dock="Left"
+                                                 VerticalAlignment="Bottom"
                                             ToolTip="Current skeleton game folder"
                                                 />
 
                                         <!--LOAD YAMLS-->
                                         <Button Content="Load" MaxWidth="50"
                                                 DockPanel.Dock="Right" 
-                                                ToolTip="Load yaml entries"
+                                                ToolTip="Load / Refresh from the games yaml configurations"
+                                                VerticalAlignment="Bottom"
                                                 Command="{Binding RefreshObjectsCommand}"
                                                 />
 
                                         <!--SET DIR-->
                                         <Button Content="..." MaxWidth="50" DockPanel.Dock="Right" ToolTip="Set game folder"
-                                            Command="{Binding SetDirectoryCommand}"
+                                                VerticalAlignment="Bottom"
+                                                Command="{Binding SetDirectoryCommand}"
                                                 />
+
+                                        <!--LAUNCH GAME-->
+                                        <Button Content="{StaticResource Path_Game}" 
+                                            Width="25" Height="20"
+                                            VerticalAlignment="Bottom"
+                                            DockPanel.Dock="Right"
+                                            ToolTip="{StaticResource GameLaunchInfo}"                                            
+                                            Command="{Binding LaunchGameCommand}"/>
 
                                     </DockPanel>
                                 </StackPanel>

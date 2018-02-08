@@ -178,22 +178,6 @@
         <!--DMD OPTIONS-->
         <StackPanel Grid.Column="0">
 
-            <GroupBox Grid.Row="3" VerticalAlignment="Top" Margin="5">
-
-                <GroupBox.Header>
-                    <DockPanel>
-                        <ContentPresenter Content="{DynamicResource Path_Game}"/>
-                        <TextBlock Text="Game Launch" FontWeight="DemiBold"/>
-                    </DockPanel>
-                </GroupBox.Header>
-
-                <Button Content="{StaticResource Path_Game}" Width="25" Height="25"
-                    Margin="10"
-                    ToolTip="{StaticResource GameLaunchInfo}"
-                    HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Command="{Binding LaunchGameCommand}"/>
-            </GroupBox>
-
             <!--DISPLAY ( DMD )-->
             <GroupBox Grid.Column="1" Grid.Row="0" BorderThickness="3">
 
