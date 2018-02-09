@@ -353,7 +353,7 @@
         <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
             <StackPanel>
                 <Label Content="Name"/>
-                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}"/>
+                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding AnimName}"/>
 
                 <Label Content="Lampshow"/>
                 <ComboBox Style="{StaticResource Style_LampsCombo}"/>
@@ -363,8 +363,152 @@
 
                 <Label Content="Duration"/>
                 <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
+
+                <ContentPresenter ContentTemplate="{DynamicResource TransformOption}"/>
             </StackPanel>
         </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TransformOption">
+        <GroupBox Header="Apply Transforms">
+            <StackPanel Margin="5">
+                <ContentPresenter ContentTemplate="{DynamicResource ZoomOptions}"/>
+                <ContentPresenter ContentTemplate="{DynamicResource MoveOptions}"/>
+                <ContentPresenter ContentTemplate="{DynamicResource RotateOptions}"/>
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ZoomOptions">
+        <Expander Header="Zoom">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <CheckBox x:Name="CheckboxZoom" Content="Enabled" IsChecked="{Binding Sequence.ZoomLayer.IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <CheckBox Content="Hold" Grid.Row="1" IsChecked="{Binding Sequence.ZoomLayer.Hold}" 
+                          />
+
+                <xctk:DecimalUpDown Grid.Row="2" Value="{Binding Sequence.ZoomLayer.ScaleStart}" 
+                                    Minimum="0.0" Increment="0.1" Maximum="10.0" ClipValueToMinMax="True"
+                                    
+                                    />
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Sequence.ZoomLayer.ScaleStop}"
+                                    Minimum="0.0" Increment="0.1" Maximum="10.0" ClipValueToMinMax="True"
+                                    
+                                    />
+
+                <xctk:IntegerUpDown Grid.Row="3" Value="{Binding Sequence.ZoomLayer.FramesPerZoom}"
+                                    
+                                    />
+                <xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Sequence.ZoomLayer.TotalZooms}"
+                                    
+                                    />
+            </Grid>
+        </Expander>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MoveOptions">
+        <Expander Header="Move">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <CheckBox x:Name="CheckboxMove" Content="Enabled" IsChecked="{Binding Sequence.MoveLayer.IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <CheckBox Content="Loop" Grid.Row="0" Grid.Column="1" IsChecked="{Binding Sequence.MoveLayer.loop}" 
+                          />
+
+                <Label Content="Frames" Grid.Row="1"/>
+                <xctk:IntegerUpDown Grid.Row="1" Value="{Binding Sequence.MoveLayer.frames}" 
+                                    Grid.Column="1"
+                                    Minimum="1" Increment="1" Maximum="1000" ClipValueToMinMax="True"                                    
+                                    />
+
+                <Label Content="Start X" Grid.Row="2"/>
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Value="{Binding Sequence.MoveLayer.start_x}"
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+
+                <Label Content="Target X" Grid.Row="2" Grid.Column="2"/>
+                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="3" Value="{Binding Sequence.MoveLayer.target_x}"
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+
+                <Label Content="Start Y" Grid.Row="3"/>
+                <xctk:DecimalUpDown Grid.Row="3" Grid.Column="1" Value="{Binding Sequence.MoveLayer.start_y}"
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+
+                <Label Content="Target Y" Grid.Row="3" Grid.Column="2"/>
+                <xctk:DecimalUpDown Grid.Row="3" Grid.Column="3" Value="{Binding Sequence.MoveLayer.target_y}"
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+            </Grid>
+        </Expander>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RotateOptions">
+        <Expander Header="Rotate">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <CheckBox x:Name="CheckboxMove" Content="Enabled" IsChecked="{Binding Sequence.RotateLayer.IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Label Content="X" Grid.Row="1"/>
+                <xctk:IntegerUpDown Grid.Row="1" Value="{Binding Sequence.RotateLayer.x}" 
+                                    Grid.Column="1"
+                                    Minimum="1" Increment="1" Maximum="1000" ClipValueToMinMax="True"                                    
+                                    />
+
+                <Label Content="Y" Grid.Row="1" Grid.Column="2"/>
+                <xctk:DecimalUpDown Grid.Row="1" Grid.Column="3" Value="{Binding Sequence.RotateLayer.y}"
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+
+                <Label Content="Rotation Update Frames" Grid.Row="2" Grid.Column="0"/>
+                <xctk:IntegerUpDown Grid.Row="2" Value="{Binding Sequence.RotateLayer.RotateUpdate}" 
+                                    Grid.Column="1"
+                                    Minimum="1" Increment="1" Maximum="1000" ClipValueToMinMax="True"                                    
+                                    />
+            </Grid>
+        </Expander>
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_RandomText">
@@ -910,9 +1054,7 @@
 
     <DataTemplate x:Key="Content_AnimationLayer">
         <StackPanel>
-
-            
-
+           
             <StackPanel Orientation="Horizontal" >
 
                 <Label Content="Animation"/>
@@ -933,6 +1075,8 @@
 
                 <CheckBox Content="Opaque" Margin="3" IsChecked="{Binding animation_layer.Opaque}"/>
             </StackPanel>
+
+            <ContentPresenter ContentTemplate="{DynamicResource TransformOption}"/>
         </StackPanel>
     </DataTemplate>
 
