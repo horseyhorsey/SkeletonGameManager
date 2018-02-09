@@ -1,4 +1,4 @@
-﻿using SkeletonGame.Models.Attract;
+﻿using SkeletonGame.Models.Layers;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models

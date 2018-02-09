@@ -1,4 +1,4 @@
-﻿using SkeletonGame.Models;
+﻿using SkeletonGame.Models.Layers;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -34,8 +34,6 @@ namespace SkeletonGameManager.WPF.Selectors
             }
             
             return _template;
-
-            //return base.SelectTemplate(item, container);
         }
     }
 }

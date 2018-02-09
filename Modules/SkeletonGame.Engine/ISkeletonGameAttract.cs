@@ -1,6 +1,5 @@
 ﻿using SkeletonGame.Models;
-using SkeletonGame.Models.Attract;
-using System.Collections.Generic;
+using SkeletonGame.Models.Layers;
 using System.Linq;
 
 namespace SkeletonGame.Engine

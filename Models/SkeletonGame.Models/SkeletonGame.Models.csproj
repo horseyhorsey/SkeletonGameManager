@@ -8,9 +8,6 @@
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Transition\TransitionType.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="PropertyChanged.Fody" Version="2.2.4" />
     <PackageReference Include="YamlDotNet" Version="4.2.3" />
   </ItemGroup>

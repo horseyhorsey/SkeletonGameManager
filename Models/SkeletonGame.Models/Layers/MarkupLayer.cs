@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using SkeletonGame.Models.Transition;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using YamlDotNet.Serialization;
 
-namespace SkeletonGame.Models.Attract
+namespace SkeletonGame.Models.Layers
 {
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class MarkupLayer : TransitionBaseLayer

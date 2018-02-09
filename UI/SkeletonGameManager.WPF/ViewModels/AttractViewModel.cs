@@ -5,14 +5,12 @@ using SkeletonGameManager.WPF.Providers;
 using SkeletonGame.Engine;
 using System.Threading.Tasks;
 using Prism.Commands;
-using SkeletonGame.Models.Attract;
 using System.Windows.Threading;
 using GongSolutions.Wpf.DragDrop;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System;
-using System.Windows.Controls;
+using SkeletonGame.Models.Layers;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {

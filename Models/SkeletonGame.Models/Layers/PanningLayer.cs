@@ -1,13 +1,12 @@
-﻿using System.Collections.ObjectModel;
-using YamlDotNet.Serialization;
+﻿using YamlDotNet.Serialization;
 
-namespace SkeletonGame.Models.Attract
+namespace SkeletonGame.Models.Layers
 {
-    public class Contents
-    {
-        [YamlMember(Alias = "group_layer", ApplyNamingConventions = false)]
-        public GroupLayer group_layer { get; set; }
-    }
+    //public class Contents
+    //{
+    //    [YamlMember(Alias = "group_layer", ApplyNamingConventions = false)]
+    //    public GroupLayer group_layer { get; set; }
+    //}
 
     public class PanningLayer : SequenceBase
     { 
@@ -41,9 +40,7 @@ namespace SkeletonGame.Models.Attract
 
         public PanningLayer()
         {
-            this.SeqType = SequenceType.PanningLayer;
-
-            //Contents.Add(new Content() { group_layer = new GroupLayer() });            
+            this.SeqType = SequenceType.PanningLayer;    
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using SkeletonGame.Models;
-using SkeletonGame.Models.Attract;
+using SkeletonGame.Models.Layers;
 using SkeletonGameManager.WPF.ViewModels;
 using System;
 using System.Windows;
