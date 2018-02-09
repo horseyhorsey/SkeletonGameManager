@@ -146,6 +146,8 @@ namespace SkeletonGameManager.WPF.ViewModels
         /// </summary>
         private void OnLaunchedGame()
         {
+            if (_skeletonGameProvider.GameFolder == null) return;
+
             var gameEntryPointFile = Path.Combine(_skeletonGameProvider.GameFolder, "game.py");
 
             if (!File.Exists(gameEntryPointFile))
