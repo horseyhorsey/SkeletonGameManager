@@ -171,7 +171,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         Sequences.Add(new SequenceItemViewModel(seq.RandomText));
                         break;
                     case SequenceType.Animation:
-                        var attAnim = new AttractAnimation() { Name = "Animation", duration = 3.0m };                        
+                        var attAnim = new AttractAnimation() { AnimName = "Animation", duration = 3.0m };                        
                         seq = new Sequence() { AttractAnimation = attAnim };
                         _skeletonGameProvider.AttractConfig.Sequences.Add(seq.AttractAnimation);
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.AttractAnimation);
