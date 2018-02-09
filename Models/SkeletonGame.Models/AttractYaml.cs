@@ -1,4 +1,5 @@
 ﻿using SkeletonGame.Models.Attract;
+using SkeletonGame.Models.Transition;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -50,33 +51,7 @@ namespace SkeletonGame.Models
         {
             this.SeqType = SequenceType.ScriptedText;
         }
-    }
-
-    public enum TransitionType
-    {
-        None,
-        CrossFadeTransition,
-        ExpandTransition,
-        FadeTransition,
-        ObscuredWipeTransition,
-        PushTransition,
-        SlideOverTransition,
-        WipeTransition
-    }
-
-    public enum TransitionParam
-    {
-        None,
-        horizontal,
-        vertical,
-        north,
-        south,
-        west,
-        east,
-        WipeTransition,
-        In,
-        Out
-    }
+    }    
 
     public class Message
     {
