@@ -59,18 +59,6 @@ namespace SkeletonGame.Models
         public List<TextOption> TextOptions { get; set; }
     }
 
-
-    public class LastScores : SequenceTextAnimationBase
-    {
-        [YamlMember(Alias = "multiple_screens", ApplyNamingConventions = false, SerializeAs = typeof(string))]
-        public bool MultipleScreens { get; set; } = false;
-
-        public LastScores()
-        {
-            this.SeqType = SequenceType.LastScores;
-        }
-    }
-
     //C:\P-ROC\Games\jaws
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class Combo : SequenceTextAnimationBase, ITextEntries, ITransitionLayer
