@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     PresentationTraceSources.TraceLevel="High"
+                    xmlns:transforms="clr-namespace:SkeletonGame.Models.Transition;assembly=SkeletonGame.Models"
                     xmlns:model="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
                     xmlns:conv="clr-namespace:SkeletonGameManager.Resources.Converters"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
@@ -22,13 +23,13 @@
 
     <ObjectDataProvider x:Key="Transitions" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
         <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="model:TransitionType"/>
+            <x:Type TypeName="transforms:TransitionType"/>
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
 
     <ObjectDataProvider x:Key="TransParams" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
         <ObjectDataProvider.MethodParameters>
-            <x:Type TypeName="model:TransitionParam"/>
+            <x:Type TypeName="transforms:TransitionParam"/>
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
 

@@ -25,6 +25,15 @@ namespace SkeletonGame.Models.Layers
         [YamlMember(Alias = "contents", ApplyNamingConventions = false)]
         public ObservableCollection<Content> Contents { get; set; } = new ObservableCollection<Content>();
 
+        [YamlMember(Alias = "zoom_layer", ApplyNamingConventions = false)]
+        public ZoomLayer ZoomLayer { get; set; } = new ZoomLayer();
+
+        [YamlMember(Alias = "rotate_layer", ApplyNamingConventions = false)]
+        public RotateLayer RotateLayer { get; set; } = new RotateLayer();
+
+        [YamlMember(Alias = "move_layer", ApplyNamingConventions = false)]
+        public MoveLayer MoveLayer { get; set; } = new MoveLayer();
+
         public GroupLayer()
         {
             this.SeqType = SequenceType.GroupLayer;
