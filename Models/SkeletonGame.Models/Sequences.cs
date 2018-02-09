@@ -58,6 +58,10 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "move_layer", ApplyNamingConventions = false)]
         public MoveLayer MoveLayer { get; set; }
 
+
+        [YamlMember(Alias = "zoom_layer", ApplyNamingConventions = false)]
+        public ZoomLayer ZoomLayer { get; set; }
+
         public Sequence()
         {
 

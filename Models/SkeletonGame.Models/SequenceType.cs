@@ -13,6 +13,7 @@
         PanningLayer,
         RandomText,
         ScriptedText,
-        TextLayer,        
+        TextLayer,
+        ZoomLayer,
     }
 }

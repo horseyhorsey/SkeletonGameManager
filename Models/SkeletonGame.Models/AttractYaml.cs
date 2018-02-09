@@ -238,6 +238,39 @@ namespace SkeletonGame.Models
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
+    public class ZoomLayer : SequenceBase, IZoomLayer
+    {
+        
+        [YamlMember(Alias = "hold", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public bool Hold { get; set; } = false;
+
+        [YamlMember(Alias = "frames_per_zoom", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public int FramesPerZoom { get; set; } = 1;
+
+        [YamlMember(Alias = "total_zooms", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public int TotalZooms { get; set; } = 30;
+
+        [YamlMember(Alias = "scale_start", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public decimal ScaleStart { get; set; } = 0.1m;
+
+        [YamlMember(Alias = "scale_stop", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public decimal ScaleStop { get; set; } = 1.0m;
+
+        [YamlMember(Alias = "name", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public string Name { get; set; }
+
+        [YamlMember(Alias = "enabled", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public bool IsEnabled { get; set; } = false;
+
+        public ZoomLayer()
+        {
+            this.SeqType = SequenceType.ZoomLayer;
+            this.duration = null;
+            this.lampshow = null;
+        }
+    }
+
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class AnimationLayer
     {
         [YamlMember(Alias = "name", ApplyNamingConventions = false)]
@@ -271,12 +304,56 @@ namespace SkeletonGame.Models
 
         [YamlMember(Alias = "LastScores", ApplyNamingConventions = false)]
         public LastScores last_scores { get; set; }
+
+        [YamlMember(Alias = "rotate_layer", ApplyNamingConventions = false)]
+        public RotateLayer RotateLayer { get; set; }
+        //C:\P-ROC\Games\Monkey
     }
 
-    public class MoveLayer : Combo
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
+    public class RotateLayer : IRotationLayer
+    {
+        public int x { get; set; }
+        public int y { get; set; }
+
+        [YamlMember(Alias = "rotation_update", ApplyNamingConventions = false)]
+        public int RotateUpdate { get; set; } = 0;
+
+        [YamlMember(Alias = "enabled", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public bool IsEnabled { get; set; } = false;
+
+        public RotateLayer()
+        {
+
+        }
+    }
+
+    public interface IRotationLayer
+    {
+        int x { get; set; }
+
+        int y { get; set; }
+
+        int RotateUpdate { get; set; }
+    }
+
+    public interface IMoveLayer
+    {
+        int frames { get; set; }
+        bool loop { get; set; }
+        string start_x { get; set; }
+        string start_y { get; set; }
+        string target_x { get; set; }
+        string target_y { get; set; }
+    }
+
+    public class MoveLayer : Combo, IMoveLayer
     {
         [YamlMember(Alias = "move_text", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public bool move_text { get; set; } = true;
+
+        [YamlMember(Alias = "move_anim", ApplyNamingConventions = false)]
+        public bool move_anim { get; set; } = true;
 
         [YamlMember(Alias = "frames", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public int frames { get; set; } = 15;
@@ -296,10 +373,8 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "start_y", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public string start_y { get; set; } = "0";
 
-        [YamlMember(Alias = "move_anim", ApplyNamingConventions = false)]
-        public bool move_anim { get; set; } = true;
-
-
+        [YamlMember(Alias = "enabled", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public string IsEnabled { get; set; }
 
         public MoveLayer()
         {
@@ -373,9 +448,13 @@ namespace SkeletonGame.Models
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class AttractAnimation : SequenceBase
-    {
+    {        
+
+        [YamlMember(Alias = "anim_name", ApplyNamingConventions = false)]
+        public string AnimName { get; set; } = "missing";
+
         [YamlMember(Alias = "name", ApplyNamingConventions = false)]
-        public new string Name { get; set; } = "missing";
+        public string Name { get; set; }
 
         [YamlMember(Alias = "x", ApplyNamingConventions = false)]
         public int X { get; set; } = 0;
@@ -394,9 +473,18 @@ namespace SkeletonGame.Models
 
         public AttractAnimation()
         {
-            this.Name = "missing";
+            this.AnimName = "missing";
             this.SeqType = SequenceType.Animation;
         }
+
+        [YamlMember(Alias = "zoom_layer", ApplyNamingConventions = false)]
+        public ZoomLayer ZoomLayer { get; set; } = new ZoomLayer();
+
+        [YamlMember(Alias = "rotate_layer", ApplyNamingConventions = false)]
+        public RotateLayer RotateLayer { get; set; } = new RotateLayer();
+
+        [YamlMember(Alias = "move_layer", ApplyNamingConventions = false)]
+        public MoveLayer MoveLayer { get; set; } = new MoveLayer();
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
