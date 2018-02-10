@@ -1,16 +1,19 @@
 ﻿using SkeletonGame.Models.Transforms;
+using SkeletonGame.Models.Transition;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
 
-    public class MoveLayer : Combo, IMoveLayer
+    public class MoveLayer : TransitionBaseLayer, IMoveLayer
     {
-        [YamlMember(Alias = "move_text", ApplyNamingConventions = false, SerializeAs = typeof(string))]
-        public bool move_text { get; set; } = true;
+        public MoveLayer()
+        {
+            this.SeqType = SequenceType.MoveLayer;
+        }
 
-        [YamlMember(Alias = "move_anim", ApplyNamingConventions = false)]
-        public bool move_anim { get; set; } = true;
+        [YamlMember(Alias = "enabled", ApplyNamingConventions = false, Order = 0, SerializeAs = typeof(string))]
+        public string IsEnabled { get; set; }
 
         [YamlMember(Alias = "frames", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public int frames { get; set; } = 15;
@@ -30,12 +33,10 @@ namespace SkeletonGame.Models.Layers
         [YamlMember(Alias = "start_y", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public string start_y { get; set; } = "0";
 
-        [YamlMember(Alias = "enabled", ApplyNamingConventions = false, SerializeAs = typeof(string))]
-        public string IsEnabled { get; set; }
+        //[YamlMember(Alias = "move_text", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        //public bool move_text { get; set; } = true;
 
-        public MoveLayer()
-        {
-            this.SeqType = SequenceType.MoveLayer;
-        }
+        //[YamlMember(Alias = "move_anim", ApplyNamingConventions = false)]
+        //public bool move_anim { get; set; } = true;
     }
 }
