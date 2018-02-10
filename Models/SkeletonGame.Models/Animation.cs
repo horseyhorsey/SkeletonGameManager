@@ -19,6 +19,9 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "y_loc", ApplyNamingConventions = false)]
         public int YLoc { get; set; } = 0;
 
+        [YamlMember(Alias = "scale", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public decimal Scale { get; set; } = 1.0m;
+
         [YamlMember(Alias = "composite_op", ApplyNamingConventions = false)]
         public string CompositeOp { get; set; } = null;
 
