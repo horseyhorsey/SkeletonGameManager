@@ -37,6 +37,7 @@ namespace SkeletonGame.Models.Layers
         public GroupLayer()
         {
             this.SeqType = SequenceType.GroupLayer;
+            SequenceName = SeqType + "SequenceStyle";
             this.duration = 5.0m;
         }
 
