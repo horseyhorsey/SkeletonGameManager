@@ -49,15 +49,22 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Key" Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
                 <DataGridTextColumn Header="File" Binding="{Binding File, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
+                <DataGridTextColumn Header="Scale" Binding="{Binding Scale}"/>
                 <DataGridTextColumn Header="X_Loc" Binding="{Binding XLoc}"/>
                 <DataGridTextColumn Header="Y_Loc" Binding="{Binding YLoc}"/>
                 <DataGridTextColumn Header="FrameTime" Binding="{Binding FrameTime}" MaxWidth="40"/>
                 <DataGridCheckBoxColumn Header="Repeat" Binding="{Binding Repeat}" MaxWidth="40"/>
                 <DataGridCheckBoxColumn Header="Hold" Binding="{Binding HoldLastFrame}"/>
-                <DataGridCheckBoxColumn Header="StreamingMovie" Binding="{Binding StreamingMovie}" Width="10"/>
-                <DataGridCheckBoxColumn Header="StreamingPng" Binding="{Binding StreamingPng}" Width="10"/>
-                <DataGridCheckBoxColumn Header="StreamingPngCached" Binding="{Binding StreamingPngCached}" Width="10"/>
-                <DataGridCheckBoxColumn Header="SkipPreLoading" Binding="{Binding SkipPreLoading}" Width="20"/>
+                <DataGridCheckBoxColumn Binding="{Binding StreamingMovie}" Width="10">
+                    <DataGridCheckBoxColumn.Header>
+                        <Grid ToolTip="Streaming Movie">
+                            <TextBlock Text="Smov"/>
+                        </Grid>
+                    </DataGridCheckBoxColumn.Header>
+                </DataGridCheckBoxColumn>
+                <DataGridCheckBoxColumn Header="Spng" Binding="{Binding StreamingPng}" Width="10"/>
+                <DataGridCheckBoxColumn Header="SpngC" Binding="{Binding StreamingPngCached}" Width="10"/>
+                <DataGridCheckBoxColumn Header="Skip" Binding="{Binding SkipPreLoading}" Width="20"/>
                 <DataGridTemplateColumn Header="Sequence">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
