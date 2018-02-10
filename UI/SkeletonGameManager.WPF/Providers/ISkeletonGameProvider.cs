@@ -145,11 +145,17 @@ namespace SkeletonGameManager.WPF.Providers
                         });
                     }
 
+                    SequenceYamls.Clear();
+
+                    //Add the base sequences.yaml found in config
+                    var baseSeqFile = Path.Combine(GameFolder, @"config\sequences.yaml");
+                    if (File.Exists(baseSeqFile))
+                        SequenceYamls.Add(baseSeqFile);
+
                     //Get sequence files and add to list       
                     var seqDir = Path.Combine(GameFolder, @"config\sequences");
                     Directory.CreateDirectory(seqDir);
-                    var seqFiles = await _skeletonGameFiles.GetFilesAsync(seqDir, AssetTypes.Sequences);
-                    SequenceYamls.Clear();
+                    var seqFiles = await _skeletonGameFiles.GetFilesAsync(seqDir, AssetTypes.Sequences);                    
                     foreach (var item in seqFiles)
                     {
                         SequenceYamls.Add(item);
@@ -217,14 +223,14 @@ namespace SkeletonGameManager.WPF.Providers
                     item.combo_layer.TextList = item.combo_layer.TextEntries.Select(x => x.TextLine).ToList();
                 }
 
-                foreach (var item in group.Contents.Where(x => x.move_layer != null))
-                {
-                    if (item.move_layer.TextList != null)
-                        item.move_layer.TextList.Clear();
+                //foreach (var item in group.Contents.Where(x => x.move_layer != null))
+                //{
+                //    if (item.move_layer.TextList != null)
+                //        item.move_layer.TextList.Clear();
 
-                    item.move_layer.duration = null;
-                    item.move_layer.TextList = item.move_layer.TextEntries.Select(x => x.TextLine).ToList();
-                }
+                //    item.move_layer.duration = null;
+                //    item.move_layer.TextList = item.move_layer.TextEntries.Select(x => x.TextLine).ToList();
+                //}
             }
 
             var yamlFile = Path.Combine(GameFolder, YamlFiles[2]);
@@ -266,14 +272,14 @@ namespace SkeletonGameManager.WPF.Providers
                        
             }
 
-            foreach (var item in move.Where(x => x != null))
-            {
+            //foreach (var item in move.Where(x => x != null))
+            //{
 
-                if (item.TextList != null)
-                    item.TextList.Clear();
+            //    if (item.TextList != null)
+            //        item.TextList.Clear();
 
-                item.TextList = item.TextEntries.Select(x => x.TextLine).ToList();
-            }
+            //    item.TextList = item.TextEntries.Select(x => x.TextLine).ToList();
+            //}
             //AttractConfig.Sequences
             _skeletonGameSerializer.SerializeYaml(saveFile, sequenceYaml);
 
