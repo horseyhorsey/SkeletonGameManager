@@ -1,4 +1,5 @@
-﻿using YamlDotNet.Serialization;
+﻿using SkeletonGame.Models.Transition;
+using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
@@ -41,5 +42,8 @@ namespace SkeletonGame.Models.Layers
 
         [YamlMember(Alias = "move_layer", ApplyNamingConventions = false)]
         public MoveLayer MoveLayer { get; set; } = new MoveLayer();
+
+        [YamlMember(Alias = "fade", ApplyNamingConventions = false)]
+        public FadeLayer FadeLayer { get; set; } = new FadeLayer();
     }
 }
