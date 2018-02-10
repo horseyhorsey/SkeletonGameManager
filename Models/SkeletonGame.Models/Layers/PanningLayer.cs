@@ -1,4 +1,5 @@
-﻿using YamlDotNet.Serialization;
+﻿using System.Collections.ObjectModel;
+using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
@@ -33,14 +34,14 @@ namespace SkeletonGame.Models.Layers
         public int FramesPerMovement { get; set; } = 1;
 
         [YamlMember(Alias = "bounce", ApplyNamingConventions = false)]
-        public string Bounce { get; set; } = "false";    
+        public string Bounce { get; set; } = "false";
 
         [YamlMember(Alias = "contents", ApplyNamingConventions = false)]
-        public Contents Contents { get; set; } = new Contents();
+        public Content Contents { get; set; } = new Content() { group_layer = new GroupLayer() };
 
         public PanningLayer()
         {
-            this.SeqType = SequenceType.PanningLayer;    
+            this.SeqType = SequenceType.PanningLayer;            
         }
     }
 }
