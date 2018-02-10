@@ -14,7 +14,7 @@ using SkeletonGame.Models.Layers;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
-    public class AttractViewModel : SequenceViewModelBase, IDropTarget
+    public class AttractViewModel : SequenceViewModelBase//, IDropTarget
     {
         public ISkeletonGameProvider _skeletonGameProvider { get; set; }
         private ISkeletonGameAttract _skeletonGameAttract;
@@ -312,21 +312,21 @@ namespace SkeletonGameManager.WPF.ViewModels
         public virtual void DragOver(IDropInfo dropInfo)
         {
             //throw new System.NotImplementedException();
-            if (dropInfo.IsSameDragDropContextAsSource)
-                dropInfo.Effects = System.Windows.DragDropEffects.Move;
+            //if (dropInfo.IsSameDragDropContextAsSource)
+            //    dropInfo.Effects = System.Windows.DragDropEffects.Move;
         }
 
         public virtual void Drop(IDropInfo dropInfo)
         {
-            try
-            {
-                if (dropInfo.IsSameDragDropContextAsSource)
-                {
-                    this.Sequences.RemoveAt(dropInfo.DragInfo.SourceIndex);
-                    this.Sequences.Insert(dropInfo.InsertIndex, dropInfo.Data as SequenceItemViewModel);
-                }
-            }
-            catch { }
+            //try
+            //{
+            //    if (dropInfo.IsSameDragDropContextAsSource)
+            //    {
+            //        this.Sequences.RemoveAt(dropInfo.DragInfo.SourceIndex);
+            //        this.Sequences.Insert(dropInfo.InsertIndex, dropInfo.Data as SequenceItemViewModel);
+            //    }
+            //}
+            //catch { }
             
         }
 
@@ -377,7 +377,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             {                
                 //Assign the attract config
                 AttractConfig = _skeletonGameProvider.AttractConfig;
-                SequenceYamls.Add(new SequenceYamlItemViewModel(_skeletonGameProvider.GameFolder + @"/config/attract.yaml", AttractConfig));
+                SequenceYamls.Add(new SequenceYamlItemViewModel(_skeletonGameProvider.GameFolder + @"\config\attract.yaml", AttractConfig));
 
                 //Assign from all files found in config/sequences
                 foreach (var item in _skeletonGameProvider.SequenceYamls)
