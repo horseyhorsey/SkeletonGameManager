@@ -11,4 +11,10 @@
         SlideOverTransition,
         WipeTransition
     }
+
+    public enum FadeType
+    {
+        In,
+        Out
+    }
 }

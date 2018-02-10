@@ -9,7 +9,6 @@
         south,
         west,
         east,
-        WipeTransition,
         In,
         Out
     }
