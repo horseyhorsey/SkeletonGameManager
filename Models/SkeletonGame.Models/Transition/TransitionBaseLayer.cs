@@ -11,6 +11,6 @@ namespace SkeletonGame.Models.Transition
         public TransitionParam TransParam { get; set; }
 
         [YamlMember(Alias = "trans_length", ApplyNamingConventions = false, SerializeAs = typeof(string))]
-        public int TransLength { get; set; }
+        public int TransLength { get; set; } = 15;
     }
 }
