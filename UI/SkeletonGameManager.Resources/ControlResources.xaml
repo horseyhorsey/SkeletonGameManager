@@ -290,6 +290,7 @@
     <SolidColorBrush x:Key="Brush_RandomText" Color="SandyBrown"/>
     <SolidColorBrush x:Key="Brush_ScriptedText" Color="SandyBrown"/>
     <SolidColorBrush x:Key="Brush_TextLayer" Color="SandyBrown"/>
+    <SolidColorBrush x:Key="Brush_AnimLayer" Color="BlueViolet"/>
     <!--#endregion-->
 
     <ControlTemplate x:Key="ToolTips" TargetType="ToolTip">
@@ -320,7 +321,7 @@
     </Style>
 
     <Style x:Key="AnimationSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
-        <Setter Property="Background" Value="{StaticResource Brush_MoveLayer}"/>
+        <Setter Property="Background" Value="{DynamicResource Brush_AnimLayer}"/>
         <Setter Property="Content" Value="A"/>
         <Setter Property="ToolTip">
             <Setter.Value>
