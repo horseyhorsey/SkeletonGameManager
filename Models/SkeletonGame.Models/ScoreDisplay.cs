@@ -77,6 +77,9 @@ namespace SkeletonGame.Models.Score
     {
         [YamlMember(Alias = "Name", ApplyNamingConventions = false)]
         public string Name { get; set; }
+
+        [YamlMember(Alias = "from_saved", ApplyNamingConventions = false)]
+        public bool FromSaved { get; set; }
     }
 
     public class Background
