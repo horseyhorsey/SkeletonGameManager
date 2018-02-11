@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/Templates/DataGridTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <converters:ListToColorConverter x:Key="NegateBoolConv"/>
             <converters:ListToColorConverter x:Key="ListToColorConv"/>
             <converters:StyleConverter x:Key="StyleConverter"/>
         </ResourceDictionary>
