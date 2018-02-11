@@ -27,12 +27,45 @@
     </sys:String>
     
     <!--GAME CONFIG-->
+
+    <sys:String x:Key="ConfigYaml">
+        This file contains global configuration for the game. Paths, Dmd, Audio, Modes.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsDmd">
+        Asset manager path for display files. Images, movie, .dmd
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsSound">
+        Asset manager path for the parent Sound folder.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsVoice">
+        Asset manager path for the parent Voice folder.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsSfx">
+        Asset manager for the sfx dir.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsHdFonts">
+        Asset manager path for fonts. .ttf
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsSdlPath">
+        The display uses SDL2. The Dlls path is the needed SDL2 Dlls.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsVpGameMap">
+        The is where the vp_game_map.yaml can be found. This is more of a globally used path, not per game.
+    </sys:String>
+
     <sys:String x:Key="Tip_DmdGrid">
         Where to find the dmdgrid32x32.png file
     </sys:String>
 
     <sys:String x:Key="Tip_DmdBordered">
-        Shows a border around the window.
+        Shows a border around the window. (F11 toggles window border and F12 will save position when window is running)
     </sys:String>
 
     <sys:String x:Key="Tip_DmdFlipped">
@@ -72,7 +105,31 @@
     <sys:String x:Key="Tip_Trophys">
         Enables a mode that displays trophys when complete. See the trophy_default_data.
     </sys:String>
-    
+
+    <sys:String x:Key="Tip_TiltConfig">
+        Enables/Disables the Tilt mode.
+    </sys:String>
+
+    <sys:String x:Key="Tip_BallSearch">
+        Enables/Disables the BallSearch Mode
+    </sys:String>
+
+    <sys:String x:Key="Tip_BallSearchDelay">
+        How long to wait for a ball search to start.
+    </sys:String>
+
+    <sys:String x:Key="Tip_ServiceMenu">
+        Enables/Disables the Service Mode Menu
+    </sys:String>
+
+    <sys:String x:Key="Tip_BonusTally">
+        Enables/Disables the Bonus mode. 
+    </sys:String>
+
+    <sys:String x:Key="Tip_Attract">
+        Todo
+    </sys:String>
+
     <!--#region SEQUENCES-->
 
     <sys:String x:Key="Tip_SeqLastScores">
@@ -124,6 +181,35 @@
     <sys:String x:Key="Tip_SeqScriptedText">
         Runs a script of text lists. Duration is how long each text list will be displayed. If an animation is set to play with the layers and the duration of the animation is longer than the text script, then the duration is set to let the whole animtion finish.
     </sys:String>
+
+    <!--#endregion-->
+    
+    <!--#region MACHINE CONFIG-->
+
+    <sys:String x:Key="Tip_MachineYaml">
+        This file contains all the configuration for a machine.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SwitchMatrix">
+        This view allows you configure the switches. Switches must have a name to be exported to yaml and will be skipped if NOT USED. Don't use spaces in names, use the label. Some tags are needed for Skeleton game. Noteably; shooter, trough, early_save.
+    </sys:String>
+
+    <sys:String x:Key="Tip_LampMatrix">
+        This view allows you to configure all the lamps in a machine. Lamps must have a name to be exported to yaml and will be skipped if NOT USED. Some tags are needed for Skeleton game. Noteably; shoot_again (Used for ball save).
+    </sys:String>
+
+    <sys:String x:Key="Tip_CoilFlashTable">
+        This view allows you to configure all the coils/flashers in a machine. Coils in the table must have a name to be exported to yaml and will be skipped if NOT USED. The SolenoidType isn't needed for pyprocgame but just as extra options for reference.
+    </sys:String>
+
+    <sys:String x:Key="Tip_VPExportSwitch">
+        Export VP_Switch.txt -  all the switches into Visual Pinball switch hits. Creates Sub routines for switches and these can be copied into a tables script.
+    </sys:String>
+
+    <sys:String x:Key="Tip_VPExportSolenoid">
+        Export VP_Coil.txt - all the coils into Visual Pinball 'SolCallBacks'. Creates Sub routines for the Solenoid callback and a list of SolCallBacks. Flippers should be skipped from this process.
+    </sys:String>
+
 
     <!--#endregion-->
 
