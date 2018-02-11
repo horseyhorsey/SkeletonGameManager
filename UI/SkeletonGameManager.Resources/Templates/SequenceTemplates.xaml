@@ -526,8 +526,6 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-las
-
             <ContentPresenter Grid.Row="1" Content="{StaticResource SoundLampDurationCombo}"/>
 
             <!--FONT AND STYLE-->
@@ -613,9 +611,6 @@ las
 
 
 
-
-
-
     <DataTemplate x:Key="Sequence_Combo">
         <GroupBox x:Name="LayoutRoot" DataContext="{Binding Sequence}"
                   Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_ComboLayer}">
@@ -641,15 +636,32 @@ las
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!--<ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" Grid.Row="3"/>-->
 
-                <ContentPresenter Content="{StaticResource TransitionOptions}" Grid.Row="1" Margin="3"/>
+                <!--ANIMATION-->
+                <GroupBox Grid.Column="0" Grid.Row="1" >
+                    <GroupBox.Header>
+                        <DockPanel>
+                            <Viewbox Height="20" Width="50">
+                                <ContentPresenter Content="{StaticResource Path_Assets}" Height="50" Width="50"/>
+                            </Viewbox>
+                            <TextBlock Text="Animation" FontWeight="DemiBold" FontSize="14"/>
+                        </DockPanel>
+                    </GroupBox.Header>
 
-                <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="0" Margin="3"/>
+                    <ComboBox Grid.Column="1" Style="{StaticResource Style_AttractAnimationsCombo}"
+                                  DockPanel.Dock="Left"
+                                  />
+                </GroupBox>
 
-                <GroupBox Header="Text Lines"  Grid.Row="2" Margin="5" FontSize="14">
+                <ContentPresenter Grid.Row="2" Content="{StaticResource SoundLampDurationCombo}" Margin="3"/>
+
+                <ContentPresenter Grid.Row="3" Content="{StaticResource TransitionOptions}" Margin="3"/>
+
+                <GroupBox Header="Text Lines"  Grid.Row="4" Margin="5" FontSize="14">
                     <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}"
                               AutoGenerateColumns="False"
                               >
