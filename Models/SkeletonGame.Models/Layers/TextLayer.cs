@@ -23,7 +23,7 @@ namespace SkeletonGame.Models.Layers
         [YamlMember(Alias = "h_justify", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public HJustify HJustify { get; set; } = HJustify.left;
 
-        [YamlMember(Alias = "Text", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "Text", ApplyNamingConventions = false, ScalarStyle = YamlDotNet.Core.ScalarStyle.SingleQuoted)]
         public string Text { get; set; } = "TEXT LAYER";
 
         [YamlMember(Alias = "blink_frames", ApplyNamingConventions = false, SerializeAs = typeof(string))]
