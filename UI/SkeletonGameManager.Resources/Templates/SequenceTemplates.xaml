@@ -191,7 +191,7 @@
     </Grid>
     
     <DataTemplate x:Key="ZoomOptions">
-        <GroupBox Header="Zoom" x:Name="ZoomGroupBox" DataContext="{Binding Sequence}">
+        <GroupBox Header="Zoom" x:Name="ZoomGroupBox">
 
             <GroupBox.Style>
                 <Style TargetType="GroupBox">
@@ -261,7 +261,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MoveOptions">
-        <GroupBox Header="Move" DataContext="{Binding Sequence}">
+        <GroupBox Header="Move">
 
             <GroupBox.Style>
                 <Style TargetType="GroupBox">
@@ -331,7 +331,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="RotateOptions">
-        <GroupBox Header="Rotate" DataContext="{Binding Sequence}">
+        <GroupBox Header="Rotate">
 
             <GroupBox.Style>
                 <Style TargetType="GroupBox">
@@ -927,7 +927,7 @@
                 <CheckBox Grid.Column="2" Content="Opaque" Margin="3" IsChecked="{Binding Opaque}"/>
             </Grid>
 
-            <ContentControl Content="{Binding}" 
+            <ContentControl Content="{Binding }" 
                             ContentTemplate="{DynamicResource TransformOption_Content}" />
             
         </StackPanel>
@@ -1286,6 +1286,7 @@
                         <DataGrid Grid.Row="1" x:Name="TextOptionsListView" Margin="5" 
                                   ItemsSource="{Binding TextOptions, UpdateSourceTrigger=PropertyChanged}" 
                                   xmlns:dd="urn:gong-wpf-dragdrop"
+                                  CanUserReorderColumns="False"
                                   dd:DragDrop.IsDragSource="True"
                                   dd:DragDrop.IsDropTarget="True"
                                   dd:DragDrop.DropHandler="{Binding}"                                  
@@ -1427,7 +1428,7 @@
                 <ContentPresenter Content="{StaticResource SoundLampDurationCombo}" Margin="3"/>
 
                 <!--TRANSFORMS-->
-                <ContentPresenter ContentTemplate="{DynamicResource TransformOption}"/>
+                <ContentPresenter Content="{Binding}" ContentTemplate="{DynamicResource TransformOption_Content}"/>
             </StackPanel>
         </GroupBox>
     </DataTemplate>
