@@ -12,6 +12,7 @@ using SkeletonGameManager.WPF.Views;
 using System.Diagnostics;
 using System.Windows;
 using SkeletonGame.Engine;
+using System.Collections.Generic;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -23,11 +24,11 @@ namespace SkeletonGameManager.WPF.ViewModels
         #endregion
 
         #region Commands
-        public ICommand SetDirectoryCommand { get; set; }
+        public DelegateCommand SetDirectoryCommand { get; set; }
         public DelegateCommand RefreshObjectsCommand { get; set; }
-        public ICommand CreateNewGameCommand { get; set; }
-        public ICommand OpenFileFolderCommand { get; set; }
-        public ICommand LaunchGameCommand { get; set; }
+        public DelegateCommand CreateNewGameCommand { get; set; }
+        public DelegateCommand<string> OpenFileFolderCommand { get; set; }
+        public DelegateCommand LaunchGameCommand { get; set; }
         public DelegateCommand OpenGameFolderCommand { get; set; }        
         #endregion
 
@@ -37,8 +38,9 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonLogger = skeletonLogger;
+            IsGameRunning = false;
 
-            SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory());
+            SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory(), () => !IsGameRunning);
 
             RefreshObjectsCommand = new DelegateCommand(async () => await OnRefreshSkeletonGameObjects(), () => IsValidGameFolder());
 
@@ -58,8 +60,10 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             LaunchGameCommand = new DelegateCommand(async () =>
             {
+                IsGameRunning = true;
                 await OnLaunchedGame();
-            });
+
+            }, () => IsValidGameFolder());
 
             //Open the game folder
             OpenGameFolderCommand = new DelegateCommand(() => Process.Start(_skeletonGameProvider.GameFolder), () => IsValidGameFolder());
@@ -91,6 +95,8 @@ namespace SkeletonGameManager.WPF.ViewModels
                 SetProperty(ref gameFolder, value);
                 _skeletonGameProvider.GameFolder = value;
                 RefreshObjectsCommand.RaiseCanExecuteChanged();
+                LaunchGameCommand.RaiseCanExecuteChanged();
+                SetDirectoryCommand.RaiseCanExecuteChanged();
                 this.OpenGameFolderCommand.RaiseCanExecuteChanged();
             }
         }
@@ -109,7 +115,8 @@ namespace SkeletonGameManager.WPF.ViewModels
             }
         }
 
-        private bool isMachineConfigEnabled = false;
+        private bool isMachineConfigEnabled = false;        
+
         /// <summary>
         /// Gets or sets the IsMachineConfigEnabled to enable the machine config tab. Should be disabled when a machine.yaml fails to parse
         /// </summary>
@@ -122,7 +129,24 @@ namespace SkeletonGameManager.WPF.ViewModels
             }
         }
 
-        
+        private bool isGameRunning = false;
+
+        /// <summary>
+        /// Gets or sets the IsGameRunning.
+        /// </summary>
+        public bool IsGameRunning
+        {
+            get { return isGameRunning; }
+            set
+            {
+                SetProperty(ref isGameRunning, value);
+            }
+        }
+
+        /// <summary>
+        /// The last game launched log
+        /// </summary>
+        private IList<string> _lastgameLog;
 
         #endregion
 
@@ -136,6 +160,8 @@ namespace SkeletonGameManager.WPF.ViewModels
         /// </returns>
         private bool IsValidGameFolder()
         {
+            if (IsGameRunning) return false;
+
             if (Directory.Exists(GameFolder))
                 if (File.Exists(Path.Combine(GameFolder, "config.yaml")))
                 {                    
@@ -162,7 +188,16 @@ namespace SkeletonGameManager.WPF.ViewModels
                 return;
 
             try
-            {
+            {                
+                LaunchGameCommand.RaiseCanExecuteChanged();
+                CreateNewGameCommand.RaiseCanExecuteChanged();
+                RefreshObjectsCommand.RaiseCanExecuteChanged();
+                OpenFileFolderCommand.RaiseCanExecuteChanged();
+                SetDirectoryCommand.RaiseCanExecuteChanged();
+
+                //Clear the previous log.
+                _skeletonLogger.LogData.Clear();
+
                 //Check python 27 installed first
                 string getUserEnv = Environment.GetEnvironmentVariable("path", EnvironmentVariableTarget.User);
                 if (!getUserEnv.Contains(@"C:\Python27"))
@@ -173,31 +208,26 @@ namespace SkeletonGameManager.WPF.ViewModels
                 startInfo.WorkingDirectory = _skeletonGameProvider.GameFolder;
                 startInfo.Arguments = $"{gameEntryPointFile}";
 
-                //Redirect output...
-               startInfo.RedirectStandardOutput = true;
-               //startInfo.RedirectStandardError = true;
+                //Redirect just the error output...
+                startInfo.CreateNoWindow = true;
+                startInfo.RedirectStandardError = true;
                 startInfo.RedirectStandardInput = true;
                 startInfo.UseShellExecute = false;
 
-                startInfo.WorkingDirectory = @"C:\P-ROC\Games\ParalexTest";
-                startInfo.CreateNoWindow = false;
+                await Task.Run(() =>
+                 {
+                     var p = new Process { StartInfo = startInfo };
 
-                var p = new Process { StartInfo = startInfo };
+                     p.Start();
+                    //p.BeginOutputReadLine();
+                    p.BeginErrorReadLine();
 
-                p.Start();
-                p.BeginOutputReadLine();
-               // p.BeginErrorReadLine();
-
-                p.OutputDataReceived += P_OutputDataReceived1;
-                p.Exited += P_Exited;
-
-
-                //p.BeginOutputReadLine();
-                //error = await p.StandardOutput.ReadToEndAsync();
-                p.WaitForExit();
-
-
-
+                     p.ErrorDataReceived += P_OutputDataReceived1;
+                     p.Exited += P_Exited;
+                     p.Disposed += P_Disposed;
+                     p.WaitForExit();
+                 });
+                               
             }
             catch (FileNotFoundException ex)
             {
@@ -210,6 +240,27 @@ namespace SkeletonGameManager.WPF.ViewModels
             {
 
             }
+            finally
+            {
+                IsGameRunning = false;
+
+                LaunchGameCommand.RaiseCanExecuteChanged();
+                CreateNewGameCommand.RaiseCanExecuteChanged();
+                RefreshObjectsCommand.RaiseCanExecuteChanged();
+                OpenFileFolderCommand.RaiseCanExecuteChanged();
+                SetDirectoryCommand.RaiseCanExecuteChanged();
+
+                if (_skeletonLogger?.LogData?.Count > 0)
+                {
+                    _lastgameLog = _skeletonLogger.LogData;
+                    _skeletonLogger.LogToFile(Path.Combine(GameFolder, "Logs"));
+                }                
+            }
+        }
+
+        private void P_Disposed(object sender, EventArgs e)
+        {
+            
         }
 
         private void P_Exited(object sender, EventArgs e)
@@ -219,7 +270,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         private void P_OutputDataReceived1(object sender, DataReceivedEventArgs e)
         {
-            _skeletonLogger.LogData.Add(e.Data);
+            _skeletonLogger.LogData.Add(e.Data);            
         }
 
         private void P_OutputDataReceived(object sender, DataReceivedEventArgs e)
