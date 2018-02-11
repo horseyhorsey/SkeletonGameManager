@@ -42,6 +42,8 @@ namespace SkeletonGameManager.WPF
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+            
+            Container.RegisterInstance<ISkeletonLogger>(Container.Resolve<SkeletonLogger>());
 
             Container.RegisterInstance<ISkeletonGameSerializer>(Container.Resolve<SkeletonGameSerializer>());
 

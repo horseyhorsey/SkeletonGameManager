@@ -106,6 +106,14 @@
                                             ToolTip="{StaticResource GameLaunchInfo}"                                            
                                             Command="{Binding LaunchGameCommand}"/>
 
+                                        <!--OPEN GAME FOLDER-->
+                                        <Button Content="{StaticResource Path_Dir}" 
+                                            Width="25" Height="20"
+                                            VerticalAlignment="Bottom"
+                                            DockPanel.Dock="Right"
+                                            ToolTip="Open this game path"                                            
+                                            Command="{Binding OpenGameFolderCommand}"/>
+
                                     </DockPanel>
                                 </StackPanel>
 
