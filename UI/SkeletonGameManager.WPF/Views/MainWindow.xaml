@@ -26,7 +26,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type views:MainWindow}">
                         
-                        <Grid>
+                        <Grid x:Name="LayoutRoot">
                             <!--DISPLAY WINDOW CONTENT-->
                             <Border Background="LightGray" CornerRadius="0,15,0,0">
                                 <ContentPresenter Content="{TemplateBinding Content}"/>
@@ -123,7 +123,7 @@
                                 <TabControl Grid.Row="3" Margin="3" IsEnabled="{Binding IsMainTabEnabled}">
 
                                     <!--SKELETON GAME CONFIG-->
-                                    <TabItem Header="Config.yaml">
+                                    <TabItem Header="Config.yaml" ToolTip="{StaticResource ConfigYaml}">
                                         <ContentControl prism:RegionManager.RegionName="ConfigRegion" />
                                     </TabItem>
 
@@ -140,7 +140,9 @@
                                                 <Button Content="{StaticResource Path_Dir}"
                                                         Command="{Binding OpenFileFolderCommand}"
                                                         CommandParameter="asset_list.yaml"
-                                                        DockPanel.Dock="Right" Height="15" Width="20" VerticalAlignment="Center"/>
+                                                        DockPanel.Dock="Right"
+                                                        Height="15" Width="20" 
+                                                        VerticalAlignment="Center"/>
                                             </DockPanel>    
                                         </TabItem.Header>
                                         
@@ -157,7 +159,9 @@
                                         <ContentControl prism:RegionManager.RegionName="SequencesRegion"/>
                                     </TabItem>-->
 
-                                    <TabItem Header="Scene Grab">
+                                    <TabItem Header="Scene Grab" 
+                                             
+                                             IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
 
                                         <ContentControl prism:RegionManager.RegionName="ScenesRegion"/>
 

@@ -232,8 +232,9 @@
         <GroupBox Header="VP Script Exports" Grid.Column="1" Margin="0,5">
             <StackPanel Orientation="Horizontal">
 
-                <Button Content="SwitchHits" VerticalAlignment="Center" Margin="5,0" ToolTip="Exports switch hits to make it a bit faster creating script switch hits for visual pinball"
+                <Button Content="SwitchHits" VerticalAlignment="Center" Margin="5,0"
                         Command="{Binding ExportToVpCommand}" CommandParameter="Switch"
+                        ToolTip="{StaticResource Tip_VPExportSwitch}"
                         />
                 
                 <Button Content="SolCallBacks" VerticalAlignment="Center" Margin="5,0" 
@@ -245,19 +246,22 @@
 
         <GroupBox Header="Save" Grid.Column="2" MaxHeight="50">
             <!--SAVE MACHINE BUTTON-->
-            <Button Command="{Binding SaveMachineConfigCommand}" Grid.Row="2" HorizontalAlignment="Left"
+            <Button Command="{Binding SaveMachineConfigCommand}" 
+                        Grid.Row="2" HorizontalAlignment="Left"
                         Height="25" Width="50"
-                        Content="{StaticResource Path_Save}" ToolTip="Saves all the machine configuration"/>
+                        ToolTip="{StaticResource Tip_VPExportSolenoid}"
+                        Content="{StaticResource Path_Save}"/>
         </GroupBox>
         
          <!--MAIN TAB CONTROL-->
-        <TabControl Grid.Row="1" Grid.ColumnSpan="3" Background="{StaticResource Brush_Paper}">
+        <TabControl Grid.Row="1" 
+                    Grid.ColumnSpan="3" Background="{StaticResource Brush_Paper}">
 
             <!--SWITCHES - THE STYLE CHANGES DEPENDING ON THE MACHINE TYPE-->
             <TabItem Header="Switches">
                 <TabControl>
 
-                    <TabItem Header="Matrix" >
+                    <TabItem Header="Matrix" ToolTip="{StaticResource Tip_SwitchMatrix}">
                         <ItemsControl ItemsSource="{Binding Switches}">
 
                             <ItemsControl.Resources>
@@ -336,7 +340,7 @@
             </TabItem>
 
             <!--LAMP MATRIX-->
-            <TabItem Header="Lamps" Background="{StaticResource Brush_Paper}">
+            <TabItem Header="Lamps" Background="{StaticResource Brush_Paper}" ToolTip="{StaticResource Tip_LampMatrix}">
                 <ItemsControl ItemsSource="{Binding Lamps}">
 
                     <ItemsControl.Resources>
@@ -369,14 +373,8 @@
             </TabItem>
 
             <!--COIL FLASHER TABLE-->
-            <TabItem Header="Coils">
-
+            <TabItem Header="Coils" ToolTip="{StaticResource Tip_CoilFlashTable}">
                 <Grid>
-
-                    <!--<Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>-->
 
                     <!--STANDARD FLASHER / COILS-->
                     <DataGrid ItemsSource="{Binding Coils}" CanUserAddRows="False"

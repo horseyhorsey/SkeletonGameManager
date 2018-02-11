@@ -81,25 +81,39 @@
 
             <StackPanel>
                 <TextBlock Text="DMD Path"/>
-                <TextBox Text="{Binding GameConfigModel.DmdPath, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding GameConfigModel.DmdPath, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{StaticResource Tip_PathsDmd}"
+                         />
 
                 <TextBlock Text="Sound Path"/>
-                <TextBox Text="{Binding GameConfigModel.SoundPath, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding GameConfigModel.SoundPath, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{StaticResource Tip_PathsSound}"
+                         />
 
                 <TextBlock Text="Voice Dir"/>
-                <TextBox Text="{Binding GameConfigModel.VoiceDir, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding GameConfigModel.VoiceDir, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{StaticResource Tip_PathsVoice}"
+                         />
 
                 <TextBlock Text="Sfx Dir"/>
-                <TextBox Text="{Binding GameConfigModel.SfxDir, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding GameConfigModel.SfxDir, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{StaticResource Tip_PathsSfx}"
+                         />
 
                 <TextBlock Text="HdFont Path"/>
-                <TextBox Text="{Binding GameConfigModel.HdFontPath, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding GameConfigModel.HdFontPath, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{StaticResource Tip_PathsHdFonts}"
+                         />
 
                 <TextBlock Text="SDL DLL Path"/>
-                <TextBox Text="{Binding GameConfigModel.PySdlDllPath, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding GameConfigModel.PySdlDllPath, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{StaticResource Tip_PathsSdlPath}"
+                         />
 
                 <TextBlock Text="VP Game Map file"/>
-                <TextBox Text="{Binding GameConfigModel.VpGameMapFile, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding GameConfigModel.VpGameMapFile, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{StaticResource Tip_PathsVpGameMap}"
+                         />
             </StackPanel>
 
         </GroupBox>
@@ -133,23 +147,31 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Attract" Grid.Row="0"/>
-                <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding GameConfigModel.DefaultModes.Attract, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Grid.Row="0" Grid.Column="1" 
+                          ToolTip="{StaticResource Tip_Attract}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.Attract, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Bonus Tally" Grid.Column="2"/>
-                <CheckBox Grid.Column="3" IsChecked="{Binding GameConfigModel.DefaultModes.BonusTally, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Grid.Column="3" 
+                          ToolTip="{StaticResource Tip_BonusTally}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.BonusTally, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Service" Grid.Row="0" Grid.Column="4"/>
-                <CheckBox Grid.Row="0" Grid.Column="5" IsChecked="{Binding GameConfigModel.DefaultModes.ServiceMode, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Grid.Row="0" Grid.Column="5" 
+                          ToolTip="{StaticResource Tip_ServiceMenu}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.ServiceMode, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Ball Search" Grid.Row="1"/>
-                <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding GameConfigModel.DefaultModes.BallSearch, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" 
+                          ToolTip="{StaticResource Tip_BallSearch}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.BallSearch, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="Ball Search Delay" Grid.Row="1" Grid.Column="2"/>
-                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Maximum="60"
+                <TextBlock Text="Ball Search Delay" Grid.Row="1" Grid.Column="2" ToolTip="{StaticResource Tip_BallSearchDelay}"/>
+                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Maximum="60" ToolTip="{StaticResource Tip_BallSearchDelay}"
                         Value="{Binding GameConfigModel.DefaultModes.BallSearchDelay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Tilt" Grid.Row="2"/>
-                <CheckBox Grid.Row="2" Grid.Column="1" 
+                <CheckBox Grid.Row="2" Grid.Column="1" ToolTip="{StaticResource Tip_TiltConfig}"
                           IsChecked="{Binding GameConfigModel.DefaultModes.TiltMode, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="OSC Input" Grid.Row="2" Grid.Column="2" />
