@@ -180,6 +180,214 @@
     </Style>
     <!--#endregion-->
 
+    <Grid x:Key="Transition_Standard">
+        <GroupBox Header="Transition" FontWeight="DemiBold">
+            <StackPanel>
+                <ComboBox ItemsSource="{Binding Source={StaticResource Transitions}}" SelectedItem="{Binding Transition}"/>
+                <ComboBox ItemsSource="{Binding Source={StaticResource TransParams}}" SelectedItem="{Binding TransParam}"/>
+                <xctk:IntegerUpDown Value="{Binding TransLength}" Minimum="1" ClipValueToMinMax="True"/>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+    
+    <DataTemplate x:Key="ZoomOptions">
+        <GroupBox Header="Zoom" x:Name="ZoomGroupBox" DataContext="{Binding Sequence}">
+
+            <GroupBox.Style>
+                <Style TargetType="GroupBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=CheckboxZoom,Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                     Value="True">
+                            <Setter Property="Background" Value="{DynamicResource Brush_MoveLayer}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=CheckboxZoom,Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                     Value="False">
+                            <Setter Property="Background" Value="{StaticResource Brush_GradientBackground}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
+            
+            <Expander>
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Margin="5">
+                        <CheckBox x:Name="CheckboxZoom" Content="Enabled" Margin="3" Grid.Row="0"
+                                  
+                          IsChecked="{Binding ZoomLayer.IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <CheckBox Content="Hold" Grid.Row="0" Grid.Column="1" IsChecked="{Binding ZoomLayer.Hold}" 
+                                  Margin="3"
+                          />
+                    </DockPanel>
+
+                    <Label Content="Start" Grid.Row="1"/>
+                    <xctk:DecimalUpDown Grid.Row="1" Grid.Column="1" Value="{Binding ZoomLayer.ScaleStart}" 
+                                    Minimum="0.0" Increment="0.1" Maximum="10.0" ClipValueToMinMax="True"
+                                    
+                                    />
+
+                    <Label Content="Stop" Grid.Row="1" Grid.Column="2"/>
+                    <xctk:DecimalUpDown Grid.Row="1" Grid.Column="3" Value="{Binding ZoomLayer.ScaleStop}"
+                                    Minimum="0.0" Increment="0.1" Maximum="10.0" ClipValueToMinMax="True"                                    
+                                    />
+
+                    <Label Content="Frames Per Zoom" Grid.Row="2"/>
+                    <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Value="{Binding ZoomLayer.FramesPerZoom}"
+                                    
+                                    />
+
+                    <Label Content="Total Zooms" Grid.Row="2" Grid.Column="2"/>
+                    <xctk:IntegerUpDown Grid.Row="2" Grid.Column="3" Value="{Binding ZoomLayer.TotalZooms}"
+                                    
+                                    />
+                </Grid>
+            </Expander>
+
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MoveOptions">
+        <GroupBox Header="Move" DataContext="{Binding Sequence}">
+
+            <GroupBox.Style>
+                <Style TargetType="GroupBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=CheckboxMove,Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                     Value="True">
+                            <Setter Property="Background" Value="{DynamicResource Brush_MoveLayer}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=CheckboxMove,Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                     Value="False">
+                            <Setter Property="Background" Value="{StaticResource Brush_GradientBackground}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
+            
+            <Expander x:Name="opt" >
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox x:Name="CheckboxMove" Content="Enabled" IsChecked="{Binding MoveLayer.IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <CheckBox Content="Loop" Grid.Row="0" Grid.Column="1" IsChecked="{Binding MoveLayer.loop}" 
+                          />
+
+                    <Label Content="Frames" Grid.Row="1"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Value="{Binding MoveLayer.frames}" 
+                                    Grid.Column="1"
+                                    Minimum="1" Increment="1" Maximum="1000" ClipValueToMinMax="True"                                    
+                                    />
+
+                    <Label Content="Start X" Grid.Row="2"/>
+                    <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Value="{Binding MoveLayer.start_x}" 
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+
+                    <Label Content="Target X" Grid.Row="2" Grid.Column="2"/>
+                    <xctk:DecimalUpDown Grid.Row="2" Grid.Column="3" Value="{Binding MoveLayer.target_x}"
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+
+                    <Label Content="Start Y" Grid.Row="3"/>
+                    <xctk:DecimalUpDown Grid.Row="3" Grid.Column="1" Value="{Binding MoveLayer.start_y}"
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+
+                    <Label Content="Target Y" Grid.Row="3" Grid.Column="2"/>
+                    <xctk:DecimalUpDown Grid.Row="3" Grid.Column="3" Value="{Binding MoveLayer.target_y}"
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+                </Grid>
+            </Expander>
+        </GroupBox>
+    </DataTemplate>
+
+    <DataTemplate x:Key="RotateOptions">
+        <GroupBox Header="Rotate" DataContext="{Binding Sequence}">
+
+            <GroupBox.Style>
+                <Style TargetType="GroupBox">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=CheckboxMove,Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                     Value="True">
+                            <Setter Property="Background" Value="{DynamicResource Brush_MoveLayer}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=CheckboxMove,Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                     Value="False">
+                            <Setter Property="Background" Value="{StaticResource Brush_GradientBackground}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </GroupBox.Style>
+            
+            <Expander>
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox x:Name="CheckboxMove" Content="Enabled" IsChecked="{Binding RotateLayer.IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Label Content="X" Grid.Row="1"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Value="{Binding RotateLayer.x}" 
+                                    Grid.Column="1"
+                                    Minimum="1" Increment="1" Maximum="1000" ClipValueToMinMax="True"                                    
+                                    />
+
+                    <Label Content="Y" Grid.Row="1" Grid.Column="2"/>
+                    <xctk:DecimalUpDown Grid.Row="1" Grid.Column="3" Value="{Binding RotateLayer.y}"
+                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
+                                    />
+
+                    <Label Content="Rotation Update Frames" Grid.Row="2" Grid.Column="0"/>
+                    <xctk:IntegerUpDown Grid.Row="2" Value="{Binding RotateLayer.RotateUpdate}" 
+                                    Grid.Column="1"
+                                    Minimum="1" Increment="1" Maximum="1000" ClipValueToMinMax="True"                                    
+                                    />
+                </Grid>
+            </Expander>
+        </GroupBox>
+    </DataTemplate>
+
     <Grid x:Key="FontOptionsGrid">
 
         <GroupBox>
@@ -207,9 +415,9 @@
     </Grid>
 
     <DataTemplate x:Key="TransformOption">
-        <GroupBox Header="Apply Transforms" >
+        <GroupBox Header="Transform &amp; Fx" >
             <StackPanel Margin="5">
-                <ContentPresenter ContentTemplate="{DynamicResource ZoomOptions}" DataContext="{Binding Sequence}"/>
+                <ContentPresenter ContentTemplate="{DynamicResource ZoomOptions}" DataContext="{Binding}"/>
                 <ContentPresenter ContentTemplate="{DynamicResource MoveOptions}" DataContext="{Binding Sequence}"/>
                 <ContentPresenter ContentTemplate="{DynamicResource RotateOptions}" DataContext="{Binding Sequence}"/>
             </StackPanel>
@@ -224,138 +432,6 @@
                 <ContentControl ContentTemplate="{DynamicResource RotateOptions}" Content="{Binding}"/>
             </StackPanel>
         </GroupBox>
-    </DataTemplate>
-
-    <DataTemplate x:Key="ZoomOptions">
-        <Expander Header="Zoom">
-            <Grid>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <CheckBox x:Name="CheckboxZoom" Content="Enabled" IsChecked="{Binding ZoomLayer.IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <CheckBox Content="Hold" Grid.Row="1" IsChecked="{Binding ZoomLayer.Hold}" 
-                          />
-
-                <xctk:DecimalUpDown Grid.Row="2" Value="{Binding ZoomLayer.ScaleStart}" 
-                                    Minimum="0.0" Increment="0.1" Maximum="10.0" ClipValueToMinMax="True"
-                                    
-                                    />
-                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Value="{Binding ZoomLayer.ScaleStop}"
-                                    Minimum="0.0" Increment="0.1" Maximum="10.0" ClipValueToMinMax="True"
-                                    
-                                    />
-
-                <xctk:IntegerUpDown Grid.Row="3" Value="{Binding ZoomLayer.FramesPerZoom}"
-                                    
-                                    />
-                <xctk:IntegerUpDown Grid.Row="3" Grid.Column="1" Value="{Binding ZoomLayer.TotalZooms}"
-                                    
-                                    />
-            </Grid>
-        </Expander>
-    </DataTemplate>
-
-    <DataTemplate x:Key="MoveOptions">
-        <Expander Header="Move" x:Name="opt" >
-            <Grid>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <CheckBox x:Name="CheckboxMove" Content="Enabled" IsChecked="{Binding MoveLayer.IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <CheckBox Content="Loop" Grid.Row="0" Grid.Column="1" IsChecked="{Binding MoveLayer.loop}" 
-                          />
-
-                <Label Content="Frames" Grid.Row="1"/>
-                <xctk:IntegerUpDown Grid.Row="1" Value="{Binding MoveLayer.frames}" 
-                                    Grid.Column="1"
-                                    Minimum="1" Increment="1" Maximum="1000" ClipValueToMinMax="True"                                    
-                                    />
-
-                <Label Content="Start X" Grid.Row="2"/>
-                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="1" Value="{Binding MoveLayer.start_x}" 
-                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
-                                    />
-
-                <Label Content="Target X" Grid.Row="2" Grid.Column="2"/>
-                <xctk:DecimalUpDown Grid.Row="2" Grid.Column="3" Value="{Binding MoveLayer.target_x}"
-                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
-                                    />
-
-                <Label Content="Start Y" Grid.Row="3"/>
-                <xctk:DecimalUpDown Grid.Row="3" Grid.Column="1" Value="{Binding MoveLayer.start_y}"
-                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
-                                    />
-
-                <Label Content="Target Y" Grid.Row="3" Grid.Column="2"/>
-                <xctk:DecimalUpDown Grid.Row="3" Grid.Column="3" Value="{Binding MoveLayer.target_y}"
-                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
-                                    />
-            </Grid>
-        </Expander>
-    </DataTemplate>
-
-    <DataTemplate x:Key="RotateOptions">
-        <Expander Header="Rotate">
-            <Grid>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <CheckBox x:Name="CheckboxMove" Content="Enabled" IsChecked="{Binding RotateLayer.IsEnabled, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <Label Content="X" Grid.Row="1"/>
-                <xctk:IntegerUpDown Grid.Row="1" Value="{Binding RotateLayer.x}" 
-                                    Grid.Column="1"
-                                    Minimum="1" Increment="1" Maximum="1000" ClipValueToMinMax="True"                                    
-                                    />
-
-                <Label Content="Y" Grid.Row="1" Grid.Column="2"/>
-                <xctk:DecimalUpDown Grid.Row="1" Grid.Column="3" Value="{Binding RotateLayer.y}"
-                                    Minimum="-1000" Increment="1" Maximum="2000" ClipValueToMinMax="True"                                    
-                                    />
-
-                <Label Content="Rotation Update Frames" Grid.Row="2" Grid.Column="0"/>
-                <xctk:IntegerUpDown Grid.Row="2" Value="{Binding RotateLayer.RotateUpdate}" 
-                                    Grid.Column="1"
-                                    Minimum="1" Increment="1" Maximum="1000" ClipValueToMinMax="True"                                    
-                                    />
-            </Grid>
-        </Expander>
     </DataTemplate>
 
     <GroupBox x:Key="TransitionOptions" Header="Transitions"
@@ -441,30 +517,23 @@
         </GroupBox>
     </Grid>
 
-    <Grid x:Key="Attract_Standard">
+    <Grid x:Key="Attract_Standard" x:Shared="false">
         <Grid>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <ContentPresenter Content="{StaticResource SoundLampDurationCombo}"/>
-            
+las
+
+            <ContentPresenter Grid.Row="1" Content="{StaticResource SoundLampDurationCombo}"/>
+
             <!--FONT AND STYLE-->
-            <ContentPresenter Grid.Row="1" Content="{StaticResource FontOptionsGrid}"/>
+            <ContentPresenter Grid.Row="2" Content="{StaticResource FontOptionsGrid}"/>
 
         </Grid>
-    </Grid>
-
-    <Grid x:Key="Transition_Standard">
-        <GroupBox Header="Transition" FontWeight="DemiBold">
-            <StackPanel>
-                <ComboBox ItemsSource="{Binding Source={StaticResource Transitions}}" SelectedItem="{Binding Transition}"/>
-                <ComboBox ItemsSource="{Binding Source={StaticResource TransParams}}" SelectedItem="{Binding TransParam}"/>
-                <xctk:IntegerUpDown Value="{Binding TransLength}" Minimum="1" ClipValueToMinMax="True"/>
-            </StackPanel>
-        </GroupBox>
     </Grid>
 
     <Grid x:Key="Attract_Text">
@@ -544,61 +613,28 @@
 
 
 
-    <DataTemplate x:Key="Sequence_LastScores">
-        <GroupBox DataContext="{Binding Sequence}" Margin="3">
-            <GroupBox.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label Style="{DynamicResource LastScoresSequenceStyle}" 
-                           Width="75" Height="30"
-                           FontSize="20" HorizontalAlignment="Right"
-                           BorderThickness="3" BorderBrush="Black"/>
-                </Grid>
-            </GroupBox.Header>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                
-                <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
-                               VerticalAlignment="Bottom" FontSize="16"/>
-                
-                <ContentPresenter Content="{StaticResource Attract_Text}" Margin="3" Grid.Row="1"/>
-            </Grid>
-        </GroupBox>
-    </DataTemplate>
 
-    <DataTemplate x:Key="Sequence_HighScores">
-        <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
 
-            <Grid>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <GroupBox Header="Order">
-                    <ListView ItemsSource="{Binding Order}"                       
-                      xmlns:dd="urn:gong-wpf-dragdrop"
-                      dd:DragDrop.IsDragSource="True"
-                      dd:DragDrop.IsDropTarget="True"
-                      dd:DragDrop.DropHandler="{Binding}">
-                    </ListView>
-                </GroupBox>
-
-                <ContentPresenter Grid.Row="1" Content="{StaticResource Attract_Standard}"/>
-            </Grid>
-        </GroupBox>
-    </DataTemplate>
 
     <DataTemplate x:Key="Sequence_Combo">
-        <GroupBox Header="{Binding Name}" x:Name="LayoutRoot" DataContext="{Binding Sequence}">
+        <GroupBox x:Name="LayoutRoot" DataContext="{Binding Sequence}"
+                  Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_ComboLayer}">
 
+            <GroupBox.Header>
+                <DockPanel>
+                    <Label Style="{DynamicResource ComboSequenceStyle}"                          
+                           Width="75" Height="30" FontWeight="DemiBold"
+                           Grid.ColumnSpan="2" Margin="0,0"
+                           FontSize="20" />
+                    <!--SEQUENCE TYPE HEADER-->
+                    <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           FontSize="14" Margin="0,0"
+                           FontWeight="DemiBold"
+                           />
+                </DockPanel>
+            </GroupBox.Header>
+            
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -609,9 +645,11 @@
 
                 <!--<ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" Grid.Row="3"/>-->
 
-                <ContentPresenter Content="{StaticResource Transition_Standard}" Grid.Row="2"/>
+                <ContentPresenter Content="{StaticResource TransitionOptions}" Grid.Row="1" Margin="3"/>
 
-                <GroupBox Header="Text Lines"  Grid.Row="0" Margin="5" FontSize="14">
+                <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="0" Margin="3"/>
+
+                <GroupBox Header="Text Lines"  Grid.Row="2" Margin="5" FontSize="14">
                     <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}"
                               AutoGenerateColumns="False"
                               >
@@ -622,185 +660,74 @@
                     </DataGrid>
                 </GroupBox>
 
-                <ContentPresenter Content="{StaticResource Attract_Standard}" Grid.Row="1"/>
-
-
             </Grid>
+            
         </GroupBox>
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_TextLayer">
-        <GroupBox DataContext="{Binding Sequence}" Margin="3">
+        <GroupBox DataContext="{Binding Sequence}" Margin="3" 
+                  Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_TextLayer}">
 
             <GroupBox.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label Style="{DynamicResource TextLayerSequenceStyle}" 
-                           Width="75" Height="30"
-                           FontSize="20" HorizontalAlignment="Right"
-                           BorderThickness="3" BorderBrush="Black"/>
-                </Grid>
+                <DockPanel>
+                    <Label Style="{DynamicResource TextLayerSequenceStyle}"                          
+                           Width="75" Height="30" FontWeight="DemiBold"
+                           Grid.ColumnSpan="2" Margin="0,0"
+                           FontSize="20" />
+                    <!--SEQUENCE TYPE HEADER-->
+                    <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           FontSize="14" Margin="0,0"
+                           FontWeight="DemiBold"
+                           />
+                </DockPanel>
             </GroupBox.Header>
+            
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
-                               VerticalAlignment="Bottom" FontSize="16"/>
-                
-                <!--TEXT TO DISPLAY AND WHERE IT'S JUSTIFIED-->
-                <GroupBox Grid.Row="1" Header="Line">
-                    <StackPanel Margin="3" >
+                <ContentPresenter Content="{StaticResource SoundLampDurationCombo}" Grid.Row="0" Margin="3"/>
 
-                        <DockPanel LastChildFill="False" Margin="3">
-                            <TextBox Text="{Binding Text}" DockPanel.Dock="Top" 
+                <ContentPresenter Content="{StaticResource FontOptionsGrid}" Grid.Row="1" Margin="3"/>
+
+                <DockPanel LastChildFill="False" Margin="3" Grid.Row="2">
+                    <TextBox Text="{Binding Text}" DockPanel.Dock="Top" 
                                      FontSize="22"/>
 
-                            <StackPanel Orientation="Horizontal" Margin="3" DockPanel.Dock="Left">
-                                <Label Content="Position"/>
-                                <xctk:IntegerUpDown Value="{Binding X}" Minimum="0" ClipValueToMinMax="True" ToolTip="X position of text"/>
-                                <xctk:IntegerUpDown Value="{Binding Y}" Minimum="0" ClipValueToMinMax="True" ToolTip="Y position of text"/>
-                                <CheckBox VerticalAlignment="Center" IsChecked="{Binding BlinkFrames}" Content="Blink Text"></CheckBox>
-                            </StackPanel>
+                </DockPanel>
 
-                        </DockPanel>
+                <GroupBox Grid.Row="3"
+                          Style="{StaticResource SequenceBaseGroupBox}" 
+                          BorderBrush="{DynamicResource Brush_TextLayer}"
+                          Header="Text layer options"
+                          >
+                    <StackPanel Orientation="Horizontal" Margin="5" >
 
-                        <StackPanel Orientation="Horizontal" Margin="5">
+                        <xctk:IntegerUpDown Value="{Binding X}" Minimum="0" ClipValueToMinMax="True" ToolTip="X position of text" Margin="3"/>
+                        <xctk:IntegerUpDown Value="{Binding Y}" Minimum="0" ClipValueToMinMax="True" ToolTip="Y position of text" Margin="3"/>
 
-                            <TextBlock Text="Vert Justify:   " VerticalAlignment="Center"/>
-                            <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Vert Justify:   " VerticalAlignment="Center"/>
+                        <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
 
-                            <TextBlock Text="    Horz Justify:   " VerticalAlignment="Center"/>
-                            <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustify, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="    Horz Justify:   " VerticalAlignment="Center"/>
+                        <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustify, UpdateSourceTrigger=PropertyChanged}"/>
+                        
+                        
+                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding BlinkFrames}" Content="Blink Text" Margin="3"></CheckBox>
 
-                        </StackPanel>
                     </StackPanel>
                 </GroupBox>
 
-                <ContentPresenter Content="{StaticResource Attract_Text}" Grid.Row="2"/>
             </Grid>
         </GroupBox>
     </DataTemplate>
 
-    <DataTemplate x:Key="Sequence_Animation">
-        <GroupBox DataContext="{Binding Sequence}" Margin="3">
-
-            <GroupBox.Header>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label Style="{DynamicResource AnimationSequenceStyle}" 
-                           Width="75" Height="30"
-                           FontSize="20" HorizontalAlignment="Right"
-                           BorderThickness="3" BorderBrush="Black"/>
-                </Grid>
-            </GroupBox.Header>
-
-            <StackPanel>
-                <Label Content="Anim Name:"/>
-                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding AnimName}"/>
-
-                <!--LAMPS SOUNDS DURATION-->
-                <ContentPresenter Content="{StaticResource SoundLampDurationCombo}" Margin="3"/>
-
-                <ContentPresenter ContentTemplate="{DynamicResource TransformOption}"/>
-            </StackPanel>
-        </GroupBox>
-    </DataTemplate>
-
-    <DataTemplate x:Key="Sequence_Markup">
-        <GroupBox Header="{Binding Name}" DataContext="{Binding Sequence}">
-            <StackPanel>
-
-                <GroupBox>
-                    <GroupBox.Header>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Label Style="{DynamicResource MarkupLayerSequenceStyle}" 
-                           Width="75" Height="30"
-                           FontSize="20" HorizontalAlignment="Right"
-                           BorderThickness="3" BorderBrush="Black"/>
-                        </Grid>
-                    </GroupBox.Header>
-                    
-                    <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="True" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding TextLine}" Width="1*"></DataGridTextColumn>
-                            <!--<DataGridTemplateColumn Width="1*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    
-                                        <TextBox Text="{Binding TextLine,UpdateSourceTrigger=PropertyChanged}"/>
-                                    
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>-->
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </GroupBox>
-                
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="Name" VerticalAlignment="Center"/>
-                    <TextBox Text="{Binding Name}" MinWidth="100" Margin="10"/>
-
-                    <Label Content="Width" VerticalAlignment="Center"/>
-                    <xctk:IntegerUpDown Value="{Binding Width}" Margin="10"/>
-                    
-                </StackPanel>
-
-                <!--FONT AND STYLE-->
-                <!--<ContentPresenter Content="{StaticResource FontOptionsGrid}"/>-->
-
-                <GroupBox>
-                    <StackPanel>
-                        <GroupBox Header="Bold">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Font"/>
-                                <ComboBox Style="{StaticResource Style_FontCombo}" 
-                              SelectedValue="{Binding Bold.Font,UpdateSourceTrigger=PropertyChanged}"/>
-
-                                <Label Content="Style"/>
-                                <ComboBox Style="{StaticResource Style_FontStyleCombo}"
-                              SelectedValue="{Binding Bold.FontStyle}"
-                              />
-                            </StackPanel>
-                        </GroupBox>
-
-                        <GroupBox Header="Normal">
-                            <StackPanel Orientation="Horizontal">
-                                <Label Content="Font"/>
-                                <ComboBox Style="{StaticResource Style_FontCombo}" 
-                              SelectedValue="{Binding Normal.Font}"/>
-
-                                <Label Content="Style"/>
-                                <ComboBox Style="{StaticResource Style_FontStyleCombo}"
-                              SelectedValue="{Binding Normal.FontStyle}"
-                              />
-                            </StackPanel>
-                        </GroupBox>
-                    </StackPanel>
-                </GroupBox>
-
-                <!--<Label Content="Animation"/>
-                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding Animation}"/>-->
-
-                <ContentPresenter Content="{StaticResource Transition_Standard}" Grid.Row="1"/>
-
-                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
-            </StackPanel>
-        </GroupBox>
-    </DataTemplate>
 
     <DataTemplate x:Key="Sequence_MoveLayer">
         <GroupBox Header="{Binding Name}" x:Name="Root" DataContext="{Binding Sequence}">
@@ -940,141 +867,6 @@
                 </GroupBox>
 
 
-            </StackPanel>
-        </GroupBox>
-    </DataTemplate>
-
-    <DataTemplate x:Key="Sequence_Panning">
-        <GroupBox Header="{Binding Name}" x:Name="Root" DataContext="{Binding Sequence}">
-            <StackPanel>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.Resources>
-                        <Style TargetType="{x:Type xctk:IntegerUpDown}">
-                            <Setter Property="Margin" Value="5"/>
-                        </Style>
-                    </Grid.Resources>
-
-                    <Label Content="Height" Grid.Column="0"/>
-                    <xctk:IntegerUpDown Grid.Column="1" Value="{Binding Width}"/>
-
-                    <Label Content="Width" Grid.Column="2"/>
-                    <xctk:IntegerUpDown Grid.Column="3" Value="{Binding Height}"/>
-
-                    <Label Content="Origin X" Grid.Column="4"/>
-                    <xctk:IntegerUpDown Grid.Column="5"
-                                        Value="{Binding OriginX}"/>
-
-                    <Label Content="Origin Y" Grid.Column="6"/>
-                    <xctk:IntegerUpDown Grid.Column="7" Value="{Binding OriginY}"/>
-
-                    <!--ROW 1-->
-                    <Label Content="Scroll X" Grid.Row="1" />
-                    <xctk:IntegerUpDown Grid.Column="1" Grid.Row="1"                                          
-                                        Text="{Binding ScrollX, UpdateSourceTrigger=PropertyChanged}"/>
-
-                    <Label Content="Scroll Y" Grid.Row="1" Grid.Column="2"/>
-                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Value="{Binding ScrollY}"/>
-
-                    <Label Content="Frames Per Movement" Grid.Row="1" Grid.Column="4"/>
-                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="5" Value="{Binding FramesPerMovement}"/>
-
-                    <Label Content="Bounce" Grid.Row="1" Grid.Column="6"/>
-                    <CheckBox Grid.Row="1" Grid.Column="7" Margin="5" IsChecked="{Binding Bounce}"/>
-
-
-                </Grid>
-
-                <Label Content="Lampshow"/>
-                <ComboBox Style="{StaticResource Style_LampsCombo}"/>
-
-                <Label Content="Sound"/>
-                <ComboBox Style="{StaticResource Style_SoundsCombo}"/>
-
-                <Label Content="Duration"/>
-                <xctk:DecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
-
-                <GroupBox Header="Contents - Grouped Layer">
-                    <StackPanel Margin="5">
-
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Width"/>
-                            <xctk:IntegerUpDown Value="{Binding Width}"/>
-
-                            <Label Content="Height"/>
-                            <xctk:IntegerUpDown Value="{Binding Height}"/>
-                        </StackPanel>
-
-                        <Label Content="Layers"/>
-
-                        <DockPanel Grid.Row="1">
-                            <ComboBox x:Name="LayerComboboxPanning" Margin="3" SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}" 
-                                      DockPanel.Dock="Top">
-                                <ComboBox.Items>
-                                    <ComboBoxItem Content="Animation" IsSelected="True"/>
-                                    <ComboBoxItem Content="Markup"/>
-                                    <ComboBoxItem Content="Text"/>
-                                </ComboBox.Items>
-                            </ComboBox>
-
-                            <Button Margin="3"
-                            Content="+" Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddLayerCommand }"            
-                                   CommandParameter="{Binding Contents.group_layer,UpdateSourceTrigger=PropertyChanged}"
-                                         DockPanel.Dock="Bottom"/>
-                        </DockPanel>
-
-                        <DataGrid x:Name="GroupedLayers" ItemsSource="{Binding Contents.group_layer.Contents}" 
-                                  MinHeight="50" AutoGenerateColumns="False" CanUserAddRows="False"
-                                  Margin="25"
-                                  ItemTemplateSelector="{DynamicResource GroupedLayerSelector}"
-                                  >
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn>
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Height="20">
-                                                <Label.Style>
-                                                    <MultiBinding Converter="{StaticResource StyleConverter}">
-                                                        <MultiBinding.Bindings>
-                                                            <Binding RelativeSource="{RelativeSource Self}"/>
-                                                            <Binding Path="SequenceName"/>
-                                                        </MultiBinding.Bindings>
-                                                    </MultiBinding>
-                                                </Label.Style>
-                                            </Label>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn Binding="{Binding SeqType}" Width="1*" IsReadOnly="True"/>
-                                <DataGridTextColumn Binding="{Binding animation_layer.Name}" Width="1*" IsReadOnly="True"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-
-                        <GroupBox Header="Layer Options" Grid.Row="4" Margin="0,50">
-                            <Grid  Background="White" >
-                                <ContentPresenter ContentTemplateSelector="{DynamicResource GroupedLayerSelector}" 
-                                        Content="{Binding ElementName=GroupedLayers,Path=SelectedItem}"/>
-                            </Grid>
-                        </GroupBox>
-
-                    </StackPanel>
-                </GroupBox>
             </StackPanel>
         </GroupBox>
     </DataTemplate>
@@ -1596,6 +1388,397 @@
         </GroupBox>
     </DataTemplate>
 
+    <!--ANIMATION-->
+    <DataTemplate x:Key="Sequence_Animation">
+        <GroupBox DataContext="{Binding Sequence}" Margin="3" Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_AnimLayer}">
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <Label Style="{DynamicResource AnimationSequenceStyle}"                          
+                           Width="75" Height="30" FontWeight="DemiBold"
+                           Grid.ColumnSpan="2" Margin="0,0"
+                           FontSize="20" />
+                    <!--SEQUENCE TYPE HEADER-->
+                    <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           FontSize="14" Margin="0,0"
+                           FontWeight="DemiBold"
+                           />
+                </DockPanel>
+            </GroupBox.Header>
+
+            <StackPanel>
+                <Label Content="Anim Name:"/>
+                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding AnimName}"/>
+
+                <!--LAMPS SOUNDS DURATION-->
+                <ContentPresenter Content="{StaticResource SoundLampDurationCombo}" Margin="3"/>
+
+                <!--TRANSFORMS-->
+                <ContentPresenter ContentTemplate="{DynamicResource TransformOption}"/>
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+
+    <!--LAST SCORES-->
+    <DataTemplate x:Key="Sequence_LastScores">
+        <GroupBox DataContext="{Binding Sequence}" Style="{StaticResource SequenceBaseGroupBox}"
+                  BorderBrush="{DynamicResource Brush_LastScores}"
+                  Margin="3">
+            <GroupBox.Header>
+                <DockPanel>
+                    <Label Style="{DynamicResource LastScoresSequenceStyle}"                          
+                           Width="75" Height="30" FontWeight="DemiBold"
+                           Grid.ColumnSpan="2" Margin="0,0"
+                           FontSize="20" />
+                    <!--SEQUENCE TYPE HEADER-->
+                    <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           FontSize="14" Margin="0,0"
+                           FontWeight="DemiBold"
+                           />
+                </DockPanel>
+            </GroupBox.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!--ANIMATION-->
+                <GroupBox Grid.Column="2" Grid.Row="2" >
+                    <GroupBox.Header>
+                        <DockPanel>
+                            <Viewbox Height="20" Width="50">
+                                <ContentPresenter Content="{StaticResource Path_Assets}" Height="50" Width="50"/>
+                            </Viewbox>
+                            <TextBlock Text="Animation" FontWeight="DemiBold" FontSize="14"/>
+                        </DockPanel>
+                    </GroupBox.Header>
+
+                    <ComboBox Grid.Column="0" Style="{StaticResource Style_AnimationsCombo}"
+                                  DockPanel.Dock="Left"
+                                  />
+
+                </GroupBox>
+
+
+                <ContentPresenter Content="{StaticResource SoundLampDurationCombo}" Margin="3" Grid.Row="0"/>
+
+                <ContentPresenter Content="{StaticResource FontOptionsGrid}" Margin="3" Grid.Row="1"/>
+            </Grid>
+        </GroupBox>
+    </DataTemplate>
+
+    <!--MARKUP-->
+    <DataTemplate x:Key="Sequence_Markup">
+        <GroupBox Style="{StaticResource SequenceBaseGroupBox}"
+                  BorderBrush="{DynamicResource Brush_MarkupLayer}"
+                  DataContext="{Binding Sequence}">
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <Label Style="{DynamicResource MarkupLayerSequenceStyle}"                          
+                           Width="75" Height="30" FontWeight="DemiBold"
+                           Grid.ColumnSpan="2" Margin="0,0"
+                           FontSize="20" />
+                    <!--SEQUENCE TYPE HEADER-->
+                    <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           FontSize="14" Margin="0,0"
+                           FontWeight="DemiBold"
+                           />
+                </DockPanel>
+            </GroupBox.Header>
+
+            <StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Name" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding Name}" MinWidth="100" Margin="10"/>
+
+                    <Label Content="Width" VerticalAlignment="Center"/>
+                    <xctk:IntegerUpDown Value="{Binding Width}" Margin="10"/>
+
+                </StackPanel>
+
+                <!--FONT AND STYLE-->
+                <!--<ContentPresenter Content="{StaticResource FontOptionsGrid}"/>-->
+
+                <GroupBox>
+                    <StackPanel>
+                        <GroupBox Header="Bold">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Font"/>
+                                <ComboBox Style="{StaticResource Style_FontCombo}" 
+                              SelectedValue="{Binding Bold.Font,UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <Label Content="Style"/>
+                                <ComboBox Style="{StaticResource Style_FontStyleCombo}"
+                              SelectedValue="{Binding Bold.FontStyle}"
+                              />
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="Normal">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Font"/>
+                                <ComboBox Style="{StaticResource Style_FontCombo}" 
+                              SelectedValue="{Binding Normal.Font}"/>
+
+                                <Label Content="Style"/>
+                                <ComboBox Style="{StaticResource Style_FontStyleCombo}"
+                              SelectedValue="{Binding Normal.FontStyle}"
+                              />
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </GroupBox>
+
+                <!--<Label Content="Animation"/>
+                <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding Animation}"/>-->
+
+                <ContentPresenter Content="{StaticResource Transition_Standard}" Grid.Row="1"/>
+
+                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
+
+                <GroupBox>
+
+                    <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding TextLine}" Width="1*"></DataGridTextColumn>
+                            <!--<DataGridTemplateColumn Width="1*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    
+                                        <TextBox Text="{Binding TextLine,UpdateSourceTrigger=PropertyChanged}"/>
+                                    
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>-->
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+            </StackPanel>
+        </GroupBox>
+    </DataTemplate>
+
+    <!--HIGH SCORES-->
+    <DataTemplate x:Key="Sequence_HighScores">
+        <GroupBox Style="{StaticResource SequenceBaseGroupBox}"
+                  BorderBrush="{DynamicResource Brush_HighScores}"
+                  DataContext="{Binding Sequence}">
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <Label Style="{DynamicResource HighScoresSequenceStyle}"                          
+                           Width="75" Height="30" FontWeight="DemiBold"
+                           Grid.ColumnSpan="2" Margin="0,0"
+                           FontSize="20" />
+                    <!--SEQUENCE TYPE HEADER-->
+                    <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           FontSize="14" Margin="0,0"
+                           FontWeight="DemiBold"
+                           />
+                </DockPanel>
+            </GroupBox.Header>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--ANIMATION-->
+                <GroupBox Grid.Column="0" Grid.Row="0" >
+                    <GroupBox.Header>
+                        <DockPanel>
+                            <Viewbox Height="20" Width="50">
+                                <ContentPresenter Content="{StaticResource Path_Assets}" Height="50" Width="50"/>
+                            </Viewbox>
+                            <TextBlock Text="Animation" FontWeight="DemiBold" FontSize="14"/>
+                        </DockPanel>
+                    </GroupBox.Header>
+
+                    <ComboBox Grid.Column="1" Style="{StaticResource Style_AnimationsCombo}"
+                                  DockPanel.Dock="Left"
+                                  />
+                </GroupBox>
+
+                <ContentPresenter Grid.Row="1" Content="{StaticResource SoundLampDurationCombo}" Margin="3"/>
+
+                <GroupBox Header="Order" Grid.Row="2">
+                    <ListView ItemsSource="{Binding Order}"                       
+                      xmlns:dd="urn:gong-wpf-dragdrop"
+                      dd:DragDrop.IsDragSource="True"
+                      dd:DragDrop.IsDropTarget="True"
+                      dd:DragDrop.DropHandler="{Binding}">
+                    </ListView>
+                </GroupBox>
+
+            </Grid>
+        </GroupBox>
+    </DataTemplate>
+
+    <!--PANNING LAYER-->
+    <DataTemplate x:Key="Sequence_Panning">
+        <GroupBox x:Name="Root" DataContext="{Binding Sequence}" 
+                  Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_PanningLayer}"
+                  >
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <Label Style="{DynamicResource PanningLayerSequenceStyle}"                          
+                           Width="75" Height="30" FontWeight="DemiBold"
+                           Grid.ColumnSpan="2" Margin="0,0"
+                           FontSize="20" />
+                    <!--SEQUENCE TYPE HEADER-->
+                    <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           FontSize="14" Margin="0,0"
+                           FontWeight="DemiBold"
+                           />
+                </DockPanel>
+            </GroupBox.Header>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!--SOUND LAMPS DURATION-->
+                <StackPanel Grid.Row="0">
+
+                    <!--NAME-->
+                    <xctk:WatermarkTextBox Text="{Binding Name}" Watermark="Layer name to reference in game" Margin="3"/>
+
+                    <!--SOUND LAMP COMBOS-->
+                    <ContentPresenter Content="{StaticResource SoundLampDurationCombo}"/>
+
+                    <!--TRANSITION PANEL-->
+                    <ContentPresenter Content="{StaticResource TransitionOptions}"/>
+                </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type xctk:IntegerUpDown}">
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <Label Content="Height" Grid.Column="0"/>
+                    <xctk:IntegerUpDown Grid.Column="1" Value="{Binding Width}"/>
+
+                    <Label Content="Width" Grid.Column="2"/>
+                    <xctk:IntegerUpDown Grid.Column="3" Value="{Binding Height}"/>
+
+                    <Label Content="Origin X" Grid.Column="4"/>
+                    <xctk:IntegerUpDown Grid.Column="5"
+                                        Value="{Binding OriginX}"/>
+
+                    <Label Content="Origin Y" Grid.Column="6"/>
+                    <xctk:IntegerUpDown Grid.Column="7" Value="{Binding OriginY}"/>
+
+                    <!--ROW 1-->
+                    <Label Content="Scroll X" Grid.Row="1" />
+                    <xctk:IntegerUpDown Grid.Column="1" Grid.Row="1"                                          
+                                        Text="{Binding ScrollX, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Label Content="Scroll Y" Grid.Row="1" Grid.Column="2"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Value="{Binding ScrollY}"/>
+
+                    <Label Content="Frames Per Movement" Grid.Row="1" Grid.Column="4"/>
+                    <xctk:IntegerUpDown Grid.Row="1" Grid.Column="5" Value="{Binding FramesPerMovement}"/>
+
+                    <Label Content="Bounce" Grid.Row="1" Grid.Column="6"/>
+                    <CheckBox Grid.Row="1" Grid.Column="7" Margin="5" IsChecked="{Binding Bounce}"/>
+
+                </Grid>
+
+                <DockPanel Grid.Row="2" LastChildFill="False">
+                    <ComboBox x:Name="LayerComboboxPanning" Margin="3" SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}" 
+                                      DockPanel.Dock="Top">
+                        <ComboBox.Items>
+                            <ComboBoxItem Content="Animation" IsSelected="True"/>
+                            <ComboBoxItem Content="Markup"/>
+                            <ComboBoxItem Content="Text"/>
+                        </ComboBox.Items>
+                    </ComboBox>
+
+                    <Button Margin="3"
+                            Content="+" Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddLayerCommand }"            
+                                   CommandParameter="{Binding Contents.group_layer,UpdateSourceTrigger=PropertyChanged}"
+                                         DockPanel.Dock="Top"/>
+                </DockPanel>
+
+                <!--GROUP LAYER CONTENTS-->
+                <DataGrid x:Name="GroupedLayers" ItemsSource="{Binding Contents.group_layer.Contents}" 
+                                  MinHeight="50" AutoGenerateColumns="False" CanUserAddRows="False"
+                                  Grid.Row="3" Margin="3"
+                                  ItemTemplateSelector="{DynamicResource GroupedLayerSelector}"
+                                  >
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Height="20">
+                                        <Label.Style>
+                                            <MultiBinding Converter="{StaticResource StyleConverter}">
+                                                <MultiBinding.Bindings>
+                                                    <Binding RelativeSource="{RelativeSource Self}"/>
+                                                    <Binding Path="SequenceName"/>
+                                                </MultiBinding.Bindings>
+                                            </MultiBinding>
+                                        </Label.Style>
+                                    </Label>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding SeqType}" Width="1*" IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding animation_layer.Name}" Width="1*" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <GroupBox Header="Layer Options" Grid.Row="4" Margin="0,50" 
+                          Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_PanningLayer}">
+                    <Grid  Background="White" >
+                        <ContentPresenter ContentTemplateSelector="{DynamicResource GroupedLayerSelector}" 
+                                        Content="{Binding ElementName=GroupedLayers,Path=SelectedItem}"/>
+                    </Grid>
+                </GroupBox>
+
+            </Grid>
+            
+        </GroupBox>
+    </DataTemplate>
 
 </ResourceDictionary>
     
