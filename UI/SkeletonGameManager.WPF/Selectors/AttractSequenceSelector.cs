@@ -26,10 +26,15 @@ namespace SkeletonGameManager.WPF.Selectors
             if (item == null) return _template;                       
 
             var sequenceItem = item as SequenceItemViewModel;
-
-            var type = sequenceItem.Sequence.GetType();
-
-            return GetTemplate(type, container);
+            if (sequenceItem != null)
+            {
+                var type = sequenceItem.GetType();
+                return GetTemplate(type, container);
+            }
+            else
+            {
+                return GetTemplate(item.GetType(), container);
+            }
         }
 
         private DataTemplate GetTemplate(Type type, DependencyObject container)
