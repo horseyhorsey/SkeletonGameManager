@@ -74,4 +74,26 @@ namespace SkeletonGame.Models.Machine
         [YamlMember(Alias = "PRCoils", ApplyNamingConventions = false)]
         public List<PRCoil> PRCoils { get; set; }
     }
+
+    public class MachineConfigDict
+    {
+        [YamlMember(Alias = "PRGame", Order = 0, ApplyNamingConventions = false)]
+        public PRGame PRGame { get; set; }
+
+        [YamlMember(Alias = "PRBumpers", ApplyNamingConventions = false)]
+        public List<string> PRBumpers { get; set; }
+
+        [YamlMember(Alias = "PRFlippers", ApplyNamingConventions = false)]
+        public List<string> PRFlippers { get; set; }
+
+        [YamlMember(Alias = "PRSwitches", Order = 3, ApplyNamingConventions = false)]
+        public Dictionary<string, PRSwitch> PRSwitches { get; set; }
+
+        [YamlMember(Alias = "PRLamps", Order = 4, ApplyNamingConventions = false)]
+        public Dictionary<string, PRLamp> PRLamps { get; set; }
+
+        [YamlMember(Alias = "PRCoils", Order = 5, ApplyNamingConventions = false)]        
+        public Dictionary<string, PRCoil> PRCoils { get; set; }
+
+    }
 }
