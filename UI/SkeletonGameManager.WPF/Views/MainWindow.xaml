@@ -132,6 +132,10 @@
                                         <ContentControl prism:RegionManager.RegionName="MachineRegion" />
                                     </TabItem>
 
+                                    <TabItem Header="Score Display" IsEnabled="False">
+                                        <ContentControl prism:RegionManager.RegionName="ScoreLayoutRegion"/>
+                                    </TabItem>
+
                                     <!--SKELETON GAME ASSETS-->
                                     <TabItem>
                                         <TabItem.Header>
@@ -154,11 +158,13 @@
                                         <ContentControl prism:RegionManager.RegionName="AttractRegion"/>
                                     </TabItem>
 
-                                    <!--SKELETON GAME ATTRACT--><!--
-                                    <TabItem Header="Sequences" IsEnabled="True">
-                                        <ContentControl prism:RegionManager.RegionName="SequencesRegion"/>
-                                    </TabItem>-->
+                                    <!--RECORDINGS / PLAYBACKS-->
+                                    <TabItem Header="Recordings"                                              
+                                             IsEnabled="True">
+                                        <ContentControl prism:RegionManager.RegionName="RecordingsRegion"/>
+                                    </TabItem>
 
+                                    <!--SCENE GRABBER-->
                                     <TabItem Header="Scene Grab" 
                                              
                                              IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
