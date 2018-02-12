@@ -7,6 +7,7 @@
         public string Number { get; set; }
         public string Tags { get; set; }
         public string Type { get; set; }
+        public bool State { get; set; }
 
         public string[] BallSearch = new string[] { null, null };
 
