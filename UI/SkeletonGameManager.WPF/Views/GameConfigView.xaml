@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"             
              xmlns:enum="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
@@ -24,6 +24,13 @@
                         ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="enum:BufferSize"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <ObjectDataProvider x:Key="SdlKeys" MethodName="GetValues" 
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enum:SDL_Scancode"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
@@ -60,9 +67,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -70,6 +78,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <!--PATHS-->
         <GroupBox BorderThickness="3" Grid.Column="1">
 
             <GroupBox.Header>
@@ -118,7 +127,8 @@
 
         </GroupBox>
 
-        <GroupBox  Grid.Column="0" Grid.Row="2" BorderThickness="3">
+        <!--DEFAULT MODES-->
+        <GroupBox  Grid.Column="1" Grid.Row="2" BorderThickness="3">
 
             <GroupBox.Header>
                 <DockPanel>
@@ -192,7 +202,7 @@
 
         </GroupBox>
 
-
+        <!--SAVE-->
         <Button Grid.Row="4" Margin="15" VerticalAlignment="Bottom" Grid.ColumnSpan="3"                
                 HorizontalAlignment="Right" Height="50" Width="75"
                 Command="{Binding SaveCommand}" Content="{StaticResource Path_Save}" 
@@ -316,6 +326,43 @@
             </GroupBox>
 
         </StackPanel>
+        
+        <!--KEYBOARD MAPPINGS-->
+
+        <GroupBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="1"
+                  >
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <ContentPresenter Content="{DynamicResource Path_Pause}"/>
+                    <TextBlock Text="Keyboard Mappings" FontWeight="DemiBold"/>
+                </DockPanel>
+            </GroupBox.Header>
+
+            <ListView ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      Margin="3"
+                          BorderBrush="Black" BorderThickness="2"                       
+                    ItemsSource="{Binding SwitchKeys}"
+                    >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Key}" MinWidth="30" Grid.Column="1"/>
+                            <TextBlock Text="{Binding Number}" Grid.Column="2" MinWidth="30"/>
+                            <ComboBox Grid.Column="0" Width="250"
+                                SelectedValue="{Binding Keycode, UpdateSourceTrigger=PropertyChanged}"
+                                ItemsSource="{Binding Source={StaticResource SdlKeys}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+        </GroupBox>
 
 
     </Grid>
