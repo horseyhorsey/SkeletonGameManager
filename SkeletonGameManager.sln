@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{C0262CA2-636D-47CE-8D00-EE53F241C2C4}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{C94260DC-5E56-41FB-86DD-AE12DBA2A14D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFMpegSharp", "Module\FFMpegSharp\FFMpegSharp.csproj", "{5CEC6504-BD25-45D0-830C-A2162F4AAD12}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSCforSTD", "Modules\OSCforPCL-master\OSCforSTD\OSCforSTD.csproj", "{744172B5-FA69-4C00-831E-DF4B304A0C92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{5CEC6504-BD25-45D0-830C-A2162F4AAD12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CEC6504-BD25-45D0-830C-A2162F4AAD12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CEC6504-BD25-45D0-830C-A2162F4AAD12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{744172B5-FA69-4C00-831E-DF4B304A0C92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{744172B5-FA69-4C00-831E-DF4B304A0C92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{744172B5-FA69-4C00-831E-DF4B304A0C92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{744172B5-FA69-4C00-831E-DF4B304A0C92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{CF89487C-3166-4F78-BB96-63C93EC42723} = {D8C31603-4030-4A21-8C95-4AA8760BE8C5}
 		{CE1E49C2-EC38-4853-B807-CA94248A1780} = {C0262CA2-636D-47CE-8D00-EE53F241C2C4}
 		{5CEC6504-BD25-45D0-830C-A2162F4AAD12} = {C94260DC-5E56-41FB-86DD-AE12DBA2A14D}
+		{744172B5-FA69-4C00-831E-DF4B304A0C92} = {C94260DC-5E56-41FB-86DD-AE12DBA2A14D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BEB539EF-392F-4249-9853-6420517BBF01}
