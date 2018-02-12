@@ -284,16 +284,17 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         private void Sequences_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
                 //Sequences.Insert(e.NewStartingIndex, (SequenceItemViewModel)e.NewItems[0]);
-                //try
-                //{
-                //    this.SelectedSequenceFile.SequenceYaml.Sequences.RemoveAt(e.OldStartingIndex);
-                //    this.SelectedSequenceFile.SequenceYaml.AttractSequences.RemoveAt(e.OldStartingIndex);
-                //}
-                //catch { }                
+                try
+                {
+                    this.SelectedSequenceFile.SequenceYaml.Sequences.RemoveAt(e.OldStartingIndex);
+                    this.SelectedSequenceFile.SequenceYaml.AttractSequences.RemoveAt(e.OldStartingIndex);
+                }
+                catch { }
             }
+        }
 
 
         private SequenceYaml attractConfig;
