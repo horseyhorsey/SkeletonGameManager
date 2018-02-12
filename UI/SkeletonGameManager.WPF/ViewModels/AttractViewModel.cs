@@ -85,17 +85,16 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             SaveAttractCommand = new DelegateCommand(() =>
             {
+                SelectedSequenceFile.SequenceYaml.Sequences.Clear();
+                SelectedSequenceFile.SequenceYaml.AttractSequences.Clear();
 
-                //Save to yaml
-                foreach (var item in SequenceYamls)
+                foreach (var item in Sequences)
                 {
-                    item.SequenceYaml.AttractSequences.Clear();
-                    foreach (var sequence in item.SequenceYaml.Sequences)
-                    {
-                        item.SequenceYaml.AttractSequences.Add(new Sequence(sequence));
-                    }
-                    skeletonGameProvider.SaveSequenceFile(item.SequenceYaml, item.Filename);
+                    SelectedSequenceFile.SequenceYaml.AttractSequences.Add(new Sequence(item.Sequence));
                 }
+
+                //Save sequence to yaml
+                _skeletonGameProvider.SaveSequenceFile(SelectedSequenceFile.SequenceYaml, SelectedSequenceFile.Filename);
             });
 
             DuplicateSequenceCommand = new DelegateCommand<object>((x) =>
@@ -285,38 +284,17 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         private void Sequences_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                try
-                {
-                    this.SelectedSequenceFile.SequenceYaml.Sequences.RemoveAt(e.OldStartingIndex);
-                    this.SelectedSequenceFile.SequenceYaml.AttractSequences.RemoveAt(e.OldStartingIndex);
-                }
-                catch { }                
+                //Sequences.Insert(e.NewStartingIndex, (SequenceItemViewModel)e.NewItems[0]);
+                //try
+                //{
+                //    this.SelectedSequenceFile.SequenceYaml.Sequences.RemoveAt(e.OldStartingIndex);
+                //    this.SelectedSequenceFile.SequenceYaml.AttractSequences.RemoveAt(e.OldStartingIndex);
+                //}
+                //catch { }                
             }
-                
-        }
 
-        public virtual void DragOver(IDropInfo dropInfo)
-        {
-            //throw new System.NotImplementedException();
-            //if (dropInfo.IsSameDragDropContextAsSource)
-            //    dropInfo.Effects = System.Windows.DragDropEffects.Move;
-        }
-
-        public virtual void Drop(IDropInfo dropInfo)
-        {
-            //try
-            //{
-            //    if (dropInfo.IsSameDragDropContextAsSource)
-            //    {
-            //        this.Sequences.RemoveAt(dropInfo.DragInfo.SourceIndex);
-            //        this.Sequences.Insert(dropInfo.InsertIndex, dropInfo.Data as SequenceItemViewModel);
-            //    }
-            //}
-            //catch { }
-            
-        }
 
         private SequenceYaml attractConfig;
         public SequenceYaml AttractConfig
