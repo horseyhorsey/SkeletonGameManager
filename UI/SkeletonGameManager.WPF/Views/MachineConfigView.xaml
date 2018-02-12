@@ -12,7 +12,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <Grid>
+    <Grid x:Name="LayoutRoot">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -33,12 +33,14 @@
                 <Setter Property="ItemTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            
                             <!--These are buttons because they could be used to send OSC-->
-                            <ToggleButton Background="Transparent" 
-                                          BorderThickness="2"
+                            <ToggleButton BorderThickness="2"
+                                          Opacity="0.90"
+                                          Command="{Binding ElementName=LayoutRoot, Path=DataContext.SendOscMessageCommand}"
+                                          CommandParameter="{Binding}"
                                           BorderBrush="Black"
                                           Padding="2"
+                                          IsThreeState="False"
                                     >
                                 <ToggleButton.Content>
                                     <Grid>
@@ -55,7 +57,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                                        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" Background="{DynamicResource Brush_MatrixLabel}">
                                             
                                             <TextBlock Text="{Binding Number}" Grid.Row="0" Margin="0,-5"
                                                    HorizontalAlignment="Left" 
@@ -71,8 +73,9 @@
                                             </ComboBox>
                                         </StackPanel>
 
-                                        <TextBox Background="Transparent" Text="{Binding Name}"
-                                                 TextWrapping="Wrap" Grid.Row="1" Grid.Column="1"
+                                        <TextBox Grid.Row="1" Grid.Column="1" Background="Transparent" Text="{Binding Name}"
+                                                 BorderThickness="0" FontWeight="DemiBold"
+                                                 TextWrapping="Wrap" FontSize="14"
                                                    HorizontalAlignment="Left"
                                                  ToolTip="Switch Name. Setting to NOT USED will not be added to yaml"
                                                    />
@@ -85,8 +88,10 @@
 
                                         <TextBox Background="Transparent" Text="{Binding Tags}" 
                                                  Grid.Row="2" Grid.Column="1"
+                                                 BorderThickness="0"
+                                                 MinWidth="50" MaxWidth="70"
                                                  TextWrapping="Wrap"
-                                                   HorizontalAlignment="Left"
+                                                 HorizontalAlignment="Left"
                                                    />
 
                                         <StackPanel Orientation="Horizontal" Grid.Row="4" TextElement.FontSize="11" Grid.Column="1">
@@ -96,6 +101,21 @@
                                         </StackPanel>
                                     </Grid>
                                 </ToggleButton.Content>
+
+                                <ToggleButton.Style>
+                                    <Style TargetType="ToggleButton">
+
+                                        <Setter Property="Background" Value="{DynamicResource Brush_Used}"/>
+
+                                        <Style.Triggers>
+
+                                            <DataTrigger Binding="{Binding Name}" Value="NOT USED">
+                                                <Setter Property="Background" Value="{DynamicResource Brush_NotUsed}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
+
                             </ToggleButton>
                         </DataTemplate>
                     </Setter.Value>
@@ -108,9 +128,24 @@
                 <Setter Property="ItemTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Border Background="Transparent" BorderThickness="2"
+                            <Border BorderThickness="2"
                                     BorderBrush="Black"
                                     >
+
+                                <Border.Style>
+                                    <Style TargetType="Border">
+
+                                        <Setter Property="Background" Value="{DynamicResource Brush_Used}"/>
+
+                                        <Style.Triggers>
+
+                                            <DataTrigger Binding="{Binding Name}" Value="NOT USED">
+                                                <Setter Property="Background" Value="{DynamicResource Brush_NotUsed}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
