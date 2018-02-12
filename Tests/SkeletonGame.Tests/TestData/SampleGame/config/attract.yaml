@@ -104,7 +104,7 @@ Sequence:
         lampshow: attract_show_2
         duration: 4.0
     - Animation:
-        Name: t800-war
+        anim_name: t800-war
         sound: target_bank                
     - Combo:
         Text:
