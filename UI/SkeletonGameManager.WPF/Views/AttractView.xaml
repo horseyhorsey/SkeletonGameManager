@@ -27,6 +27,7 @@
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -35,10 +36,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Options" Grid.ColumnSpan="2" BorderThickness="2">
+        <!--SEQUENCE FILE SELECTOR-->
+        <GroupBox Header="Options" Grid.Row="0" Grid.ColumnSpan="2" BorderThickness="2">
             <DockPanel>
 
                 <ComboBox ItemsSource="{Binding SequenceYamls}" DisplayMemberPath="Filename"
@@ -48,8 +49,10 @@
             </DockPanel>
         </GroupBox>
 
+        <GridSplitter Grid.Row="1" Grid.Column="0" Width="10" Margin="3"/>
+
         <!--ATTRACT SEQEUENCES-->
-        <GroupBox Grid.Row="1" Header="Sequences" MaxWidth="300">
+        <GroupBox Grid.Row="1" Header="Sequences" Margin="15">
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
 
@@ -68,11 +71,9 @@
                     />
                 </StackPanel>
 
-                <!--MAIN ITEMS SOURCE OF THE ATTRACT YAML-->
-                <DataGrid x:Name="DataGridSequences" 
-                      ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"
-                      AutoGenerateColumns="False"
-                      CanUserResizeRows="False" CanUserAddRows="False"                      
+                <!--MAIN ITEMS SOURCE OF THE SELECTED SEQUENCE-->
+                <ListView x:Name="DataGridSequences" 
+                      ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"                              
                       SelectedItem="{Binding SelectedSequence}"
                       xmlns:dd="urn:gong-wpf-dragdrop"
                       dd:DragDrop.IsDragSource="True"
@@ -80,46 +81,43 @@
                       dd:DragDrop.DropHandler="{Binding}"
                   >
 
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn IsReadOnly="True"                                          
-                                        Width="1*">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition MaxWidth="55"/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MaxWidth="55"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
 
-                                        <Label Height="20">
-                                            <Label.Style>
-                                                <MultiBinding Converter="{StaticResource StyleConverter}">
-                                                    <MultiBinding.Bindings>
-                                                        <Binding RelativeSource="{RelativeSource Self}"/>
-                                                        <Binding Path="Sequence.SequenceName"/>
-                                                    </MultiBinding.Bindings>
-                                                </MultiBinding>
-                                            </Label.Style>
-                                        </Label>
+                                <Label Height="20" Width="35" Margin="3">
+                                    <Label.Style>
+                                        <MultiBinding Converter="{StaticResource StyleConverter}">
+                                            <MultiBinding.Bindings>
+                                                <Binding RelativeSource="{RelativeSource Self}"/>
+                                                <Binding Path="Sequence.SequenceName"/>
+                                            </MultiBinding.Bindings>
+                                        </MultiBinding>
+                                    </Label.Style>
+                                </Label>
 
-                                        <TextBlock Text="{Binding Sequence.SeqType}" Grid.Column="1"/>
-                                        <TextBlock Text="{Binding Sequence.duration}" Grid.Column="2"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                                <TextBlock Text="{Binding Sequence.SeqType}" Grid.Column="2" Margin="3"/>
+                                <TextBlock Text="{Binding Sequence.duration}" Grid.Column="1" Margin="3"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+                
             </StackPanel>
         </GroupBox>
 
         <!--SELECTED SEQUENCE-->
-        <Grid Grid.Column="1" Background="White" Grid.Row="1">
+        <Grid Grid.Column="1" Background="White" Grid.Row="1" Grid.ColumnSpan="2">
 
             <ScrollViewer>
                 <ContentPresenter ContentTemplateSelector="{StaticResource AttractSequenceSelector}"
-                              Content="{Binding SelectedSequence}"
+                              Content="{Binding SelectedSequence.Sequence}"
                               />
 
             </ScrollViewer>
