@@ -286,7 +286,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             try
             {
-                await _skeletonGameProvider.LoadYamlEntriesAsync();
+                await _skeletonGameProvider.LoadYamlEntriesAsync();                
 
                 _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
 
@@ -299,7 +299,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             {
                 IsMainTabEnabled = false;                
 
-                System.Windows.MessageBox.Show($"Failed loading skeleton game files. {ex.Data["yaml"]} {ex.Message} {ex.InnerException.Message}");
+                System.Windows.MessageBox.Show($"Failed loading skeleton game files. {ex.Data["yaml"]} {ex.Message}");
             }
         }
 
