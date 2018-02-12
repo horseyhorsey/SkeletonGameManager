@@ -38,6 +38,8 @@ namespace SkeletonGameManager.WPF.Providers
 
         MachineConfig MachineConfig { get; set; }
 
+        MachineConfigDict MachineConfigDict { get; set; }
+
         ObservableCollection<string> SequenceYamls { get; set; }
 
         SequenceYaml GetSequence(string yamlPath);
@@ -89,15 +91,20 @@ namespace SkeletonGameManager.WPF.Providers
 
         public MachineConfig MachineConfig { get; set; }
 
+        public MachineConfigDict MachineConfigDict { get; set; }
+
         #endregion
 
         #region Public Methods
 
         public void ClearConfigs()
         {
+            GameConfig?.KeyboardSwitchMap?.Clear();
             GameConfig = null;
-            AssetsConfig = null;
+            //AssetsConfig = null;
             ScoreDisplayConfig = null;
+            ScoreDisplayConfig = null;
+            AttractConfig = null;
             ScoreDisplayConfig = null;
         }
 
@@ -109,66 +116,123 @@ namespace SkeletonGameManager.WPF.Providers
             if (!Directory.Exists(GameFolder))
                 throw new FileNotFoundException($"Cannot find game folder: {GameFolder}");
 
+            ClearConfigs();
+
             await Task.Run(async () =>
-            {
-                try
-                {
-                    GameConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<GameConfig>(Path.Combine(GameFolder, YamlFiles[0]));
-                    AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
-                    AttractConfig = GetSequence(Path.Combine(GameFolder, YamlFiles[2]));
-
-                    var newScoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[3]);
-                    var scoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[4]);
-
-                    //Deal with the updated score display
-                    if (File.Exists(newScoreDisplayYaml))
-                        ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(newScoreDisplayYaml);
-                    else if (File.Exists(scoreDisplayYaml))
-                        ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(scoreDisplayYaml);
-
+            {                
                     try
-                    {
-                        MachineConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfig>(Path.Combine(GameFolder, YamlFiles[5]));
-                    }
-                    catch (FileNotFoundException ex)
-                    {
-                        Dispatcher.CurrentDispatcher.Invoke(() =>
+                    {                    
+                        GameConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<GameConfig>(Path.Combine(GameFolder, YamlFiles[0]));
+
+                        if (File.Exists(Path.Combine(GameFolder, YamlFiles[1])))
+                            AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
+
+                        AttractConfig = GetSequence(Path.Combine(GameFolder, YamlFiles[2]));
+
+                        var newScoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[3]);
+                        var scoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[4]);
+
+                        //Deal with the updated score display
+                        if (File.Exists(newScoreDisplayYaml))
+                            ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(newScoreDisplayYaml);
+                        else if (File.Exists(scoreDisplayYaml))
+                            ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(scoreDisplayYaml);
+
+                        try
                         {
-                            System.Windows.MessageBox.Show($"{ex.Message}");
-                        });
+                            MachineConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfig>(Path.Combine(GameFolder, YamlFiles[5]));
+                        }
+                        catch (FileNotFoundException ex)
+                        {
+                            Dispatcher.CurrentDispatcher.Invoke(() =>
+                            {
+                                System.Windows.MessageBox.Show($"{ex.Message}");
+                            });
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Dispatcher.CurrentDispatcher.Invoke(() =>
+                            {
+                                ParseMachineConfigWithKeyValues(ex);
+                            });
+                        }
+
+                        SequenceYamls.Clear();
+
+                        //Add the base sequences.yaml found in config
+                        var baseSeqFile = Path.Combine(GameFolder, @"config\sequences.yaml");
+                        if (File.Exists(baseSeqFile))
+                            SequenceYamls.Add(baseSeqFile);
+
+                        //Get sequence files and add to list       
+                        var seqDir = Path.Combine(GameFolder, @"config\sequences");
+                        Directory.CreateDirectory(seqDir);
+                        var seqFiles = await _skeletonGameFiles.GetFilesAsync(seqDir, AssetTypes.Sequences);
+                        foreach (var item in seqFiles)
+                        {
+                            SequenceYamls.Add(item);
+                        }
+
+                        Directory.CreateDirectory(GameFolder + @"\recordings");
+                        RecordingManager.GetPlaybackFiles(GameFolder + @"\recordings");
                     }
                     catch (System.Exception ex)
                     {
-                        Dispatcher.CurrentDispatcher.Invoke(() =>
-                        {
-                            System.Windows.MessageBox.Show($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}");
-                        });
+                        ClearConfigs();
+
+                        throw ex;
                     }
-
-                    SequenceYamls.Clear();
-
-                    //Add the base sequences.yaml found in config
-                    var baseSeqFile = Path.Combine(GameFolder, @"config\sequences.yaml");
-                    if (File.Exists(baseSeqFile))
-                        SequenceYamls.Add(baseSeqFile);
-
-                    //Get sequence files and add to list       
-                    var seqDir = Path.Combine(GameFolder, @"config\sequences");
-                    Directory.CreateDirectory(seqDir);
-                    var seqFiles = await _skeletonGameFiles.GetFilesAsync(seqDir, AssetTypes.Sequences);                    
-                    foreach (var item in seqFiles)
-                    {
-                        SequenceYamls.Add(item);
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    ClearConfigs();
-
-                    throw;
-                }
 
             });
+        }
+
+        /// <summary>
+        /// Parses the machine configuration to MachineConfigDict then to a listed MachineConfig
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        private void ParseMachineConfigWithKeyValues(System.Exception ex)
+        {
+            var result = System.Windows.MessageBox.Show
+            ($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}", "Couldn't parse machine, Convert and backup?", System.Windows.MessageBoxButton.YesNo);
+
+            //Parse with different object
+            if (result == System.Windows.MessageBoxResult.Yes)
+            {
+                var machineConfigFile = Path.Combine(GameFolder, YamlFiles[5]);
+                MachineConfigDict = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfigDict>(machineConfigFile);
+
+                File.Delete(machineConfigFile + ".bak");
+                File.Copy(machineConfigFile, machineConfigFile + ".bak");
+
+                if (MachineConfigDict != null)
+                {
+                    foreach (var coil in MachineConfigDict.PRCoils.Select(x => x))
+                    {
+                        coil.Value.Name = coil.Key;
+                    }
+
+                    foreach (var lamp in MachineConfigDict.PRLamps.Select(x => x))
+                    {
+                        lamp.Value.Name = lamp.Key;
+                    }
+                    foreach (var sw in MachineConfigDict.PRSwitches.Select(x => x))
+                    {
+                        sw.Value.Name = sw.Key;
+                    }
+
+                    MachineConfig = new MachineConfig()
+                    {
+                        PRGame = MachineConfigDict.PRGame,
+                        PRBumpers = MachineConfigDict.PRBumpers,
+                        PRFlippers = MachineConfigDict.PRFlippers,
+                        PRCoils = MachineConfigDict.PRCoils.Select(x => x.Value).ToList(),
+                        PRLamps = MachineConfigDict.PRLamps.Select(x => x.Value).ToList(),
+                        PRSwitches = MachineConfigDict.PRSwitches.Select(x => x.Value).ToList()
+                    };
+
+                    MachineConfigDict = null;
+                }
+            }
         }
 
         public SequenceYaml GetSequence(string yamlPath)
@@ -221,6 +285,14 @@ namespace SkeletonGameManager.WPF.Providers
 
                     item.combo_layer.duration = null;
                     item.combo_layer.TextList = item.combo_layer.TextEntries.Select(x => x.TextLine).ToList();
+                }
+
+                foreach (var item in group.Contents.Where(x => x.scripted_text_layer != null))
+                {
+                    foreach (var item2 in item.scripted_text_layer.TextOptions)
+                    {
+                        item2.TextList = item2.TextEntries.Select(x => x.TextLine).ToList();
+                    }
                 }
 
                 //foreach (var item in group.Contents.Where(x => x.move_layer != null))
