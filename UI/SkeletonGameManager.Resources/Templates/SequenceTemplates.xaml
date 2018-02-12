@@ -34,24 +34,7 @@
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
 
-    <!--#endregion-->
-    
-    <Style x:Key="TextBlockDefaults" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontWeight" Value="DemiBold"/>
-    </Style>
-
-    <DataTemplate x:Key="SequenceTemplate">
-        <GroupBox Header="{Binding}">
-            <StackPanel>
-                <TextBox Text="{Binding Sequence.duration}"/>
-                <TextBox Text="{Binding Sequence.lampshow}"/>
-                <TextBox Text="{Binding Sequence.Sound}"/>
-                <TextBox Text="{Binding Sequence.Font}"/>
-                <TextBox Text="{Binding Sequence.FontStyle}"/>
-                <TextBox Text="{Binding Sequence.Animation}"/>
-            </StackPanel>
-        </GroupBox>
-    </DataTemplate>
+    <!--#endregion-->    
 
     <!--#region STYLES-->
     <Style x:Key="Panel_Font" TargetType="Button">
@@ -70,7 +53,11 @@
         </Setter>
     </Style>
 
-    <Style x:Key="Style_AssetCombo" TargetType="ComboBox">
+    <Style x:Key="TextBlockDefaults" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontWeight" Value="DemiBold"/>
+    </Style>
+
+    <Style x:Key="Style_AssetCombo" TargetType="ComboBox"  x:Shared="false">
         <Setter Property="SelectedValuePath" Value="Key"/>
     </Style>
 
@@ -78,7 +65,7 @@
         <Setter Property="SelectedValuePath" Value="Name"/>
     </Style>
 
-    <Style x:Key="Style_FontCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+    <Style x:Key="Style_FontCombo" BasedOn="{StaticResource Style_AssetCombo}"  x:Shared="false" 
            TargetType="ComboBox">
         <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Fonts.HdFonts, UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="SelectedValue" Value="{Binding Font,UpdateSourceTrigger=PropertyChanged}"/>
@@ -95,7 +82,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="Style_FontStyleCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+    <Style x:Key="Style_FontStyleCombo" BasedOn="{StaticResource Style_AssetCombo}"  x:Shared="false"
            TargetType="ComboBox">
         <Setter Property="ItemsSource" 
                 Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Fonts.FontStyles}"/>
@@ -112,7 +99,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="Style_AnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+    <Style x:Key="Style_AnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" x:Shared="false" 
            TargetType="ComboBox">
         <Setter Property="ItemsSource" 
                 Value="{Binding ElementName=LayoutRoot, 
@@ -131,23 +118,22 @@
         </Setter>
     </Style>
 
-    <Style x:Key="Style_AttractAnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+    <Style x:Key="Style_AttractAnimationsCombo" BasedOn="{StaticResource Style_AssetCombo}" x:Shared="false" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations}"/>
         <Setter Property="SelectedValue" Value="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Key}"/>
-                        <!--<Rectangle Fill="{Binding InteriorColor, Converter={StaticResource ListToColorConv},Mode=OneTime}"/>-->
                     </StackPanel>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="Style_SoundsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+    <Style x:Key="Style_SoundsCombo" BasedOn="{StaticResource Style_AssetCombo}"  x:Shared="false" 
            TargetType="ComboBox">
         <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Audio.AllAudio}"/>
         <Setter Property="SelectedValue" Value="{Binding Sound,UpdateSourceTrigger=PropertyChanged}"/>
@@ -163,9 +149,9 @@
         </Setter>
     </Style>
 
-    <Style x:Key="Style_LampsCombo" BasedOn="{StaticResource Style_AssetCombo}" 
+    <Style x:Key="Style_LampsCombo" BasedOn="{StaticResource Style_AssetCombo}" x:Shared="false" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.LampShows}"/>
+        <Setter Property="ItemsSource" Value="{Binding LampShows}"/>
         <Setter Property="SelectedValue" Value="{Binding lampshow,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
@@ -178,6 +164,34 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--FONT AND STYLE-->
+    <Grid x:Key="FontOptionsGrid" x:Shared="false">
+
+        <GroupBox>
+            <GroupBox.Header>
+                <DockPanel>
+                    <Viewbox Height="20" Width="50">
+                        <ContentPresenter Content="{StaticResource Path_Fonts}" Height="50" Width="50"/>
+                    </Viewbox>
+                    <TextBlock Text="Font &amp; Style" FontSize="14" FontWeight="DemiBold"/>
+                </DockPanel>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Style="{StaticResource Style_FontCombo}" Margin="3"/>
+
+                <ComboBox Grid.Column="1" Style="{StaticResource Style_FontStyleCombo}" Margin="3"/>
+            </Grid>
+
+        </GroupBox>
+    </Grid>
+    
     <!--#endregion-->
 
     <Grid x:Key="Transition_Standard">
@@ -347,7 +361,7 @@
                     </Style.Triggers>
                 </Style>
             </GroupBox.Style>
-            
+
             <Expander>
                 <Grid>
 
@@ -388,42 +402,6 @@
         </GroupBox>
     </DataTemplate>
 
-    <Grid x:Key="FontOptionsGrid">
-
-        <GroupBox>
-            <GroupBox.Header>
-                <DockPanel>
-                    <Viewbox Height="20" Width="50">
-                        <ContentPresenter Content="{StaticResource Path_Fonts}" Height="50" Width="50"/>
-                    </Viewbox>
-                    <TextBlock Text="Font &amp; Style" FontSize="14" FontWeight="DemiBold"/>
-                </DockPanel>
-            </GroupBox.Header>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <ComboBox Style="{StaticResource Style_FontCombo}" Margin="3"/>
-
-                <ComboBox Grid.Column="1" Style="{StaticResource Style_FontStyleCombo}" Margin="3"/>
-            </Grid>
-
-        </GroupBox>
-    </Grid>
-
-    <DataTemplate x:Key="TransformOption">
-        <GroupBox Header="Transform &amp; Fx" >
-            <StackPanel Margin="5">
-                <ContentPresenter ContentTemplate="{DynamicResource ZoomOptions}" DataContext="{Binding}"/>
-                <ContentPresenter ContentTemplate="{DynamicResource MoveOptions}" DataContext="{Binding Sequence}"/>
-                <ContentPresenter ContentTemplate="{DynamicResource RotateOptions}" DataContext="{Binding Sequence}"/>
-            </StackPanel>
-        </GroupBox>
-    </DataTemplate>
-
     <DataTemplate x:Key="TransformOption_Content">
         <GroupBox Header="Apply Transforms">
             <StackPanel Margin="5">
@@ -434,7 +412,7 @@
         </GroupBox>
     </DataTemplate>
 
-    <GroupBox x:Key="TransitionOptions" Header="Transitions"
+    <GroupBox x:Key="TransitionOptions" Header="Transition In" x:Shared="false"
                               FontSize="14" FontWeight="DemiBold">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -455,7 +433,33 @@
         </Grid>
     </GroupBox>
 
-    <Grid x:Key="SoundLampDurationCombo">
+    <GroupBox x:Key="TransitionOutOptions" Header="Transition Out"
+                              FontSize="14" FontWeight="DemiBold">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ComboBox ItemsSource="{Binding Source={StaticResource Transitions}}" ToolTip="Setting to None turns off the transition."
+                                      FontWeight="DemiBold" VerticalAlignment="Center"
+                                      SelectedItem="{Binding TransitionOut}" Margin="5"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource TransParams}}" Grid.Column="1" 
+                                      FontWeight="DemiBold" VerticalAlignment="Center"
+                                      SelectedItem="{Binding TransOutParam}" Margin="5"/>
+
+            <xctk:IntegerUpDown Value="{Binding TransOutLength}" Margin="5"
+                                                ToolTip="Transition frames." VerticalAlignment="Center"
+                                                Minimum="1" ClipValueToMinMax="True" Grid.Column="2" />
+
+            <xctk:DecimalUpDown Value="{Binding TransOutDuration}" Margin="5"
+                                                ToolTip="Transition duration." VerticalAlignment="Center"
+                                                Minimum="0.1" ClipValueToMinMax="True" Grid.Column="3" />
+        </Grid>
+    </GroupBox>
+
+    <Grid x:Key="SoundLampDurationCombo" x:Shared="false">
         <!--SOUND & LAMPS-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -511,7 +515,7 @@
 
             <DockPanel>
                 <xctk:DecimalUpDown Value="{Binding duration, UpdateSourceTrigger=PropertyChanged}"                                     
-                                    Increment="0.1" Minimum="1.0" 
+                                    Increment="0.1" Minimum="0.0" 
                                     ClipValueToMinMax="True"/>
             </DockPanel>
         </GroupBox>
@@ -611,8 +615,8 @@
 
 
 
-    <DataTemplate x:Key="Sequence_Combo">
-        <GroupBox x:Name="LayoutRoot" DataContext="{Binding Sequence}"
+    <DataTemplate x:Key="Sequence_Combo" x:Shared="false">
+        <GroupBox 
                   Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_ComboLayer}">
 
             <GroupBox.Header>
@@ -639,25 +643,39 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!--<ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" Grid.Row="3"/>-->
-
+                <ComboBox Style="{StaticResource Style_AssetCombo}" Grid.Row="3"/>
+                
                 <!--ANIMATION-->
-                <GroupBox Grid.Column="0" Grid.Row="1" >
-                    <GroupBox.Header>
-                        <DockPanel>
-                            <Viewbox Height="20" Width="50">
-                                <ContentPresenter Content="{StaticResource Path_Assets}" Height="50" Width="50"/>
-                            </Viewbox>
-                            <TextBlock Text="Animation" FontWeight="DemiBold" FontSize="14"/>
-                        </DockPanel>
-                    </GroupBox.Header>
 
-                    <ComboBox Grid.Column="1" Style="{StaticResource Style_AttractAnimationsCombo}"
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!--ANIMATION-->
+                    <GroupBox Grid.Column="2" Grid.Row="2" >
+                        <GroupBox.Header>
+                            <DockPanel>
+                                <Viewbox Height="20" Width="50">
+                                    <ContentPresenter Content="{StaticResource Path_Assets}" Height="50" Width="50"/>
+                                </Viewbox>
+                                <TextBlock Text="Animation" FontWeight="DemiBold" FontSize="14"/>
+                            </DockPanel>
+                        </GroupBox.Header>
+
+                        <ComboBox Grid.Column="0" Style="{StaticResource Style_AnimationsCombo}"
                                   DockPanel.Dock="Left"
                                   />
-                </GroupBox>
 
-                <ContentPresenter Grid.Row="2" Content="{StaticResource SoundLampDurationCombo}" Margin="3"/>
+                    </GroupBox>
+
+
+                    <ContentPresenter Content="{StaticResource SoundLampDurationCombo}" Margin="3" Grid.Row="0"/>
+
+                    <ContentPresenter Content="{StaticResource FontOptionsGrid}" Margin="3" Grid.Row="1"/>
+                </Grid>
 
                 <ContentPresenter Grid.Row="3" Content="{StaticResource TransitionOptions}" Margin="3"/>
 
@@ -678,7 +696,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="Sequence_TextLayer">
-        <GroupBox DataContext="{Binding Sequence}" Margin="3" 
+        <GroupBox Margin="3" 
                   Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_TextLayer}">
 
             <GroupBox.Header>
@@ -742,7 +760,7 @@
 
 
     <DataTemplate x:Key="Sequence_MoveLayer">
-        <GroupBox Header="{Binding Name}" x:Name="Root" DataContext="{Binding Sequence}">
+        <GroupBox Header="{Binding Name}" x:Name="Root">
             <StackPanel>
 
                 <Grid>
@@ -1052,66 +1070,9 @@
         </StackPanel>
     </DataTemplate>
 
-    <!--IMPLEMENT IN FRAMEWORK-->
-    <DataTemplate x:Key="Content_ScriptedText">
-        <GroupBox Header="{Binding Name}" DataContext="{Binding scripted_text_layer}">
-            <Grid>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <ContentPresenter Grid.Row="0" Content="{StaticResource Attract_Standard}"/>
-
-                <ContentPresenter Content="{StaticResource Transition_Standard}" Grid.Row="1"/>
-
-                <GroupBox Header="Script" Grid.Row="2">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <DataGrid Grid.Row="0" x:Name="TextOptionsListView" Margin="5" ItemsSource="{Binding TextOptions, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn Width="1*">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding TextEntries[0].TextLine}"/>
-                                                <TextBlock Text="{Binding TextEntries[1].TextLine, StringFormat={} | {0}}"/>
-                                                <TextBlock Text="{Binding TextEntries[2].TextLine, StringFormat={} | {0}}"/>
-                                                <TextBlock Text="{Binding TextEntries[3].TextLine, StringFormat={} | {0}}"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                            </DataGrid.Columns>
-
-                        </DataGrid>
-
-                        <DataGrid Grid.Row="2" ItemsSource="{Binding ElementName=TextOptionsListView,Path=SelectedItem.TextEntries,UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Path=TextLine}" Width="1*"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-
-                    </Grid>
-                </GroupBox>
-
-            </Grid>
-
-        </GroupBox>
-    </DataTemplate>
-
     <!--GROUP LAYER-->
     <DataTemplate x:Key="Sequence_GroupLayer">
-        <GroupBox BorderBrush="{StaticResource Brush_GroupLayer}" DataContext="{Binding Sequence}">
+        <GroupBox BorderBrush="{StaticResource Brush_GroupLayer}">
 
             <GroupBox.Header>
                 <DockPanel>
@@ -1132,12 +1093,10 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="1">
+                <StackPanel Grid.Row="0">
 
                     <!--NAME-->
                     <xctk:WatermarkTextBox Text="{Binding Name}" Watermark="Group layer name" Margin="3"/>
@@ -1150,7 +1109,7 @@
                 </StackPanel>
 
                 <!--ADD TO GROUP LAYER-->
-                <GroupBox Grid.Row="2" Header="Add layer" FontSize="14" FontWeight="DemiBold" BorderBrush="{DynamicResource Brush_GroupLayer}"
+                <GroupBox Grid.Row="1" Header="Add layer" FontSize="14" FontWeight="DemiBold" BorderBrush="{DynamicResource Brush_GroupLayer}"
                           Margin="3"
                           >
                     <DockPanel>
@@ -1168,7 +1127,7 @@
                                 <ComboBoxItem Content="MoveLayer"/>
                                 <ComboBoxItem Content="PanningLayer" IsEnabled="False"/>
                                 <ComboBoxItem Content="RandomText" IsEnabled="False"/>
-                                <ComboBoxItem Content="ScriptedText" IsEnabled="False"/>
+                                <ComboBoxItem Content="ScriptedText" IsEnabled="True"/>
                                 <ComboBoxItem Content="TextLayer"/>
                             </ComboBox.Items>
                         </ComboBox>
@@ -1203,7 +1162,7 @@
                                                     <MultiBinding Converter="{StaticResource StyleConverter}">
                                                         <MultiBinding.Bindings>
                                                             <Binding RelativeSource="{RelativeSource Self}"/>
-                                                            <Binding Path="SequenceName"/>
+                                                            <Binding Path="SeqType"/>
                                                         </MultiBinding.Bindings>
                                                     </MultiBinding>
                                                 </Label.Style>
@@ -1222,7 +1181,7 @@
 
 
                 <!--OPTIONS FOR THE SELECTED LAYER IN THE GROUP-->
-                <GroupBox Grid.Row="3" Header="Layer Options" Margin="3" 
+                <GroupBox Grid.Row="2" Header="Layer Options" Margin="3" 
                           Background="{StaticResource Brush_GradientBackground}"
                           FontSize="13" FontWeight="DemiBold"
                           BorderBrush="{DynamicResource Brush_GroupLayer}"
@@ -1239,8 +1198,7 @@
 
     <!--SCRIPTED TEXT-->
     <DataTemplate x:Key="Sequence_ScriptedText" >
-        <GroupBox Style="{StaticResource SequenceBaseGroupBox}"
-                  DataContext="{Binding Sequence}"
+        <GroupBox Style="{StaticResource SequenceBaseGroupBox}"                  
                   BorderBrush="{DynamicResource Brush_ScriptedText}">
 
             <GroupBox.Header>
@@ -1263,6 +1221,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -1271,8 +1230,9 @@
 
                 <!--TRANSITION PANEL-->
                 <ContentPresenter Grid.Row="1" Content="{StaticResource TransitionOptions}" Margin="3"/>
+                <ContentPresenter Grid.Row="2" Content="{StaticResource TransitionOutOptions}" Margin="3"/>
 
-                <GroupBox Grid.Row="2" Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{StaticResource Brush_ScriptedText}">
+                <GroupBox Grid.Row="3" Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{StaticResource Brush_ScriptedText}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -1325,10 +1285,98 @@
 
         </GroupBox>
     </DataTemplate>
+    
+    <DataTemplate x:Key="Content_ScriptedText">
+        <GroupBox Style="{StaticResource SequenceBaseGroupBox}" DataContext="{Binding scripted_text_layer}"
+                  BorderBrush="{DynamicResource Brush_ScriptedText}">
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <Label Style="{DynamicResource ScriptedTextSequenceStyle}"                          
+                           Width="75" Height="30" FontWeight="DemiBold"
+                           Grid.ColumnSpan="2" Margin="0,0"
+                           FontSize="20" />
+                    <!--SEQUENCE TYPE HEADER-->
+                    <TextBlock Text="{Binding SeqType}" Grid.Column="1" 
+                           VerticalAlignment="Center" 
+                           FontSize="14" Margin="0,0"
+                           FontWeight="DemiBold"
+                           />
+                </DockPanel>
+            </GroupBox.Header>
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!--STANDARD OPTIONS-->
+                <ContentPresenter Grid.Row="0" Content="{StaticResource Attract_Standard}" Margin="3"/>
+                <!--TRANSITION PANEL-->
+                <ContentPresenter Grid.Row="1" Content="{StaticResource TransitionOptions}" Margin="3"/>
+                <ContentPresenter Grid.Row="2" Content="{StaticResource TransitionOutOptions}" Margin="3"/>
+
+                <GroupBox Grid.Row="3" Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{StaticResource Brush_ScriptedText}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Scripted lines" Grid.Row="0" HorizontalAlignment="Center" FontWeight="DemiBold"/>
+
+                        <DataGrid Grid.Row="1" x:Name="TextOptionsListView" Margin="5" 
+                                  ItemsSource="{Binding TextOptions, UpdateSourceTrigger=PropertyChanged}" 
+                                  xmlns:dd="urn:gong-wpf-dragdrop"
+                                  CanUserReorderColumns="False"
+                                  dd:DragDrop.IsDragSource="True"
+                                  dd:DragDrop.IsDropTarget="True"
+                                  dd:DragDrop.DropHandler="{Binding}"                                  
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Width="1*">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding TextEntries[0].TextLine}"/>
+                                                <TextBlock Text="{Binding TextEntries[1].TextLine, StringFormat={}| {0}}"/>
+                                                <TextBlock Text="{Binding TextEntries[2].TextLine, StringFormat={}| {0}}"/>
+                                                <TextBlock Text="{Binding TextEntries[3].TextLine, StringFormat={}| {0}}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                        <Label Content="Edit lines:" Grid.Row="2" HorizontalAlignment="Center" FontWeight="DemiBold"/>
+
+                        <DataGrid Grid.Row="3" 
+                                  ItemsSource="{Binding ElementName=TextOptionsListView,Path=SelectedItem.TextEntries,UpdateSourceTrigger=PropertyChanged}"
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Path=TextLine}" Width="1*"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+                </GroupBox>
+
+            </Grid>
+
+        </GroupBox>
+    </DataTemplate>
 
     <!--RANDOM TEXT-->
     <DataTemplate x:Key="Sequence_RandomText">
-        <GroupBox DataContext="{Binding Sequence}" Style="{StaticResource SequenceBaseGroupBox}" 
+        <GroupBox Style="{StaticResource SequenceBaseGroupBox}" 
                   BorderBrush="{DynamicResource Brush_RandomText}">
 
             <GroupBox.Header>
@@ -1403,7 +1451,7 @@
 
     <!--ANIMATION-->
     <DataTemplate x:Key="Sequence_Animation">
-        <GroupBox DataContext="{Binding Sequence}" Margin="3" Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_AnimLayer}">
+        <GroupBox Margin="3" Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_AnimLayer}">
 
             <GroupBox.Header>
                 <DockPanel>
@@ -1435,7 +1483,7 @@
 
     <!--LAST SCORES-->
     <DataTemplate x:Key="Sequence_LastScores">
-        <GroupBox DataContext="{Binding Sequence}" Style="{StaticResource SequenceBaseGroupBox}"
+        <GroupBox Style="{StaticResource SequenceBaseGroupBox}"
                   BorderBrush="{DynamicResource Brush_LastScores}"
                   Margin="3">
             <GroupBox.Header>
@@ -1488,7 +1536,7 @@
     <DataTemplate x:Key="Sequence_Markup">
         <GroupBox Style="{StaticResource SequenceBaseGroupBox}"
                   BorderBrush="{DynamicResource Brush_MarkupLayer}"
-                  DataContext="{Binding Sequence}">
+                  >
 
             <GroupBox.Header>
                 <DockPanel>
@@ -1581,7 +1629,7 @@
     <DataTemplate x:Key="Sequence_HighScores">
         <GroupBox Style="{StaticResource SequenceBaseGroupBox}"
                   BorderBrush="{DynamicResource Brush_HighScores}"
-                  DataContext="{Binding Sequence}">
+                  >
 
             <GroupBox.Header>
                 <DockPanel>
@@ -1639,8 +1687,9 @@
 
     <!--PANNING LAYER-->
     <DataTemplate x:Key="Sequence_Panning">
-        <GroupBox x:Name="Root" DataContext="{Binding Sequence}" 
-                  Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_PanningLayer}"
+        <GroupBox
+                  Style="{StaticResource SequenceBaseGroupBox}" 
+                  BorderBrush="{DynamicResource Brush_PanningLayer}"
                   >
 
             <GroupBox.Header>
