@@ -22,11 +22,13 @@ namespace SkeletonGameManager.WPF
             if (regionManager != null)
             {                                
                 regionManager.RegisterViewWithRegion("ConfigRegion", typeof(GameConfigView));
+                regionManager.RegisterViewWithRegion("RecordingsRegion", typeof(RecordingsView));
                 regionManager.RegisterViewWithRegion("AssetsRegion", typeof(AssetListView));
                 regionManager.RegisterViewWithRegion("AttractRegion", typeof(AttractView));
                 regionManager.RegisterViewWithRegion("ScenesRegion", typeof(ScenesView));
                 regionManager.RegisterViewWithRegion("MachineRegion", typeof(MachineConfigView));
-                regionManager.RegisterViewWithRegion("SequencesRegion", typeof(SequenceView));                
+                regionManager.RegisterViewWithRegion("SequencesRegion", typeof(SequenceView));
+                regionManager.RegisterViewWithRegion("ScoreLayoutRegion", typeof(ScoreLayoutView));
             }
 
             Application.Current.MainWindow.Show();                                            
@@ -44,6 +46,8 @@ namespace SkeletonGameManager.WPF
             base.ConfigureContainer();
             
             Container.RegisterInstance<ISkeletonLogger>(Container.Resolve<SkeletonLogger>());
+
+            Container.RegisterInstance<ISkeletonOSC>(Container.Resolve<SkeletonOSC>());
 
             Container.RegisterInstance<ISkeletonGameSerializer>(Container.Resolve<SkeletonGameSerializer>());
 
