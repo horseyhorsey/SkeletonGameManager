@@ -20,15 +20,18 @@ namespace SkeletonGameManager.WPF.ViewModels
     public class MachineConfigViewModel : SkeletonGameManagerViewModelBase
     {
         private ISkeletonGameProvider _skeletonGameProvider;
+        private ISkeletonOSC _skeletonOSC;
         private IVpScriptExporter _vpScriptExporter;
 
         public ICommand SaveMachineConfigCommand { get; set; }
         public ICommand ExportToVpCommand { get; set; }
+        public ICommand SendOscMessageCommand { get; set; }
 
         #region Constructors
-        public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
+        public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC) : base(eventAggregator)
         {
             _skeletonGameProvider = skeletonGameProvider;
+            _skeletonOSC = skeletonOSC;
 
             _vpScriptExporter = new VpScriptExporter();
 
@@ -44,6 +47,20 @@ namespace SkeletonGameManager.WPF.ViewModels
             ExportToVpCommand = new DelegateCommand<string>((x) =>
             {
                 ExportVpScript(x);
+            });
+
+            SendOscMessageCommand = new DelegateCommand<object>((x) =>
+            {
+                var obj = x as SwitchViewModel;
+
+                var pushedSwitch = this.Switches.First((c) => c == obj);
+                pushedSwitch.State = !pushedSwitch.State;
+
+                var value = 0.0f;
+                if (pushedSwitch.State)
+                    value = 1.0f;
+
+                _skeletonOSC.Send($@"/sw/{pushedSwitch.Name}", value);
             });
         }
 
