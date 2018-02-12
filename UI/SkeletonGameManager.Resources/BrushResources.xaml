@@ -6,6 +6,9 @@
         <GradientStop Color="#FFCCDDE4"/>
         <GradientStop Color="#FFFDFDFD" Offset="1"/>
     </RadialGradientBrush>
-    
-    
+
+    <SolidColorBrush x:Key="Brush_NotUsed" Color="#FF816B6B"/>
+    <SolidColorBrush x:Key="Brush_Used" Color="#FF6D9B65"/>
+    <SolidColorBrush x:Key="Brush_MatrixLabel" Color="Green"/>
+
 </ResourceDictionary>
