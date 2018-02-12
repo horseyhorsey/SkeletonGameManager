@@ -5,6 +5,9 @@ using SkeletonGame.Models;
 using Prism.Commands;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Collections.ObjectModel;
+using SkeletonGameManager.WPF.ViewModels.Config;
+using System.Linq;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -22,6 +25,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             SaveCommand = new DelegateCommand(() =>
             {
                 GameConfigModel.AudioBufferSize = (int)SelectedBufferSize;
+
                 _skeletonGameProvider.SaveGameConfig(GameConfigModel);
             },() => GameConfigModel == null ? false : true);
         }
@@ -42,11 +46,26 @@ namespace SkeletonGameManager.WPF.ViewModels
             set { SetProperty(ref bufferSize, value); }
         }
 
+        private ObservableCollection<KeyboardMapItemViewModel> switchKeys = new ObservableCollection<KeyboardMapItemViewModel>();
+        public ObservableCollection<KeyboardMapItemViewModel> SwitchKeys
+        {
+            get { return switchKeys; }
+            set { SetProperty(ref switchKeys, value); }
+        }
+
         #region Private Methods
 
         public async override Task OnLoadYamlFilesChanged()
         {
             GameConfigModel = _skeletonGameProvider.GameConfig;
+            SwitchKeys?.Clear();
+
+            var orderedSwitch = GameConfigModel.KeyboardSwitchMap.OrderBy(x => x.Value);
+
+            foreach (var keySwitch in orderedSwitch)
+            {
+                SwitchKeys.Add(new KeyboardMapItemViewModel(keySwitch));
+            }
 
             await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
