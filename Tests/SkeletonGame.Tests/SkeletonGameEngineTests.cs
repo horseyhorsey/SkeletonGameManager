@@ -19,9 +19,9 @@ namespace SkeletonGame.Tests
         }
 
         [Theory()]
-        [InlineData("EmptyGame")]
+        //[InlineData("EmptyGame")]
         [InlineData("SampleGame")]
-        [InlineData("EvilDead")]
+        //[InlineData("EvilDead")]
         public void DeseralizeSkeletonGameConfig(string gameFolder)
         {
             var gameConfig = _skeleSerializer.DeserializeSkeletonYaml<GameConfig>(@"TestData/" + gameFolder + "/config.yaml");
@@ -81,7 +81,15 @@ namespace SkeletonGame.Tests
         public void DeserializeMachineYaml()
         {
             //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");
-            var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");
+            var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");            
+        }
+
+        [Fact]
+        public void DeserializeMachineYamlKeyValues()
+        {
+            //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
+            var machine = _skeleSerializer
+                .DeserializeSkeletonYaml<MachineConfigDict>(@"C:\P-ROC\Games\jaws\config\machine_jaws.yaml");
         }
 
         [Fact]
