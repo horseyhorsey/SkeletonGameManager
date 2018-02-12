@@ -24,39 +24,30 @@ namespace SkeletonGame.Models.Score
         [YamlMember(Alias = "in_place_if_active", ApplyNamingConventions = false)]
         public string InPlaceIfActive { get; set; }
     }
-    
-    public class SinglePlayer
+
+    public abstract class PlayerLayout
     {
-        [YamlMember(Alias = "Score", ApplyNamingConventions = false)]
-        public Score Score { get; set; }
-
-        [YamlMember(Alias = "CreditIndicator", ApplyNamingConventions = false)]
-        public CreditIndicator CreditIndicator { get; set; }
-
-        [YamlMember(Alias = "BallNumber", ApplyNamingConventions = false)]
-        public BallNumber BallNumber { get; set; }
+        [YamlMember(Alias = "Foreground", ApplyNamingConventions = false)]
+        public Foreground Foreground { get; set; } = null;
 
         [YamlMember(Alias = "Background", ApplyNamingConventions = false)]
         public Background Background { get; set; } = null;
 
-        [YamlMember(Alias = "Foreground", ApplyNamingConventions = false)]
-        public Foreground Foreground { get; set; } = null;
-    }
-
-    public class MultiPlayer
-    {
-        [YamlMember(Alias = "Foreground", ApplyNamingConventions = false)]
-        public string Foreground { get; set; }
-
-        [YamlMember(Alias = "Background", ApplyNamingConventions = false)]
-        public Background Background { get; set; }
-
-        [YamlMember(Alias = "CreditIndicator", ApplyNamingConventions = false)]
-        public CreditIndicator CreditIndicator { get; set; }
-
         [YamlMember(Alias = "BallNumber", ApplyNamingConventions = false)]
         public BallNumber BallNumber { get; set; }
 
+        [YamlMember(Alias = "CreditIndicator", ApplyNamingConventions = false)]
+        public CreditIndicator CreditIndicator { get; set; }
+    }
+    
+    public class SinglePlayer : PlayerLayout
+    {
+        [YamlMember(Alias = "Score", ApplyNamingConventions = false)]
+        public Score Score { get; set; }
+    }
+
+    public class MultiPlayer : PlayerLayout
+    {
         [YamlMember(Alias = "ActivePlayer", ApplyNamingConventions = false)]
         public ActivePlayer ActivePlayer { get; set; }
 
