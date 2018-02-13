@@ -49,7 +49,7 @@ namespace SkeletonGameManager.WPF.Providers
         void SaveGameConfig(GameConfig config);
 
         void SaveSequenceFile(SequenceYaml sequenceYaml, string saveFile);
-
+        void SaveScoreDsiplayFile(ScoreDisplay scoreDisplay);
         void SaveMachineConfig(MachineConfig mConfig);
     }
 
@@ -368,6 +368,12 @@ namespace SkeletonGameManager.WPF.Providers
             //var yamlFile = Path.Combine(GameFolder, YamlFiles[6]);
             _skeletonGameSerializer.SerializeYaml(GameFolder + "\\" + YamlFiles[5], mConfig);
             //_skeletonGameSerializer.SerializeYaml(yamlFile, mConfig);
+        }
+
+        public void SaveScoreDsiplayFile(ScoreDisplay scoreDisplay)
+        {
+            var yamlFile = Path.Combine(GameFolder, YamlFiles[3]);
+            _skeletonGameSerializer.SerializeYaml(yamlFile, scoreDisplay);
         }
 
         #endregion
