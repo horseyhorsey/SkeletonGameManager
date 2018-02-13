@@ -203,10 +203,9 @@
         </GroupBox>
 
         <!--SAVE-->
-        <Button Grid.Row="4" Margin="15" VerticalAlignment="Bottom" Grid.ColumnSpan="3"                
-                HorizontalAlignment="Right" Height="50" Width="75"
-                Command="{Binding SaveCommand}" Content="{StaticResource Path_Save}" 
-                ToolTip="Overwrites the config.yaml in the current game folder"/>
+        <Button Grid.Row="4" Grid.ColumnSpan="3"                
+                Style="{DynamicResource StyleSaveButton}"                             
+                ToolTip="{StaticResource Tip_SaveConfigGame}"/>
 
         <!--DMD OPTIONS-->
         <StackPanel Grid.Column="0">

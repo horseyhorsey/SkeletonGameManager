@@ -275,9 +275,7 @@
         </Setter>
     </Style>
 
-    <!--#endregion-->    
-
-    <!--SEQUENCE STYLE-->
+    <!--#endregion-->        
 
     <!--#region Sequence Brushes-->
     <SolidColorBrush x:Key="Brush_ComboLayer" Color="LightCoral"/>
@@ -441,4 +439,14 @@
     </Style>
     <!--#endregion-->
 
+    <!--SAVE BUTTON-->
+    <Style x:Key="StyleSaveButton" TargetType="Button">
+        <Setter Property="Command" Value="{Binding SaveCommand}"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Width" Value="75"/>
+        <Setter Property="Content" Value="{DynamicResource Path_Save}"/>
+        <Setter Property="Margin" Value="15"/>
+    </Style>
 </ResourceDictionary>
