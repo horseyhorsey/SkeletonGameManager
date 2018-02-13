@@ -132,7 +132,7 @@
                                         <ContentControl prism:RegionManager.RegionName="MachineRegion" />
                                     </TabItem>
 
-                                    <TabItem Header="Score Display" IsEnabled="False">
+                                    <TabItem Header="Score Display" IsEnabled="True">
                                         <ContentControl prism:RegionManager.RegionName="ScoreLayoutRegion"/>
                                     </TabItem>
 
