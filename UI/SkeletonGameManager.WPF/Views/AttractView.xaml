@@ -124,11 +124,14 @@
             </ScrollViewer>
 
             <!--SAVE SEQUENCES-->
-            <Button Content="{StaticResource Path_Save}" Grid.Row="2" Grid.ColumnSpan="2"
-                        VerticalAlignment="Bottom" Height="50" Width="70" 
+            <Button Grid.Row="2" Grid.ColumnSpan="2"
+                        VerticalAlignment="Bottom"
                         HorizontalAlignment="Right" Margin="30,10"
-                        ToolTip="Saves the attract and all other sequence files."
+                        Style="{DynamicResource StyleSaveButton}"
+                        ToolTip="{StaticResource Tip_SaveSequences}"
                         Command="{Binding SaveAttractCommand}" />
+            
+            
         </Grid>
 
     </Grid>

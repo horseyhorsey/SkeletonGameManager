@@ -120,10 +120,10 @@
 
         </TabControl>
 
-        <Button Command="{Binding SaveCommand}" 
-                Margin="3" ToolTip="Saves the asset_list.yaml"
-                VerticalAlignment="Top"
-                Content="{StaticResource Path_Save}" Height="40" Width="55" HorizontalAlignment="Right"/>
+        <!--SAVE-->
+        <Button Grid.Row="4" Grid.ColumnSpan="3"              
+                Style="{DynamicResource StyleSaveButton}"                             
+                ToolTip="{StaticResource Tip_SaveAssetsFile}"/>
 
     </Grid>
 </UserControl>
