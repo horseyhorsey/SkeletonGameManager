@@ -8,22 +8,27 @@ namespace SkeletonGameManager.WPF.ViewModels
 {
     public class ScoreLayoutViewModel : SkeletonGameManagerViewModelBase
     {
-        public ISkeletonGameProvider SkeletonGameProvider { get; set; }
-
-        public ScoreLayout ScoreLayout { get; private set; } = null;
+        public ISkeletonGameProvider _skeletonGameProvider { get; set; }        
 
         public ScoreLayoutViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {
-            SkeletonGameProvider = skeletonGameProvider;            
+            _skeletonGameProvider = skeletonGameProvider;            
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
         }
 
         public async override Task OnLoadYamlFilesChanged()
         {
-            ScoreLayout = SkeletonGameProvider.ScoreDisplayConfig?.ScoreLayout;
+            ScoreLayout = _skeletonGameProvider.ScoreDisplayConfig?.ScoreLayout;
 
-            await Task.Delay(1000);
+            await Task.Delay(100);
+        }
+
+        private ScoreLayout scoreLayout = new ScoreLayout();
+        public ScoreLayout ScoreLayout
+        {
+            get { return scoreLayout; }
+            set { SetProperty(ref scoreLayout, value); }
         }
     }
 }
