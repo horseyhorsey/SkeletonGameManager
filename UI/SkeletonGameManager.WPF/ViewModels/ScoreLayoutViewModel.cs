@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Prism.Commands;
 using Prism.Events;
 using SkeletonGame.Models.Score;
 using SkeletonGameManager.WPF.Events;
@@ -12,7 +14,13 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         public ScoreLayoutViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {
-            _skeletonGameProvider = skeletonGameProvider;            
+            _skeletonGameProvider = skeletonGameProvider;
+
+            //Save new_score_display.yaml
+            SaveCommand = new DelegateCommand(() =>
+            {
+                OnSaveCommand();
+            });
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
         }
@@ -29,6 +37,12 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             get { return scoreLayout; }
             set { SetProperty(ref scoreLayout, value); }
+        }
+
+        private void OnSaveCommand()
+        {
+            _skeletonGameProvider.ScoreDisplayConfig.ScoreLayout = ScoreLayout;            
+            _skeletonGameProvider.SaveScoreDsiplayFile(_skeletonGameProvider.ScoreDisplayConfig);
         }
     }
 }
