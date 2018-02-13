@@ -6,103 +6,179 @@
              xmlns:local="clr-namespace:SkeletonGameManager.WPF.Views"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" Background="{StaticResource Brush_GradientBackground}"
+             d:DesignHeight="1000" d:DesignWidth="600">
 
-    <UserControl.Resources>
-
-        <Style x:Key="ScoreLayoutGridStyle" TargetType="GroupBox">
-            <Setter Property="Template" >
-                <Setter.Value>
-                    <ControlTemplate TargetType="GroupBox">
-                        <GroupBox Header="Standard">
-                            <StackPanel>
-                                <TextBlock Text="{Binding Foreground.AnimationLayer}"/>
-                                <TextBlock Text="{Binding Background.Animation}"/>
-                                <TextBlock Text="{Binding BallNumber}"/>
-                                <TextBlock Text="{Binding CreditIndicator}"/>
-                            </StackPanel>
-                        </GroupBox>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-    </UserControl.Resources>
     
-    <Grid>
+    <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
         <!--SINGLE PLAYER-->
-        <GroupBox Grid.Row="2" Style="{StaticResource ScoreLayoutGridStyle}"
-                  DataContext="{Binding ScoreLayout.SinglePlayer}"
-                  >
-        </GroupBox>
-        
-        <GroupBox Grid.Row="0"
-                  Header="Single Player"
-                  DataContext="{Binding ScoreLayout.SinglePlayer}"
-                  >
-            <TextBlock Text="{Binding Score}"/>
-        </GroupBox>
+        <Grid Grid.Row="0" Grid.RowSpan="2">
 
-        
-        <!--MULTI PLAYER-->
+            <GroupBox Grid.Row="0" Header="Single Player" FontSize="12">
 
-        <GroupBox Grid.Row="0" Grid.Column="1"
-                  Header="Multi Player"
-                  DataContext="{Binding ScoreLayout.MultiPlayer}"
-                  >
-            <StackPanel>
-                <ListView>
-                    <ListViewItem DataContext="{Binding PlayerOne}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!--BACKGROUND ANIMATION OPTONS-->
+                    <GroupBox Header="BackGround" FontSize="14">
                         <StackPanel Orientation="Horizontal">
-                            <ContentPresenter Content="{StaticResource FontOptionsGrid}"/>
-                            <TextBlock Text="{Binding X}"/>
-                            <TextBlock Text="{Binding Y}"/>
+                            
+                            <ComboBox Grid.Column="0" Style="{StaticResource Style_AttractAnimationsCombo}" MinWidth="100" 
+                                      SelectedValue="{Binding ScoreLayout.SinglePlayer.Background.Animation.Name}"/>
+                            
+                            <CheckBox x:Name="ChkBoxFromSaved" Content="From Saved" VerticalAlignment="Center" 
+                                      IsChecked="{Binding ScoreLayout.SinglePlayer.Background.Animation.FromSaved}" Margin="3"/>
+                            
+                            <TextBox  Grid.Row="0" Grid.Column="0"  ToolTip="Enter a layer name that is in your saved sequences, not the attract.yaml"
+                                      IsEnabled="{Binding ElementName=ChkBoxFromSaved, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                      Text="{Binding ScoreLayout.SinglePlayer.Background.Animation.Name}" Margin="3"/>
                         </StackPanel>
-                    </ListViewItem>
+                    </GroupBox>
 
-                </ListView>
+                    <!--FOREGROUND ANIMATION OPTONS-->
+                    <GroupBox Header="Foreground" FontSize="14" Grid.Row="1">
+                        <Grid>
+                            <ComboBox Grid.Column="0" Style="{StaticResource Style_AnimAssetCombo}" MinWidth="100" 
+                                      SelectedValue="{Binding ScoreLayout.SinglePlayer.Foreground.AnimationLayer.Name}"/>
+                        </Grid>
+                    </GroupBox>
 
-                <TextBlock Text="{Binding PlayerTwo}"/>
-                <!--<TextBlock Text="{Binding ActivePlayer}"/>
-                <TextBlock Text="{Binding PlayerOne}"/>
-                
-                <TextBlock Text="{Binding PlayerThree}"/>
-                <TextBlock Text="{Binding PlayerFour}"/>
-                <TextBlock Text="{Binding PlayerFour}"/>-->
-                <ContentPresenter Content="{StaticResource Attract_Standard}"/>
-            </StackPanel>
-        </GroupBox>
+                    <!--SCORE-->
+                    <GroupBox Header="Score" Grid.Row="2" Style="{DynamicResource SequenceBaseGroupBox}">
+                        <ContentPresenter Grid.Row="0" Grid.Column="0" 
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.Score}"/>
+                    </GroupBox>
 
-        <GroupBox Grid.Row="1" Grid.Column="1"
-                  Header="Selected Player"
-                  DataContext="{Binding ScoreLayout.MultiPlayer}"
+                    <!--CREDITS-->
+                    <GroupBox Header="Credit Indicator" Grid.Row="3" Grid.Column="1" Style="{StaticResource SequenceBaseGroupBox}">
+                        <StackPanel>
+                            <ContentPresenter 
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.CreditIndicator}"/>
+
+                            <ContentPresenter Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
+                                      ContentTemplate="{StaticResource ScoreTextLayerFormatGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.CreditIndicator}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!--BALL NUMBER-->
+                    <GroupBox Header="Ball Number" Grid.Row="4" Style="{StaticResource SequenceBaseGroupBox}">
+                        <StackPanel>
+                            <ContentPresenter Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.BallNumber}"/>
+
+                            <ContentPresenter Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
+                                      ContentTemplate="{StaticResource ScoreTextLayerFormatGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.BallNumber}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                </Grid>
+
+            </GroupBox>
+
+        </Grid>
+
+        <!--MULTI PLAYER-->
+        <GroupBox Grid.Row="0" Grid.Column="1" Grid.RowSpan="3"
+                  Header="Multi Player"
                   >
-            <StackPanel>
-                <TextBlock Text="{Binding X}"/>
-                <TextBlock Text="{Binding Y}"/>
-                <TextBlock Text="{Binding HJustify}"/>
-                <TextBlock Text="{Binding VJustify}"/>
-                <TextBlock Text="{Binding FontStyle}"/>
-                <TextBlock Text="{Binding Font}"/>
-                <ContentPresenter Content="{StaticResource FontOptionsGrid}" Margin="3"/>
-            </StackPanel>
-        </GroupBox>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <GroupBox Grid.Column="1" Grid.Row="2" Style="{StaticResource ScoreLayoutGridStyle}"
-                  DataContext="{Binding ScoreLayout.MultiPlayer}"
-                  >
+                <GroupBox Header="BackGround" FontSize="14">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox Grid.Column="0" Style="{StaticResource Style_AnimationsCombo}" MinWidth="100" SelectedValue="{Binding ScoreLayout.MultiPlayer.Background.Animation.Name}"/>
+                        <CheckBox x:Name="ChkBoxFromSavedMulti" Content="From Saved" VerticalAlignment="Center" IsChecked="{Binding ScoreLayout.MultiPlayer.Background.Animation.FromSaved}" Margin="3"/>
+                        <TextBox  Grid.Row="0" Grid.Column="0"  ToolTip="Enter Same here to use the single player animation."
+                                      IsEnabled="{Binding ElementName=ChkBoxFromSaved, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                      Text="{Binding ScoreLayout.MultiPlayer.Background.Animation.Name}" Margin="3"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="Foreground" FontSize="14" Grid.Row="1">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox Grid.Column="0" Style="{StaticResource Style_AnimationsCombo}" MinWidth="100" 
+                                      SelectedValue="{Binding ScoreLayout.MultiPlayer.Foreground.AnimationLayer.Name}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!--Active Player-->
+                <GroupBox Header="Active Player" Grid.Row="2" Style="{DynamicResource SequenceBaseGroupBox}">
+                    <StackPanel>
+                        <ContentPresenter Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.ActivePlayer}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!--Player One-->
+                <GroupBox Header="Player One" Grid.Row="3" Style="{DynamicResource SequenceBaseGroupBox}">
+                    <StackPanel>
+                        <ContentPresenter Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.PlayerOne}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!--Player Two-->
+                <GroupBox Header="Player Two" Grid.Row="4" Style="{DynamicResource SequenceBaseGroupBox}">
+                    <StackPanel>
+                        <ContentPresenter Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.PlayerOne}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!--Player Three-->
+                <GroupBox Header="Player Three" Grid.Row="5" Style="{DynamicResource SequenceBaseGroupBox}">
+                    <StackPanel>
+                        <ContentPresenter Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.PlayerOne}"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <!--Player Four-->
+                <GroupBox Header="Player Four" Grid.Row="6" Style="{DynamicResource SequenceBaseGroupBox}">
+                    <StackPanel>
+                        <ContentPresenter Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.PlayerOne}"/>
+                    </StackPanel>
+                </GroupBox>
+
+            </Grid>
         </GroupBox>
 
     </Grid>
