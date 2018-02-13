@@ -100,22 +100,22 @@ namespace SkeletonGame.Models.Score
     public class ScoreOptionBase
     {
         [YamlMember(Alias = "font", ApplyNamingConventions = false)]
-        public string Font { get; set; }
+        public string Font { get; set; } = "default";
 
         [YamlMember(Alias = "font_style", ApplyNamingConventions = false)]
-        public string FontStyle { get; set; }
+        public string FontStyle { get; set; } = "default";
 
-        [YamlMember(Alias = "h_justify", ApplyNamingConventions = false)]
-        public string HJustify { get; set; }
+        [YamlMember(Alias = "h_justify", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public HJustify HJustifyOptions { get; set; }
 
-        [YamlMember(Alias = "v_justify", ApplyNamingConventions = false)]
-        public string VJustify { get; set; }
+        [YamlMember(Alias = "v_justify", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public VJustify VJustifyOptions { get; set; }
 
-        [YamlMember(Alias = "x", ApplyNamingConventions = false)]
-        public string X { get; set; }
+        [YamlMember(Alias = "x", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public decimal X { get; set; } = 0.5m;
 
-        [YamlMember(Alias = "y", ApplyNamingConventions = false)]
-        public string Y { get; set; }        
+        [YamlMember(Alias = "y", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public decimal Y { get; set; } = 0.5m;      
     }    
 
     public class Score : ScoreOptionBase
