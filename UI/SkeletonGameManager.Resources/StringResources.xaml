@@ -91,7 +91,27 @@
     <sys:String x:Key="Tip_DmdFullScreen">
         Full-screen mode scales the contents to fit the full display; may not look right
     </sys:String>
-    
+
+    <sys:String x:Key="Tip_SaveConfigGame">
+        Overwrites the config.yaml in the current game folder
+    </sys:String>
+
+    <sys:String x:Key="Tip_SaveConfigMachine">
+        Overwrites the machine.yaml in the games config folder
+    </sys:String>
+
+    <sys:String x:Key="Tip_SaveScoreDisplayConfig">
+        Overwrites the new_score_display.yaml in the games config folder
+    </sys:String>
+
+    <sys:String x:Key="Tip_SaveAssetsFile">
+        Saves the asset_list.yaml
+    </sys:String>
+
+    <sys:String x:Key="Tip_SaveSequences">
+        Saves the sequence file that's in view.
+    </sys:String>
+
     <!--DEFAULT MODES-->
 
     <sys:String x:Key="Tip_OSC">
