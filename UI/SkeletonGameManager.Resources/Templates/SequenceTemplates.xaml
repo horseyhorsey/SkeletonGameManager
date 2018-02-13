@@ -695,6 +695,56 @@
         </GroupBox>
     </DataTemplate>
 
+    <DataTemplate x:Key="TextLayerOptionsGrid">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                
+            </Grid.ColumnDefinitions>
+
+            <ContentPresenter Grid.Row="0" Grid.ColumnSpan="5" Content="{StaticResource FontOptionsGrid}" MaxWidth="350"/>
+
+            <xctk:DecimalUpDown Grid.Row="1" Grid.Column="0" Value="{Binding X}" Increment="0.1" ClipValueToMinMax="True" ToolTip="X position of text" Margin="3"/>
+            <xctk:DecimalUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Y}" Increment="0.1" ClipValueToMinMax="True" ToolTip="Y position of text" Margin="3"/>
+
+            <TextBlock Grid.Column="2" Grid.Row="1" Text="Vert Justify:   " VerticalAlignment="Center"/>
+            <ComboBox Grid.Column="3" Grid.Row="1" Margin="3" VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustifyOptions, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Grid.Column="4" Grid.Row="1" Text="    Horz Justify:   " VerticalAlignment="Center"/>
+            <ComboBox  Grid.Column="5" Grid.Row="1" Margin="3" VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustifyOptions, UpdateSourceTrigger=PropertyChanged}"/>
+            
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ScoreTextLayerFormatGrid">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="Format" Grid.Row="0" Grid.Column="0"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Margin="3"
+                              VerticalAlignment="Center"
+                              Text="{Binding Format}"/>
+
+            <CheckBox Grid.Column="2" Margin="3"
+                              VerticalAlignment="Center" HorizontalAlignment="Right"
+                              Content="Visible" IsChecked="{Binding Visible}"/>
+        </Grid>
+        
+    </DataTemplate>
+
     <DataTemplate x:Key="Sequence_TextLayer">
         <GroupBox Margin="3" 
                   Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_TextLayer}">
