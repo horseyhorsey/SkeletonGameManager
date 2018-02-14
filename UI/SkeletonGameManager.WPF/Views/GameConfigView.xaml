@@ -8,6 +8,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"             
              xmlns:enum="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:views="clr-namespace:SkeletonGameManager.WPF.Views"
              mc:Ignorable="d" 
              Background="{DynamicResource Brush_GradientBackground}"
              d:DesignHeight="768" d:DesignWidth="768">
@@ -24,13 +25,6 @@
                         ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="enum:BufferSize"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-
-        <ObjectDataProvider x:Key="SdlKeys" MethodName="GetValues" 
-                        ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="enum:SDL_Scancode"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
 
@@ -327,40 +321,17 @@
         </StackPanel>
         
         <!--KEYBOARD MAPPINGS-->
-
-        <GroupBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="1"
+        <GroupBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="3"
                   >
-
             <GroupBox.Header>
                 <DockPanel>
                     <ContentPresenter Content="{DynamicResource Path_Pause}"/>
-                    <TextBlock Text="Keyboard Mappings" FontWeight="DemiBold"/>
+                    <TextBlock Text="Keyboard > Switch Mappings" FontWeight="DemiBold"/>
                 </DockPanel>
             </GroupBox.Header>
 
-            <ListView ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      Margin="3"
-                          BorderBrush="Black" BorderThickness="2"                       
-                    ItemsSource="{Binding SwitchKeys}"
-                    >
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="{Binding Key}" MinWidth="30" Grid.Column="1"/>
-                            <TextBlock Text="{Binding Number}" Grid.Column="2" MinWidth="30"/>
-                            <ComboBox Grid.Column="0" Width="250"
-                                SelectedValue="{Binding Keycode, UpdateSourceTrigger=PropertyChanged}"
-                                ItemsSource="{Binding Source={StaticResource SdlKeys}}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ListView>
+            <views:KeyboardMappingsView/>
+                        
         </GroupBox>
 
 

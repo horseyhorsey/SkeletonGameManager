@@ -28,7 +28,7 @@ namespace SkeletonGameManager.WPF
                 regionManager.RegisterViewWithRegion("ScenesRegion", typeof(ScenesView));
                 regionManager.RegisterViewWithRegion("MachineRegion", typeof(MachineConfigView));
                 regionManager.RegisterViewWithRegion("SequencesRegion", typeof(SequenceView));
-                regionManager.RegisterViewWithRegion("ScoreLayoutRegion", typeof(ScoreLayoutView));
+                regionManager.RegisterViewWithRegion("ScoreLayoutRegion", typeof(ScoreLayoutView));                
             }
 
             Application.Current.MainWindow.Show();                                            
