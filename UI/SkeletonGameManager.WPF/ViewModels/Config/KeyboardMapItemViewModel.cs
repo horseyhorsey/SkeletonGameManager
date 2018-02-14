@@ -1,12 +1,13 @@
-﻿using SkeletonGame.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using static SkeletonGame.Models.SdlKeyCode;
 
 namespace SkeletonGameManager.WPF.ViewModels.Config
 {
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class KeyboardMapItemViewModel
     {
+        #region Constructors
         public KeyboardMapItemViewModel(KeyValuePair<string, string> keySwitch)
         {
             Key = keySwitch.Key;
@@ -15,32 +16,36 @@ namespace SkeletonGameManager.WPF.ViewModels.Config
             GetKeycode(Key);
         }
 
-        private void GetKeycode(string key)
-        {
-            //string strKey = key.ToString();
-            //if (char.IsDigit(key))
-            //    strKey = strKey.Insert(0, "D");
-
-            SDL_Scancode _keycode;            
-            Enum.TryParse("SDL_SCANCODE_" + key.ToString().ToUpper(), out _keycode);
-
-            if (_keycode == SDL_Scancode.SDL_SCANCODE_UNKNOWN)
-                Enum.TryParse(key.ToString(), out _keycode);
-
-
-
-            this.Keycode = _keycode;
-
-            //Keycode = (SdlKeyCode.SDL_Scancode)Enum.Parse(typeof(SdlKeyCode.SDL_Scancode), key.ToString());
-        }
-
         public KeyboardMapItemViewModel()
-        {            
-        }
+        {
+        } 
+        #endregion
 
+        #region Properties
         public string Key { get; set; }
         public string Number { get; set; }
+        public SDL_Keycode Keycode { get; set; } 
+        #endregion
 
-        public SDL_Scancode Keycode { get; set; }
+        #region Private Methods
+        /// <summary>
+        /// Gets the keycode from the character/dcimal set inthe yaml.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        private void GetKeycode(string key)
+        {
+            if (key.Length == 1)
+                this.Keycode = (SDL_Keycode)(Convert.ToChar(key));
+            else
+            {
+                SDL_Keycode _keycode;
+                Enum.TryParse(key, out _keycode);
+                if (_keycode == SDL_Keycode.SDLK_UNKNOWN)
+                    Enum.TryParse(key, out _keycode);
+
+                this.Keycode = _keycode;
+            }
+        }
+        #endregion
     }
 }

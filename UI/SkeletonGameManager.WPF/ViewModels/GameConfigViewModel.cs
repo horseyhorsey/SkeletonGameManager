@@ -8,26 +8,37 @@ using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using SkeletonGameManager.WPF.ViewModels.Config;
 using System.Linq;
+using System;
+using Microsoft.Practices.Unity;
+using System.Text;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
     public class GameConfigViewModel : SkeletonGameManagerViewModelBase
     {        
-        private ISkeletonGameProvider _skeletonGameProvider;        
+        private ISkeletonGameProvider _skeletonGameProvider;
+        private IUnityContainer _unityContainer;
+        private readonly KeyboardMappingsViewModel _keyboardMappingsVm;
 
         #region Constructors
 
-        public GameConfigViewModel(IEventAggregator ea, ISkeletonGameProvider skeletonGameProvider) : base(ea)
+        public GameConfigViewModel(IEventAggregator ea, ISkeletonGameProvider skeletonGameProvider, IUnityContainer unityContainer) : base(ea)
         {            
             _skeletonGameProvider = skeletonGameProvider;
+            _unityContainer = unityContainer;
+            _keyboardMappingsVm = _unityContainer.Resolve<KeyboardMappingsViewModel>();
+
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x =>await  OnLoadYamlFilesChanged());
 
             SaveCommand = new DelegateCommand(() =>
             {
                 GameConfigModel.AudioBufferSize = (int)SelectedBufferSize;
 
+                UpdateSwitchMaps();
+
                 _skeletonGameProvider.SaveGameConfig(GameConfigModel);
-            },() => GameConfigModel == null ? false : true);
+
+            }, () => GameConfigModel == null ? false : true);
         }
 
         #endregion
@@ -46,31 +57,37 @@ namespace SkeletonGameManager.WPF.ViewModels
             set { SetProperty(ref bufferSize, value); }
         }
 
-        private ObservableCollection<KeyboardMapItemViewModel> switchKeys = new ObservableCollection<KeyboardMapItemViewModel>();
-        public ObservableCollection<KeyboardMapItemViewModel> SwitchKeys
-        {
-            get { return switchKeys; }
-            set { SetProperty(ref switchKeys, value); }
-        }
-
         #region Private Methods
 
         public async override Task OnLoadYamlFilesChanged()
         {
             GameConfigModel = _skeletonGameProvider.GameConfig;
-            SwitchKeys?.Clear();
-
-            var orderedSwitch = GameConfigModel.KeyboardSwitchMap.OrderBy(x => x.Value);
-
-            foreach (var keySwitch in orderedSwitch)
-            {
-                SwitchKeys.Add(new KeyboardMapItemViewModel(keySwitch));
-            }
 
             await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
                 SaveCommand.RaiseCanExecuteChanged();
             });
+        }
+
+        /// <summary>
+        /// Updates the switch maps before running save.
+        /// </summary>
+        private void UpdateSwitchMaps()
+        {
+            foreach (var item in _keyboardMappingsVm.SwitchKeys)
+            {
+                //Get the keycode....LShift etc are higher integer values
+                var charCode = (int)item.Keycode;
+
+                if (charCode > 10000) item.Key = charCode.ToString();
+                else item.Key = Convert.ToString((char)item.Keycode);
+
+                //Replace in dictionary.
+                if (_skeletonGameProvider.GameConfig.KeyboardSwitchMap.ContainsKey(item.Key))
+                    _skeletonGameProvider.GameConfig.KeyboardSwitchMap[item.Key] = item.Number;
+                else
+                    _skeletonGameProvider.GameConfig.KeyboardSwitchMap.Add(item.Key, item.Number);
+            }
         }
 
         #endregion        
