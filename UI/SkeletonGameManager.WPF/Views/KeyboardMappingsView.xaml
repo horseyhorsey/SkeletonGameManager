@@ -22,7 +22,7 @@
         
     </UserControl.Resources>
     
-    <Grid>
+    <Grid IsEnabled="False">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

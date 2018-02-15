@@ -370,9 +370,6 @@
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="the_evil_dead.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="skull.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -51,7 +51,15 @@ namespace SkeletonGameManager.WPF.ViewModels
                 switch (x)
                 {
                     case "asset_list.yaml":
+                    case "new_score_display.yaml":
+                    case "machine.yaml":
+                    case "attract.yaml":
+                    case "game_default_data.yaml":
+                    case "game_default_settings.yaml":
                         Process.Start(Path.Combine(_skeletonGameProvider.GameFolder, "config", x));
+                        break;
+                    case "config.yaml":
+                        Process.Start(Path.Combine(_skeletonGameProvider.GameFolder, x));
                         break;
                     default:
                         break;

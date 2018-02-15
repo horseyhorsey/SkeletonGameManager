@@ -11,8 +11,18 @@
         Title="{Binding Title}" Width="1024" Height="768">
 
     <Window.Resources>
+
+        <Style x:Key="OpenFileButton" TargetType="Button">
+            <Setter Property="Content" Value="{StaticResource Path_Dir}"/>
+            <Setter Property="Command" Value="{Binding OpenFileFolderCommand}"/>
+            <Setter Property="DockPanel.Dock" Value="Right"/>
+            <Setter Property="Height" Value="15"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
         <Style x:Key="ChromeWindow" TargetType="{x:Type views:MainWindow}">
-            
+
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
                     <WindowChrome GlassFrameThickness="1"
@@ -123,16 +133,44 @@
                                 <TabControl Grid.Row="3" Margin="3" IsEnabled="{Binding IsMainTabEnabled}">
 
                                     <!--SKELETON GAME CONFIG-->
-                                    <TabItem Header="Config.yaml" ToolTip="{StaticResource ConfigYaml}">
+                                    <TabItem ToolTip="{StaticResource ConfigYaml}">
+
+                                        <TabItem.Header>
+                                            <DockPanel>
+                                                <TextBlock Text="Config" Margin="3"/>
+                                                <Button Style="{StaticResource OpenFileButton}"                                                         
+                                                        CommandParameter="config.yaml"
+                                                        />
+                                            </DockPanel>
+                                        </TabItem.Header>
+                                        
                                         <ContentControl prism:RegionManager.RegionName="ConfigRegion" />
                                     </TabItem>
 
                                     <!--MACHINE CONFIG-->
-                                    <TabItem Header="Machine.yaml" IsEnabled="{Binding IsMachineConfigEnabled}">
+                                    <TabItem IsEnabled="{Binding IsMachineConfigEnabled}">
+                                        <TabItem.Header>
+                                            <DockPanel>
+                                                <TextBlock Text="Machine Config" Margin="3"/>
+                                                <Button Style="{StaticResource OpenFileButton}"                                                         
+                                                        CommandParameter="machine.yaml"
+                                                        />
+                                            </DockPanel>
+                                        </TabItem.Header>
+                                        
                                         <ContentControl prism:RegionManager.RegionName="MachineRegion" />
                                     </TabItem>
 
-                                    <TabItem Header="Score Display" IsEnabled="True">
+                                    <TabItem IsEnabled="True">
+                                        <TabItem.Header>
+                                            <DockPanel>
+                                                <TextBlock Text="Score Display" Margin="3"/>
+                                                <Button Style="{StaticResource OpenFileButton}"                                                         
+                                                        CommandParameter="new_score_display.yaml"
+                                                        />
+                                            </DockPanel>
+                                        </TabItem.Header>
+
                                         <ContentControl prism:RegionManager.RegionName="ScoreLayoutRegion"/>
                                     </TabItem>
 
@@ -140,13 +178,10 @@
                                     <TabItem>
                                         <TabItem.Header>
                                             <DockPanel>
-                                                <TextBlock Text="asset_list.yaml" Margin="3"/>
-                                                <Button Content="{StaticResource Path_Dir}"
-                                                        Command="{Binding OpenFileFolderCommand}"
-                                                        CommandParameter="asset_list.yaml"
-                                                        DockPanel.Dock="Right"
-                                                        Height="15" Width="20" 
-                                                        VerticalAlignment="Center"/>
+                                                <TextBlock Text="Asset List" Margin="3"/>
+                                                <Button Style="{StaticResource OpenFileButton}"                                                         
+                                                        CommandParameter="asset_list.yaml"                                                        
+                                                        />
                                             </DockPanel>    
                                         </TabItem.Header>
                                         
@@ -160,7 +195,7 @@
 
                                     <!--RECORDINGS / PLAYBACKS-->
                                     <TabItem Header="Recordings"                                              
-                                             IsEnabled="True">
+                                             IsEnabled="False">
                                         <ContentControl prism:RegionManager.RegionName="RecordingsRegion"/>
                                     </TabItem>
 
