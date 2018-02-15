@@ -10,7 +10,7 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:model="clr-namespace:SkeletonGame.Models.Machine;assembly=SkeletonGame.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="768" d:DesignWidth="1000">
 
     <Grid x:Name="LayoutRoot">
 
@@ -27,6 +27,16 @@
         </Grid.ColumnDefinitions>
 
         <Grid.Resources>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="DemiBold"/>
+            </Style>
+
+            <Style TargetType="TextBox">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="DemiBold"/>
+            </Style>
 
             <!--SWITCH STYLES-->
             <Style x:Key="PinballSwitchMatrix" TargetType="{x:Type ItemsControl}">
@@ -61,8 +71,6 @@
 
                                             <TextBlock Text="{Binding Number}" Grid.Row="0" Margin="0,-5"
                                                    HorizontalAlignment="Left" 
-                                                   FontWeight="DemiBold"
-                                                   FontSize="16"
                                                    />
 
                                             <ComboBox Background="Transparent" SelectedItem="{Binding Type}" Margin="30,0"
@@ -74,8 +82,8 @@
                                         </StackPanel>
 
                                         <TextBox Grid.Row="1" Grid.Column="1" Background="Transparent" Text="{Binding Name}"
-                                                 BorderThickness="0" FontWeight="DemiBold"
-                                                 TextWrapping="Wrap" FontSize="14"
+                                                 BorderThickness="0"
+                                                 TextWrapping="Wrap" 
                                                    HorizontalAlignment="Left"
                                                  ToolTip="Switch Name. Setting to NOT USED will not be added to yaml"
                                                    />
@@ -163,9 +171,7 @@
                                                    Grid.Column="1"
                                                    Grid.Row="0" VerticalAlignment="Top"
                                                    HorizontalAlignment="Center"
-                                                   FontStyle="Italic"
-                                                   FontWeight="DemiBold"
-                                                   FontSize="18"
+                                                   FontStyle="Italic"                                                   
                                                    />
 
                                     <TextBox Background="Transparent" 
@@ -187,8 +193,7 @@
                                                  Text="{Binding Tags}" 
                                                  TextWrapping="Wrap"
                                                  VerticalAlignment="Center"
-                                                 HorizontalAlignment="Center"
-                                                 FontSize="12"
+                                                 HorizontalAlignment="Center"                                                 
                                                    />
                                 </Grid>
                             </Border>
@@ -262,6 +267,34 @@
                 <TabControl>
 
                     <TabItem Header="Matrix" ToolTip="{StaticResource Tip_SwitchMatrix}">
+
+
+                        <!--TODO PLAYFIELD VIEW WITH SWITCHES-->
+                        <!--<ScrollViewer Background="{StaticResource Brush_GradientBackground}">
+                            <Grid>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
+                                    <xctk:IntegerUpDown Value="{Binding ElementName=CanvasPf, Path=Width, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <xctk:IntegerUpDown Value="{Binding ElementName=CanvasPf, Path=Height, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+
+                                <Canvas x:Name="CanvasPf" Width="400" Height="600" Grid.Row="1">
+                                    <Image x:Name="ImagePf" Source="C:\P-ROC\Games\!GameLoaders\OSC\_PF.png" 
+                                       Stretch="Uniform" 
+                                           Width="{Binding ElementName=CanvasPf, Path=Width}"
+                                           Height="{Binding ElementName=CanvasPf, Path=Height}"
+                                           />
+                                    <Button Content="S13" Canvas.Top="100"/>
+                                </Canvas>
+                            </Grid>
+                        </ScrollViewer>-->
+
+                        <!--SWITCH MATRIX VIEW-->
                         <ItemsControl ItemsSource="{Binding Switches}">
 
                             <ItemsControl.Resources>
@@ -445,9 +478,14 @@
         <GroupBox Header="PR Game" Margin="3" Grid.Row="1">
             <StackPanel Orientation="Horizontal" Margin="5">
 
-                <TextBlock Text="{Binding MachineConfig.PRGame.MachineType, StringFormat={} Machine Type: {0}}"/>
+                <TextBlock Text="{Binding MachineConfig.PRGame.MachineType, StringFormat={} Machine Type: {0}}"
+                           FontSize="12"
+                           Margin="3"
+                           />
 
-                <TextBlock Text="{Binding MachineConfig.PRGame.NumBalls, StringFormat={} Balls in Machine: {0}}" Margin="50,0"/>
+                <TextBlock Text="{Binding MachineConfig.PRGame.NumBalls, StringFormat={} Balls in Machine: {0}}" 
+                           FontSize="12"
+                           Margin="3"/>
 
             </StackPanel>
         </GroupBox>

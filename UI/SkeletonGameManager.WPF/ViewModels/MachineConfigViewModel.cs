@@ -75,8 +75,8 @@ namespace SkeletonGameManager.WPF.ViewModels
             set { SetProperty(ref coils, value); }
         }
 
-        private ObservableCollection<PRSwitch> dSwitches;
-        public ObservableCollection<PRSwitch> DedicatedSwitches
+        private ObservableCollection<SwitchViewModel> dSwitches;
+        public ObservableCollection<SwitchViewModel> DedicatedSwitches
         {
             get { return dSwitches; }
             set { SetProperty(ref dSwitches, value); }
@@ -153,12 +153,18 @@ namespace SkeletonGameManager.WPF.ViewModels
                 }
 
                 //Switches
-                DedicatedSwitches?.Clear();
                 FlippersSwitches?.Clear();
                 foreach (var prSwitch in MachineConfig.PRSwitches)
                 {
                     if (prSwitch.Number.Contains("D"))
-                        DedicatedSwitches.Add(prSwitch);
+                    {
+                        var dSw = DedicatedSwitches.FirstOrDefault(x => x.Number == prSwitch.Number);
+                        if (dSw != null)
+                        {
+                            dSw.Name = prSwitch.Name;
+                            dSw.Tags = prSwitch.Tags;                            
+                        }
+                    }                        
                     else if (prSwitch.Number.Contains("F"))
                         FlippersSwitches.Add(prSwitch);
                     else
@@ -243,6 +249,15 @@ namespace SkeletonGameManager.WPF.ViewModels
             Switches.Add(new SwitchViewModel() { Number = $"S{numString}", Name = "NOT USED" });
         }
 
+        /// <summary>
+        /// Adds to dedicated switch matrix by number
+        /// </summary>
+        /// <param name="i">The i.</param>
+        private void AddToDedicatedSwitchMatrix(int i)
+        {
+            DedicatedSwitches.Add(new SwitchViewModel() { Number = $"SD{i}", Name = "NOT USED" });
+        }
+
         private void CreateCoils(MachineType type)
         {
             if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPCALPHANUMERIC)
@@ -314,7 +329,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPCALPHANUMERIC)
             {
-                //Add switches and lamps
+                //Add switches, lamps and dedicated switches for williams
                 for (int i = 11; i < 99; i++)
                 {
                     var numStr = i.ToString();
@@ -328,16 +343,33 @@ namespace SkeletonGameManager.WPF.ViewModels
                     else if (i > 90)
                         AddToMatrix(numStr, i);
                 }
+
+                //Add dedicated for williams
+                for (int i = 1; i < 10; i++)
+                {                    
+                    AddToDedicatedSwitchMatrix(i);
+                }
+
+                //dedicated
+                for (int i = 1; i < 9; i++)
+                {
+                    
+                }
             }
             else if (type == MachineType.STERNSAM)
             {
+                //Adds all stern lamps, switches and dedicated switces
                 for (int i = 1; i < 81; i++)
                 {
                     if (i < 65)
                         AddToSwitchMatrix(i);
 
+                    if (i < 25)
+                        AddToDedicatedSwitchMatrix(i);
+
                     AddToLampMatrix(i);
                 }
+
             }
         }
 
@@ -375,7 +407,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             Lamps = new ObservableCollection<LampViewModel>();
             Coils = new ObservableCollection<SolenoidFlasherViewModel>();
 
-            DedicatedSwitches = new ObservableCollection<PRSwitch>();
+            DedicatedSwitches = new ObservableCollection<SwitchViewModel>();
             FlippersSwitches = new ObservableCollection<PRSwitch>();
         }
 
@@ -383,8 +415,24 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             var mConfig = MachineConfig;
             mConfig.PRSwitches.Clear();
-            mConfig.PRSwitches.AddRange(this.FlippersSwitches);
-            mConfig.PRSwitches.AddRange(this.DedicatedSwitches);
+            mConfig.PRSwitches.AddRange(this.FlippersSwitches);            
+
+            // Save dedicated switches 
+            foreach (var item in DedicatedSwitches)
+            {
+                if (item.Name != "NOT USED")
+                {
+                    var sw = new PRSwitch()
+                    {
+                        Name = item.Name,
+                        Number = item.Number,
+                        Tags = item.Tags,
+                        SwitchType = item.Type
+                    };
+
+                    MachineConfig.PRSwitches.Add(sw);
+                }
+            }
 
             //Save switches
             foreach (var item in Switches)
@@ -453,8 +501,6 @@ namespace SkeletonGameManager.WPF.ViewModels
             }
 
             _skeletonGameProvider.SaveMachineConfig(mConfig);
-
-
         }
         #endregion
     }
