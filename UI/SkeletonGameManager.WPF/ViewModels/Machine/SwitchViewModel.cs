@@ -8,6 +8,8 @@
         public string Tags { get; set; }
         public string Type { get; set; }
         public bool State { get; set; }
+        public int PosTop { get; set; }
+        public int PosLeft { get; set; }
 
         public string[] BallSearch = new string[] { null, null };
 

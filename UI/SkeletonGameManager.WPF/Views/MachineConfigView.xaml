@@ -9,6 +9,7 @@
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"             
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:model="clr-namespace:SkeletonGame.Models.Machine;assembly=SkeletonGame.Models"
+             xmlns:machineviews="clr-namespace:SkeletonGameManager.WPF.Views.MachineViews"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1000">
 
@@ -267,68 +268,49 @@
                 <TabControl>
 
                     <TabItem Header="Matrix" ToolTip="{StaticResource Tip_SwitchMatrix}">
+                        
+                        <Grid>
+                            
+                            <!--OSC VIEW-->
+                            <machineviews:OscView Visibility="Hidden"/>
 
+                            <!--SWITCH MATRIX VIEW-->
+                            <ItemsControl ItemsSource="{Binding Switches}" Visibility="Visible">
 
-                        <!--TODO PLAYFIELD VIEW WITH SWITCHES-->
-                        <!--<ScrollViewer Background="{StaticResource Brush_GradientBackground}">
-                            <Grid>
+                                <ItemsControl.Resources>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+                                    <!--STERN SAM 1-64 switches (10 x)-->
+                                    <ItemsPanelTemplate x:Key="SAM_Matrix">
+                                        <UniformGrid Columns="8" Rows="8" IsItemsHost="True"/>
+                                    </ItemsPanelTemplate>
 
-                                <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Center">
-                                    <xctk:IntegerUpDown Value="{Binding ElementName=CanvasPf, Path=Width, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <xctk:IntegerUpDown Value="{Binding ElementName=CanvasPf, Path=Height, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
+                                    <ItemsPanelTemplate x:Key="STD_Matrix">
+                                        <ui:UniformGridWithOrientation Columns="8" Rows="8" IsItemsHost="True"/>
+                                    </ItemsPanelTemplate>
 
-                                <Canvas x:Name="CanvasPf" Width="400" Height="600" Grid.Row="1">
-                                    <Image x:Name="ImagePf" Source="C:\P-ROC\Games\!GameLoaders\OSC\_PF.png" 
-                                       Stretch="Uniform" 
-                                           Width="{Binding ElementName=CanvasPf, Path=Width}"
-                                           Height="{Binding ElementName=CanvasPf, Path=Height}"
-                                           />
-                                    <Button Content="S13" Canvas.Top="100"/>
-                                </Canvas>
-                            </Grid>
-                        </ScrollViewer>-->
+                                </ItemsControl.Resources>
 
-                        <!--SWITCH MATRIX VIEW-->
-                        <ItemsControl ItemsSource="{Binding Switches}">
+                                <!--STYLE-->
+                                <ItemsControl.Style>
 
-                            <ItemsControl.Resources>
+                                    <Style TargetType="ItemsControl" BasedOn="{StaticResource PinballSwitchMatrix}">
 
-                                <!--STERN SAM 1-64 switches (10 x)-->
-                                <ItemsPanelTemplate x:Key="SAM_Matrix">
-                                    <UniformGrid Columns="8" Rows="8" IsItemsHost="True"/>
-                                </ItemsPanelTemplate>
+                                        <Setter Property="ItemsPanel" Value="{StaticResource STD_Matrix}"/>
 
-                                <ItemsPanelTemplate x:Key="STD_Matrix">
-                                    <ui:UniformGridWithOrientation Columns="8" Rows="8" IsItemsHost="True"/>
-                                </ItemsPanelTemplate>
+                                        <!--CHANGE THE STYLE IF USING A SAM CONFIG-->
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
+                                                <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
 
-                            </ItemsControl.Resources>
+                                    </Style>
 
-                            <!--STYLE-->
-                            <ItemsControl.Style>
+                                </ItemsControl.Style>
 
-                                <Style TargetType="ItemsControl" BasedOn="{StaticResource PinballSwitchMatrix}">
+                            </ItemsControl>
+                        </Grid>
 
-                                    <Setter Property="ItemsPanel" Value="{StaticResource STD_Matrix}"/>
-
-                                    <!--CHANGE THE STYLE IF USING A SAM CONFIG-->
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
-                                            <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-
-                                </Style>
-
-                            </ItemsControl.Style>
-
-                        </ItemsControl>
                     </TabItem>
 
                     <!--TODO - MAYBE JUST MOVE THESE INTO AN EXPANDER IN THE SAME TAB?-->
@@ -473,7 +455,6 @@
 
         </TabControl>
 
-
         <!--MACHINE (PRGAME)-->
         <GroupBox Header="PR Game" Margin="3" Grid.Row="1">
             <StackPanel Orientation="Horizontal" Margin="5">
@@ -490,6 +471,7 @@
             </StackPanel>
         </GroupBox>
 
+        <!--VP SCRIPT EXPORTS-->
         <GroupBox Header="VP Script Exports" Grid.Column="1"
                   Grid.Row="1" Margin="3"
                   >
@@ -508,6 +490,7 @@
             </StackPanel>
         </GroupBox>
 
+        <!--SAVE-->
         <GroupBox Header="Save" Grid.Column="2" Grid.Row="1" Margin="3">
             <!--SAVE MACHINE BUTTON-->
             <Button Command="{Binding SaveMachineConfigCommand}" 

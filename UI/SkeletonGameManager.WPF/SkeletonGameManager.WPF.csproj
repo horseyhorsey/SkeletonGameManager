@@ -113,6 +113,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviours\DragBehaviour.cs" />
     <Compile Include="Controls\UniformGridWithOrientation.cs" />
     <Compile Include="Converters\NegateBoolConverter.cs" />
     <Compile Include="Converters\StyleConverter.cs" />
@@ -136,6 +137,9 @@
     <Compile Include="ViewModels\SequenceYamlItemViewModel.cs" />
     <Compile Include="Views\KeyboardMappingsView.xaml.cs">
       <DependentUpon>KeyboardMappingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MachineViews\OscView.xaml.cs">
+      <DependentUpon>OscView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RecordingsView.xaml.cs">
       <DependentUpon>RecordingsView.xaml</DependentUpon>
@@ -195,6 +199,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\KeyboardMappingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MachineViews\OscView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
