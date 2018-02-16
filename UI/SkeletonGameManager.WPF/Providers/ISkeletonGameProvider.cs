@@ -2,6 +2,7 @@
 using SkeletonGame.Models;
 using SkeletonGame.Models.Machine;
 using SkeletonGame.Models.Score;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -123,6 +124,9 @@ namespace SkeletonGameManager.WPF.Providers
                     try
                     {                    
                         GameConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<GameConfig>(Path.Combine(GameFolder, YamlFiles[0]));
+
+                        if (GameConfig == null)
+                            throw new NullReferenceException("Config.yaml returned null, please check your config.yaml");
 
                         if (File.Exists(Path.Combine(GameFolder, YamlFiles[1])))
                             AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
