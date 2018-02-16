@@ -8,28 +8,44 @@ namespace SkeletonGameManager.WPF.ViewModels.Config
     public class KeyboardMapItemViewModel
     {
         #region Constructors
-        public KeyboardMapItemViewModel(KeyValuePair<string, string> keySwitch)
+        public KeyboardMapItemViewModel(string name, KeyValuePair<string, string> keySwitch)
         {
+            Name = name;
             Key = keySwitch.Key;
             Number = keySwitch.Value;
 
-            GetKeycode(Key);
+            GetKeycode(Key.ToString());
         }
 
         public KeyboardMapItemViewModel()
         {
-        } 
+        }
+
         #endregion
 
         #region Properties
+        public string Name { get; set; }
         public string Key { get; set; }
         public string Number { get; set; }
-        public SDL_Keycode Keycode { get; set; } 
+
+        private SDL_Keycode _keycode;
+        public SDL_Keycode Keycode {
+            get { return _keycode; }
+            set
+            {
+                _keycode = value;
+
+                var str = ((char)Keycode).ToString().Replace("\t", "\\t").Replace("\b", "\\b").Replace("\r", "\\r");
+
+                Key = str;
+            }
+        } 
         #endregion
 
         #region Private Methods
+
         /// <summary>
-        /// Gets the keycode from the character/dcimal set inthe yaml.
+        /// Gets the keycode from the character/decimal set in the yaml.
         /// </summary>
         /// <param name="key">The key.</param>
         private void GetKeycode(string key)
@@ -41,7 +57,14 @@ namespace SkeletonGameManager.WPF.ViewModels.Config
                 SDL_Keycode _keycode;
                 Enum.TryParse(key, out _keycode);
                 if (_keycode == SDL_Keycode.SDLK_UNKNOWN)
-                    Enum.TryParse(key, out _keycode);
+                {
+                    var newKey = key.Replace("\\b", "\b")
+                                    .Replace("\\r", "\r")
+                                    .Replace("\\t", "\t");
+
+                    _keycode = (SDL_Keycode)(Convert.ToChar(newKey));
+                }
+                    
 
                 this.Keycode = _keycode;
             }

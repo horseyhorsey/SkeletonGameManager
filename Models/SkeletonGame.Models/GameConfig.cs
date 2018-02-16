@@ -91,7 +91,9 @@ namespace SkeletonGame.Models {
         [YamlMember(Alias = "audio_freq_rate", ApplyNamingConventions = false)]
         public int AudioFrequency { get; set; } = 24000;
 
-        [YamlMember(Alias = "keyboard_switch_map", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "keyboard_switch_map", ApplyNamingConventions = false, 
+            SerializeAs = typeof(Dictionary<string, string>), 
+            ScalarStyle = YamlDotNet.Core.ScalarStyle.DoubleQuoted)]
         public Dictionary<string, string> KeyboardSwitchMap { get; set; }
     }
 

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SkeletonGameManager.WPF.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"         
              xmlns:sys="clr-namespace:System;assembly=mscorlib"   
@@ -22,7 +23,7 @@
         
     </UserControl.Resources>
     
-    <Grid IsEnabled="False">
+    <Grid IsEnabled="True">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,40 +39,69 @@
                 </Grid.ColumnDefinitions>
 
                 <!--Select switch-->
-                <ComboBox Margin="3"/>
+                <ComboBox Margin="3" x:Name="ComboAvailSwitches"                          
+                          ItemsSource="{Binding AvailableSwitches}">
+
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Number}"/>
+                                <Label Content="{Binding Name}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                    
+                </ComboBox>
 
                 <!--SDL Keycodes-->
                 <ComboBox Grid.Column="1" Margin="3"
-                                ItemsSource="{Binding Source={StaticResource SdlKeys}}"/>
+                                ItemsSource="{Binding Source={StaticResource SdlKeys}}"
+                                SelectedValue="{Binding CapturedSdlCode, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedValuePath=""
+                          />
 
-                <ToggleButton Grid.Column="2" Height="22" Margin="3"
+                <Button Grid.Column="2" Content="+"
+                        Command="{Binding AddUnusedSwitchCommand}"
+                        CommandParameter="{Binding ElementName=ComboAvailSwitches, Path=SelectedItem}"
+                        />
+
+                <!--<ToggleButton Grid.Column="2" Height="22" Margin="3"
                                 Content="Capture Key"
-                                />
+                                >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyDown">
+                            <prism:InvokeCommandAction Command="{Binding KeyDownCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ToggleButton>-->
             </Grid>
         </GroupBox>
 
         <ListView Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto"
                       Margin="3"
                           BorderBrush="Black" BorderThickness="2"                       
-                    ItemsSource="{Binding SwitchKeys}"
+                    ItemsSource="{Binding SwitchKeys, UpdateSourceTrigger=PropertyChanged}"
                     >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="150"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ComboBox Grid.Column="1" Width="250" Margin="3"
+                        <TextBlock Text="{Binding Number}" Grid.Column="0" MinWidth="30" Margin="3"/>
+
+                        <TextBlock Text="{Binding Name}" Grid.Column="1" MinWidth="30" Margin="3"/>
+
+                        <ComboBox Grid.Column="2" Width="140" Margin="3"
                                 SelectedValue="{Binding Keycode, UpdateSourceTrigger=PropertyChanged}"
                                 ItemsSource="{Binding Source={StaticResource SdlKeys}}"/>
 
-                        <TextBlock Text="{Binding Keycode}" 
-                                       MinWidth="30" Grid.Column="2" Margin="3"/>
-
-                        <TextBlock Text="{Binding Number}" Grid.Column="0" MinWidth="30" Margin="3"/>
+                        <TextBlock Grid.Column="3" Text="{Binding Keycode}" 
+                                       MinWidth="30" Margin="3"/>
 
                     </Grid>
                 </DataTemplate>

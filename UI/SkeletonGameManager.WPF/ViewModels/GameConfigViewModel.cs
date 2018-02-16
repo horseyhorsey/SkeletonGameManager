@@ -5,20 +5,14 @@ using SkeletonGame.Models;
 using Prism.Commands;
 using System.Threading.Tasks;
 using System.Windows.Threading;
-using System.Collections.ObjectModel;
-using SkeletonGameManager.WPF.ViewModels.Config;
-using System.Linq;
-using System;
 using Microsoft.Practices.Unity;
-using System.Text;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
     public class GameConfigViewModel : SkeletonGameManagerViewModelBase
-    {        
+    {
         private ISkeletonGameProvider _skeletonGameProvider;
-        private IUnityContainer _unityContainer;
-        private readonly KeyboardMappingsViewModel _keyboardMappingsVm;
+        private IUnityContainer _unityContainer;        
 
         #region Constructors
 
@@ -26,7 +20,8 @@ namespace SkeletonGameManager.WPF.ViewModels
         {            
             _skeletonGameProvider = skeletonGameProvider;
             _unityContainer = unityContainer;
-            _keyboardMappingsVm = _unityContainer.Resolve<KeyboardMappingsViewModel>();
+
+            KeyboardMappingsVm = _unityContainer.Resolve<KeyboardMappingsViewModel>();
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x =>await  OnLoadYamlFilesChanged());
 
@@ -43,11 +38,20 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         #endregion
 
+        #region Properties
+
         private GameConfig gameConfig;
         public GameConfig GameConfigModel
         {
             get { return gameConfig; }
             set { SetProperty(ref gameConfig, value); }
+        }
+
+        private KeyboardMappingsViewModel _keyboardMappingsVm;
+        public KeyboardMappingsViewModel KeyboardMappingsVm
+        {
+            get { return _keyboardMappingsVm; }
+            set { SetProperty(ref _keyboardMappingsVm, value); }
         }
 
         private BufferSize bufferSize = BufferSize.Buff512;
@@ -56,8 +60,9 @@ namespace SkeletonGameManager.WPF.ViewModels
             get { return bufferSize; }
             set { SetProperty(ref bufferSize, value); }
         }
+        #endregion
 
-        #region Private Methods
+        #region Public Methods
 
         public async override Task OnLoadYamlFilesChanged()
         {
@@ -69,21 +74,30 @@ namespace SkeletonGameManager.WPF.ViewModels
             });
         }
 
+        #endregion
+
+        #region Private Methods
+
         /// <summary>
         /// Updates the switch maps before running save.
         /// </summary>
         private void UpdateSwitchMaps()
         {
-            foreach (var item in _keyboardMappingsVm.SwitchKeys)
+            _skeletonGameProvider.GameConfig.KeyboardSwitchMap.Clear();
+
+            //KeyboardMappingsVm.SwitchKeys.OrderBy(x => x.Key);
+
+            foreach (var item in KeyboardMappingsVm.SwitchKeys)
             {
                 //Get the keycode....LShift etc are higher integer values
                 var charCode = (int)item.Keycode;
+                string newKey = string.Empty;
 
-                if (charCode > 10000) item.Key = charCode.ToString();
-                else item.Key = Convert.ToString((char)item.Keycode);
+                if (charCode > 10000)
+                    item.Key = charCode.ToString();    
 
                 //Replace in dictionary.
-                if (_skeletonGameProvider.GameConfig.KeyboardSwitchMap.ContainsKey(item.Key))
+                if (_skeletonGameProvider.GameConfig.KeyboardSwitchMap.ContainsKey(newKey))
                     _skeletonGameProvider.GameConfig.KeyboardSwitchMap[item.Key] = item.Number;
                 else
                     _skeletonGameProvider.GameConfig.KeyboardSwitchMap.Add(item.Key, item.Number);

@@ -6,6 +6,7 @@ using SkeletonGame.Engine;
 using SkeletonGameManager.WPF.Views;
 using SkeletonGameManager.WPF.Providers;
 using Prism.Regions;
+using SkeletonGameManager.WPF.ViewModels;
 
 namespace SkeletonGameManager.WPF
 {
@@ -54,6 +55,8 @@ namespace SkeletonGameManager.WPF
             Container.RegisterInstance<ISkeletonGameFiles>(Container.Resolve<SkeletonGameFiles>());
 
             Container.RegisterInstance<ISkeletonGameProvider>(Container.Resolve<SkeletonGameProvider>());
+
+            Container.RegisterInstance(Container.Resolve<KeyboardMappingsViewModel>());
 
             Container.RegisterTypeForNavigation<GameConfigView>("GameConfigView");                       
         }
