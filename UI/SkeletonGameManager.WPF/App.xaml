@@ -19,6 +19,7 @@
             <converters:ListToColorConverter x:Key="NegateBoolConv"/>
             <converters:ListToColorConverter x:Key="ListToColorConv"/>
             <converters:StyleConverter x:Key="StyleConverter"/>
+            <converters:DoubleToTimespanConverter x:Key="DoubleToTimspanConverter"/>
         </ResourceDictionary>
 
     </Application.Resources>

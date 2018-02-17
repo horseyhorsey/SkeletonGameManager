@@ -122,6 +122,7 @@
     </ApplicationDefinition>
     <Compile Include="Behaviours\DragBehaviour.cs" />
     <Compile Include="Controls\UniformGridWithOrientation.cs" />
+    <Compile Include="Converters\DoubleToTimespanConverter.cs" />
     <Compile Include="Converters\NegateBoolConverter.cs" />
     <Compile Include="Converters\StyleConverter.cs" />
     <Compile Include="Interfaces\IMediaPlayer.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="ViewModels\Machine\LampViewModel.cs" />
     <Compile Include="ViewModels\Machine\SolenoidFlasherViewModel.cs" />
     <Compile Include="ViewModels\Machine\SwitchViewModel.cs" />
+    <Compile Include="ViewModels\PlaybackItemViewModel.cs" />
     <Compile Include="ViewModels\SceneMediaViewModel.cs" />
     <Compile Include="ViewModels\SceneEditViewModels\SceneProcessItemViewModel.cs" />
     <Compile Include="ViewModels\SceneProcessViewModel.cs" />
