@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Events;
@@ -29,7 +31,18 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             ScoreLayout = _skeletonGameProvider.ScoreDisplayConfig?.ScoreLayout;
 
+            Animations = new ObservableCollection<string>(
+                _skeletonGameProvider.AssetsConfig.Animations
+                .Select(x => x.Key));
+
             await Task.Delay(100);
+        }
+
+        private ObservableCollection<string> animations;
+        public ObservableCollection<string> Animations
+        {
+            get { return animations; }
+            set { SetProperty(ref animations, value); }
         }
 
         private ScoreLayout scoreLayout = new ScoreLayout();

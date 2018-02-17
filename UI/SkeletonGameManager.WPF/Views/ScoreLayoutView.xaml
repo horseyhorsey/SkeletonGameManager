@@ -41,7 +41,8 @@
                     <GroupBox Header="BackGround" FontSize="14">
                         <StackPanel Orientation="Horizontal">
                             
-                            <ComboBox Grid.Column="0" Style="{StaticResource Style_AttractAnimationsCombo}" MinWidth="100" 
+                            <ComboBox Grid.Column="0" MinWidth="100" 
+                                      ItemsSource="{Binding Animations}"
                                       SelectedValue="{Binding ScoreLayout.SinglePlayer.Background.Animation.Name}"/>
                             
                             <CheckBox x:Name="ChkBoxFromSaved" Content="From Saved" VerticalAlignment="Center" 
@@ -56,7 +57,7 @@
                     <!--FOREGROUND ANIMATION OPTONS-->
                     <GroupBox Header="Foreground" FontSize="14" Grid.Row="1">
                         <Grid>
-                            <ComboBox Grid.Column="0" Style="{StaticResource Style_AnimAssetCombo}" MinWidth="100" 
+                            <ComboBox Grid.Column="0" ItemsSource="{Binding Animations}" MinWidth="100" 
                                       SelectedValue="{Binding ScoreLayout.SinglePlayer.Foreground.AnimationLayer.Name}"/>
                         </Grid>
                     </GroupBox>
@@ -119,7 +120,7 @@
 
                     <GroupBox Header="BackGround" FontSize="14">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox Grid.Column="0" Style="{StaticResource Style_AnimationsCombo}" MinWidth="100" SelectedValue="{Binding ScoreLayout.MultiPlayer.Background.Animation.Name}"/>
+                            <ComboBox Grid.Column="0" ItemsSource="{Binding Animations}" MinWidth="100" SelectedValue="{Binding ScoreLayout.MultiPlayer.Background.Animation.Name}"/>
                             <CheckBox x:Name="ChkBoxFromSavedMulti" Content="From Saved" VerticalAlignment="Center" IsChecked="{Binding ScoreLayout.MultiPlayer.Background.Animation.FromSaved}" Margin="3"/>
                             <TextBox  Grid.Row="0" Grid.Column="0"  ToolTip="Enter Same here to use the single player animation."
                                       IsEnabled="{Binding ElementName=ChkBoxFromSaved, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
@@ -129,7 +130,7 @@
 
                     <GroupBox Header="Foreground" FontSize="14" Grid.Row="1">
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox Grid.Column="0" Style="{StaticResource Style_AnimationsCombo}" MinWidth="100" 
+                            <ComboBox Grid.Column="0" ItemsSource="{Binding Animations}"  MinWidth="100" 
                                       SelectedValue="{Binding ScoreLayout.MultiPlayer.Foreground.AnimationLayer.Name}"/>
                         </StackPanel>
                     </GroupBox>
