@@ -2,9 +2,9 @@
 {
     public class PlayBackItem
     {
-        public decimal Event;
-        public string Type;
-        public byte value;
-        public string SwName;
+        public double Event { get; set; }
+        public string Type { get; set; }
+        public byte value { get; set; }
+        public string SwName { get; set; }
     }    
 }
