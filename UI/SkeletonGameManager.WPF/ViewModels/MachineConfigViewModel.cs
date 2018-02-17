@@ -57,9 +57,9 @@ namespace SkeletonGameManager.WPF.ViewModels
 
                     SwitchViewModel pushedSwitch = null;
                     if (obj.Number.Contains("D"))
-                        this.DedicatedSwitches.First((c) => c == obj);
+                        pushedSwitch = this.DedicatedSwitches.First((c) => c == obj);
                     else
-                        this.Switches.First((c) => c == obj);
+                        pushedSwitch = this.Switches.First((c) => c == obj);
 
                     pushedSwitch.State = !pushedSwitch.State;
 
