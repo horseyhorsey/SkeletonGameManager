@@ -190,55 +190,6 @@ namespace SkeletonGameManager.WPF.Providers
             });
         }
 
-        /// <summary>
-        /// Parses the machine configuration to MachineConfigDict then to a listed MachineConfig
-        /// </summary>
-        /// <param name="ex">The ex.</param>
-        private void ParseMachineConfigWithKeyValues(System.Exception ex)
-        {
-            var result = System.Windows.MessageBox.Show
-            ($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}", "Couldn't parse machine, Convert and backup?", System.Windows.MessageBoxButton.YesNo);
-
-            //Parse with different object
-            if (result == System.Windows.MessageBoxResult.Yes)
-            {
-                var machineConfigFile = Path.Combine(GameFolder, YamlFiles[5]);
-                MachineConfigDict = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfigDict>(machineConfigFile);
-
-                File.Delete(machineConfigFile + ".bak");
-                File.Copy(machineConfigFile, machineConfigFile + ".bak");
-
-                if (MachineConfigDict != null)
-                {
-                    foreach (var coil in MachineConfigDict.PRCoils.Select(x => x))
-                    {
-                        coil.Value.Name = coil.Key;
-                    }
-
-                    foreach (var lamp in MachineConfigDict.PRLamps.Select(x => x))
-                    {
-                        lamp.Value.Name = lamp.Key;
-                    }
-                    foreach (var sw in MachineConfigDict.PRSwitches.Select(x => x))
-                    {
-                        sw.Value.Name = sw.Key;
-                    }
-
-                    MachineConfig = new MachineConfig()
-                    {
-                        PRGame = MachineConfigDict.PRGame,
-                        PRBumpers = MachineConfigDict.PRBumpers,
-                        PRFlippers = MachineConfigDict.PRFlippers,
-                        PRCoils = MachineConfigDict.PRCoils.Select(x => x.Value).ToList(),
-                        PRLamps = MachineConfigDict.PRLamps.Select(x => x.Value).ToList(),
-                        PRSwitches = MachineConfigDict.PRSwitches.Select(x => x.Value).ToList()
-                    };
-
-                    MachineConfigDict = null;
-                }
-            }
-        }
-
         public SequenceYaml GetSequence(string yamlPath)
         {
             return _skeletonGameSerializer.DeserializeSkeletonYaml<SequenceYaml>(yamlPath);
@@ -378,6 +329,59 @@ namespace SkeletonGameManager.WPF.Providers
         {
             var yamlFile = Path.Combine(GameFolder, YamlFiles[3]);
             _skeletonGameSerializer.SerializeYaml(yamlFile, scoreDisplay);
+        }
+
+        #endregion
+
+        #region Private Properties
+
+        /// <summary>
+        /// Parses the machine configuration to MachineConfigDict then to a listed MachineConfig
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        private void ParseMachineConfigWithKeyValues(System.Exception ex)
+        {
+            var result = System.Windows.MessageBox.Show
+            ($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}", "Couldn't parse machine, Convert and backup?", System.Windows.MessageBoxButton.YesNo);
+
+            //Parse with different object
+            if (result == System.Windows.MessageBoxResult.Yes)
+            {
+                var machineConfigFile = Path.Combine(GameFolder, YamlFiles[5]);
+                MachineConfigDict = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfigDict>(machineConfigFile);
+
+                File.Delete(machineConfigFile + ".bak");
+                File.Copy(machineConfigFile, machineConfigFile + ".bak");
+
+                if (MachineConfigDict != null)
+                {
+                    foreach (var coil in MachineConfigDict.PRCoils.Select(x => x))
+                    {
+                        coil.Value.Name = coil.Key;
+                    }
+
+                    foreach (var lamp in MachineConfigDict.PRLamps.Select(x => x))
+                    {
+                        lamp.Value.Name = lamp.Key;
+                    }
+                    foreach (var sw in MachineConfigDict.PRSwitches.Select(x => x))
+                    {
+                        sw.Value.Name = sw.Key;
+                    }
+
+                    MachineConfig = new MachineConfig()
+                    {
+                        PRGame = MachineConfigDict.PRGame,
+                        PRBumpers = MachineConfigDict.PRBumpers,
+                        PRFlippers = MachineConfigDict.PRFlippers,
+                        PRCoils = MachineConfigDict.PRCoils.Select(x => x.Value).ToList(),
+                        PRLamps = MachineConfigDict.PRLamps.Select(x => x.Value).ToList(),
+                        PRSwitches = MachineConfigDict.PRSwitches.Select(x => x.Value).ToList()
+                    };
+
+                    MachineConfigDict = null;
+                }
+            }
         }
 
         #endregion
