@@ -57,6 +57,7 @@ namespace SkeletonGameManager.WPF
             Container.RegisterInstance<ISkeletonGameProvider>(Container.Resolve<SkeletonGameProvider>());
 
             Container.RegisterInstance(Container.Resolve<KeyboardMappingsViewModel>());
+            Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>());
 
             Container.RegisterTypeForNavigation<GameConfigView>("GameConfigView");                       
         }
