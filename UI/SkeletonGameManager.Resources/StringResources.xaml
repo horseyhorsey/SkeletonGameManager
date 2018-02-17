@@ -232,6 +232,24 @@
 
 
     <!--#endregion-->
+    
+    <!--#region Recording Tips-->
+
+
+    <sys:String x:Key="Tip_EnableRecording">
+        Enabled game recording. This will set the skeletons base class to BasicGameRecordable and set it back providing the game window is closed before the UI. Recordings are saved to the recordings directory.
+    </sys:String>
+
+    <sys:String x:Key="Tip_EnablePlayback">
+        Enabled game recording plaback. This will set the FakePinProc class to use the Playback version and set back when game is closed. The selected playback in the list will be copied to the main game directory as playback.txt.
+    </sys:String>
+
+    <sys:String x:Key="Tip_LaunchRecording">
+        Launches the game with the options set.
+    </sys:String>
+
+
+    <!--#endregion-->
 
 </ResourceDictionary>
     
