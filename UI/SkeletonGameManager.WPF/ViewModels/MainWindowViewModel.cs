@@ -29,7 +29,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         public DelegateCommand CreateNewGameCommand { get; set; }
         public DelegateCommand<string> OpenFileFolderCommand { get; set; }
         public DelegateCommand LaunchGameCommand { get; set; }
-        public DelegateCommand OpenGameFolderCommand { get; set; }        
+        public DelegateCommand OpenGameFolderCommand { get; set; }
         #endregion
 
         #region Constructors
@@ -73,6 +73,12 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             }, () => IsValidGameFolder());
 
+            _eventAggregator.GetEvent<OnLaunchGameEvent>().Subscribe(async (x) =>
+            {
+                IsGameRunning = true;
+                await OnLaunchedGame();
+            });
+
             //Open the game folder
             OpenGameFolderCommand = new DelegateCommand(() => Process.Start(_skeletonGameProvider.GameFolder), () => IsValidGameFolder());
         }
@@ -84,7 +90,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             window.DataContext = vm;
 
             var dialog = window.ShowDialog();
-            
+
         }
 
         #endregion
@@ -119,11 +125,11 @@ namespace SkeletonGameManager.WPF.ViewModels
             get { return isMainTabEnabled; }
             set
             {
-                SetProperty(ref isMainTabEnabled, value);                
+                SetProperty(ref isMainTabEnabled, value);
             }
         }
 
-        private bool isMachineConfigEnabled = false;        
+        private bool isMachineConfigEnabled = false;
 
         /// <summary>
         /// Gets or sets the IsMachineConfigEnabled to enable the machine config tab. Should be disabled when a machine.yaml fails to parse
@@ -172,7 +178,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             if (Directory.Exists(GameFolder))
                 if (File.Exists(Path.Combine(GameFolder, "config.yaml")))
-                {                    
+                {
                     if (_skeletonGameProvider.GameConfig != null)
                         IsMainTabEnabled = true;
 
@@ -196,7 +202,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                 return;
 
             try
-            {                
+            {
                 LaunchGameCommand.RaiseCanExecuteChanged();
                 CreateNewGameCommand.RaiseCanExecuteChanged();
                 RefreshObjectsCommand.RaiseCanExecuteChanged();
@@ -227,15 +233,15 @@ namespace SkeletonGameManager.WPF.ViewModels
                      var p = new Process { StartInfo = startInfo };
 
                      p.Start();
-                    //p.BeginOutputReadLine();
-                    p.BeginErrorReadLine();
+                     //p.BeginOutputReadLine();
+                     p.BeginErrorReadLine();
 
                      p.ErrorDataReceived += P_OutputDataReceived1;
                      p.Exited += P_Exited;
                      p.Disposed += P_Disposed;
                      p.WaitForExit();
                  });
-                               
+
             }
             catch (FileNotFoundException ex)
             {
@@ -262,13 +268,15 @@ namespace SkeletonGameManager.WPF.ViewModels
                 {
                     _lastgameLog = _skeletonLogger.LogData;
                     _skeletonLogger.LogToFile(Path.Combine(GameFolder, "Logs"));
-                }                
+                }
+
+                _eventAggregator.GetEvent<OnGameEndedEvent>().Publish(true);
             }
         }
 
         private void P_Disposed(object sender, EventArgs e)
         {
-            
+
         }
 
         private void P_Exited(object sender, EventArgs e)
@@ -278,12 +286,12 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         private void P_OutputDataReceived1(object sender, DataReceivedEventArgs e)
         {
-            _skeletonLogger.LogData.Add(e.Data);            
+            _skeletonLogger.LogData.Add(e.Data);
         }
 
         private void P_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            
+
         }
 
         /// <summary>
@@ -294,7 +302,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             try
             {
-                await _skeletonGameProvider.LoadYamlEntriesAsync();                
+                await _skeletonGameProvider.LoadYamlEntriesAsync();
 
                 _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
 
@@ -305,7 +313,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             }
             catch (Exception ex)
             {
-                IsMainTabEnabled = false;                
+                IsMainTabEnabled = false;
 
                 System.Windows.MessageBox.Show($"Failed loading skeleton game files. {ex.Data["yaml"]} {ex.Message}");
             }
@@ -329,8 +337,8 @@ namespace SkeletonGameManager.WPF.ViewModels
                 GameFolder = dlg.SelectedPath;
 
                 //_eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
-            };      
-        } 
+            };
+        }
         #endregion
     }
 }
