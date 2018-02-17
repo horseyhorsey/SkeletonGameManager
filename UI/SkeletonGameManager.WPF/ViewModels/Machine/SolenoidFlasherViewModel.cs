@@ -12,6 +12,8 @@ namespace SkeletonGameManager.WPF.ViewModels.Machine
 
         public string Tags { get; set; }
 
+        public string Label { get; set; }
+
         public byte? PulseTime { get; set; }
 
         public byte? PatterOnTime { get; set; }
@@ -21,6 +23,7 @@ namespace SkeletonGameManager.WPF.ViewModels.Machine
         public bool BallSearch { get; set; }
 
         public SolenoidType SolenoidType { get; set; }
+        
     }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]

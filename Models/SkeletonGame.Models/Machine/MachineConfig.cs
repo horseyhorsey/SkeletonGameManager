@@ -13,6 +13,9 @@ namespace SkeletonGame.Models.Machine
 
         [YamlMember(Alias = "tags", ApplyNamingConventions = false)]
         public string Tags { get; set; }
+
+        [YamlMember(Alias = "label", ApplyNamingConventions = false)]
+        public string Label { get; set; }
     }
 
     public class PRCoil : GameItemBase

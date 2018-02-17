@@ -158,6 +158,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         //lamp.Number = prLamp.Number;
                         lamp.Name = prLamp.Name;
                         lamp.Tags = prLamp.Tags;
+                        lamp.Label = prLamp.Label;
                     }
                 }
 
@@ -171,7 +172,8 @@ namespace SkeletonGameManager.WPF.ViewModels
                         if (dSw != null)
                         {
                             dSw.Name = prSwitch.Name;
-                            dSw.Tags = prSwitch.Tags;                            
+                            dSw.Tags = prSwitch.Tags;
+                            dSw.Label = prSwitch.Label;
                         }
                     }                        
                     else if (prSwitch.Number.Contains("F"))
@@ -184,6 +186,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                             sw.Name = prSwitch.Name;
                             sw.Tags = prSwitch.Tags;
                             sw.Type = prSwitch.SwitchType;
+                            sw.Label = prSwitch.Label;
 
                             if (prSwitch.BallSearch != null)
                             {
@@ -436,7 +439,9 @@ namespace SkeletonGameManager.WPF.ViewModels
                         Name = item.Name,
                         Number = item.Number,
                         Tags = item.Tags,
-                        SwitchType = item.Type
+                        SwitchType = item.Type,
+                        Label = item.Label
+                       
                     };
 
                     MachineConfig.PRSwitches.Add(sw);
@@ -453,7 +458,8 @@ namespace SkeletonGameManager.WPF.ViewModels
                         Name = item.Name,
                         Number = item.Number,
                         Tags = item.Tags,
-                        SwitchType = item.Type
+                        SwitchType = item.Type,
+                        Label = item.Label
                     };
 
                     if (item.BallSearch.Any(x => x != null))
@@ -474,6 +480,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         Name = item.Name,
                         Number = item.Number,
                         Tags = item.Tags,
+                        Label = item.Label
                     };
 
                     MachineConfig.PRLamps.Add(lamp);
@@ -496,7 +503,8 @@ namespace SkeletonGameManager.WPF.ViewModels
                         PatterOnTime = coil.PatterOnTime,
                         BallSearch = coil.BallSearch,
                         PulseTime = coil.PulseTime,
-                        SolenoidType = coil.SolenoidType
+                        SolenoidType = coil.SolenoidType,
+                        Label = coil.Label
                     };
 
                     //Add to the PRFlippers list

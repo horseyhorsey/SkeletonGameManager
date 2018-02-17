@@ -6,6 +6,7 @@
         public string Name { get; set; }
         public string Number { get; set; }
         public string Tags { get; set; }
+        public string Label { get; set; }
         public string Type { get; set; }
         public bool State { get; set; }
         public int PosTop { get; set; }

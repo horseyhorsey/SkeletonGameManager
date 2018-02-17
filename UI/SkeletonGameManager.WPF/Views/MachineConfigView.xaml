@@ -91,12 +91,27 @@
 
                                         <ContentPresenter Content="{StaticResource Path_Tags}"
                                                           HorizontalAlignment="Left"
+                                                          ToolTip="Label" Grid.Column="0"
+                                                          Width="10" Height="10" Margin="6,0"
+                                                          Grid.Row="3"/>
+
+                                        <TextBox Background="Transparent" Text="{Binding Tags}" 
+                                                 Grid.Row="2" Grid.Column="1"
+                                                 BorderThickness="0"
+                                                 MinWidth="50" MaxWidth="70"
+                                                 TextWrapping="Wrap"
+                                                 HorizontalAlignment="Left"
+                                                   />
+
+                                        <!--LABEL-->
+                                        <ContentPresenter Content="{StaticResource Path_Tags}"
+                                                          HorizontalAlignment="Left"
                                                           ToolTip="Tags" Grid.Column="0"
                                                           Width="10" Height="10" Margin="6,0"
                                                           Grid.Row="2"/>
 
-                                        <TextBox Background="Transparent" Text="{Binding Tags}" 
-                                                 Grid.Row="2" Grid.Column="1"
+                                        <TextBox Background="Transparent" Text="{Binding Label}" 
+                                                 Grid.Row="3" Grid.Column="1"
                                                  BorderThickness="0"
                                                  MinWidth="50" MaxWidth="70"
                                                  TextWrapping="Wrap"
@@ -195,6 +210,21 @@
                                                  TextWrapping="Wrap"
                                                  VerticalAlignment="Center"
                                                  HorizontalAlignment="Center"                                                 
+                                                   />
+
+                                    <!--LABEL-->
+                                    <ContentPresenter Content="{StaticResource Path_Tags}"
+                                                          HorizontalAlignment="Left"
+                                                          ToolTip="Label" Grid.Column="0"
+                                                          Width="10" Height="10" Margin="6,0"
+                                                          Grid.Row="3"/>
+
+                                    <TextBox Background="Transparent" Text="{Binding Label}" 
+                                                 Grid.Row="3" Grid.Column="1"
+                                                 BorderThickness="0"
+                                                 MinWidth="50" MaxWidth="70"
+                                                 TextWrapping="Wrap"
+                                                 HorizontalAlignment="Left"
                                                    />
                                 </Grid>
                             </Border>
@@ -421,6 +451,7 @@
 
                             <DataGridTextColumn Binding="{Binding Name}" Width="1*" Header="Name"/>
                             <DataGridTextColumn Binding="{Binding Tags}" Width="0.5*" Header="Tags"/>
+                            <DataGridTextColumn Binding="{Binding Label}" Width="0.5*" Header="Label"/>
                             <DataGridTemplateColumn Width="0.2*" Header="Pulse Time">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
