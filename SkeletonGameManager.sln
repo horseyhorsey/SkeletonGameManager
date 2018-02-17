@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Blend for Visual Studio 15
+# Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{C0262CA2-636D-47CE-8D00-EE53F241C2C4}"
@@ -13,17 +13,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{C942
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeletonGameManager.WPF", "UI\SkeletonGameManager.WPF\SkeletonGameManager.WPF.csproj", "{99C9E82C-C594-446D-AA59-8FFBC43AD226}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeletonGame.Models", "Models\SkeletonGame.Models\SkeletonGame.Models.csproj", "{47F8BAD2-2140-493D-AB7D-E4F99734A69F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkeletonGame.Models", "Models\SkeletonGame.Models\SkeletonGame.Models.csproj", "{47F8BAD2-2140-493D-AB7D-E4F99734A69F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeletonGame.Engine", "Modules\SkeletonGame.Engine\SkeletonGame.Engine.csproj", "{798CAD91-B4BD-4B70-8B70-436B23CB99BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkeletonGame.Engine", "Modules\SkeletonGame.Engine\SkeletonGame.Engine.csproj", "{798CAD91-B4BD-4B70-8B70-436B23CB99BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeletonGame.Tests", "Tests\SkeletonGame.Tests\SkeletonGame.Tests.csproj", "{CF89487C-3166-4F78-BB96-63C93EC42723}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkeletonGame.Tests", "Tests\SkeletonGame.Tests\SkeletonGame.Tests.csproj", "{CF89487C-3166-4F78-BB96-63C93EC42723}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeletonGameManager.Resources", "UI\SkeletonGameManager.Resources\SkeletonGameManager.Resources.csproj", "{CE1E49C2-EC38-4853-B807-CA94248A1780}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFMpegSharp", "Module\FFMpegSharp\FFMpegSharp.csproj", "{5CEC6504-BD25-45D0-830C-A2162F4AAD12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSCforSTD", "Modules\OSCforPCL-master\OSCforSTD\OSCforSTD.csproj", "{744172B5-FA69-4C00-831E-DF4B304A0C92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OSCforSTD", "Modules\OSCforPCL-master\OSCforSTD\OSCforSTD.csproj", "{744172B5-FA69-4C00-831E-DF4B304A0C92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

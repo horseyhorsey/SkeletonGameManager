@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SkeletonGameManager.WPF.Views"
              xmlns:prism="http://prismlibrary.com/"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="768" d:DesignWidth="1024">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -15,8 +16,72 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <GroupBox Header="Record Options" FontSize="18">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <RadioButton Content="Record" Margin="3" IsChecked="{Binding RecordIsChecked}" 
+                             IsEnabled="{Binding ElementName=LaunchGameButton, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="{StaticResource Tip_EnableRecording}"
+                             />
+                
+                <RadioButton Content="Playback" Grid.Column="1" Margin="3" IsChecked="{Binding PlaybackIsChecked}" 
+                             IsEnabled="{Binding ElementName=LaunchGameButton, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="{StaticResource Tip_EnablePlayback}"
+                             />
+
+                <Button Grid.Column="2" x:Name="LaunchGameButton" 
+                        Content="{DynamicResource Path_Game}" Command="{Binding LaunchGameCommand}"
+                        ToolTip="{StaticResource Tip_LaunchRecording}"
+                        />
+            </Grid>
+        </GroupBox>
+
+        <!--PLAYBACK FILES-->
+        <Grid Grid.Column="0" Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <DataGrid Margin="3" x:Name="PlaybackItemsDataGrid" AutoGenerateColumns="False"
+                      CanUserDeleteRows="False"
+                      SelectedItem="{Binding PlaybackItemViewModel}"
+                      ItemsSource="{Binding PlaybackItemViewModels, UpdateSourceTrigger=PropertyChanged}"
+                      
+                      >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding PlaybackFile}" Width="1*"                                        
+                                        />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        
+        <!--CONTENTS-->
+        <Grid Grid.Column="1" Grid.RowSpan="2">
+            <DataGrid Margin="3" AutoGenerateColumns="False"
+                      ItemsSource="{Binding ElementName=PlaybackItemsDataGrid,Path=SelectedItem.PlayBackItems}"
+                      >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Event, Converter={StaticResource DoubleToTimspanConverter}}" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding value}" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Type}" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding SwName}" Width="1*" IsReadOnly="True"/>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
+        
     </Grid>
 </UserControl>
