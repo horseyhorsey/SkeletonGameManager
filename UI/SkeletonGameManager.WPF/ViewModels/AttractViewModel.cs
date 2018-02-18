@@ -312,6 +312,12 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             //Remove and insert the vm item.
             this.Sequences.RemoveAt(srcIndex);
+
+            if (destIndex < 0)
+                destIndex = 0;
+            else if(destIndex > this.Sequences.Count - 1)
+                destIndex = Sequences.Count;
+
             this.Sequences.Insert(destIndex, sourceItem);
         }
 
