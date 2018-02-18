@@ -449,4 +449,24 @@
         <Setter Property="Content" Value="{DynamicResource Path_Save}"/>
         <Setter Property="Margin" Value="15"/>
     </Style>
+
+    <!--DATAGRID STYLES-->
+    <Style x:Key="DataGridRecording" TargetType="DataGrid">
+        <Setter Property="Background" Value="Azure"/>
+        <Setter Property="RowBackground" Value="LightGray"/>
+        <Setter Property="AlternatingRowBackground" Value="AntiqueWhite"/>
+        <Setter Property="GridLinesVisibility" Value="None"/>
+        <Setter Property="RowHeaderWidth" Value="0"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
+        <Setter Property="ColumnHeaderStyle">
+            <Setter.Value>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="DarkGray"/>
+                    <Setter Property="FontWeight" Value="DemiBold"/>
+                    <Setter Property="Margin" Value="1"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
 </ResourceDictionary>
