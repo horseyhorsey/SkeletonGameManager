@@ -9,10 +9,11 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024">
-    <Grid>
+    
+    <Grid Background="{StaticResource Brush_GradientBackground}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -20,7 +21,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Record Options" FontSize="18">
+        <GroupBox Grid.Column="0" Header="Record Options" FontSize="18">
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -54,14 +55,16 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <DataGrid Margin="3" x:Name="PlaybackItemsDataGrid" AutoGenerateColumns="False"
+            <DataGrid Margin="3" x:Name="PlaybackItemsDataGrid" 
+                      AutoGenerateColumns="False"
                       CanUserDeleteRows="False"
+                      Style="{StaticResource DataGridRecording}"
                       SelectedItem="{Binding PlaybackItemViewModel}"
-                      ItemsSource="{Binding PlaybackItemViewModels, UpdateSourceTrigger=PropertyChanged}"
-                      
+                      ItemsSource="{Binding PlaybackItemViewModels, UpdateSourceTrigger=PropertyChanged}"                      
                       >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding PlaybackFile}" Width="1*"                                        
+                    <DataGridTextColumn Header="Recorded files" 
+                                        Binding="{Binding PlaybackFile}" 
                                         />
                 </DataGrid.Columns>
             </DataGrid>
@@ -69,14 +72,50 @@
         
         <!--CONTENTS-->
         <Grid Grid.Column="1" Grid.RowSpan="2">
+                        
             <DataGrid Margin="3" AutoGenerateColumns="False"
+                      Style="{StaticResource DataGridRecording}"
                       ItemsSource="{Binding ElementName=PlaybackItemsDataGrid,Path=SelectedItem.PlayBackItems}"
                       >
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Event, Converter={StaticResource DoubleToTimspanConverter}}" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding value}" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding Type}" IsReadOnly="True"/>
-                    <DataGridTextColumn Binding="{Binding SwName}" Width="1*" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Time" Binding="{Binding Event, Converter={StaticResource DoubleToTimspanConverter}}" IsReadOnly="True"/>
+
+                    <DataGridTextColumn Binding="{Binding value}" IsReadOnly="True">
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="Value" ToolTip="This is the P-ROC decoded switch number"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Binding="{Binding Type}" IsReadOnly="True">
+                        
+                        <!--HEADER-->
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="Type" ToolTip="The type of switch event, on/off"/>
+                        </DataGridTextColumn.Header>
+
+                        <!--STYLE-->
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+
+                                <Setter Property="Background" Value="White"/>
+
+                                <Style.Triggers>
+                                    
+                                    <DataTrigger Binding="{Binding Type}" Value="1">
+                                        <Setter Property="Background" Value="PaleGreen"/>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding Type}" Value="2">
+                                        <Setter Property="Background" Value="LightPink"/>
+                                    </DataTrigger>
+                                    
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                        
+                    </DataGridTextColumn>
+                    
+                    <DataGridTextColumn Header="SwName" Binding="{Binding SwName}" Width="1*" IsReadOnly="True"/>
 
                 </DataGrid.Columns>
 
