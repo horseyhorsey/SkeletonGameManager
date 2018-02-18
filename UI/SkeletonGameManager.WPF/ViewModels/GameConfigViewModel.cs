@@ -91,13 +91,12 @@ namespace SkeletonGameManager.WPF.ViewModels
             {
                 //Get the keycode....LShift etc are higher integer values
                 var charCode = (int)item.Keycode;
-                string newKey = string.Empty;
 
                 if (charCode > 10000)
                     item.Key = charCode.ToString();    
 
                 //Replace in dictionary.
-                if (_skeletonGameProvider.GameConfig.KeyboardSwitchMap.ContainsKey(newKey))
+                if (_skeletonGameProvider.GameConfig.KeyboardSwitchMap.ContainsKey(item.Key))
                     _skeletonGameProvider.GameConfig.KeyboardSwitchMap[item.Key] = item.Number;
                 else
                     _skeletonGameProvider.GameConfig.KeyboardSwitchMap.Add(item.Key, item.Number);
