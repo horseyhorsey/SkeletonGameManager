@@ -178,5 +178,17 @@ namespace SkeletonGame.Engine
 
             return outputNewFile;
         }
+
+        /// <summary>
+        /// Converts the images with padding eg; %03d to video.
+        /// </summary>
+        public static void ConvertImagesWithPaddingToVideo(string ffmpeg, string imageFilename, int frameRate, int width, int height, string outputFileName)
+        {
+            var startInfo = new ProcessStartInfo(ffmpeg);
+
+            string args = $@"-r {frameRate} -f image2 -s {width}x{height} -i {imageFilename} -vcodec libx264 -crf 25  -pix_fmt yuv420p {outputFileName}";
+
+            RunFfmpeg(startInfo, args);
+        }
     }
 }
