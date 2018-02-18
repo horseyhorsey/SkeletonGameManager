@@ -11,66 +11,25 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System;
 using SkeletonGame.Models.Layers;
+using System.Windows;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
-    public class AttractViewModel : SequenceViewModelBase//, IDropTarget
+    public class AttractViewModel : SequenceViewModelBase, IDropTarget
     {
+        #region Fields
         public ISkeletonGameProvider _skeletonGameProvider { get; set; }
-        private ISkeletonGameAttract _skeletonGameAttract;
+        private ISkeletonGameAttract _skeletonGameAttract; 
+        #endregion
 
+        #region Commands
         public DelegateCommand<object> AddNewSequenceCommand { get; set; }
-        public DelegateCommand<object> DuplicateSequenceCommand { get; set; }        
+        public DelegateCommand<object> DuplicateSequenceCommand { get; set; }
         public DelegateCommand<object> AddLayerCommand { get; set; }
-        
         public DelegateCommand SaveAttractCommand { get; set; }
+        #endregion
 
-        public Sequence CreateSequenceFromBase(SequenceBase sequenceBase)
-        {
-            Sequence seq = new Sequence();
-
-            switch (sequenceBase.SeqType)
-            {
-                case SequenceType.Animation:
-                    seq.AttractAnimation =(AttractAnimation)sequenceBase;
-                    break;
-                case SequenceType.Combo:
-                    seq.Combo = (Combo)sequenceBase;
-                    break;
-                case SequenceType.Credits:
-                    seq.Credits = (Credits)sequenceBase;
-                    break;
-                case SequenceType.GroupLayer:
-                    seq.GroupLayer = (GroupLayer)sequenceBase;
-                    break;
-                case SequenceType.HighScores:
-                    seq.HighScores = (HighScores)sequenceBase;
-                    break;
-                case SequenceType.LastScores:
-                    seq.LastScores = (LastScores)sequenceBase;
-                    break;
-                case SequenceType.MarkupLayer:
-                    seq.MarkupLayer = (MarkupLayer)sequenceBase;
-                    break;
-                case SequenceType.PanningLayer:
-                    seq.panning_layer = (PanningLayer)sequenceBase;
-                    break;
-                case SequenceType.RandomText:
-                    seq.RandomText = (RandomText)sequenceBase;
-                    break;
-                case SequenceType.ScriptedText:
-                    seq.ScriptedText = (ScriptedText)sequenceBase;
-                    break;
-                case SequenceType.TextLayer:
-                    seq.text_layer = (TextLayer)sequenceBase;
-                    break;
-                default:
-                    break;
-            }
-
-            return seq;
-        }
-
+        #region Constructors
         public AttractViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {
             _skeletonGameProvider = skeletonGameProvider;
@@ -99,13 +58,13 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             DuplicateSequenceCommand = new DelegateCommand<object>((x) =>
             {
-                var seqbase = x as SequenceBase;                
+                var seqbase = x as SequenceBase;
 
                 if (seqbase != null)
                 {
                     if (seqbase.SeqType == SequenceType.GroupLayer)
                     {
-                        var  groupBase =  (GroupLayer)seqbase;
+                        var groupBase = (GroupLayer)seqbase;
 
                         var newGroup = new GroupLayer();
 
@@ -115,12 +74,12 @@ namespace SkeletonGameManager.WPF.ViewModels
                             {
                                 animation_layer = item.animation_layer
                             });
-                        }                            
+                        }
 
                         this.Sequences.Add(new SequenceItemViewModel(newGroup));
                     }
                 }
-                    
+
             });
 
             AddNewSequenceCommand = new DelegateCommand<object>((x) =>
@@ -133,19 +92,19 @@ namespace SkeletonGameManager.WPF.ViewModels
                 switch (seqType)
                 {
                     case SequenceType.LastScores:
-                        var lastScores = new LastScores() { SequenceName = "LastScores", duration = 3.0m};
+                        var lastScores = new LastScores() { SequenceName = "LastScores", duration = 3.0m };
                         seq = new Sequence() { LastScores = lastScores };
-                        this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.LastScores);                        
+                        this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.LastScores);
                         Sequences.Add(new SequenceItemViewModel(seq.LastScores));
                         break;
                     case SequenceType.Combo:
-                        var combo = new Combo() { SequenceName = "Combo", duration = 3.0m };                        
+                        var combo = new Combo() { SequenceName = "Combo", duration = 3.0m };
                         seq = new Sequence() { Combo = combo };
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.Combo);
                         Sequences.Add(new SequenceItemViewModel(seq.Combo));
                         break;
                     case SequenceType.TextLayer:
-                        var txtLayr = new TextLayer() { SequenceName = "TextLayer", duration = 3.0m };                        
+                        var txtLayr = new TextLayer() { SequenceName = "TextLayer", duration = 3.0m };
                         seq = new Sequence() { text_layer = txtLayr };
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.text_layer);
                         Sequences.Add(new SequenceItemViewModel(seq.text_layer));
@@ -157,31 +116,31 @@ namespace SkeletonGameManager.WPF.ViewModels
                         Sequences.Add(new SequenceItemViewModel(seq.panning_layer));
                         break;
                     case SequenceType.RandomText:
-                        var rndText = new RandomText() { SequenceName = "RandomText", duration = 3.0m };                        
+                        var rndText = new RandomText() { SequenceName = "RandomText", duration = 3.0m };
                         seq = new Sequence() { RandomText = rndText };
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.RandomText);
                         Sequences.Add(new SequenceItemViewModel(seq.RandomText));
                         break;
                     case SequenceType.Animation:
-                        var attAnim = new AttractAnimation() { AnimName = "Animation", duration = 3.0m };                        
+                        var attAnim = new AttractAnimation() { AnimName = "Animation", duration = 3.0m };
                         seq = new Sequence() { AttractAnimation = attAnim };
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.AttractAnimation);
                         Sequences.Add(new SequenceItemViewModel(seq.AttractAnimation));
                         break;
                     case SequenceType.HighScores:
-                        var hiScore = new HighScores() { SequenceName = "HighScores", duration = 1.0m };                        
+                        var hiScore = new HighScores() { SequenceName = "HighScores", duration = 1.0m };
                         seq = new Sequence() { HighScores = hiScore };
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.HighScores);
                         Sequences.Add(new SequenceItemViewModel(seq.HighScores));
                         break;
                     case SequenceType.Credits:
-                        var credits = new Credits() { SequenceName = "Credits", duration = 3.0m };  
-                        seq = new Sequence() { Credits = credits};
+                        var credits = new Credits() { SequenceName = "Credits", duration = 3.0m };
+                        seq = new Sequence() { Credits = credits };
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.Credits);
                         Sequences.Add(new SequenceItemViewModel(seq.Credits));
                         break;
                     case SequenceType.MarkupLayer:
-                        var markup = new MarkupLayer() { SequenceName = "MarkupLayer", duration = 3.0m };                        
+                        var markup = new MarkupLayer() { SequenceName = "MarkupLayer", duration = 3.0m };
                         seq = new Sequence() { MarkupLayer = markup };
                         this.SelectedSequenceFile.SequenceYaml.Sequences.Add(seq.MarkupLayer);
                         Sequences.Add(new SequenceItemViewModel(seq.MarkupLayer));
@@ -224,8 +183,12 @@ namespace SkeletonGameManager.WPF.ViewModels
                     switch (seqType)
                     {
                         case SequenceType.Animation:
-                            group.Contents.Add(new Content() { animation_layer = new AttractAnimation(), SeqType = seqType,
-                                SequenceName = seqType + "SequenceStyle" });
+                            group.Contents.Add(new Content()
+                            {
+                                animation_layer = new AttractAnimation(),
+                                SeqType = seqType,
+                                SequenceName = seqType + "SequenceStyle"
+                            });
                             break;
                         case SequenceType.Combo:
                             break;
@@ -236,12 +199,17 @@ namespace SkeletonGameManager.WPF.ViewModels
                         case SequenceType.HighScores:
                             break;
                         case SequenceType.LastScores:
-                            group.Contents.Add(new Content() { last_scores = new LastScores(),          SeqType = seqType,
-                               SequenceName = seqType + "SequenceStyle"
+                            group.Contents.Add(new Content()
+                            {
+                                last_scores = new LastScores(),
+                                SeqType = seqType,
+                                SequenceName = seqType + "SequenceStyle"
                             });
                             break;
                         case SequenceType.MarkupLayer:
-                            group.Contents.Add(new Content() { markup_layer = new MarkupLayer(),
+                            group.Contents.Add(new Content()
+                            {
+                                markup_layer = new MarkupLayer(),
                                 SeqType = seqType,
                                 SequenceName = seqType + "SequenceStyle"
                             });
@@ -251,19 +219,25 @@ namespace SkeletonGameManager.WPF.ViewModels
                         case SequenceType.RandomText:
                             break;
                         case SequenceType.ScriptedText:
-                            group.Contents.Add(new Content() { scripted_text_layer = new     ScriptedText(),
+                            group.Contents.Add(new Content()
+                            {
+                                scripted_text_layer = new ScriptedText(),
                                 SeqType = seqType,
                                 SequenceName = seqType + "SequenceStyle"
                             });
                             break;
                         case SequenceType.TextLayer:
-                            group.Contents.Add(new Content() { text_layer = new TextLayer(),
+                            group.Contents.Add(new Content()
+                            {
+                                text_layer = new TextLayer(),
                                 SeqType = seqType,
                                 SequenceName = seqType + "SequenceStyle"
                             });
                             break;
                         case SequenceType.MoveLayer:
-                            group.Contents.Add(new Content() { move_layer = new MoveLayer(),
+                            group.Contents.Add(new Content()
+                            {
+                                move_layer = new MoveLayer(),
                                 SeqType = seqType,
                                 SequenceName = seqType + "SequenceStyle"
                             });
@@ -276,27 +250,9 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             });
         }
+        #endregion
 
-        private void SequenceYamls_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            
-        }
-
-        private void Sequences_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-            {
-                //Sequences.Insert(e.NewStartingIndex, (SequenceItemViewModel)e.NewItems[0]);
-                try
-                {
-                    this.SelectedSequenceFile.SequenceYaml.Sequences.RemoveAt(e.OldStartingIndex);
-                    this.SelectedSequenceFile.SequenceYaml.AttractSequences.RemoveAt(e.OldStartingIndex);
-                }
-                catch { }
-            }
-        }
-
-
+        #region Properties
         private SequenceYaml attractConfig;
         public SequenceYaml AttractConfig
         {
@@ -322,10 +278,90 @@ namespace SkeletonGameManager.WPF.ViewModels
         public SequenceYamlItemViewModel SelectedSequenceFile
         {
             get { return selectedSequenceFile; }
-            set {
+            set
+            {
                 SetProperty(ref selectedSequenceFile, value);
                 OnUpdateSequenceYamlItem();
             }
+        }
+        #endregion
+
+        #region DragDrop Handlers
+        public void DragOver(IDropInfo dropInfo)
+        {
+            SequenceItemViewModel sourceItem = dropInfo.Data as SequenceItemViewModel;
+            SequenceItemViewModel targetItem = dropInfo.TargetItem as SequenceItemViewModel;
+
+            if (sourceItem != null)
+            {                
+                dropInfo.Effects = DragDropEffects.Move;
+            }
+        }
+
+        /// <summary>
+        /// Performs a drag drop on the Sequences. User can then order the sequences.
+        /// </summary>
+        /// <param name="dropInfo">Information about the drop.</param>
+        public void Drop(IDropInfo dropInfo)
+        {
+            SequenceItemViewModel sourceItem = dropInfo.Data as SequenceItemViewModel;
+            SequenceItemViewModel targetItem = dropInfo.TargetItem as SequenceItemViewModel;
+
+            var srcIndex = dropInfo.DragInfo.SourceIndex;
+            var destIndex = dropInfo.InsertIndex -1;
+
+            //Remove and insert the vm item.
+            this.Sequences.RemoveAt(srcIndex);
+            this.Sequences.Insert(destIndex, sourceItem);
+        }
+
+        #endregion
+
+        #region Public Methods
+        public Sequence CreateSequenceFromBase(SequenceBase sequenceBase)
+        {
+            Sequence seq = new Sequence();
+
+            switch (sequenceBase.SeqType)
+            {
+                case SequenceType.Animation:
+                    seq.AttractAnimation = (AttractAnimation)sequenceBase;
+                    break;
+                case SequenceType.Combo:
+                    seq.Combo = (Combo)sequenceBase;
+                    break;
+                case SequenceType.Credits:
+                    seq.Credits = (Credits)sequenceBase;
+                    break;
+                case SequenceType.GroupLayer:
+                    seq.GroupLayer = (GroupLayer)sequenceBase;
+                    break;
+                case SequenceType.HighScores:
+                    seq.HighScores = (HighScores)sequenceBase;
+                    break;
+                case SequenceType.LastScores:
+                    seq.LastScores = (LastScores)sequenceBase;
+                    break;
+                case SequenceType.MarkupLayer:
+                    seq.MarkupLayer = (MarkupLayer)sequenceBase;
+                    break;
+                case SequenceType.PanningLayer:
+                    seq.panning_layer = (PanningLayer)sequenceBase;
+                    break;
+                case SequenceType.RandomText:
+                    seq.RandomText = (RandomText)sequenceBase;
+                    break;
+                case SequenceType.ScriptedText:
+                    seq.ScriptedText = (ScriptedText)sequenceBase;
+                    break;
+                case SequenceType.TextLayer:
+                    seq.text_layer = (TextLayer)sequenceBase;
+                    break;
+                default:
+                    break;
+            }
+
+            return seq;
         }
 
         /// <summary>
@@ -338,10 +374,10 @@ namespace SkeletonGameManager.WPF.ViewModels
             if (AttractConfig == null)
                 AttractConfig = _skeletonGameProvider.AttractConfig;
 
-            SequenceYamls?.Clear();            
+            SequenceYamls?.Clear();
 
             if (AttractConfig != null)
-            {                
+            {
                 //Assign the attract config
                 AttractConfig = _skeletonGameProvider.AttractConfig;
                 SequenceYamls.Add(new SequenceYamlItemViewModel(_skeletonGameProvider.GameFolder + @"\config\attract.yaml", AttractConfig));
@@ -353,11 +389,13 @@ namespace SkeletonGameManager.WPF.ViewModels
                     _skeletonGameAttract.GetAvailableSequences(SequenceYamls.Last().SequenceYaml);
                 }
 
-                this.SelectedSequenceFile = SequenceYamls[0];                          
+                this.SelectedSequenceFile = SequenceYamls[0];
 
             }
-        }
+        } 
+        #endregion
 
+        #region Private Methods
         private async void OnUpdateSequenceYamlItem()
         {
             if (SelectedSequenceFile == null) return;
@@ -374,7 +412,25 @@ namespace SkeletonGameManager.WPF.ViewModels
                 }
             });
         }
+
+        private void SequenceYamls_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Sequences_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {
+                //Sequences.Insert(e.NewStartingIndex, (SequenceItemViewModel)e.NewItems[0]);
+                try
+                {
+                    this.SelectedSequenceFile.SequenceYaml.Sequences.RemoveAt(e.OldStartingIndex);
+                    this.SelectedSequenceFile.SequenceYaml.AttractSequences.RemoveAt(e.OldStartingIndex);
+                }
+                catch { }
+            }
+        }
+        #endregion
     }
-
-
 }

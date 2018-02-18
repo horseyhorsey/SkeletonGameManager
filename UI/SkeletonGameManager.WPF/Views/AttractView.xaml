@@ -9,10 +9,11 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              xmlns:model="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
              xmlns:system="clr-namespace:System;assembly=mscorlib"             
+             xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
              PresentationTraceSources.TraceLevel="High"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid x:Name="LayoutRoot">
+    <Grid>
 
         <Grid.Resources>
             <selectors:AttractSequenceSelector x:Key="AttractSequenceSelector" />
@@ -72,16 +73,17 @@
                 </StackPanel>
 
                 <!--MAIN ITEMS SOURCE OF THE SELECTED SEQUENCE-->
-                <DataGrid x:Name="DataGridSequences" IsReadOnly="False"
+                <DataGrid x:Name="DataGridSequences"
                       ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"                              
-                      SelectedItem="{Binding SelectedSequence}" AutoGenerateColumns="False"
-                      CanUserSortColumns="False"
-                      CanUserDeleteRows="True" CanUserAddRows="False" 
-                      xmlns:dd="urn:gong-wpf-dragdrop"
+                      SelectedItem="{Binding SelectedSequence}" 
+                      AutoGenerateColumns="False"
+                      CanUserSortColumns="True"
+                      CanUserDeleteRows="True" CanUserAddRows="True"                       
                       dd:DragDrop.IsDragSource="True"
-                      dd:DragDrop.IsDropTarget="True"
-                      
-                  >
+                      dd:DragDrop.IsDropTarget="True"   
+                      dd:DragDrop.DropHandler="{Binding}"
+                      dd:DragDrop.DragHandler="{Binding}"
+                      >
 
                     <DataGrid.Columns>
 
