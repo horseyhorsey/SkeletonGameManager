@@ -613,8 +613,6 @@
         <Setter Property="BorderThickness" Value="2"/>
     </Style>
 
-
-
     <DataTemplate x:Key="Sequence_Combo" x:Shared="false">
         <GroupBox 
                   Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_ComboLayer}">
@@ -1061,34 +1059,70 @@
 
             <TextBox Text="{Binding Text}"/>
 
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Font"/>
-                <ComboBox Style="{StaticResource Style_FontCombo}" 
-                            SelectedValue="{Binding Font}"/>
+            <!--FONT OPTIONS-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-                <Label Content="Style"/>
-                <ComboBox Style="{StaticResource Style_FontStyleCombo}"
+                <Label Content="Font" Margin="3"/>
+                <ComboBox Grid.Column="1" Margin="3" 
+                          Style="{StaticResource Style_FontCombo}" 
+                          SelectedValue="{Binding Font}"/>
+
+                <Label Content="Style" Grid.Column="2" Margin="3" />
+                <ComboBox Grid.Column="3" Margin="3" 
+                          Style="{StaticResource Style_FontStyleCombo}"
                             SelectedValue="{Binding FontStyle}"
                             />
-            </StackPanel>
+            </Grid>
 
-            <StackPanel Orientation="Horizontal" Margin="5">
+            <!--TEXT JUSTIFY-->
+            <Grid Margin="3">
 
-                <TextBlock Text="Vert Justify:   " VerticalAlignment="Center"/>
-                <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
-                <TextBlock Text="    Horz Justify:   " VerticalAlignment="Center"/>
-                <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustify, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Grid.Column="0" Text="Vert Justify:   " VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="1" VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
 
-            </StackPanel>
+                <TextBlock Grid.Column="2" Text="    Horz Justify:   " VerticalAlignment="Center"/>
+                <ComboBox Grid.Column="3" VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustify, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <StackPanel Orientation="Horizontal">
-                <DockPanel>
-                    <xctk:IntegerUpDown Value="{Binding X}"  ClipValueToMinMax="True"/>
-                    <xctk:IntegerUpDown Value="{Binding Y}"  ClipValueToMinMax="True"/>
-                </DockPanel>
-                <CheckBox IsChecked="{Binding BlinkFrames}" Content="Flashing"></CheckBox>
-            </StackPanel>
+            </Grid>
+
+            <!--POSITION AND FLASHING-->
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="PosX" Margin="3"/>
+                <xctk:IntegerUpDown Grid.Column="1" Margin="3" MaxHeight="20"
+                                    Value="{Binding X}"  ClipValueToMinMax="True"/>
+
+                <Label Content="PosY" Grid.Column="2" Margin="3"/>
+                <xctk:IntegerUpDown Grid.Column="3" Margin="3" MaxHeight="20"
+                                    Value="{Binding Y}"  ClipValueToMinMax="True"/>
+
+                <CheckBox Grid.Column="4" Margin="3" VerticalAlignment="Center"
+                          IsChecked="{Binding BlinkFrames}" Content="Blinking"></CheckBox>
+            </Grid>
+
+            <ContentControl Content="{Binding }" 
+                            ContentTemplate="{DynamicResource TransformOption_Content}" />
 
         </StackPanel>
     </DataTemplate>
