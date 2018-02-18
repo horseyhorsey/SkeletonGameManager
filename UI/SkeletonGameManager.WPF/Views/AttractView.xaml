@@ -106,6 +106,8 @@
 
                         <DataGridTextColumn Binding="{Binding Sequence.SeqType}" Width="1*" IsReadOnly="True"/>
 
+                        <DataGridTextColumn Binding="{Binding Sequence.Name}" Width="1*" IsReadOnly="True"/>
+
                     </DataGrid.Columns>
 
                 </DataGrid>
