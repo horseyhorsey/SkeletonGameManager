@@ -45,18 +45,8 @@ namespace SkeletonGame.Engine
                                 if (!_switch.Number.Contains("SD"))
                                     {
                                         exportString += $"' {_switch.Name} hit {newLine}";
-                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit(){newLine}";
-                                        exportString += $"    Controller.Switch({_switch.Number.Remove(0, 1)}) = 1{newLine}";
-                                        exportString += $"End Sub{newLine}";
-
-                                        exportString += $"{newLine}";
-
-                                        exportString += $"' {_switch.Name} unhit {newLine}";
-                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_UnHit(){newLine}";
-                                        exportString += $"    Controller.Switch({_switch.Number.Remove(0, 1)}) = 0{newLine}";
-                                        exportString += $"End Sub{newLine}";
-
-                                        exportString += $"{newLine}";
+                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit():Controller.Switch({_switch.Number.Remove(0, 1)}) = 1 :End Sub{newLine}";                                                                                
+                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_UnHit():Controller.Switch({_switch.Number.Remove(0, 1)}) = 0 :End Sub{newLine}";                                        
                                 }
                     }
                     break;
