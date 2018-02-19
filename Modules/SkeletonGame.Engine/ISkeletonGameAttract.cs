@@ -53,6 +53,8 @@ namespace SkeletonGame.Engine
                                 item.SeqType = item.move_layer.SeqType;
                             else if (item.scripted_text_layer != null)
                                 item.SeqType = item.scripted_text_layer.SeqType;
+                            else if (item.particle_layer != null)
+                                item.SeqType = item.particle_layer.SeqType;
 
                             //Assign style name
                             item.SequenceName = item.SeqType + "SequenceStyle";

@@ -34,6 +34,12 @@
         </ObjectDataProvider.MethodParameters>
     </ObjectDataProvider>
 
+    <ObjectDataProvider x:Key="Particles" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="model:Particles"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
     <!--#endregion-->    
 
     <!--#region STYLES-->
@@ -1127,6 +1133,110 @@
         </StackPanel>
     </DataTemplate>
 
+    <DataTemplate x:Key="Emitter">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Type" Margin="3"/>
+            <ComboBox Grid.Column="1" 
+                      ItemsSource="{Binding Source={StaticResource Particles}}"                       
+                      SelectedItem="{Binding ParticleClass, UpdateSourceTrigger=PropertyChanged}"
+                      />
+
+            <Label Content="X / Y" Margin="3" Grid.Column="2"/>
+            <xctk:IntegerUpDown Grid.Column="3" Value="{Binding X}"/>
+            <xctk:IntegerUpDown Grid.Column="4" Value="{Binding Y}"/>
+
+            <Label Grid.Column="0" Grid.Row="1" Content="Max Life" Margin="3" />
+            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="1" Value="{Binding MaxLife}"/>
+
+            <Label Grid.Column="2" Grid.Row="1" Content="Max Particles" Margin="3" />
+            <xctk:IntegerUpDown Grid.Column="3" Grid.Row="1" Value="{Binding MaxParticles}"/>
+
+            <Label Grid.Column="0" Grid.Row="2" Content="Per Update" Margin="3" />
+            <xctk:IntegerUpDown Grid.Column="1" Grid.Row="2" Value="{Binding ParticlesPerUpdate}" ToolTip="Particles Per Update"/>
+
+            <Label Grid.Column="2" Grid.Row="2" Content="TotalCreations" Margin="3" />
+            <xctk:IntegerUpDown Grid.Column="3" Grid.Row="2" Value="{Binding TotalCreations}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Content_ParticleEmitter">
+        <Grid Margin="3" DataContext="{Binding particle_layer}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <!--LAYER SIZE-->
+            <GroupBox Header="Particle Layer Size" Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Width" Margin="3"/>
+                    <xctk:IntegerUpDown Grid.Column="1" Value="{Binding Width}"/>
+
+                    <Label Content="Height" Grid.Column="2" Margin="3" />
+                    <xctk:IntegerUpDown Grid.Column="3" Value="{Binding Height}"/>
+
+
+                </Grid>
+            </GroupBox>
+
+            <!--TEXT JUSTIFY-->
+            <GroupBox Header="Emitters" Grid.Row="1">
+                <Grid Margin="3">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ListView x:Name="Emitters" ItemsSource="{Binding Emitters, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <Button Grid.Column="1" Content="+"/>
+                    </Grid>
+
+                    <GroupBox Header="Selected Emitter" Grid.Row="1" Margin="3">
+                        <ContentPresenter Grid.Row="1" ContentTemplate="{StaticResource Emitter}"
+                                          Content="{Binding ElementName=Emitters, Path=SelectedValue, UpdateSourceTrigger=PropertyChanged}"
+                                          />
+                    </GroupBox>
+                </Grid>
+            </GroupBox>
+
+            <!--<ContentControl Content="{Binding }" Grid.Row="3"
+                            ContentTemplate="{DynamicResource TransformOption_Content}" />-->
+
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate x:Key="Content_Combo">
         <StackPanel Margin="3" DataContext="{Binding combo_layer}">
 
@@ -1210,6 +1320,7 @@
                                 <ComboBoxItem Content="MarkupLayer"/>
                                 <ComboBoxItem Content="MoveLayer"/>
                                 <ComboBoxItem Content="PanningLayer" IsEnabled="False"/>
+                                <ComboBoxItem Content="ParticleLayer"/>
                                 <ComboBoxItem Content="RandomText" IsEnabled="False"/>
                                 <ComboBoxItem Content="ScriptedText" IsEnabled="True"/>
                                 <ComboBoxItem Content="TextLayer"/>

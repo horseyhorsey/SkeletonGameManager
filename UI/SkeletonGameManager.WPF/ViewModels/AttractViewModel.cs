@@ -242,6 +242,18 @@ namespace SkeletonGameManager.WPF.ViewModels
                                 SequenceName = seqType + "SequenceStyle"
                             });
                             break;
+                        case SequenceType.ParticleLayer:
+                            group.Contents.Add(new Content()
+                            {
+                                particle_layer = new ParticleLayer()
+                                {
+                                    Emitters = new System.Collections.Generic.List<ParticleEmitter>(){
+                                    new ParticleEmitter()}
+                                },
+                                SeqType = seqType,
+                                SequenceName = seqType + "SequenceStyle"
+                            });
+                            break;
                         default:
                             break;
                     }

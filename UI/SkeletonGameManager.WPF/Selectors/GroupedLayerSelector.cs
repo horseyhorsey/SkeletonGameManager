@@ -31,6 +31,8 @@ namespace SkeletonGameManager.WPF.Selectors
                     _template = element.FindResource("Content_GroupLayer") as DataTemplate;
                 else if (groupedContent.move_layer != null)
                     _template = element.FindResource("Content_MoveLayer") as DataTemplate;
+                else if (groupedContent.particle_layer != null)
+                    _template = element.FindResource("Content_ParticleEmitter") as DataTemplate;                
             }
             
             return _template;

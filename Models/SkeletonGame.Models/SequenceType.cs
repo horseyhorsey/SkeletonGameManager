@@ -11,9 +11,10 @@
         MarkupLayer,
         MoveLayer,
         PanningLayer,
+        ParticleLayer,
         RandomText,
         ScriptedText,
         TextLayer,
-        ZoomLayer,
+        ZoomLayer,        
     }
 }

@@ -31,5 +31,8 @@ namespace SkeletonGame.Models.Layers
 
         [YamlMember(Alias = "rotate_layer", ApplyNamingConventions = false)]
         public RotateLayer RotateLayer { get; set; }
+
+        [YamlMember(Alias = "particle_layer", ApplyNamingConventions = false)]
+        public ParticleLayer particle_layer { get; set; }
     }
 }

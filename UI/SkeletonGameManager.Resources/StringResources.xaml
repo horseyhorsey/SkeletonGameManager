@@ -202,6 +202,10 @@
         Runs a script of text lists. Duration is how long each text list will be displayed. If an animation is set to play with the layers and the duration of the animation is longer than the text script, then the duration is set to let the whole animtion finish.
     </sys:String>
 
+    <sys:String x:Key="Tip_SeqParticleLayer">
+        Displays particle emitters in a layer
+    </sys:String>
+
     <!--#endregion-->
     
     <!--#region MACHINE CONFIG-->

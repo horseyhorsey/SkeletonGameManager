@@ -289,6 +289,7 @@
     <SolidColorBrush x:Key="Brush_ScriptedText" Color="SandyBrown"/>
     <SolidColorBrush x:Key="Brush_TextLayer" Color="SandyBrown"/>
     <SolidColorBrush x:Key="Brush_AnimLayer" Color="BlueViolet"/>
+    <SolidColorBrush x:Key="Brush_ParticleLayer" Color="SeaGreen"/>
     <!--#endregion-->
 
     <ControlTemplate x:Key="ToolTips" TargetType="ToolTip">
@@ -410,7 +411,7 @@
 
     <Style x:Key="MoveLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_MoveLayer}"/>
-        <Setter Property="Content" Value="M"/>
+        <Setter Property="Content" Value="MO"/>
         <Setter Property="ToolTip">
             <Setter.Value>
                 <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqMoveLayer}" Background="{StaticResource Brush_MoveLayer}"/>
@@ -430,10 +431,21 @@
 
     <Style x:Key="CreditsSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
         <Setter Property="Background" Value="{StaticResource Brush_HighScores}"/>
-        <Setter Property="Content" Value="HS"/>
+        <Setter Property="Content" Value="CR"/>
         <Setter Property="ToolTip">
             <Setter.Value>
                 <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqCredits}" Background="{StaticResource Brush_ScriptedText}"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ParticleLayerSequenceStyle" BasedOn="{StaticResource SequenceLabelStyle}" TargetType="Label">
+        <Setter Property="Background" Value="{StaticResource Brush_ParticleLayer}"/>
+        <Setter Property="Content" Value="PA"/>
+        <Setter Property="ToolTip">
+            <Setter.Value>
+                <ToolTip Template="{StaticResource ToolTips}" Content="{StaticResource Tip_SeqParticleLayer}" 
+                         Background="{StaticResource Brush_ParticleLayer}"/>
             </Setter.Value>
         </Setter>
     </Style>
