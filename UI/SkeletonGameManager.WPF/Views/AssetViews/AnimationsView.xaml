@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="SkeletonGameManager.WPF.Views.AssetViews.AnimationsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SkeletonGameManager.WPF.Views.AssetViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Content="{StaticResource Path_Dir}"
+                    ToolTip="{StaticResource OpenDir}"
+                    VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"  Grid.Row="1">
+            <TextBlock FontStyle="Italic" Text="{StaticResource DropFilesInfo}"/>
+            <TextBlock Text=" - " />
+            <TextBlock FontStyle="Italic" Text="{StaticResource FileOptionInfo}" 
+                       Margin="10,0"/>
+        </StackPanel>
+
+        <ListView ItemsSource="{Binding AssetFiles}" Grid.Row="1">
+
+        </ListView>
+
+        <GridSplitter Width="5" Grid.Column="0" Grid.RowSpan="2" Background="Silver" Margin="0,20"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="1">
+            <TextBlock Text="{Binding Animations.Count, StringFormat={}   Entries: {0}   }"/>
+            <TextBlock Text="{Binding ElementName=AnimDataGrid,Path=SelectedItems.Count, StringFormat={}     Selected: {0}}"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1" x:Name="AnimDataGrid" Grid.Column="1"
+                              ScrollViewer.CanContentScroll="False"
+                              SelectionMode="Extended" AutoGenerateColumns="False"
+                              ItemsSource="{Binding Animations, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Key" Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
+                <DataGridTextColumn Header="File" Binding="{Binding File, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
+                <DataGridTextColumn Header="Scale" Binding="{Binding Scale}"/>
+                <DataGridTextColumn Header="X_Loc" Binding="{Binding XLoc}"/>
+                <DataGridTextColumn Header="Y_Loc" Binding="{Binding YLoc}"/>
+                <DataGridTextColumn Header="FrameTime" Binding="{Binding FrameTime}" MaxWidth="40"/>
+                <DataGridCheckBoxColumn Header="Repeat" Binding="{Binding Repeat}" MaxWidth="40"/>
+                <DataGridCheckBoxColumn Header="Hold" Binding="{Binding HoldLastFrame}"/>
+                <DataGridCheckBoxColumn Binding="{Binding StreamingMovie}" Width="10">
+                    <DataGridCheckBoxColumn.Header>
+                        <Grid ToolTip="Streaming Movie">
+                            <TextBlock Text="Smov"/>
+                        </Grid>
+                    </DataGridCheckBoxColumn.Header>
+                </DataGridCheckBoxColumn>
+                <DataGridCheckBoxColumn Header="Spng" Binding="{Binding StreamingPng}" Width="10"/>
+                <DataGridCheckBoxColumn Header="SpngC" Binding="{Binding StreamingPngCached}" Width="10"/>
+                <DataGridCheckBoxColumn Header="Skip" Binding="{Binding SkipPreLoading}" Width="20"/>
+                <DataGridTemplateColumn Header="Sequence">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ListView ItemsSource="{Binding Sequence}">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                            </ListView>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </Grid>
+</UserControl>

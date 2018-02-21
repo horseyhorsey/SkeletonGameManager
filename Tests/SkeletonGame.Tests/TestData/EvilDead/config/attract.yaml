@@ -1,0 +1,59 @@
+Sequence:
+    - Combo:
+        Text:
+            - "{"
+            - "Winners don't"
+            - "Use"
+            - "The Horse }"
+        Font: ed_targets
+        FontStyle: redYellowThin
+        Animation: dark_chrome
+        lampshow: RightLeft32
+        duration: 2.0 
+    - Animation:
+        Name: Trailer1
+        lampshow: centerExpand4secs
+        sound: Trailer1
+        duration: 15.5  
+    - HighScores:
+        Animation: Pages
+        lampshow: swipeUp
+        Font: large
+        FontStyle: redYellow
+        Order:
+            - category
+            - player
+            - score
+        duration: 1.5
+    - Animation:
+        Name: Trailer2
+        lampshow: swipeDown
+        sound: Trailer2
+        duration: 10.2
+    - Animation:
+        Name: Trailer3
+        lampshow: PageSmash
+        sound: Trailer3
+        duration: 3.5
+    - Combo:
+        Text:
+            - "PRESS"
+            - ""
+            - "START"
+        Font: large
+        FontStyle: redYellow        
+        Animation: Trailer6
+        sound: Trailer6
+        lampshow: attract_show_2
+        duration: 2.0
+    - Animation:
+        Name: Trailer5
+        lampshow: leftRight
+        sound: Trailer5
+        duration: 10.0
+    - Credits:
+        Image: bitmap
+        Animation: Piano
+        lampshow: leftRight
+        sound: PianoTune
+        duration: 48.0

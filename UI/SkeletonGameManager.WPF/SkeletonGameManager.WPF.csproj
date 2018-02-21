@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{99C9E82C-C594-446D-AA59-8FFBC43AD226}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SkeletonGameManager.WPF</RootNamespace>
+    <AssemblyName>SkeletonGameManager.WPF</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>skull.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Costura, Version=1.6.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="GongSolutions.Wpf.DragDrop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\gong-wpf-dragdrop.1.1.0\lib\net46\GongSolutions.Wpf.DragDrop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=7.0.0.396, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.Core.7.0.0.396\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.Unity.6.3.0\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.Wpf.6.3.0\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\PropertyChanged.Fody.2.2.5\lib\net452\PropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.Wpf.6.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.2.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Extended.Wpf.Toolkit.3.2.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet, Version=4.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\YamlDotNet.4.2.3\lib\net35\YamlDotNet.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Behaviours\DragBehaviour.cs" />
+    <Compile Include="Controls\UniformGridWithOrientation.cs" />
+    <Compile Include="Converters\DoubleToTimespanConverter.cs" />
+    <Compile Include="Converters\NegateBoolConverter.cs" />
+    <Compile Include="Converters\StyleConverter.cs" />
+    <Compile Include="Interfaces\IMediaPlayer.cs" />
+    <Compile Include="Model\TrimVideo.cs" />
+    <Compile Include="ViewModels\Config\KeyboardMapItemViewModel.cs" />
+    <Compile Include="ViewModels\CreateNewGameWindowViewModel.cs" />
+    <Compile Include="ViewModels\KeyboardMappingsViewModel.cs" />
+    <Compile Include="ViewModels\MachineConfigViewModel.cs" />
+    <Compile Include="ViewModels\Machine\LampViewModel.cs" />
+    <Compile Include="ViewModels\Machine\SolenoidFlasherViewModel.cs" />
+    <Compile Include="ViewModels\Machine\SwitchViewModel.cs" />
+    <Compile Include="ViewModels\PlaybackItemViewModel.cs" />
+    <Compile Include="ViewModels\SceneMediaViewModel.cs" />
+    <Compile Include="ViewModels\SceneEditViewModels\SceneProcessItemViewModel.cs" />
+    <Compile Include="ViewModels\SceneProcessViewModel.cs" />
+    <Compile Include="ViewModels\ScenesViewModel.cs" />
+    <Compile Include="ViewModels\ScoreLayoutViewModel.cs" />
+    <Compile Include="ViewModels\SequenceCreateViewModel.cs" />
+    <Compile Include="ViewModels\SequenceItemViewModel.cs" />
+    <Compile Include="ViewModels\SequenceViewModelBase.cs" />
+    <Compile Include="ViewModels\SequenceYamlItemViewModel.cs" />
+    <Compile Include="Views\KeyboardMappingsView.xaml.cs">
+      <DependentUpon>KeyboardMappingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MachineViews\OscView.xaml.cs">
+      <DependentUpon>OscView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecordingsView.xaml.cs">
+      <DependentUpon>RecordingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\RecordingsViewModel.cs" />
+    <Compile Include="Views\ScoreLayoutView.xaml.cs">
+      <DependentUpon>ScoreLayoutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SequenceView.xaml.cs">
+      <DependentUpon>SequenceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CreateNewGameWindow.xaml.cs">
+      <DependentUpon>CreateNewGameWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MachineConfigView.xaml.cs">
+      <DependentUpon>MachineConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SceneMediaView.xaml.cs">
+      <DependentUpon>SceneMediaView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SceneProcessView.xaml.cs">
+      <DependentUpon>SceneProcessView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ScenesView.xaml.cs">
+      <DependentUpon>ScenesView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\AssetListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\AnimationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\FontsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\LampshowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\LoadingProgressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\SfxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\SoundView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AssetViews\VoiceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\KeyboardMappingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MachineViews\OscView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecordingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScoreLayoutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SequenceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AttractView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CreateNewGameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GameConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MachineConfigView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Converters\ListToColorConverter.cs" />
+    <Compile Include="Events\ViewModelEvents.cs" />
+    <Compile Include="Providers\ISkeletonGameProvider.cs" />
+    <Compile Include="Selectors\AttractSequenceSelector.cs" />
+    <Compile Include="Selectors\GroupedLayerSelector.cs" />
+    <Compile Include="ViewModels\AssetListViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\AnimationsViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\AssetFileBaseViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\FontsViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\LampshowViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\LoadingProgressViewModel.cs" />
+    <Compile Include="ViewModels\AssetViewModels\SoundViewModel.cs" />
+    <Compile Include="ViewModels\AttractViewModel.cs" />
+    <Compile Include="ViewModels\GameConfigViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\SkeletonGameManagerViewModelBase.cs" />
+    <Compile Include="Views\AssetListView.xaml.cs">
+      <DependentUpon>AssetListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\AnimationsView.xaml.cs">
+      <DependentUpon>AnimationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\FontsView.xaml.cs">
+      <DependentUpon>FontsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\LampshowView.xaml.cs">
+      <DependentUpon>LampshowView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\LoadingProgressView.xaml.cs">
+      <DependentUpon>LoadingProgressView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\SfxView.xaml.cs">
+      <DependentUpon>SfxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\SoundView.xaml.cs">
+      <DependentUpon>SoundView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetViews\VoiceView.xaml.cs">
+      <DependentUpon>VoiceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AttractView.xaml.cs">
+      <DependentUpon>AttractView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GameConfigView.xaml.cs">
+      <DependentUpon>GameConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\SceneMediaView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SceneProcessView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ScenesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\SkeletonGame.Models\SkeletonGame.Models.csproj">
+      <Project>{47f8bad2-2140-493d-ab7d-e4f99734a69f}</Project>
+      <Name>SkeletonGame.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Modules\SkeletonGame.Engine\SkeletonGame.Engine.csproj">
+      <Project>{798cad91-b4bd-4b70-8b70-436b23cb99be}</Project>
+      <Name>SkeletonGame.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Module\FFMpegSharp\FFMpegSharp.csproj">
+      <Project>{5cec6504-bd25-45d0-830c-a2162f4aad12}</Project>
+      <Name>FFMpegSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Resources\SkeletonGameManager.Resources.csproj">
+      <Project>{ce1e49c2-ec38-4853-b807-ca94248a1780}</Project>
+      <Name>SkeletonGameManager.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\SceneEditViews\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="skull.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+  </Target>
+  <Import Project="..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets" Condition="Exists('..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Fody.2.4.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.2.4.1\build\Fody.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\Fody.2.4.1\build\Fody.targets" Condition="Exists('..\..\packages\Fody.2.4.1\build\Fody.targets')" />
+</Project>

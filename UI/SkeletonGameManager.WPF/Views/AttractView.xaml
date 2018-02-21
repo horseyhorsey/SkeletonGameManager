@@ -1,0 +1,144 @@
+﻿<UserControl x:Class="SkeletonGameManager.WPF.Views.AttractView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SkeletonGameManager.WPF.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:selectors="clr-namespace:SkeletonGameManager.WPF.Selectors"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:model="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"             
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             mc:Ignorable="d" 
+             PresentationTraceSources.TraceLevel="High"
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.Resources>
+            <selectors:AttractSequenceSelector x:Key="AttractSequenceSelector" />
+            <selectors:GroupedLayerSelector x:Key="GroupedLayerSelector" />
+
+            <ObjectDataProvider x:Key="SequenceTypes"
+                                MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:Type TypeName="model:SequenceType"/>
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--SEQUENCE FILE SELECTOR-->
+        <GroupBox Header="Options" Grid.Row="0" Grid.ColumnSpan="2" BorderThickness="2">
+            <DockPanel>
+
+                <ComboBox ItemsSource="{Binding SequenceYamls}" DisplayMemberPath="Filename"
+                      SelectedIndex="0" MaxHeight="25"
+                      SelectedItem="{Binding SelectedSequenceFile}"                      
+                      />
+            </DockPanel>
+        </GroupBox>
+
+        <GridSplitter Grid.Row="1" Grid.Column="0" Width="10" Margin="3"/>
+
+        <!--ATTRACT SEQEUENCES-->
+        <GroupBox Grid.Row="1" Header="Sequences" Margin="15">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+
+                    <ComboBox x:Name="SequenceSelector" MinWidth="45"                          
+                          ItemsSource="{Binding Source={StaticResource SequenceTypes}}"
+                          />
+
+                    <Button Content="+" MinWidth="25"
+                        Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddNewSequenceCommand}"
+                        CommandParameter="{Binding ElementName=SequenceSelector,Path=SelectedItem}"
+                    />
+
+                    <Button Content="+" MinWidth="25" IsEnabled="False"
+                        Command="{Binding ElementName=LayoutRoot,Path=DataContext.DuplicateSequenceCommand}"
+                        CommandParameter="{Binding ElementName=DataGridSequences,Path=SelectedItem}"
+                    />
+                </StackPanel>
+
+                <!--MAIN ITEMS SOURCE OF THE SELECTED SEQUENCE-->
+                <DataGrid x:Name="DataGridSequences"
+                      ItemsSource="{Binding Sequences, UpdateSourceTrigger=PropertyChanged}"                              
+                      SelectedItem="{Binding SelectedSequence}" 
+                      AutoGenerateColumns="False"
+                      CanUserSortColumns="True"
+                      CanUserDeleteRows="True" CanUserAddRows="True"                       
+                      dd:DragDrop.IsDragSource="True"
+                      dd:DragDrop.IsDropTarget="True"   
+                      dd:DragDrop.DropHandler="{Binding}"
+                      dd:DragDrop.DragHandler="{Binding}"
+                      >
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Binding="{Binding Sequence.duration}" IsReadOnly="True"/>
+
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Height="20" Width="35" Margin="3">
+                                        <Label.Style>
+                                            <MultiBinding Converter="{StaticResource StyleConverter}">
+                                                <MultiBinding.Bindings>
+                                                    <Binding RelativeSource="{RelativeSource Self}"/>
+                                                    <Binding Path="Sequence.SequenceName"/>
+                                                </MultiBinding.Bindings>
+                                            </MultiBinding>
+                                        </Label.Style>
+                                    </Label>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTextColumn Binding="{Binding Sequence.SeqType}" Width="1*" IsReadOnly="True"/>
+
+                        <DataGridTextColumn Binding="{Binding Sequence.Name}" Width="1*" IsReadOnly="True"/>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+                
+            </StackPanel>
+        </GroupBox>
+
+        <!--SELECTED SEQUENCE-->
+        <Grid Grid.Column="1" Background="White" Grid.Row="1" Grid.ColumnSpan="2">
+
+            <ScrollViewer>
+                <ContentPresenter ContentTemplateSelector="{StaticResource AttractSequenceSelector}"
+                              Content="{Binding SelectedSequence.Sequence}"
+                              />
+
+            </ScrollViewer>
+
+            <!--SAVE SEQUENCES-->
+            <Button Grid.Row="2" Grid.ColumnSpan="2"
+                        VerticalAlignment="Bottom"
+                        HorizontalAlignment="Right" Margin="30,10"
+                        Style="{DynamicResource StyleSaveButton}"
+                        ToolTip="{StaticResource Tip_SaveSequences}"
+                        Command="{Binding SaveAttractCommand}" />
+            
+            
+        </Grid>
+
+    </Grid>
+
+</UserControl>

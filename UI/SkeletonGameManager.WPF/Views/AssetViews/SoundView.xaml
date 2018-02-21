@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="SkeletonGameManager.WPF.Views.AssetViews.SoundView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
+             mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Content="{StaticResource Path_Dir}"
+                    ToolTip="{StaticResource OpenDir}"
+                    VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"  Grid.Row="1">
+            <TextBlock FontStyle="Italic" Text="{StaticResource DropFilesInfo}"/>
+            <TextBlock Text=" - " />
+            <TextBlock FontStyle="Italic" Text="{StaticResource FileOptionInfo}" 
+                       Margin="10,0"/>
+        </StackPanel>
+
+        <ListView ItemsSource="{Binding AssetFiles}" x:Name="FileListView" Grid.Row="2"
+                  dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding OpenSoundCommand}" CommandParameter="{Binding ElementName=FileListView, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+        </ListView>
+
+        <DataGrid Grid.Column="1" Grid.Row="2"
+                  Template="{StaticResource Datagrid_AudioAssetTemplate}"
+                  CanUserAddRows="False"                         
+                  >
+        </DataGrid>
+    </Grid>
+</UserControl>

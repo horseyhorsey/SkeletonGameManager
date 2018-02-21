@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="SkeletonGameManager.WPF.Views.ScenesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"             
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:sceneeditviews="clr-namespace:SkeletonGameManager.WPF.Views"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1024">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Expander Header="Process" ExpandDirection="Right" Background="LightGray" IsExpanded="True">
+
+            <!--PROCESS LIST VIEW-->
+            <sceneeditviews:SceneProcessView MinWidth="350"/>
+
+        </Expander>
+
+        <!--MAIN CLIPPING VIEW-->
+        <sceneeditviews:SceneMediaView Grid.Column="1"/>
+
+    </Grid>
+</UserControl>

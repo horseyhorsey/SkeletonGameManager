@@ -1,0 +1,42 @@
+ScoreLayout:
+      Fonts:
+            bottom_info:                  # the bottom info Credits/Ball Num
+                  Font: small         # value corresponds to a font key in asset_list.yaml
+                  FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL
+
+            single_player:                # Fonts/Styles for single player play
+                  10_digits:
+                        Font: score_activeL # corresponds to keys in asset_list.yaml
+                        FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL
+                  11_digits:
+                        Font: score_activeM
+                        FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL                        
+                  12plus:
+                        Font: score_activeS
+                        FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL                        
+
+            multiplayer:                 # Fonts/Styles for multiplayer play
+                  active:                 # style for the active player
+                        7_digits: 
+                              Font: score_activeL
+                              FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL                              
+                        8_digits: 
+                              Font: score_activeM
+                              FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL
+                        9plus: 
+                              Font: score_activeS
+                              FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL                              
+
+                  inactive:               # style for the inactive player(s)
+                        7_digits: 
+                              Font: score_inactive
+                              FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL
+                        8_digits: 
+                              Font: score_inactive
+                              FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL
+                        9plus: 
+                              Font: score_inactive
+                              FontStyle: blood      # FontStyles are also in asset_list and OPTIONAL                              
+      # Background: flames
+      #ScoreInterior: bloodAnim
+      Background: Whirl
