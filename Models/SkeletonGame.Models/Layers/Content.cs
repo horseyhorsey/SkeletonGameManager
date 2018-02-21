@@ -34,5 +34,8 @@ namespace SkeletonGame.Models.Layers
 
         [YamlMember(Alias = "particle_layer", ApplyNamingConventions = false)]
         public ParticleLayer particle_layer { get; set; }
+
+        [YamlMember(Alias = "solid_layer", ApplyNamingConventions = false)]
+        public SolidLayer solid_layer { get; set; }
     }
 }
