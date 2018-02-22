@@ -518,6 +518,11 @@
                         Command="{Binding ExportToVpCommand}" CommandParameter="Coil"
                         ToolTip="Exports SolCallBacks for Visual Pinball"/>
 
+
+                <Button Content="Lampshow UI" VerticalAlignment="Center" Margin="5,0" 
+                        Command="{Binding ExportToLampshowUiCommand}" CommandParameter="Coil"
+                        ToolTip="Exports json compatible with rampantslug lampshow UI"/>
+
             </StackPanel>
         </GroupBox>
 

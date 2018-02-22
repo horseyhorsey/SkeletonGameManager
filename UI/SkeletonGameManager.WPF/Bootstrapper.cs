@@ -55,6 +55,7 @@ namespace SkeletonGameManager.WPF
             Container.RegisterInstance<ISkeletonGameFiles>(Container.Resolve<SkeletonGameFiles>());
 
             Container.RegisterInstance<ISkeletonGameProvider>(Container.Resolve<SkeletonGameProvider>());
+            Container.RegisterInstance<ISkeletonGameExport>(Container.Resolve<SkeletonGameExport>());
 
             Container.RegisterInstance(Container.Resolve<KeyboardMappingsViewModel>());
             Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>());

@@ -3,6 +3,7 @@
   <Costura>
     <ExcludeAssemblies>
       SkeletonGameManager.Resources
+      Newtonsoft.Json
     </ExcludeAssemblies>
   </Costura>
 </Weavers>

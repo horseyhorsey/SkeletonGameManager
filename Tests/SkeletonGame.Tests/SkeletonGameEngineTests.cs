@@ -106,5 +106,13 @@ namespace SkeletonGame.Tests
 
             createSkele.CreateNewGameEntry("MyNewGame", "EmptyGame", Environment.CurrentDirectory, zip);
         }
+
+        [Fact]
+        public void ExportPrLampsToJsonLampshowUI()
+        {
+            var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");
+            ISkeletonGameExport export = new SkeletonGameExport();
+            export.ExportLampsToLampshowUI(machine.PRLamps, "EmptyGame", @"TestData/EmptyGame");
+        }
     }
 }

@@ -21,17 +21,20 @@ namespace SkeletonGameManager.WPF.ViewModels
     {
         private ISkeletonGameProvider _skeletonGameProvider;
         private ISkeletonOSC _skeletonOSC;
+        private ISkeletonGameExport _skeletonExport;
         private IVpScriptExporter _vpScriptExporter;
 
         public ICommand SaveMachineConfigCommand { get; set; }
         public ICommand ExportToVpCommand { get; set; }
+        public ICommand ExportToLampshowUiCommand { get; set; }
         public ICommand SendOscMessageCommand { get; set; }
 
         #region Constructors
-        public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC) : base(eventAggregator)
+        public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC, ISkeletonGameExport skeletonGameExport) : base(eventAggregator)
         {
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonOSC = skeletonOSC;
+            _skeletonExport = skeletonGameExport;
 
             _vpScriptExporter = new VpScriptExporter();
 
@@ -47,6 +50,14 @@ namespace SkeletonGameManager.WPF.ViewModels
             ExportToVpCommand = new DelegateCommand<string>((x) =>
             {
                 ExportVpScript(x);
+            });
+
+            ExportToLampshowUiCommand = new DelegateCommand(() =>
+            {
+                _skeletonExport.ExportLampsToLampshowUI(
+                    this.MachineConfig.PRLamps, 
+                    Path.GetFileName(_skeletonGameProvider.GameFolder), 
+                    _skeletonGameProvider.GameFolder);
             });
 
             SendOscMessageCommand = new DelegateCommand<object>((x) =>
