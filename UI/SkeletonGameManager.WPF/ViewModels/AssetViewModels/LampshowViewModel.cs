@@ -26,8 +26,8 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             _skeletonGameProvider = skeletonGameProvider;
 
             _lampshowPath = Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows");
-
-            LampShows = new ObservableCollection<LampShow>(_skeletonGameProvider.AssetsConfig.LampShows ?? new List<LampShow>());
+            
+            LampShows = _skeletonGameProvider.AssetsConfig.LampShows;
             LampShows.CollectionChanged += LampShows_CollectionChanged;
 
             OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_lampshowPath));
