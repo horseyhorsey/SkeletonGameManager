@@ -90,6 +90,7 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 
         public override void Drop(IDropInfo dropInfo)
         {
+            IList<Music> addedSounds = new List<Music>();
             List<string> droppedFiles = new List<string>();
 
             //Needs a few checks here. We can be dragging in from explorer or across to the datagrid.
@@ -101,24 +102,99 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
                 var windowsFileList = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>();
 
                 droppedFiles.AddRange(windowsFileList);
-
-                // Remove any files that are not a valid extension for sound and check if not already existing in the file list.
-                droppedFiles.ForEach((file) => 
+            }
+            else
+            {
+                //Catch if not a list of files, just add the one that's been dropped.
+                try
                 {
-                    var ext = Path.GetExtension(file);
-                    if (this.Extenstions.Any(x=> x == ext) && !this.AssetFiles.Any(x => x == file))
-                    {
-                        var newFilePath = Path.Combine(_audioPathFull.AbsolutePath, Path.GetFileName(file));
-                        //Copy the file to the directory and add to list
-                        if (!File.Exists(newFilePath))
-                        {
-                            File.Copy(file, newFilePath);
+                    //Add files and remove them from the available list
+                    droppedFiles.AddRange((IEnumerable<string>)dragFileList);
+                }
+                catch (System.Exception)
+                {
+                    var file = (string)dragFileList;
+                    droppedFiles.Add(file);
+                }
+            }
 
-                            this.AssetFiles.Add(file);
+            //Null draginfo here should mean files came from windows, so add them to file list
+            if (dropInfo.DragInfo == null)
+            {
+                foreach (var file in droppedFiles)
+                {
+                    if (FileIsAudio(file))
+                    {
+                        var animFileName = Path.GetFileName(file);
+
+                        //Don't add dupes
+                        if (!this.AssetFiles.Any(x => x == file) && !this.AudioEntries.Any(x => x.File == animFileName))
+                        {
+                            //Copy the file to the lampshow path and add to list
+                            var newFilePath = Path.Combine(_audioPathFull.AbsolutePath, animFileName);
+                            if (!File.Exists(newFilePath))
+                                File.Copy(file, newFilePath);
+
+                            this.AssetFiles.Add(animFileName);
                         }
-                        
                     }
-                });
+                }
+            }
+            //Convert the lampshow files to lampshow models and add to datagrid
+            else
+            {
+                // Return if trying to drag to the same element
+                if (dropInfo.DragInfo.VisualSource == dropInfo.VisualTarget) return;
+
+                //Remove all dragged files from list                    
+                foreach (var file in droppedFiles)
+                {
+                    this.AssetFiles.Remove(file);
+                }
+                
+                foreach (var audioFile in droppedFiles)
+                {
+                    if (FileIsAudio(audioFile))
+                    {
+                        var file = Path.GetFileName(audioFile);
+                        var key = Path.GetFileNameWithoutExtension(audioFile);
+
+                        if (!this.AudioEntries.Any(x => x.File == file))
+                        {
+                            addedSounds.Add(new Music()
+                            {
+                                Key = key,
+                                File = Path.GetFileName(audioFile)
+                            });
+                        }                        
+                    }
+                }
+
+                if (addedSounds.Count > 0)
+                {
+                    this.AudioEntries.AddRange(addedSounds);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks the file extension to see if video/image (animation)
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        private bool FileIsAudio(string file)
+        {
+            var extension = Path.GetExtension(file);
+
+            switch (extension)
+            {
+                case ".wav":
+                case ".mp3":
+                case ".ogg":
+                case ".aiff":
+                    return true;
+                default:
+                    return false;
             }
         }
 

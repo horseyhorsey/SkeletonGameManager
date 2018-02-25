@@ -33,7 +33,10 @@
         </StackPanel>
 
         <ListView ItemsSource="{Binding AssetFiles}" x:Name="FileListView" Grid.Row="2"
-                  dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding}">
+                    dd:DragDrop.DropHandler="{Binding}"
+                    dd:DragDrop.IsDragSource="True"
+                    dd:DragDrop.IsDropTarget="True"                                  
+                  >
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
@@ -44,8 +47,12 @@
         </ListView>
 
         <DataGrid Grid.Column="1" Grid.Row="2"
-                  Template="{StaticResource Datagrid_AudioAssetTemplate}"
-                  CanUserAddRows="False"                         
+                dd:DragDrop.DropHandler="{Binding}"
+                dd:DragDrop.IsDragSource="True"
+                dd:DragDrop.IsDropTarget="True"                                    
+                Template="{StaticResource Datagrid_AudioAssetTemplate}"
+                CanUserAddRows="False"
+                  
                   >
         </DataGrid>
     </Grid>
