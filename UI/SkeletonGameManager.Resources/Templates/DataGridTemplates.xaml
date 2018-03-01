@@ -6,8 +6,15 @@
         <DataGrid ItemsSource="{Binding AudioEntries}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="2*"/>
-                <DataGridTextColumn Binding="{Binding File}" Header="File"/>
-                <DataGridTextColumn Binding="{Binding Volume}" Header="Vol"/>
+                <DataGridTextColumn Binding="{Binding File}" Header="File" Width="2*"/>
+                <DataGridTextColumn Binding="{Binding Volume}" Header="Vol" MaxWidth="50"/>
+                <DataGridCheckBoxColumn Binding="{Binding StreamingLoad}" MaxWidth="100">
+                    <DataGridCheckBoxColumn.Header>
+                        <Label ToolTip="{StaticResource Tip_AudioStreamingLoad}"
+                               Content="StreamLoad"
+                               />
+                    </DataGridCheckBoxColumn.Header>
+                </DataGridCheckBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
     </ControlTemplate>

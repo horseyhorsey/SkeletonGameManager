@@ -255,5 +255,9 @@
 
     <!--#endregion-->
 
+    <sys:String x:Key="Tip_AudioStreamingLoad">
+        Disabling will load into memory. (Only compatible with music). If using lots of music it's probably best to disable streaming load.
+    </sys:String>
+
 </ResourceDictionary>
     

@@ -49,8 +49,8 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
         }
 
         #region Properties
-        private ObservableCollection<Music> music;
-        public ObservableCollection<Music> AudioEntries
+        private ObservableCollection<AudioFile> music;
+        public ObservableCollection<AudioFile> AudioEntries
         {
             get { return music; }
             set { SetProperty(ref music, value); }
@@ -90,7 +90,7 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 
         public override void Drop(IDropInfo dropInfo)
         {
-            IList<Music> addedSounds = new List<Music>();
+            IList<AudioFile> addedSounds = new List<AudioFile>();
             List<string> droppedFiles = new List<string>();
 
             //Needs a few checks here. We can be dragging in from explorer or across to the datagrid.
@@ -161,7 +161,7 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 
                         if (!this.AudioEntries.Any(x => x.File == file))
                         {
-                            addedSounds.Add(new Music()
+                            addedSounds.Add(new AudioFile()
                             {
                                 Key = key,
                                 File = Path.GetFileName(audioFile)
