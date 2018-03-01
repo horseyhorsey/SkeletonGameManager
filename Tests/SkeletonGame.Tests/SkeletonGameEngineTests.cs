@@ -114,5 +114,13 @@ namespace SkeletonGame.Tests
             ISkeletonGameExport export = new SkeletonGameExport();
             export.ExportLampsToLampshowUI(machine.PRLamps, "EmptyGame", @"TestData/EmptyGame");
         }
+
+        [Fact]
+        public void ExportToPyprocgameSwitchHits()
+        {
+            var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");
+            ISkeletonGameExport export = new SkeletonGameExport();
+            export.ExportToPyprocgameSwitchHits(machine.PRSwitches, @"TestData/EmptyGame");
+        }
     }
 }

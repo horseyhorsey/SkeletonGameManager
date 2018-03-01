@@ -28,6 +28,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         public ICommand ExportToVpCommand { get; set; }
         public ICommand ExportToLampshowUiCommand { get; set; }
         public ICommand SendOscMessageCommand { get; set; }
+        public ICommand ExportToPythonSwitcheMethodsCommand { get; set; }        
 
         #region Constructors
         public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC, ISkeletonGameExport skeletonGameExport) : base(eventAggregator)
@@ -57,6 +58,13 @@ namespace SkeletonGameManager.WPF.ViewModels
                 _skeletonExport.ExportLampsToLampshowUI(
                     this.MachineConfig.PRLamps, 
                     Path.GetFileName(_skeletonGameProvider.GameFolder), 
+                    _skeletonGameProvider.GameFolder);
+            });
+
+            ExportToPythonSwitcheMethodsCommand = new DelegateCommand(() =>
+            {
+                _skeletonExport.ExportToPyprocgameSwitchHits(
+                    this.MachineConfig.PRSwitches,
                     _skeletonGameProvider.GameFolder);
             });
 
@@ -349,6 +357,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             this.Lamps.Clear();
             this.Switches.Clear();
             this.Coils.Clear();
+            this.DedicatedSwitches.Clear();
 
             if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPCALPHANUMERIC)
             {
