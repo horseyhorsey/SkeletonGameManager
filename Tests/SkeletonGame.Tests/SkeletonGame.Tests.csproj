@@ -18,6 +18,9 @@
     <ProjectReference Include="..\..\Modules\SkeletonGame.Engine\SkeletonGame.Engine.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="TestData\EmptyGame\assets\lampshows\GoingUp.lampshow">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\EmptyGame\config.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
