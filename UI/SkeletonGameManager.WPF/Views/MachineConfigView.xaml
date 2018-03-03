@@ -520,11 +520,11 @@
 
                 <Button Content="Lampshow UI" VerticalAlignment="Center" Margin="5,0" 
                         Command="{Binding ExportToLampshowUiCommand}" CommandParameter="Coil"
-                        ToolTip="Exports json compatible with rampantslug lampshow UI"/>
+                        ToolTip="{StaticResource Tip_ExportLampshowUI}"/>
 
                 <Button Content="pyproc switch" VerticalAlignment="Center" Margin="5,0" 
                         Command="{Binding ExportToPythonSwitcheMethodsCommand}" CommandParameter="Coil"
-                        ToolTip="Exports a python file that contans active switch methods from all the switches in the machine (without the trough and dedicated)"/>
+                        ToolTip="{StaticResource Tip_ExportPythonSwitchCallbacks}"/>
 
             </StackPanel>
         </GroupBox>
