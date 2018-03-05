@@ -53,7 +53,7 @@ namespace SkeletonGame.Engine
                                     else if (_switch.VpSwitchType == VpSwitchType.PulseSwitch)
                                     {
                                         exportString += $"' {_switch.Name} hit {newLine}";
-                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit():vpmTimer.PulseSw {_switch.Number.Remove(0, 1)}):End Sub{newLine}";
+                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit():vpmTimer.PulseSw {_switch.Number.Remove(0, 1)}:End Sub{newLine}";
                                     }                                        
                                 }
                     }
