@@ -26,6 +26,14 @@
                     VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
         </StackPanel>
 
+        <Button Content="{StaticResource Path_Lamps}" Grid.Column="1"
+                    ToolTip="Reverse selected"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom" Height="30" Width="35" 
+                    Command="{Binding ReverseLampshowCommand}"
+                    CommandParameter="{Binding ElementName=LampsDataGrid, Path=SelectedItem}"
+                />
+
         <!--TITLE AND HELP-->
         <StackPanel  Orientation="Horizontal" Grid.Row="2">
             <Label Content="Available Show files"/>
@@ -46,7 +54,7 @@
             <Label Content="Use delete key to remove from saved list" FontStyle="Italic" FontSize="12"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="3" Grid.Column="1" 
+        <DataGrid Grid.Row="3" Grid.Column="1" x:Name="LampsDataGrid"
                               AutoGenerateColumns="False" CanUserAddRows="False"
                               dd:DragDrop.IsDropTarget="True"
                               dd:DragDrop.DropHandler="{Binding}"
@@ -57,6 +65,7 @@
                 <DataGridTextColumn Binding="{Binding File}" Width="1*" IsReadOnly="True" Header="File"/>
             </DataGrid.Columns>
 
+            
         </DataGrid>
 
     </Grid>

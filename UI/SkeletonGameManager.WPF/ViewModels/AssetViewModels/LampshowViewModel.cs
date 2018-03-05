@@ -11,6 +11,8 @@ using SkeletonGame.Engine;
 using SkeletonGameManager.WPF.Providers;
 using System.Windows.Threading;
 using Prism.Commands;
+using System.Windows.Input;
+using System;
 
 namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
 {
@@ -19,11 +21,15 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
         private readonly string _lampshowPath;
         private ISkeletonGameFiles _skeletonGameFiles;
         private readonly ISkeletonGameProvider _skeletonGameProvider;
+        private ILampshowEdit _lampshowEdit;
+
+        public ICommand ReverseLampshowCommand { get; set; }
 
         public LampshowViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider)
         {
             _skeletonGameFiles = skeletonGameFiles;
             _skeletonGameProvider = skeletonGameProvider;
+            _lampshowEdit = new LampshowEdit();
 
             _lampshowPath = Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows");
             
@@ -31,6 +37,17 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
             LampShows.CollectionChanged += LampShows_CollectionChanged;
 
             OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_lampshowPath));
+
+            ReverseLampshowCommand = new DelegateCommand<LampShow>((x) =>
+            {
+                OnReverseLampshow(x);
+            });
+        }
+
+        private void OnReverseLampshow(LampShow x)
+        {
+            _lampshowEdit.ReverseLampshowFile(Path.Combine(_lampshowPath,x.File),
+                _lampshowPath + $"\\{Path.GetFileNameWithoutExtension(x.File)}_reversed.lampshow");
         }
 
         private void LampShows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
