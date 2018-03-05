@@ -41,12 +41,20 @@ namespace SkeletonGame.Engine
                     {
                         //Don't export trough switches, flippers and dedicated
                         if (!_switch.Name.Contains("trough"))
-                            if(!_switch.Name.Contains("flipper"))
+                            if (!_switch.Name.Contains("flipper"))
                                 if (!_switch.Number.Contains("SD"))
+                                {
+                                    if (_switch.VpSwitchType == null || _switch.VpSwitchType == VpSwitchType.Normal)
                                     {
                                         exportString += $"' {_switch.Name} hit {newLine}";
-                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit():Controller.Switch({_switch.Number.Remove(0, 1)}) = 1 :End Sub{newLine}";                                                                                
-                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_UnHit():Controller.Switch({_switch.Number.Remove(0, 1)}) = 0 :End Sub{newLine}";                                        
+                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit():Controller.Switch({_switch.Number.Remove(0, 1)}) = 1 :End Sub{newLine}";
+                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_UnHit():Controller.Switch({_switch.Number.Remove(0, 1)}) = 0 :End Sub{newLine}";
+                                    }
+                                    else if (_switch.VpSwitchType == VpSwitchType.PulseSwitch)
+                                    {
+                                        exportString += $"' {_switch.Name} hit {newLine}";
+                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit():vpmTimer.PulseSw {_switch.Number.Remove(0, 1)}):End Sub{newLine}";
+                                    }                                        
                                 }
                     }
                     break;

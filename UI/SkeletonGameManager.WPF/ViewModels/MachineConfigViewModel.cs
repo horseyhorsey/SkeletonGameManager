@@ -206,6 +206,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                             sw.Tags = prSwitch.Tags;
                             sw.Type = prSwitch.SwitchType;
                             sw.Label = prSwitch.Label;
+                            sw.VpSwitchType = prSwitch.VpSwitchType;
 
                             if (prSwitch.BallSearch != null)
                             {
@@ -479,7 +480,8 @@ namespace SkeletonGameManager.WPF.ViewModels
                         Number = item.Number,
                         Tags = item.Tags,
                         SwitchType = item.Type,
-                        Label = item.Label
+                        Label = item.Label,
+                        VpSwitchType  = item.VpSwitchType
                     };
 
                     if (item.BallSearch.Any(x => x != null))

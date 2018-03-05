@@ -46,6 +46,9 @@ namespace SkeletonGame.Models.Machine
 
         [YamlMember(Alias = "ballsearch", ApplyNamingConventions = false)]
         public string BallSearch { get; set; }
+
+        [YamlMember(Alias = "vp_switch_type", ApplyNamingConventions = false)]
+        public VpSwitchType? VpSwitchType { get; set; }
     }
 
     public class PRGame
