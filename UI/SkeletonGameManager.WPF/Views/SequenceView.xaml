@@ -57,12 +57,14 @@
         <!--ATTRACT SEQEUENCES-->
         <GroupBox Grid.Row="1" Header="Sequences">
 
-            <DataGrid ItemsSource="{Binding Sequences}" AutoGenerateColumns="False" xmlns:dd="urn:gong-wpf-dragdrop"
+            <DataGrid ItemsSource="{Binding Sequences}" AutoGenerateColumns="False"
                       DisplayMemberPath="Name" CanUserResizeRows="False" CanUserAddRows="False"
+                      CanUserSortColumns="False"                      
                       SelectedItem="{Binding SelectedSequence}"
+                      xmlns:dd="urn:gong-wpf-dragdrop"
                       dd:DragDrop.IsDragSource="True"
                       dd:DragDrop.IsDropTarget="True"
-                      dd:DragDrop.DropHandler="{Binding}"
+                      dd:DragDrop.DropHandler="{Binding}"                       
                   >
                 
                 <DataGrid.Columns>
