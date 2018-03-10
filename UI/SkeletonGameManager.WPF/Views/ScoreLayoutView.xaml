@@ -43,10 +43,10 @@
                             
                             <ComboBox Grid.Column="0" MinWidth="100" 
                                       ItemsSource="{Binding Animations}"
-                                      SelectedValue="{Binding ScoreLayout.SinglePlayer.Background.Animation.Name}"/>
+                                      SelectedValue="{Binding ScoreLayout.SinglePlayer.Background.Animation.Name, UpdateSourceTrigger=PropertyChanged}"/>
                             
                             <CheckBox x:Name="ChkBoxFromSaved" Content="From Saved" VerticalAlignment="Center" 
-                                      IsChecked="{Binding ScoreLayout.SinglePlayer.Background.Animation.FromSaved}" Margin="3"/>
+                                      IsChecked="{Binding ScoreLayout.SinglePlayer.Background.Animation.FromSaved, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
                             
                             <TextBox  Grid.Row="0" Grid.Column="0"  ToolTip="Enter a layer name that is in your saved sequences, not the attract.yaml"
                                       IsEnabled="{Binding ElementName=ChkBoxFromSaved, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"

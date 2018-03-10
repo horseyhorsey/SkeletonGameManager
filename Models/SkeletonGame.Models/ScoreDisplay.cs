@@ -31,7 +31,7 @@ namespace SkeletonGame.Models.Score
         public Foreground Foreground { get; set; } = null;
 
         [YamlMember(Alias = "Background", ApplyNamingConventions = false)]
-        public Background Background { get; set; } = null;
+        public Background Background { get; set; } = new Background();
 
         [YamlMember(Alias = "BallNumber", ApplyNamingConventions = false)]
         public BallNumber BallNumber { get; set; }
@@ -76,7 +76,7 @@ namespace SkeletonGame.Models.Score
     public class Background
     {
         [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
-        public Animation Animation { get; set; }
+        public Animation Animation { get; set; } = new Animation();
     }
 
     public class Foreground
