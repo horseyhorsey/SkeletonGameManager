@@ -107,10 +107,6 @@ namespace SkeletonGameManager.WPF.ViewModels
             
             try
             {
-                //Lampshows                
-                LampshowViewModel = new LampshowViewModel(_skeletonGameFiles, _skeletonGameProvider);                
-                await LampshowViewModel.GetFiles();
-
                 //Fonts Vm
                 FontsViewModel = new FontsViewModel(_skeletonGameFiles, _skeletonGameProvider);
                 await FontsViewModel.GetFiles();
@@ -135,8 +131,12 @@ namespace SkeletonGameManager.WPF.ViewModels
                 await AnimationsViewModel.GetFiles();
 
                 SaveCommand.RaiseCanExecuteChanged();
+
+                //Lampshows                
+                LampshowViewModel = new LampshowViewModel(_skeletonGameFiles, _skeletonGameProvider);
+                await LampshowViewModel.GetFiles();                
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
 
                 

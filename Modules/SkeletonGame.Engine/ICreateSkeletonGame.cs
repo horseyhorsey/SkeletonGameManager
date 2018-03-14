@@ -29,7 +29,7 @@ namespace SkeletonGame.Engine
             if (templateName == "EmptyGameVP")
                 Directory.CreateDirectory(Path.Combine(fullPath, "VP"));
 
-            using (ZipArchive archive = ZipFile.OpenRead(skeletonGameBranchZip))
+            using (ZipArchive archive = new ZipArchive(File.OpenRead(skeletonGameBranchZip), ZipArchiveMode.Read))
             {
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {

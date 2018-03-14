@@ -157,7 +157,7 @@
 
     <Style x:Key="Style_LampsCombo" BasedOn="{StaticResource Style_AssetCombo}" x:Shared="false" 
            TargetType="ComboBox">
-        <Setter Property="ItemsSource" Value="{Binding LampShows}"/>
+        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.LampShows}"/>
         <Setter Property="SelectedValue" Value="{Binding lampshow,UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>

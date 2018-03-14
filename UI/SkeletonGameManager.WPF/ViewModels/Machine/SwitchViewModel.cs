@@ -1,4 +1,6 @@
-﻿namespace SkeletonGameManager.WPF.ViewModels.Machine
+﻿using SkeletonGame.Models.Machine;
+
+namespace SkeletonGameManager.WPF.ViewModels.Machine
 {
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class SwitchViewModel
@@ -8,6 +10,7 @@
         public string Tags { get; set; }
         public string Label { get; set; }
         public string Type { get; set; }
+        public VpSwitchType? VpSwitchType { get; set; }
         public bool State { get; set; }
         public int PosTop { get; set; }
         public int PosLeft { get; set; }

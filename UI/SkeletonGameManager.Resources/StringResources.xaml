@@ -234,6 +234,14 @@
         Export VP_Coil.txt - all the coils into Visual Pinball 'SolCallBacks'. Creates Sub routines for the Solenoid callback and a list of SolCallBacks. Flippers should be skipped from this process.
     </sys:String>
 
+    <sys:String x:Key="Tip_ExportPythonSwitchCallbacks">
+        Exports a python file that contains active switch method callbacks. All switches in the machine are exported except for the trough and dedicated switches.
+    </sys:String>
+
+    <sys:String x:Key="Tip_ExportLampshowUI">
+        Exports all the lamps into a compatible rampantslug LampshowUI project. 
+    </sys:String>
+
 
     <!--#endregion-->
     
@@ -254,6 +262,10 @@
 
 
     <!--#endregion-->
+
+    <sys:String x:Key="Tip_AudioStreamingLoad">
+        Disabling will load into memory. (Only compatible with music). If using lots of music it's probably best to disable streaming load.
+    </sys:String>
 
 </ResourceDictionary>
     

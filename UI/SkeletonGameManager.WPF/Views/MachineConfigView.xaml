@@ -22,9 +22,9 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid.Resources>
@@ -53,6 +53,15 @@
                                           Padding="2"
                                           IsThreeState="False"
                                     >
+
+                                <ToggleButton.Resources>
+                                    <ObjectDataProvider x:Key="vpSwitchTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+                                        <ObjectDataProvider.MethodParameters>
+                                            <x:Type Type="{x:Type model:VpSwitchType}"/>
+                                        </ObjectDataProvider.MethodParameters>
+                                    </ObjectDataProvider>
+                                </ToggleButton.Resources>
+                                
                                 <ToggleButton.Content>
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -79,6 +88,15 @@
                                                    >
                                                 <ComboBoxItem>NO</ComboBoxItem>
                                                 <ComboBoxItem>NC</ComboBoxItem>
+                                            </ComboBox>
+
+                                            <ComboBox Background="Transparent" 
+                                                      SelectedItem="{Binding VpSwitchType, UpdateSourceTrigger=PropertyChanged}" 
+                                                      Margin="30,0"
+                                                      Height="20"
+                                                      ItemsSource="{Binding Source={StaticResource vpSwitchTypes}}"
+                                                      ToolTip="Use for exporting VP callbacks. Pulse switch is shorter syntax and used for targets, bumpers etc"
+                                                   >
                                             </ComboBox>
                                         </StackPanel>
 
@@ -121,7 +139,7 @@
                                         <StackPanel Orientation="Horizontal" Grid.Row="4" TextElement.FontSize="11" Grid.Column="1">
                                             <CheckBox Content="S" ToolTip="Ball search Stop" IsChecked="{Binding Stop}"/>
                                             <CheckBox Content="R" ToolTip="Ball search Reset" IsChecked="{Binding Reset}"/>
-
+                                               
                                         </StackPanel>
                                     </Grid>
                                 </ToggleButton.Content>
@@ -512,11 +530,23 @@
                         Command="{Binding ExportToVpCommand}" CommandParameter="Switch"
                         ToolTip="{StaticResource Tip_VPExportSwitch}"
                         />
-                
 
                 <Button Content="SolCallBacks" VerticalAlignment="Center" Margin="5,0" 
                         Command="{Binding ExportToVpCommand}" CommandParameter="Coil"
                         ToolTip="Exports SolCallBacks for Visual Pinball"/>
+
+                <Button Content="ScriptFull" VerticalAlignment="Center" Margin="5, 0"
+                        Command="{Binding ExportToVpCommand}" CommandParameter="ScriptFull"
+                        ToolTip="Creates a full script to be used in Visual Pinball"
+                        />
+
+                <Button Content="Lampshow UI" VerticalAlignment="Center" Margin="5,0" 
+                        Command="{Binding ExportToLampshowUiCommand}" CommandParameter="Coil"
+                        ToolTip="{StaticResource Tip_ExportLampshowUI}"/>
+
+                <Button Content="pyproc switch" VerticalAlignment="Center" Margin="5,0" 
+                        Command="{Binding ExportToPythonSwitcheMethodsCommand}" CommandParameter="Coil"
+                        ToolTip="{StaticResource Tip_ExportPythonSwitchCallbacks}"/>
 
             </StackPanel>
         </GroupBox>

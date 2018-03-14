@@ -11,7 +11,7 @@ namespace SkeletonGame.Models
         public UserInterface UserInterface { get; set; }
 
         [YamlMember(Alias = "LampShows", ApplyNamingConventions = false)]
-        public List<LampShow> LampShows { get; set; } = new List<LampShow>();
+        public ObservableCollection<LampShow> LampShows { get; set; } = new ObservableCollection<LampShow>();
 
         [YamlMember(Alias = "Animations", ApplyNamingConventions = false)]
         public ObservableCollection<Animation> Animations { get; set; } = new ObservableCollection<Animation>();

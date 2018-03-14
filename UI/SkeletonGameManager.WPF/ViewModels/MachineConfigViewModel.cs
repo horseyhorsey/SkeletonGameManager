@@ -21,17 +21,21 @@ namespace SkeletonGameManager.WPF.ViewModels
     {
         private ISkeletonGameProvider _skeletonGameProvider;
         private ISkeletonOSC _skeletonOSC;
+        private ISkeletonGameExport _skeletonExport;
         private IVpScriptExporter _vpScriptExporter;
 
         public ICommand SaveMachineConfigCommand { get; set; }
         public ICommand ExportToVpCommand { get; set; }
+        public ICommand ExportToLampshowUiCommand { get; set; }
         public ICommand SendOscMessageCommand { get; set; }
+        public ICommand ExportToPythonSwitcheMethodsCommand { get; set; }        
 
         #region Constructors
-        public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC) : base(eventAggregator)
+        public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC, ISkeletonGameExport skeletonGameExport) : base(eventAggregator)
         {
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonOSC = skeletonOSC;
+            _skeletonExport = skeletonGameExport;
 
             _vpScriptExporter = new VpScriptExporter();
 
@@ -47,6 +51,21 @@ namespace SkeletonGameManager.WPF.ViewModels
             ExportToVpCommand = new DelegateCommand<string>((x) =>
             {
                 ExportVpScript(x);
+            });
+
+            ExportToLampshowUiCommand = new DelegateCommand(() =>
+            {
+                _skeletonExport.ExportLampsToLampshowUI(
+                    this.MachineConfig.PRLamps, 
+                    Path.GetFileName(_skeletonGameProvider.GameFolder), 
+                    _skeletonGameProvider.GameFolder);
+            });
+
+            ExportToPythonSwitcheMethodsCommand = new DelegateCommand(() =>
+            {
+                _skeletonExport.ExportToPyprocgameSwitchHits(
+                    this.MachineConfig.PRSwitches,
+                    _skeletonGameProvider.GameFolder);
             });
 
             SendOscMessageCommand = new DelegateCommand<object>((x) =>
@@ -187,6 +206,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                             sw.Tags = prSwitch.Tags;
                             sw.Type = prSwitch.SwitchType;
                             sw.Label = prSwitch.Label;
+                            sw.VpSwitchType = prSwitch.VpSwitchType;
 
                             if (prSwitch.BallSearch != null)
                             {
@@ -338,6 +358,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             this.Lamps.Clear();
             this.Switches.Clear();
             this.Coils.Clear();
+            this.DedicatedSwitches.Clear();
 
             if (type == MachineType.WPC || type == MachineType.WPC95 || type == MachineType.WPCALPHANUMERIC)
             {
@@ -402,6 +423,11 @@ namespace SkeletonGameManager.WPF.ViewModels
                 scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Switch);
             else if (machineItemType == "Coil")
                 scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Coil);
+            else if (machineItemType == "ScriptFull")
+            {
+                scriptString = _vpScriptExporter.CreateVisualPinballScript(this.MachineConfig,
+                    Path.GetFileName(_skeletonGameProvider.GameFolder));
+            }
 
             //Write the script
             using (var sw = File.CreateText(scriptFileName))
@@ -459,7 +485,8 @@ namespace SkeletonGameManager.WPF.ViewModels
                         Number = item.Number,
                         Tags = item.Tags,
                         SwitchType = item.Type,
-                        Label = item.Label
+                        Label = item.Label,
+                        VpSwitchType  = item.VpSwitchType
                     };
 
                     if (item.BallSearch.Any(x => x != null))

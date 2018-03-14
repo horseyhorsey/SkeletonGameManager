@@ -7,21 +7,24 @@ namespace SkeletonGame.Models
     public class Audio
     {
         [YamlMember(Alias = "Music", ApplyNamingConventions = false)]
-        public ObservableCollection<Music> Music { get; set; }
+        public ObservableCollection<AudioFile> Music { get; set; }
 
         [YamlMember(Alias = "Effects", ApplyNamingConventions = false)]
-        public ObservableCollection<Music> Effects { get; set; }
+        public ObservableCollection<AudioFile> Effects { get; set; }
 
         [YamlMember(Alias = "Voice", ApplyNamingConventions = false)]
-        public ObservableCollection<Music> Voice { get; set; }
+        public ObservableCollection<AudioFile> Voice { get; set; }
 
         [YamlIgnore]
-        public ObservableCollection<Music> AllAudio { get; set; } = new ObservableCollection<Models.Music>();
+        public ObservableCollection<AudioFile> AllAudio { get; set; } = new ObservableCollection<Models.AudioFile>();
     }
 
-    public class Music : AssetKeyFile
+    public class AudioFile : AssetKeyFile
     {
         [YamlMember(Alias = "volume", ApplyNamingConventions = false)]
-        public decimal Volume { get; set; } 
+        public decimal Volume { get; set; }
+
+        [YamlMember(Alias = "streaming_load", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public string StreamingLoad { get; set; } = "True";
     }
 }

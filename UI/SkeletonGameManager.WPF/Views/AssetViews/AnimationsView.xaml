@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SkeletonGameManager.WPF.Views.AssetViews"
              mc:Ignorable="d" 
+             xmlns:dd="urn:gong-wpf-dragdrop"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
 
@@ -31,7 +32,11 @@
                        Margin="10,0"/>
         </StackPanel>
 
-        <ListView ItemsSource="{Binding AssetFiles}" Grid.Row="1">
+        <ListView ItemsSource="{Binding AssetFiles}" Grid.Row="1" 
+                  dd:DragDrop.IsDragSource="True"
+                  dd:DragDrop.IsDropTarget="True"
+                  dd:DragDrop.DropHandler="{Binding}" 
+                  >
 
         </ListView>
 
@@ -45,6 +50,9 @@
         <DataGrid Grid.Row="1" x:Name="AnimDataGrid" Grid.Column="1"
                               ScrollViewer.CanContentScroll="False"
                               SelectionMode="Extended" AutoGenerateColumns="False"
+                              dd:DragDrop.IsDropTarget="True"
+                              dd:DragDrop.IsDragSource="True"
+                                dd:DragDrop.DropHandler="{Binding}" 
                               ItemsSource="{Binding Animations, UpdateSourceTrigger=PropertyChanged}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Key" Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
