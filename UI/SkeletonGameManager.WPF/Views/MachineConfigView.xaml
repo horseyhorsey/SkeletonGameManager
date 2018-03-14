@@ -22,9 +22,9 @@
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid.Resources>
@@ -530,11 +530,15 @@
                         Command="{Binding ExportToVpCommand}" CommandParameter="Switch"
                         ToolTip="{StaticResource Tip_VPExportSwitch}"
                         />
-                
 
                 <Button Content="SolCallBacks" VerticalAlignment="Center" Margin="5,0" 
                         Command="{Binding ExportToVpCommand}" CommandParameter="Coil"
                         ToolTip="Exports SolCallBacks for Visual Pinball"/>
+
+                <Button Content="ScriptFull" VerticalAlignment="Center" Margin="5, 0"
+                        Command="{Binding ExportToVpCommand}" CommandParameter="ScriptFull"
+                        ToolTip="Creates a full script to be used in Visual Pinball"
+                        />
 
                 <Button Content="Lampshow UI" VerticalAlignment="Center" Margin="5,0" 
                         Command="{Binding ExportToLampshowUiCommand}" CommandParameter="Coil"

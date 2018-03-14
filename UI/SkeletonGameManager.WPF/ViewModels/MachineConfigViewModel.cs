@@ -423,6 +423,11 @@ namespace SkeletonGameManager.WPF.ViewModels
                 scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Switch);
             else if (machineItemType == "Coil")
                 scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Coil);
+            else if (machineItemType == "ScriptFull")
+            {
+                scriptString = _vpScriptExporter.CreateVisualPinballScript(this.MachineConfig,
+                    Path.GetFileName(_skeletonGameProvider.GameFolder));
+            }
 
             //Write the script
             using (var sw = File.CreateText(scriptFileName))

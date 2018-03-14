@@ -8,6 +8,12 @@
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="VpScript\script_template.vbs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="VpScript\script_template.vbs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
     <PackageReference Include="YamlDotNet" Version="4.2.3" />
