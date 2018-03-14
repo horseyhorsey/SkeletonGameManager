@@ -7,6 +7,8 @@
     {
         Normal,
         PulseSwitch,
-        Kicker,
+        Saucer,
+        Scoop,
+        Vuk,
     }
 }
