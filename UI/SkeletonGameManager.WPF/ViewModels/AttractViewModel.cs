@@ -403,8 +403,21 @@ namespace SkeletonGameManager.WPF.ViewModels
                 //Assign from all files found in config/sequences
                 foreach (var item in _skeletonGameProvider.SequenceYamls)
                 {
-                    SequenceYamls.Add(new SequenceYamlItemViewModel(item, _skeletonGameProvider.GetSequence(item)));
-                    _skeletonGameAttract.GetAvailableSequences(SequenceYamls.Last().SequenceYaml);
+                    bool seqAdded = false;
+                    try
+                    {
+                        SequenceYamls.Add(new SequenceYamlItemViewModel(item, _skeletonGameProvider.GetSequence(item)));
+
+                        seqAdded = true;
+                        _skeletonGameAttract.GetAvailableSequences(SequenceYamls.Last().SequenceYaml);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (seqAdded)
+                            SequenceYamls.Remove(SequenceYamls.Last());
+
+                        System.Windows.MessageBox.Show(ex.InnerException.Message, "Sequence parse error");
+                    }
                 }
 
                 this.SelectedSequenceFile = SequenceYamls[0];
