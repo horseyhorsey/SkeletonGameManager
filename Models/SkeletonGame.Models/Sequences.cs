@@ -119,6 +119,9 @@ namespace SkeletonGame.Models
 
     public class SequenceTextBase : SequenceBase
     {
+        [YamlMember(Alias = "Name", ApplyNamingConventions = false)]
+        public string Name { get; set; }
+
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
         public string Font { get; set; } = "default";
 
