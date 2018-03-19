@@ -5,16 +5,16 @@ namespace SkeletonGame.Models.Machine
 {
     public class GameItemBase
     {
-        [YamlMember(Alias = "name", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "name", ApplyNamingConventions = false, Order = 0)]
         public string Name { get; set; }
 
-        [YamlMember(Alias = "number", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "number", ApplyNamingConventions = false, Order = 1)]
         public string Number { get; set; }
 
-        [YamlMember(Alias = "tags", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "tags", ApplyNamingConventions = false, Order = 2)]
         public string Tags { get; set; }
 
-        [YamlMember(Alias = "label", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "label", ApplyNamingConventions = false, Order = 3)]
         public string Label { get; set; }
     }
 
