@@ -1,5 +1,6 @@
 using SkeletonGame.Engine;
 using SkeletonGame.Models;
+using SkeletonGame.Models.Data;
 using SkeletonGame.Models.Machine;
 using SkeletonGame.Models.Score;
 using System;
@@ -90,6 +91,22 @@ namespace SkeletonGame.Tests
             //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
             var machine = _skeleSerializer
                 .DeserializeSkeletonYaml<MachineConfigDict>(@"C:\P-ROC\Games\jaws\config\machine_jaws.yaml");
+        }
+
+        [Fact]
+        public void DeserializeGameData()
+        {
+            //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
+            var gData = _skeleSerializer
+                .DeserializeSkeletonYaml<GameData>(@"TestData/EmptyGame/config/audits.yaml");
+        }
+
+        [Fact]
+        public void DeserializeTrophyData()
+        {
+            //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
+            var tData = _skeleSerializer
+                .DeserializeSkeletonYaml<TrophyData>(@"TestData/EmptyGame/config/trophy_default_data.yaml");
         }
 
         [Fact]
