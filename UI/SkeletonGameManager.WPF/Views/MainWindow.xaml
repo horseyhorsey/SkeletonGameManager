@@ -207,6 +207,12 @@
                                         <ContentControl prism:RegionManager.RegionName="ScenesRegion"/>
 
                                     </TabItem>
+                                    
+                                    <!--GAME DATA / TROPHYS-->
+                                    <TabItem Header="Trophy" 
+                                             IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
+                                        <ContentControl prism:RegionManager.RegionName="GameDataRegion"/>
+                                    </TabItem>
 
                                 </TabControl>
 

@@ -18,7 +18,7 @@ namespace SkeletonGame.Models.Data
     public class TrophyData
     {
         [YamlMember(Alias = "Trophys", ApplyNamingConventions = false)]
-        public Dictionary<string, Trophy> Trophys { get; set; }
+        public ObservableDictionary<string, Trophy> Trophys { get; set; }
     }
 
 

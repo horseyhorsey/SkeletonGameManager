@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="SkeletonGameManager.WPF.Views.TrophyDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="700">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!--TOP FORM-->
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition MinWidth="120" Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition MinWidth="220" Width="Auto"/>
+                <ColumnDefinition MaxWidth="40" Width="40"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Content="TrophyKey"/>
+            <TextBox Grid.Column="1" Margin="3" Text="{Binding NewTrophyName}"/>
+
+            <Label Grid.Column="2"  Content="Description"/>
+            <TextBox Grid.Column="3" Margin="3" Text="{Binding NewTrophyDesc}"/>
+            
+            <Button Grid.Column="4" Margin="3" Content="+" Command="{Binding CreateTrophyCommand}"/>
+            
+        </Grid>
+        
+        <!--TROPHY LISTS-->
+        <Grid Grid.Row="1" Margin="3">
+            <ListBox ItemsSource="{Binding TrophyData.Trophys}"                          
+                     SelectedValuePath="Value"
+                          >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="{Binding Path=Key}" 
+                                       FontWeight="DemiBold" Margin="3"
+                                       FontSize="16"
+                                       />
+
+                            <Grid Grid.Row="1" DataContext="{Binding Path=Value}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Grid.Column="0" Source="C:\P-ROC\Games\Gremlins\assets\dmd\trophy.png" Height="50"/>
+                                <TextBox Grid.Column="1" Text="{Binding Description}"
+                                         MaxHeight="20"
+                                         HorizontalAlignment="Stretch"
+                                         VerticalAlignment="Stretch"/>
+                            </Grid>
+                            
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ListBox>
+        </Grid>
+        
+        <Button Grid.Row="2"
+                        Style="{DynamicResource StyleSaveButton}"                        
+                        Height="35" Width="50"/>
+    </Grid>
+
+</UserControl>

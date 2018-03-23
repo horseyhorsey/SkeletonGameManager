@@ -1,5 +1,6 @@
 ﻿using SkeletonGame.Engine;
 using SkeletonGame.Models;
+using SkeletonGame.Models.Data;
 using SkeletonGame.Models.Machine;
 using SkeletonGame.Models.Score;
 using System;
@@ -41,17 +42,18 @@ namespace SkeletonGameManager.WPF.Providers
 
         MachineConfigDict MachineConfigDict { get; set; }
 
-        ObservableCollection<string> SequenceYamls { get; set; }
+        ObservableCollection<string> SequenceYamls { get; set; }        
 
         SequenceYaml GetSequence(string yamlPath);
 
+        TrophyData TrophyData { get; set; }
+
         void SaveAssetsFile(AssetsFile assetsFile);
-
         void SaveGameConfig(GameConfig config);
-
-        void SaveSequenceFile(SequenceYaml sequenceYaml, string saveFile);
-        void SaveScoreDsiplayFile(ScoreDisplay scoreDisplay);
         void SaveMachineConfig(MachineConfig mConfig);
+        void SaveSequenceFile(SequenceYaml sequenceYaml, string saveFile);
+        void SaveScoreDsiplayFile(ScoreDisplay scoreDisplay);        
+        void SaveTrophyData(TrophyData trophyData);
     }
 
     /// <summary>
@@ -76,7 +78,7 @@ namespace SkeletonGameManager.WPF.Providers
         #endregion
 
         #region Properties
-        public IReadOnlyList<string> YamlFiles { get; } = new List<string>() { "config.yaml", "config/asset_list.yaml", "config/attract.yaml", "config/new_score_display.yaml", "config/score_display.yaml", "config/machine.yaml" };
+        public IReadOnlyList<string> YamlFiles { get; } = new List<string>() { "config.yaml", "config/asset_list.yaml", "config/attract.yaml", "config/new_score_display.yaml", "config/score_display.yaml", "config/machine.yaml", "config/trophy_default_data.yaml" };
 
         public string GameFolder { get; set; }
 
@@ -93,6 +95,8 @@ namespace SkeletonGameManager.WPF.Providers
         public MachineConfig MachineConfig { get; set; }
 
         public MachineConfigDict MachineConfigDict { get; set; }
+
+        public TrophyData TrophyData { get; set; }
 
         #endregion
 
@@ -179,6 +183,17 @@ namespace SkeletonGameManager.WPF.Providers
 
                         Directory.CreateDirectory(GameFolder + @"\recordings");
                         RecordingManager.GetPlaybackFiles(GameFolder + @"\recordings");
+
+                        //TROPHYS
+                        try
+                        {
+                            TrophyData = _skeletonGameSerializer.DeserializeSkeletonYaml<TrophyData>(Path.Combine(GameFolder, YamlFiles[6]));
+                        }
+                        catch (System.Exception ex)
+                        {
+                            System.Windows.MessageBox.Show($"Trophy data error: {ex.Message}");
+                        }
+                    
                     }
                     catch (System.Exception ex)
                     {
@@ -329,6 +344,12 @@ namespace SkeletonGameManager.WPF.Providers
         {
             var yamlFile = Path.Combine(GameFolder, YamlFiles[3]);
             _skeletonGameSerializer.SerializeYaml(yamlFile, scoreDisplay);
+        }
+
+        public void SaveTrophyData(TrophyData trophyData)
+        {
+            var yamlFile = Path.Combine(GameFolder, YamlFiles[6]);
+            _skeletonGameSerializer.SerializeYaml(yamlFile, trophyData);
         }
 
         #endregion

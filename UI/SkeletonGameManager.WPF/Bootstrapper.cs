@@ -7,6 +7,7 @@ using SkeletonGameManager.WPF.Views;
 using SkeletonGameManager.WPF.Providers;
 using Prism.Regions;
 using SkeletonGameManager.WPF.ViewModels;
+using Prism.Mvvm;
 
 namespace SkeletonGameManager.WPF
 {
@@ -29,7 +30,11 @@ namespace SkeletonGameManager.WPF
                 regionManager.RegisterViewWithRegion("ScenesRegion", typeof(ScenesView));
                 regionManager.RegisterViewWithRegion("MachineRegion", typeof(MachineConfigView));
                 regionManager.RegisterViewWithRegion("SequencesRegion", typeof(SequenceView));
-                regionManager.RegisterViewWithRegion("ScoreLayoutRegion", typeof(ScoreLayoutView));                
+                regionManager.RegisterViewWithRegion("ScoreLayoutRegion", typeof(ScoreLayoutView));
+                regionManager.RegisterViewWithRegion("GameDataRegion", typeof(GameDataView));
+
+                //Game Data
+                regionManager.RegisterViewWithRegion("TrophyDataRegion", typeof(TrophyDataView));
             }
 
             Application.Current.MainWindow.Show();                                            
@@ -45,22 +50,22 @@ namespace SkeletonGameManager.WPF
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-            
+
+            //ViewModelLocationProvider.SetDefaultViewModelFactory((type) =>
+            //{
+            //    return Container.Resolve(type);
+            //});
+
             Container.RegisterInstance<ISkeletonLogger>(Container.Resolve<SkeletonLogger>());
-
             Container.RegisterInstance<ISkeletonOSC>(Container.Resolve<SkeletonOSC>());
-
             Container.RegisterInstance<ISkeletonGameSerializer>(Container.Resolve<SkeletonGameSerializer>());
-
             Container.RegisterInstance<ISkeletonGameFiles>(Container.Resolve<SkeletonGameFiles>());
-
             Container.RegisterInstance<ISkeletonGameProvider>(Container.Resolve<SkeletonGameProvider>());
             Container.RegisterInstance<ISkeletonGameExport>(Container.Resolve<SkeletonGameExport>());
-
             Container.RegisterInstance(Container.Resolve<KeyboardMappingsViewModel>());
             Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>());
-
-            Container.RegisterTypeForNavigation<GameConfigView>("GameConfigView");                       
+            Container.RegisterInstance(Container.Resolve<TrophyDataViewModel>());
+            Container.RegisterTypeForNavigation<GameConfigView>("GameConfigView");
         }
     }
 }

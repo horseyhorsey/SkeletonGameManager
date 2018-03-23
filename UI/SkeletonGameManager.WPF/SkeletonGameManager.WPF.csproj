@@ -132,6 +132,8 @@
     <Compile Include="Model\TrimVideo.cs" />
     <Compile Include="ViewModels\Config\KeyboardMapItemViewModel.cs" />
     <Compile Include="ViewModels\CreateNewGameWindowViewModel.cs" />
+    <Compile Include="ViewModels\GameDataViewModel.cs" />
+    <Compile Include="ViewModels\TrophyDataViewModel.cs" />
     <Compile Include="ViewModels\KeyboardMappingsViewModel.cs" />
     <Compile Include="ViewModels\MachineConfigViewModel.cs" />
     <Compile Include="ViewModels\Machine\LampViewModel.cs" />
@@ -147,6 +149,12 @@
     <Compile Include="ViewModels\SequenceItemViewModel.cs" />
     <Compile Include="ViewModels\SequenceViewModelBase.cs" />
     <Compile Include="ViewModels\SequenceYamlItemViewModel.cs" />
+    <Compile Include="Views\GameDataView.xaml.cs">
+      <DependentUpon>GameDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrophyDataView.xaml.cs">
+      <DependentUpon>TrophyDataView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\KeyboardMappingsView.xaml.cs">
       <DependentUpon>KeyboardMappingsView.xaml</DependentUpon>
     </Compile>
@@ -207,6 +215,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AssetViews\VoiceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GameDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TrophyDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -369,6 +385,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ViewModels\GameData\" />
+    <Folder Include="Views\GameData\" />
     <Folder Include="Views\SceneEditViews\" />
   </ItemGroup>
   <ItemGroup>

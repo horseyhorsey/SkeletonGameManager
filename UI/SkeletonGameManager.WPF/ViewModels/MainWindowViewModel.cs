@@ -304,6 +304,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             {
                 await _skeletonGameProvider.LoadYamlEntriesAsync();
 
+
                 _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
 
                 IsMainTabEnabled = true;
