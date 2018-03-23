@@ -1846,6 +1846,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -1867,7 +1868,9 @@
 
                 <ContentPresenter Grid.Row="1" Content="{StaticResource SoundLampDurationCombo}" Margin="3"/>
 
-                <GroupBox Header="Order" Grid.Row="2">
+                <ContentPresenter Grid.Row="2" Content="{StaticResource FontOptionsGrid}" Margin="3"/>
+
+                <GroupBox Header="Order" Grid.Row="3">
                     <ListView ItemsSource="{Binding Order}"                       
                       xmlns:dd="urn:gong-wpf-dragdrop"
                       dd:DragDrop.IsDragSource="True"
