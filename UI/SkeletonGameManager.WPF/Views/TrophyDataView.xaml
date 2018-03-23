@@ -61,7 +61,7 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Grid.Column="0" Source="C:\P-ROC\Games\Gremlins\assets\dmd\trophy.png" Height="50"/>
+                                <Image Grid.Column="0" Source="{Binding Icon}" Height="50"/>
                                 <TextBox Grid.Column="1" Text="{Binding Description}"
                                          MaxHeight="20"
                                          HorizontalAlignment="Stretch"
