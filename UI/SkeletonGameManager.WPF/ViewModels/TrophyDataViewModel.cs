@@ -4,6 +4,8 @@ using SkeletonGame.Models.Data;
 using SkeletonGameManager.WPF.Events;
 using SkeletonGameManager.WPF.Providers;
 using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -18,13 +20,13 @@ namespace SkeletonGameManager.WPF.ViewModels
         #endregion
 
         #region Fields
-        private ISkeletonGameProvider _skeletonGameProvider;
+        public ISkeletonGameProvider _skeletonGameProvider { get; set; }    
         #endregion
 
         #region Constructors
         public TrophyDataViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {
-            _skeletonGameProvider = skeletonGameProvider;
+            _skeletonGameProvider = skeletonGameProvider;            
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
 
@@ -36,7 +38,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             SaveCommand = new DelegateCommand(() =>
             {
                 _skeletonGameProvider.SaveTrophyData(TrophyData);
-            });
+            });            
         }
         #endregion
 
@@ -44,10 +46,29 @@ namespace SkeletonGameManager.WPF.ViewModels
         public override async Task OnLoadYamlFilesChanged()
         {
             TrophyData = _skeletonGameProvider.TrophyData;
+
+            //UiIcon
+            foreach ( var trophy in TrophyData.Trophys.Values)
+            {
+                //Assign the default trophy icon if value is empty for an icon
+                var iconKey = string.Empty;
+                if (string.IsNullOrWhiteSpace(trophy.Icon))
+                    iconKey = "trophy";
+                else
+                    iconKey = trophy.Icon;
+
+                //Get the animation from the assets
+                var trophyAnim = _skeletonGameProvider.AssetsConfig.Animations.FirstOrDefault(x => x.Key == iconKey);
+
+                //Create a URI to view in the UI
+                trophy.UiIcon = 
+                    new Uri(Path.Combine(_skeletonGameProvider.GameFolder,
+                    _skeletonGameProvider.GameConfig.DmdPath, trophyAnim.File), UriKind.RelativeOrAbsolute).AbsolutePath;
+            }
         }
         #endregion
 
-        #region Provate Methods
+        #region Private Methods
 
         /// <summary>
         /// Called when [create trophy]. Adds the trophy to the disctionary if key doesn't exist
@@ -58,7 +79,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             {
                 TrophyData.Trophys.Add(this.NewTrophyName, new Trophy
                 {
-                    Description = this.NewTrophyDesc,
+                    Description = this.NewTrophyDesc                    
                 });
             }            
         }

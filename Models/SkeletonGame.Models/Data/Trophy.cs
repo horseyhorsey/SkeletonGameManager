@@ -13,6 +13,12 @@ namespace SkeletonGame.Models.Data
 
         [YamlMember(Alias = "icon", ApplyNamingConventions = false)]
         public string Icon { get; set; }
+
+        /// <summary>
+        /// Gets or sets icon to view in the UI
+        /// </summary>
+        [YamlIgnore]
+        public string UiIcon { get; set; }
     }
 
     public class TrophyData
