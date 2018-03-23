@@ -386,7 +386,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\GameData\" />
-    <Folder Include="Views\GameData\" />
     <Folder Include="Views\SceneEditViews\" />
   </ItemGroup>
   <ItemGroup>

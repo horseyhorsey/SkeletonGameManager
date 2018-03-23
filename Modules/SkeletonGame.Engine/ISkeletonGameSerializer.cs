@@ -44,6 +44,7 @@ namespace SkeletonGame.Engine
             try
             {
                 var deserializer = new DeserializerBuilder()
+                .IgnoreUnmatchedProperties()                
                 .WithNamingConvention(new CamelCaseNamingConvention())
                 .Build();
 

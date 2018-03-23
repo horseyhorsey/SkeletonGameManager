@@ -98,7 +98,7 @@ namespace SkeletonGame.Tests
         {
             //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
             var gData = _skeleSerializer
-                .DeserializeSkeletonYaml<GameData>(@"TestData/EmptyGame/config/audits.yaml");
+                .DeserializeSkeletonYaml<GameData>(@"TestData/EmptyGame/config/game_default_data.yaml");
         }
 
         [Fact]
