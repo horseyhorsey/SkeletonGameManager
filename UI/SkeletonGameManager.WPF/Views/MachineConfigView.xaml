@@ -55,13 +55,20 @@
                                     >
 
                                 <ToggleButton.Resources>
+                                    
+                                    <ObjectDataProvider x:Key="procSwitchTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
+                                        <ObjectDataProvider.MethodParameters>
+                                            <x:Type Type="{x:Type model:ProcSwitchType}"/>
+                                        </ObjectDataProvider.MethodParameters>
+                                    </ObjectDataProvider>
+                                    
                                     <ObjectDataProvider x:Key="vpSwitchTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
                                         <ObjectDataProvider.MethodParameters>
                                             <x:Type Type="{x:Type model:VpSwitchType}"/>
                                         </ObjectDataProvider.MethodParameters>
                                     </ObjectDataProvider>
                                 </ToggleButton.Resources>
-                                
+
                                 <ToggleButton.Content>
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -83,11 +90,12 @@
                                                    HorizontalAlignment="Left" 
                                                    />
 
-                                            <ComboBox Background="Transparent" SelectedItem="{Binding Type}" Margin="30,0"
-                                                 ToolTip="NC or NO = Normally closed, Normally Open" Height="20"                                                                                                    
+                                            <ComboBox Background="Transparent" 
+                                                      SelectedItem="{Binding Type}" 
+                                                      ItemsSource="{Binding Source={StaticResource procSwitchTypes}}"
+                                                      Margin="30,0"
+                                                      ToolTip="NC : NO = Normally closed, Normally Open" Height="20"                                                                                                    
                                                    >
-                                                <ComboBoxItem>NO</ComboBoxItem>
-                                                <ComboBoxItem>NC</ComboBoxItem>
                                             </ComboBox>
 
                                             <ComboBox Background="Transparent" 

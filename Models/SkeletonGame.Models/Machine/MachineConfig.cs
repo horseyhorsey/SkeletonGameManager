@@ -41,11 +41,11 @@ namespace SkeletonGame.Models.Machine
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class PRSwitch : GameItemBase
     {
-        [YamlMember(Alias = "type", ApplyNamingConventions = false)]
-        public string SwitchType { get; set; }
-
         [YamlMember(Alias = "ballsearch", ApplyNamingConventions = false)]
         public string BallSearch { get; set; }
+
+        [YamlMember(Alias = "type", ApplyNamingConventions = false, SerializeAs = typeof(string), ScalarStyle = YamlDotNet.Core.ScalarStyle.SingleQuoted)]
+        public ProcSwitchType? SwitchType { get; set; }
 
         [YamlMember(Alias = "vp_switch_type", ApplyNamingConventions = false)]
         public VpSwitchType? VpSwitchType { get; set; }

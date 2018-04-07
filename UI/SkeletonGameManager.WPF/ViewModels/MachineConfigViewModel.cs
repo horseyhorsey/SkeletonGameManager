@@ -204,7 +204,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         {
                             sw.Name = prSwitch.Name;
                             sw.Tags = prSwitch.Tags;
-                            sw.Type = prSwitch.SwitchType;
+                            sw.Type = prSwitch.SwitchType.GetValueOrDefault();
                             sw.Label = prSwitch.Label;
                             sw.VpSwitchType = prSwitch.VpSwitchType;
 
