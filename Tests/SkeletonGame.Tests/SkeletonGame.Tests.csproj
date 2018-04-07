@@ -36,6 +36,9 @@
     <None Update="TestData\EmptyGame\config\game_default_data.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\EmptyGame\config\hiscore_default_data.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\EmptyGame\config\machine.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -102,6 +102,14 @@ namespace SkeletonGame.Tests
         }
 
         [Fact]
+        public void DeserializeHighScoreDefaults()
+        {
+            //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
+            var gData = _skeleSerializer
+                .DeserializeSkeletonYaml<HighScoreData>(@"TestData/EmptyGame/config/hiscore_default_data.yaml");
+        }
+
+        [Fact]
         public void DeserializeTrophyData()
         {
             //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
