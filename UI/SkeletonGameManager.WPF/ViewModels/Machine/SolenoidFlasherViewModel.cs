@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace SkeletonGameManager.WPF.ViewModels.Machine
 {
+    /// <summary>
+    /// Represents a coil..a Flasher or Std solenoid
+    /// </summary>
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class SolenoidFlasherViewModel
     {

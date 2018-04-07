@@ -322,7 +322,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                     });
                 }
 
-                for (int i = 37; i < 44; i++)
+                for (int i = 34; i < 74; i++)
                 {
                     Coils.Add(new SolenoidFlasherViewModel
                     {
