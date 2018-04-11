@@ -61,9 +61,10 @@ namespace SkeletonGameManager.WPF.ViewModels
                 var trophyAnim = _skeletonGameProvider.AssetsConfig.Animations.FirstOrDefault(x => x.Key == iconKey);
 
                 //Create a URI to view in the UI
-                trophy.UiIcon = 
-                    new Uri(Path.Combine(_skeletonGameProvider.GameFolder,
-                    _skeletonGameProvider.GameConfig.DmdPath, trophyAnim.File), UriKind.RelativeOrAbsolute).AbsolutePath;
+                if (trophyAnim != null)
+                {
+                    trophy.UiIcon = new Uri(Path.Combine(_skeletonGameProvider.GameFolder, _skeletonGameProvider.GameConfig.DmdPath, trophyAnim.File), UriKind.RelativeOrAbsolute).AbsolutePath;
+                }                
             }
         }
         #endregion
