@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.IO.Compression;
+using SkeletonGame.Engine.Extensions;
 
 namespace SkeletonGame.Engine
 {
@@ -34,10 +35,18 @@ namespace SkeletonGame.Engine
                 foreach (ZipArchiveEntry entry in archive.Entries)
                 {
                     var fullname = entry.FullName;
-                    if (fullname.Contains($"PyProcGameHD-SkeletonGame-dev/{templateName}"))                    
-                        ExtractFile(gamePath, entry, fullname, $"PyProcGameHD-SkeletonGame-dev/{templateName}/");                    
+
+                    if (fullname.Contains($"PyProcGameHD-SkeletonGame-dev/{templateName}"))
+                        ExtractFile(gamePath, entry, fullname, $"PyProcGameHD-SkeletonGame-dev/{templateName}/");
                     else if (fullname.Contains("PyProcGameHD-SkeletonGame-dev/procgame/"))
                         ExtractFile(gamePath, entry, fullname, "PyProcGameHD-SkeletonGame-dev/");
+                    else if (fullname.Contains("PyProcGameHD-SkeletonGame-dev/SampleGame/UNZIP ME assets.zip"))
+                    {                        
+                        using (ZipArchive assetArchive = new ZipArchive(entry.Open(), ZipArchiveMode.Read))
+                        {
+                            assetArchive.ExtractToDirectory(gamePath, true);
+                        }
+                    }
                 }
             }
         }
