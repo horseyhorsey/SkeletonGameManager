@@ -192,7 +192,12 @@ namespace SkeletonGame.Engine
                                     {
                                         exportString += $"' {_switch.Name} hit {newLine}";
                                         exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit():vpmTimer.PulseSw {_switch.Number.Remove(0, 1)}:End Sub{newLine}";
-                                    }                                    
+                                    } 
+                                    else if(_switch.VpSwitchType == VpSwitchType.Spinner)
+                                    {
+                                        exportString += $"' {_switch.Name} spin {newLine}";
+                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Spin():vpmTimer.PulseSw {_switch.Number.Remove(0, 1)}:End Sub{newLine}";
+                                    }
                                     else if (_switch.VpSwitchType != VpSwitchType.Saucer || _switch.VpSwitchType != VpSwitchType.Vuk || _switch.VpSwitchType != VpSwitchType.Scoop)
                                     {
                                         exportString += $"' {_switch.Name} hit {newLine}";

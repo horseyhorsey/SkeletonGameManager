@@ -9,6 +9,7 @@
         PulseSwitch,
         Saucer,
         Scoop,
+        Spinner,
         Vuk,
     }
 }
