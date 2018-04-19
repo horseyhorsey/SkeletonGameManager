@@ -45,9 +45,13 @@ namespace SkeletonGameManager.WPF.ViewModels.AssetViewModels
         }
 
         private void OnReverseLampshow(LampShow x)
-        {
-            _lampshowEdit.ReverseLampshowFile(Path.Combine(_lampshowPath,x.File),
+        {    
+            //Select a lampshow before reversing
+            if (x != null)
+            {
+                _lampshowEdit.ReverseLampshowFile(Path.Combine(_lampshowPath, x.File),
                 _lampshowPath + $"\\{Path.GetFileNameWithoutExtension(x.File)}_reversed.lampshow");
+            }            
         }
 
         private void LampShows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
