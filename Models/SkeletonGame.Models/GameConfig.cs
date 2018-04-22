@@ -43,7 +43,7 @@ namespace SkeletonGame.Models {
         [YamlMember(Alias = "music_dir", ApplyNamingConventions = false)]
         public string MusicDir { get; set; } = @"music/";
 
-        [YamlMember(Alias = "hdfont_path", ApplyNamingConventions = false)]
+        [YamlMember(Alias = "hdfont_dir", ApplyNamingConventions = false)]
         public string HdFontPath { get; set; } = @"./assets/fonts/";
 
         [YamlMember(Alias = "dmd_grid_path", ApplyNamingConventions = false)]
