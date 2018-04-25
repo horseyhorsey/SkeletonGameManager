@@ -1700,6 +1700,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!--ANIMATION-->
@@ -1719,10 +1720,11 @@
 
                 </GroupBox>
 
-
                 <ContentPresenter Content="{StaticResource SoundLampDurationCombo}" Margin="3" Grid.Row="0"/>
 
                 <ContentPresenter Content="{StaticResource FontOptionsGrid}" Margin="3" Grid.Row="1"/>
+
+                <CheckBox Grid.Row="3" Margin="3" Content="Multiple Screens" IsChecked="{Binding MultipleScreens}"/>
             </Grid>
         </GroupBox>
     </DataTemplate>
