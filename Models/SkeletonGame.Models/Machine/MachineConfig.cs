@@ -2,7 +2,7 @@
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Machine
-{
+{    
     public class GameItemBase
     {
         [YamlMember(Alias = "name", ApplyNamingConventions = false, Order = 0)]
@@ -11,13 +11,14 @@ namespace SkeletonGame.Models.Machine
         [YamlMember(Alias = "number", ApplyNamingConventions = false, Order = 1)]
         public string Number { get; set; }
 
-        [YamlMember(Alias = "tags", ApplyNamingConventions = false, Order = 2)]
-        public string Tags { get; set; }
+        [YamlMember(Alias = "tags", ApplyNamingConventions = false, Order = 2, SerializeAs = typeof(string))]
+        public string Tags { get; set; } = string.Empty;
 
         [YamlMember(Alias = "label", ApplyNamingConventions = false, Order = 3)]
         public string Label { get; set; }
     }
 
+    [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class PRCoil : GameItemBase
     {
         [YamlMember(Alias = "pulseTime", ApplyNamingConventions = false)]

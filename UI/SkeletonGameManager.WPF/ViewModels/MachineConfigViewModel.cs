@@ -231,6 +231,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                         coil.Number = prCoil.Number;
                         coil.PatterOffTime = prCoil.PatterOffTime;
                         coil.PatterOnTime = prCoil.PatterOnTime;
+                        coil.Tags = prCoil?.Tags;
                         coil.PulseTime = prCoil.PulseTime;
                         coil.SolenoidType = prCoil.SolenoidType ?? 0;
                         coil.BallSearch = prCoil.BallSearch;
@@ -319,7 +320,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                     Coils.Add(new SolenoidFlasherViewModel
                     {
                         Name = desc,
-                        Number = flipCoil,
+                        Number = flipCoil,                        
                     });
                 }
 
