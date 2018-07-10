@@ -43,29 +43,39 @@ namespace SkeletonGameManager.WPF.ViewModels
         #endregion
 
         #region Public Methods
-        public override async Task OnLoadYamlFilesChanged()
-        {
+        public override Task OnLoadYamlFilesChanged()
+        {            
             TrophyData = _skeletonGameProvider.TrophyData;
 
-            //UiIcon
-            foreach ( var trophy in TrophyData.Trophys.Values)
+            if (TrophyData != null)
             {
-                //Assign the default trophy icon if value is empty for an icon
-                var iconKey = string.Empty;
-                if (string.IsNullOrWhiteSpace(trophy.Icon))
-                    iconKey = "trophy";
-                else
-                    iconKey = trophy.Icon;
-
-                //Get the animation from the assets
-                var trophyAnim = _skeletonGameProvider.AssetsConfig.Animations.FirstOrDefault(x => x.Key == iconKey);
-
-                //Create a URI to view in the UI
-                if (trophyAnim != null)
+                return Task.Run(() =>
                 {
-                    trophy.UiIcon = new Uri(Path.Combine(_skeletonGameProvider.GameFolder, _skeletonGameProvider.GameConfig.DmdPath, trophyAnim.File), UriKind.RelativeOrAbsolute).AbsolutePath;
-                }                
+                    //UiIcon
+                    foreach (var trophy in TrophyData.Trophys.Values)
+                    {
+                        //Assign the default trophy icon if value is empty for an icon
+                        var iconKey = string.Empty;
+                        if (string.IsNullOrWhiteSpace(trophy.Icon))
+                            iconKey = "trophy";
+                        else
+                            iconKey = trophy.Icon;
+
+                        //Get the animation from the assets
+                        var trophyAnim = _skeletonGameProvider.AssetsConfig.Animations.FirstOrDefault(x => x.Key == iconKey);
+
+                        //Create a URI to view in the UI
+                        if (trophyAnim != null)
+                        {
+                            trophy.UiIcon = new Uri(Path.Combine(_skeletonGameProvider.GameFolder, _skeletonGameProvider.GameConfig.DmdPath, trophyAnim.File), UriKind.RelativeOrAbsolute).AbsolutePath;
+                        }
+                    }
+                });
             }
+
+            //Clear trophys if failed
+            _skeletonGameProvider.TrophyData.Trophys.Clear();
+            return Task.CompletedTask;
         }
         #endregion
 
