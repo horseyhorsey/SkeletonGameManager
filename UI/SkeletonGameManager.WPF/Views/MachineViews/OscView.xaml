@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" x:Class="SkeletonGameManager.WPF.Views.MachineViews.OscView"
-             xmlns:behaviours="clr-namespace:SkeletonGameManager.WPF.Behaviours"
-            xmlns:controls="clr-namespace:SkeletonGameManager.WPF.Controls"
+             xmlns:behaviours="clr-namespace:SkeletonGameManager.WPF.Behaviours"            
             mc:Ignorable="d" 
              >
     <ScrollViewer Background="{StaticResource Brush_GradientBackground}">
@@ -38,14 +37,14 @@
                     
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas/>
+                            <Canvas Width="400" Height="600"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
 
                     <ItemsControl.ItemContainerStyle>
                         <Style TargetType="{x:Type ContentPresenter}">
-                            <Setter Property="Canvas.Top" Value="{Binding PosTop, UpdateSourceTrigger=PropertyChanged}"/>
-                            <Setter Property="Canvas.Left" Value="{Binding PosLeft, UpdateSourceTrigger=PropertyChanged}"/>
+                            <!--<Setter Property="Canvas.Top" Value="{Binding PosTop, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Setter Property="Canvas.Left" Value="{Binding PosLeft, UpdateSourceTrigger=PropertyChanged}"/>-->
                         </Style>
                     </ItemsControl.ItemContainerStyle>
 

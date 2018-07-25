@@ -1,18 +1,16 @@
 ﻿using Prism.Commands;
-using Prism.Mvvm;
-using SkeletonGameManager.WPF.Providers;
 using System.Windows.Forms;
-using System.Windows.Input;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using Prism.Events;
-using SkeletonGameManager.WPF.Events;
 using SkeletonGameManager.WPF.Views;
 using System.Diagnostics;
 using System.Windows;
 using SkeletonGame.Engine;
 using System.Collections.Generic;
+using SkeletonGameManager.Base;
+using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -27,6 +25,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         public DelegateCommand SetDirectoryCommand { get; set; }
         public DelegateCommand RefreshObjectsCommand { get; set; }
         public DelegateCommand CreateNewGameCommand { get; set; }
+        public DelegateCommand<string> OpenRecentCommand { get; set; }        
         public DelegateCommand<string> OpenFileFolderCommand { get; set; }
         public DelegateCommand LaunchGameCommand { get; set; }
         public DelegateCommand OpenGameFolderCommand { get; set; }
@@ -45,6 +44,8 @@ namespace SkeletonGameManager.WPF.ViewModels
             RefreshObjectsCommand = new DelegateCommand(async () => await OnRefreshSkeletonGameObjects(), () => IsValidGameFolder());
 
             CreateNewGameCommand = new DelegateCommand(CreateNewGame);
+
+            OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent);
 
             OpenFileFolderCommand = new DelegateCommand<string>((x) =>
             {
@@ -83,8 +84,21 @@ namespace SkeletonGameManager.WPF.ViewModels
             OpenGameFolderCommand = new DelegateCommand(() => Process.Start(_skeletonGameProvider.GameFolder), () => IsValidGameFolder());
         }
 
+        /// <summary>
+        /// Called from command when user requests to open a recent folder
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        private async void OnOpenRecent(string obj)
+        {
+            await SetGamePath(obj);
+        }
+
+        /// <summary>
+        /// Creates the new game.
+        /// </summary>
         private void CreateNewGame()
         {
+            //TODO: Use Prism request dialog
             var vm = new CreateNewGameWindowViewModel();
             var window = new CreateNewGameWindow();
             window.DataContext = vm;
@@ -304,7 +318,6 @@ namespace SkeletonGameManager.WPF.ViewModels
             {
                 await _skeletonGameProvider.LoadYamlEntriesAsync();
 
-
                 _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
 
                 IsMainTabEnabled = true;
@@ -321,9 +334,9 @@ namespace SkeletonGameManager.WPF.ViewModels
         }
 
         /// <summary>
-        /// Called when /[set directory], sets the current skeleton game folder path
+        /// Sets the current skeleton game folder path and loads the configuration for a game if a valid folder is given
         /// </summary>
-        private void OnSetDirectory()
+        private async void OnSetDirectory()
         {
             var dlg = new FolderBrowserDialog();
             dlg.SelectedPath = @"C:\P-ROC";
@@ -331,14 +344,28 @@ namespace SkeletonGameManager.WPF.ViewModels
 
             if (result == DialogResult.OK)
             {
-                _skeletonGameProvider.ClearConfigs();
-
-                IsMainTabEnabled = false;
-
-                GameFolder = dlg.SelectedPath;
-
-                //_eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
+                await SetGamePath(dlg.SelectedPath);
             };
+        }
+
+        /// <summary>
+        /// Sets the game path folder. Clears configs.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
+        private async Task SetGamePath(string path)
+        {
+            _skeletonGameProvider.ClearConfigs();
+            IsMainTabEnabled = false;
+            GameFolder = path;
+
+            if (!IsValidGameFolder())
+            {
+                System.Windows.MessageBox.Show($"Not a valid Game folder -  {GameFolder}");
+                GameFolder = null;
+            }
+            else
+                await this.OnRefreshSkeletonGameObjects();
         }
         #endregion
     }

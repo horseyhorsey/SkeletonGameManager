@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Events;
 using SkeletonGame.Models.Score;
-using SkeletonGameManager.WPF.Events;
-using SkeletonGameManager.WPF.Providers;
+using SkeletonGameManager.Base;
+using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {

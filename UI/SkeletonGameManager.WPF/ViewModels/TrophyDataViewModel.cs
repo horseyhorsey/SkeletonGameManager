@@ -1,13 +1,13 @@
 ﻿using Prism.Commands;
 using Prism.Events;
 using SkeletonGame.Models.Data;
-using SkeletonGameManager.WPF.Events;
-using SkeletonGameManager.WPF.Providers;
+using SkeletonGameManager.Base;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {

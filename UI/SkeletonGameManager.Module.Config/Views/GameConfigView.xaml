@@ -1,0 +1,339 @@
+﻿<UserControl x:Class="SkeletonGameManager.Module.Config.Views.GameConfigView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"              
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"             
+             xmlns:enum="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:views="clr-namespace:SkeletonGameManager.Module.Config.Views"
+             mc:Ignorable="d" 
+             Background="{DynamicResource Brush_GradientBackground}"
+             d:DesignHeight="768" d:DesignWidth="768">
+    <UserControl.Resources>
+
+        <!--ROUNDED TEXTBOX-->
+        <Style TargetType="TextBox" BasedOn="{StaticResource TextBox_Rounded}">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="DarkSlateGray"/>
+        </Style>
+
+        <ObjectDataProvider x:Key="BufferSizes" MethodName="GetValues" 
+                        ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enum:BufferSize"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="{x:Type xctk:IntegerUpDown}">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="ClipValueToMinMax" Value="True"/>
+        </Style>
+
+        <Style TargetType="{x:Type xctk:DoubleUpDown}">
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Minimum" Value="0"/>
+            <Setter Property="MinWidth" Value="60"/>
+            <Setter Property="ClipValueToMinMax" Value="True"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!--PATHS-->
+        <GroupBox BorderThickness="3" Grid.Column="1">
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <ContentPresenter Content="{DynamicResource Path_Dir}"/>
+                    <TextBlock Text="Paths" FontWeight="DemiBold"/>
+                </DockPanel>
+            </GroupBox.Header>
+
+            <StackPanel>
+                <TextBlock Text="DMD Path"/>
+                <TextBox Text="{Binding GameConfigModel.DmdPath, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{DynamicResource Tip_PathsDmd}"
+                         />
+
+                <TextBlock Text="Sound Path"/>
+                <TextBox Text="{Binding GameConfigModel.SoundPath, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{DynamicResource Tip_PathsSound}"
+                         />
+
+                <TextBlock Text="Voice Dir"/>
+                <TextBox Text="{Binding GameConfigModel.VoiceDir, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{DynamicResource Tip_PathsVoice}"
+                         />
+
+                <TextBlock Text="Sfx Dir"/>
+                <TextBox Text="{Binding GameConfigModel.SfxDir, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{DynamicResource Tip_PathsSfx}"
+                         />
+
+                <TextBlock Text="HdFont Path"/>
+                <TextBox Text="{Binding GameConfigModel.HdFontPath, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{DynamicResource Tip_PathsHdFonts}"
+                         />
+
+                <TextBlock Text="SDL DLL Path"/>
+                <TextBox Text="{Binding GameConfigModel.PySdlDllPath, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{DynamicResource Tip_PathsSdlPath}"
+                         />
+
+                <TextBlock Text="VP Game Map file"/>
+                <TextBox Text="{Binding GameConfigModel.VpGameMapFile, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{DynamicResource Tip_PathsVpGameMap}"
+                         />
+            </StackPanel>
+
+        </GroupBox>
+
+        <!--DEFAULT MODES-->
+        <GroupBox  Grid.Column="1" Grid.Row="2" BorderThickness="3">
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <ContentPresenter Content="{DynamicResource Path_Progress}"/>
+                    <TextBlock Text="Default Modes" FontWeight="DemiBold"/>
+                </DockPanel>
+            </GroupBox.Header>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Attract" Grid.Row="0"/>
+                <CheckBox Grid.Row="0" Grid.Column="1" 
+                          ToolTip="{DynamicResource Tip_Attract}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.Attract, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Bonus Tally" Grid.Column="2"/>
+                <CheckBox Grid.Column="3" 
+                          ToolTip="{DynamicResource Tip_BonusTally}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.BonusTally, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Service" Grid.Row="0" Grid.Column="4"/>
+                <CheckBox Grid.Row="0" Grid.Column="5" 
+                          ToolTip="{DynamicResource Tip_ServiceMenu}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.ServiceMode, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Ball Search" Grid.Row="1"/>
+                <CheckBox Grid.Row="1" Grid.Column="1" 
+                          ToolTip="{DynamicResource Tip_BallSearch}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.BallSearch, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Ball Search Delay" Grid.Row="1" Grid.Column="2" ToolTip="{DynamicResource Tip_BallSearchDelay}"/>
+                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Maximum="60" ToolTip="{DynamicResource Tip_BallSearchDelay}"
+                        Value="{Binding GameConfigModel.DefaultModes.BallSearchDelay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Tilt" Grid.Row="2"/>
+                <CheckBox Grid.Row="2" Grid.Column="1" ToolTip="{DynamicResource Tip_TiltConfig}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.TiltMode, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="OSC Input" Grid.Row="2" Grid.Column="2" />
+                <CheckBox  Grid.Row="2" Grid.Column="3" 
+                           ToolTip="{DynamicResource Tip_OSC}"
+                           IsChecked="{Binding GameConfigModel.DefaultModes.OscInput, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Profiles" Grid.Row="3" Grid.Column="0"/>
+                <CheckBox Grid.Row="3" Grid.Column="1" x:Name="ProfileCheckBox"
+                          ToolTip="{DynamicResource Tip_Profiles}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.PlayerProfiles, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Text="Trophys" Grid.Row="3" Grid.Column="2"/>
+                <CheckBox Grid.Row="3" Grid.Column="3" IsEnabled="{Binding ElementName=ProfileCheckBox, Path=IsChecked}"
+                          ToolTip="{DynamicResource Tip_Trophys}"
+                          IsChecked="{Binding GameConfigModel.DefaultModes.PlayerTrophys, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+
+        </GroupBox>
+
+        <!--SAVE-->
+        <Button Grid.Row="4" Grid.ColumnSpan="3"                
+                Style="{DynamicResource StyleSaveButton}"                             
+                ToolTip="{DynamicResource Tip_SaveConfigGame}"/>
+
+        <!--DMD OPTIONS-->
+        <StackPanel Grid.Column="0">
+
+            <!--DISPLAY ( DMD )-->
+            <GroupBox Grid.Column="1" Grid.Row="0" BorderThickness="3">
+
+                <GroupBox.Header>
+                    <DockPanel>
+                        <ContentPresenter Content="{DynamicResource Path_Attract}"/>
+                        <TextBlock Text="Display (Dmd)" FontWeight="DemiBold"/>
+                    </DockPanel>
+                </GroupBox.Header>
+                
+                <StackPanel Margin="3">
+
+                    <TextBlock Text="Dmd Grid Path"/>
+                    <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="{DynamicResource Tip_DmdGrid}"
+                             />
+
+                    <Grid Margin="5">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Width"/>
+                        <xctk:IntegerUpDown Grid.Column="1"
+                                            ToolTip="{DynamicResource Tip_DmdResolution}"
+                                            Value="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Height" Grid.Column="2"/>
+                        <xctk:IntegerUpDown Grid.Column="3" 
+                                            ToolTip="{DynamicResource Tip_DmdResolution}"
+                                            Value="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Scale" Grid.Column="4"/>
+                        <xctk:IntegerUpDown Grid.Column="5" Minimum="1" Maximum="10"    
+                                            ToolTip="{DynamicResource Tip_DmdScale}"
+                                            Text="{Binding GameConfigModel.DesktopDmdScale, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Framerate" Grid.Row="1"/>
+                        <xctk:DoubleUpDown Grid.Column="1" Grid.Row="1" ToolTip="{DynamicResource Tip_DmdScale}"
+                                           Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Pos X" Grid.Row="2"/>
+                        <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1"
+                                            ToolTip="{DynamicResource Tip_DmdPosition}"
+                                            Value="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <TextBlock Text="Pos Y" Grid.Column="2" Grid.Row="2"/>
+                        <xctk:IntegerUpDown Grid.Column="3" Grid.Row="2" 
+                                            ToolTip="{DynamicResource Tip_DmdPosition}"
+                                            Value="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+                        <TextBlock Text="Flip" Grid.Column="0" Grid.Row="3"/>
+                        <xctk:IntegerUpDown Grid.Column="1" Grid.Row="3" Margin="3" Minimum="0" Maximum="3"
+                                            ToolTip="{DynamicResource Tip_DmdFlipped}"
+                                  Value="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="6">
+                            <CheckBox Grid.Row="4" Margin="3" Grid.Column="0" Content="Bordered Window"
+                                  ToolTip="{DynamicResource Tip_DmdBordered}"
+                                  IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <CheckBox Grid.Column="1" Grid.Row="4" Margin="3"
+                                   ToolTip="{DynamicResource Tip_DmdFramerate}"
+                                  IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}" Content="Dot Filter"/>
+
+                            <CheckBox Grid.Column="2" Grid.Row="4" Margin="3"
+                                  ToolTip="Raises the window above every other window. Good for Visual Pinball or always having the display in view"
+                                  IsChecked="{Binding GameConfigModel.AlwaysOnTop, UpdateSourceTrigger=PropertyChanged}" Content="On Top"                                  
+                                  />
+
+                            <CheckBox Grid.Column="2" Grid.Row="4" Margin="3"
+                                  IsChecked="{Binding GameConfigModel.DmdFullscreen, UpdateSourceTrigger=PropertyChanged}" 
+                                      Content="Full Screen" ToolTip="{StaticResource Tip_DmdFullScreen}"
+                                  />
+                        </StackPanel>
+
+                    </Grid>
+
+                </StackPanel>
+
+            </GroupBox>
+
+            <!--AUDIO OPTIONS-->
+            <GroupBox Grid.Row="2" BorderThickness="3">
+
+                <GroupBox.Header>
+                    <DockPanel>
+                        <ContentPresenter Content="{DynamicResource Path_Sound}"/>
+                        <TextBlock Text="Audio" FontWeight="DemiBold"/>
+                    </DockPanel>
+                </GroupBox.Header>
+                
+                <StackPanel>
+                    <TextBlock Text="Buffer size"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource BufferSizes}}" SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding GameConfigModel.AudioFrequency}"/>
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+        
+        <!--KEYBOARD MAPPINGS-->
+        <GroupBox Grid.Row="2" Grid.Column="0" Grid.RowSpan="3"
+                  >
+            <GroupBox.Header>
+                <DockPanel>
+                    <ContentPresenter Content="{DynamicResource Path_Pause}"/>
+                    <TextBlock Text="Keyboard > Switch Mappings" FontWeight="DemiBold"/>
+                </DockPanel>
+            </GroupBox.Header>
+
+            <views:KeyboardMappingsView/>
+                        
+        </GroupBox>
+
+
+    </Grid>
+</UserControl>

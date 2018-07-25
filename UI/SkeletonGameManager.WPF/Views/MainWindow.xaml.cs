@@ -20,5 +20,10 @@ namespace SkeletonGameManager.WPF.Views
             _style = (Style)Resources["ChromeWindow"];
             this.Style = _style;
         }
+
+        private void Close_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

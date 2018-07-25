@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="SkeletonGameManager.Module.Assets.Views.LampshowView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <Button Content="{StaticResource Path_Dir}"
+                    ToolTip="{StaticResource OpenDir}"
+                    VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
+        </StackPanel>
+
+        <Button Content="{StaticResource Path_Lamps}" Grid.Column="1"
+                    ToolTip="Reverse selected"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom" Height="30" Width="35" 
+                    Command="{Binding ReverseLampshowCommand}"
+                    CommandParameter="{Binding ElementName=LampsDataGrid, Path=SelectedItem}"
+                />
+
+        <!--TITLE AND HELP-->
+        <StackPanel  Orientation="Horizontal" Grid.Row="2">
+            <Label Content="Available Show files"/>
+            <Label Content="Drag/Drop lampshows to add to this list" FontStyle="Italic" FontSize="12"/>
+        </StackPanel>
+
+        <Grid Grid.Row="3">
+            <ListView ItemsSource="{Binding AssetFiles, UpdateSourceTrigger=PropertyChanged}"
+                                  dd:DragDrop.IsDragSource="True"
+                                  dd:DragDrop.IsDropTarget="True"
+                                  dd:DragDrop.DropHandler="{Binding}" Margin="0,-1,0,1"
+                                  />
+        </Grid>
+
+        <!--Lampshows in asset_list-->
+        <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="2">
+            <Label Content="Applied" />
+            <Label Content="Use delete key to remove from saved list" FontStyle="Italic" FontSize="12"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="3" Grid.Column="1" x:Name="LampsDataGrid"
+                              AutoGenerateColumns="False" CanUserAddRows="False"
+                              dd:DragDrop.IsDropTarget="True"
+                              dd:DragDrop.DropHandler="{Binding}"
+                              ItemsSource="{Binding LampShows, UpdateSourceTrigger=PropertyChanged}">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Key}" Header="Key"/>
+                <DataGridTextColumn Binding="{Binding File}" Width="1*" IsReadOnly="True" Header="File"/>
+            </DataGrid.Columns>
+
+            
+        </DataGrid>
+
+    </Grid>
+</UserControl>

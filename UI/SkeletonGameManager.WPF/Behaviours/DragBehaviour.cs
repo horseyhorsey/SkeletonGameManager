@@ -1,5 +1,4 @@
-﻿using SkeletonGameManager.WPF.Controls;
-using SkeletonGameManager.WPF.ViewModels.Machine;
+﻿using SkeletonGameManager.Module.Config.ViewModels.Machine;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
@@ -17,12 +16,12 @@ namespace SkeletonGameManager.WPF.Behaviours
         {
             Window parent = Application.Current.MainWindow;
             AssociatedObject.RenderTransform = transform;
-
+            //AssociatedObject.SetValue(Canvas.LeftProperty, 0);
             AssociatedObject.PreviewMouseLeftButtonDown += (sender, e) =>
-            {                
-                elementStartPosition = AssociatedObject.TranslatePoint(new Point(), parent);
-                mouseStartPosition = e.GetPosition(parent);
+            {
                 AssociatedObject.CaptureMouse();
+                elementStartPosition = AssociatedObject.TranslatePoint(new Point(), parent);
+                mouseStartPosition = e.GetPosition(parent);                
             };
 
             AssociatedObject.PreviewMouseLeftButtonUp += (sender, e) =>

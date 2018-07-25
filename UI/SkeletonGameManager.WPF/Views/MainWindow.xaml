@@ -1,13 +1,11 @@
 ﻿<Window x:Class="SkeletonGameManager.WPF.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:prism="http://prismlibrary.com/"
-        xmlns:views="clr-namespace:SkeletonGameManager.WPF.Views"
+        xmlns:prism="http://prismlibrary.com/"        
         prism:ViewModelLocator.AutoWireViewModel="True"       
-        WindowStyle="None" ResizeMode="CanResizeWithGrip"
-        AllowsTransparency="True" ShowInTaskbar="True"
-        Background="Transparent"        
-        
+        WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="True"
+        Background="White"                
         Title="{Binding Title}" Width="1024" Height="768">
 
     <Window.Resources>
@@ -21,209 +19,234 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
-        <Style x:Key="ChromeWindow" TargetType="{x:Type views:MainWindow}">
+        <!--<Style x:Key="ChromeWindow" TargetType="{x:Type views:MainWindow}">
 
             <Setter Property="WindowChrome.WindowChrome">
                 <Setter.Value>
-                    <WindowChrome GlassFrameThickness="1"
-                                  ResizeBorderThickness="5"
+                    <WindowChrome GlassFrameThickness="20"
+                                  ResizeBorderThickness="15"
                                   CaptionHeight="20"
                                   />
                 </Setter.Value>
             </Setter>
+        </Style>-->
 
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type views:MainWindow}">
-                        
-                        <Grid x:Name="LayoutRoot">
-                            <!--DISPLAY WINDOW CONTENT-->
-                            <Border Background="LightGray" CornerRadius="0,15,0,0">
-                                <ContentPresenter Content="{TemplateBinding Content}"/>
-                            </Border>
-                            
-                            <!--BEHIND WINDOW-->
-                            <Border CornerRadius="15"
-                                    Background="SlateGray"
-                                    BorderThickness="5"
-                                    Grid.ZIndex="-1">
-                            </Border>
+    </Window.Resources>
 
-                            <Grid Margin="15"  >
+    <Window.CommandBindings>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+        <!--NEW GAME-->
+        <!--<CommandBinding Command="{Binding CreateNewGameCommand}"/>-->
+        
+        
+        <!--QUIT-->
+        <CommandBinding Command="ApplicationCommands.Close" Executed="Close_Executed"/>
+        
+    </Window.CommandBindings>
 
-                                <!--TITLE-->
-                                <StackPanel Orientation="Horizontal">
-                                    
-                                    <ContentPresenter Margin="5" 
-                                                      VerticalAlignment="Bottom"
-                                                      Content="{StaticResource Path_Skele}"/>
-                                    
-                                    <TextBlock Grid.Row="0" Text="SkeletonGame Manager" 
+    <Window.InputBindings>
+        <KeyBinding Key="N" Gesture="Ctrl+N" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.New}"/>
+        <KeyBinding Key="O" Gesture="Ctrl+O" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.Open}"/>
+        <KeyBinding Key="Q" Gesture="Ctrl+Q" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.Close}"/>
+    </Window.InputBindings>
+
+    <Grid x:Name="LayoutRoot">
+
+        <Grid Margin="0,20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--TITLE-->
+            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
+
+                <ContentPresenter Margin="5" VerticalAlignment="Bottom" Content="{StaticResource Path_Skele}"/>
+
+                <TextBlock Grid.Row="0" Text="SkeletonGame Manager" 
                                                FontSize="24" FontStyle="Italic"
                                                VerticalAlignment="Bottom"
                                                FontWeight="DemiBold" Margin="5,10,0,0"
                                                />
 
-                                    <DockPanel Margin="20,3" Grid.Row="2" VerticalAlignment="Bottom">
+                <DockPanel Margin="20,3" Grid.Row="2" VerticalAlignment="Bottom">
 
-                                        <Menu VerticalAlignment="Bottom">
-                                            
-                                            <MenuItem Header="Options">
-                                                <MenuItem Header="New" Command="{Binding CreateNewGameCommand}">
-                                                </MenuItem>
-                                            </MenuItem>
-                                        </Menu>
-
-                                        <!--HEADER-->
-                                        <TextBlock Text="{StaticResource GameFolder}" Margin="20,0"
+                    <!--HEADER-->
+                    <TextBlock Text="{StaticResource GameFolder}" Margin="20,0"
                                                    FontStyle="Italic" VerticalAlignment="Bottom"
                                                    FontWeight="Bold"
                                                    DockPanel.Dock="Left"/>
 
-                                        <!--GAME FOLDER-->
-                                        <TextBox Text="{Binding GameFolder, UpdateSourceTrigger=PropertyChanged}" 
+                    <!--GAME FOLDER-->
+                    <TextBox Text="{Binding GameFolder, UpdateSourceTrigger=PropertyChanged}" 
                                             MinWidth="300" MaxHeight="20" DockPanel.Dock="Left"
                                                  VerticalAlignment="Bottom"
                                             ToolTip="Current skeleton game folder"
                                                 />
 
-                                        <!--LOAD YAMLS-->
-                                        <Button Content="Load" MaxWidth="50"
+                    <!--LOAD YAMLS-->
+                    <Button Content="Load" MaxWidth="50"
                                                 DockPanel.Dock="Right" 
                                                 ToolTip="Load / Refresh from the games yaml configurations"
                                                 VerticalAlignment="Bottom"
                                                 Command="{Binding RefreshObjectsCommand}"
                                                 />
 
-                                        <!--SET DIR-->
-                                        <Button Content="..." MaxWidth="50" DockPanel.Dock="Right" ToolTip="Set game folder"
+                    <!--SET DIR-->
+                    <Button Content="..." MaxWidth="50" DockPanel.Dock="Right" ToolTip="Set game folder"
                                                 VerticalAlignment="Bottom"
                                                 Command="{Binding SetDirectoryCommand}"
                                                 />
 
-                                        <!--LAUNCH GAME-->
-                                        <Button Content="{StaticResource Path_Game}" 
+                    <!--LAUNCH GAME-->
+                    <Button Content="{StaticResource Path_Game}" 
                                             Width="25" Height="20"
                                             VerticalAlignment="Bottom"
                                             DockPanel.Dock="Right"
                                             ToolTip="{StaticResource GameLaunchInfo}"                                            
                                             Command="{Binding LaunchGameCommand}"/>
 
-                                        <!--OPEN GAME FOLDER-->
-                                        <Button Content="{StaticResource Path_Dir}" 
+                    <!--OPEN GAME FOLDER-->
+                    <Button Content="{StaticResource Path_Dir}" 
                                             Width="25" Height="20"
                                             VerticalAlignment="Bottom"
                                             DockPanel.Dock="Right"
                                             ToolTip="Open this game path"                                            
                                             Command="{Binding OpenGameFolderCommand}"/>
 
-                                    </DockPanel>
-                                </StackPanel>
+                </DockPanel>
+            </StackPanel>
 
-                                <Separator Grid.Row="1" Background="White"/>
+            <!--YAML CONFIG VIEWS-->
+            <TabControl Grid.Row="3" Margin="3" IsEnabled="{Binding IsMainTabEnabled}">
 
-                                <!--YAML CONFIG VIEWS-->
-                                <TabControl Grid.Row="3" Margin="3" IsEnabled="{Binding IsMainTabEnabled}">
+                <!--SKELETON GAME CONFIG-->
+                <TabItem ToolTip="{StaticResource ConfigYaml}">
 
-                                    <!--SKELETON GAME CONFIG-->
-                                    <TabItem ToolTip="{StaticResource ConfigYaml}">
-
-                                        <TabItem.Header>
-                                            <DockPanel>
-                                                <TextBlock Text="Config" Margin="3"/>
-                                                <Button Style="{StaticResource OpenFileButton}"                                                         
+                    <TabItem.Header>
+                        <DockPanel>
+                            <TextBlock Text="Config" Margin="3"/>
+                            <Button Style="{StaticResource OpenFileButton}"                                                         
                                                         CommandParameter="config.yaml"
                                                         />
-                                            </DockPanel>
-                                        </TabItem.Header>
-                                        
-                                        <ContentControl prism:RegionManager.RegionName="ConfigRegion" />
-                                    </TabItem>
+                        </DockPanel>
+                    </TabItem.Header>
 
-                                    <!--MACHINE CONFIG-->
-                                    <TabItem IsEnabled="{Binding IsMachineConfigEnabled}">
-                                        <TabItem.Header>
-                                            <DockPanel>
-                                                <TextBlock Text="Machine Config" Margin="3"/>
-                                                <Button Style="{StaticResource OpenFileButton}"                                                         
+                    <ContentControl prism:RegionManager.RegionName="ConfigRegion" />
+                </TabItem>
+
+                <!--MACHINE CONFIG-->
+                <TabItem IsEnabled="{Binding IsMachineConfigEnabled}">
+                    <TabItem.Header>
+                        <DockPanel>
+                            <TextBlock Text="Machine Config" Margin="3"/>
+                            <Button Style="{StaticResource OpenFileButton}"                                                         
                                                         CommandParameter="machine.yaml"
                                                         />
-                                            </DockPanel>
-                                        </TabItem.Header>
-                                        
-                                        <ContentControl prism:RegionManager.RegionName="MachineRegion" />
-                                    </TabItem>
+                        </DockPanel>
+                    </TabItem.Header>
 
-                                    <TabItem IsEnabled="True">
-                                        <TabItem.Header>
-                                            <DockPanel>
-                                                <TextBlock Text="Score Display" Margin="3"/>
-                                                <Button Style="{StaticResource OpenFileButton}"                                                         
+                    <ContentControl prism:RegionManager.RegionName="MachineRegion" />
+                </TabItem>
+
+                <TabItem IsEnabled="True">
+                    <TabItem.Header>
+                        <DockPanel>
+                            <TextBlock Text="Score Display" Margin="3"/>
+                            <Button Style="{StaticResource OpenFileButton}"                                                         
                                                         CommandParameter="new_score_display.yaml"
                                                         />
-                                            </DockPanel>
-                                        </TabItem.Header>
+                        </DockPanel>
+                    </TabItem.Header>
 
-                                        <ContentControl prism:RegionManager.RegionName="ScoreLayoutRegion"/>
-                                    </TabItem>
+                    <ContentControl prism:RegionManager.RegionName="ScoreLayoutRegion"/>
+                </TabItem>
 
-                                    <!--SKELETON GAME ASSETS-->
-                                    <TabItem>
-                                        <TabItem.Header>
-                                            <DockPanel>
-                                                <TextBlock Text="Asset List" Margin="3"/>
-                                                <Button Style="{StaticResource OpenFileButton}"                                                         
+                <!--SKELETON GAME ASSETS-->
+                <TabItem>
+                    <TabItem.Header>
+                        <DockPanel>
+                            <TextBlock Text="Asset List" Margin="3"/>
+                            <Button Style="{StaticResource OpenFileButton}"                                                         
                                                         CommandParameter="asset_list.yaml"                                                        
                                                         />
-                                            </DockPanel>    
-                                        </TabItem.Header>
-                                        
-                                        <ContentControl prism:RegionManager.RegionName="AssetsRegion"/>
-                                    </TabItem>
+                        </DockPanel>
+                    </TabItem.Header>
 
-                                    <!--SKELETON GAME ATTRACT-->
-                                    <TabItem Header="Sequences">
-                                        <ContentControl prism:RegionManager.RegionName="AttractRegion"/>
-                                    </TabItem>
+                    <ContentControl prism:RegionManager.RegionName="AssetsRegion"/>
+                </TabItem>
 
-                                    <!--RECORDINGS / PLAYBACKS-->
-                                    <TabItem Header="Recordings"                                              
+                <!--SKELETON GAME ATTRACT-->
+                <TabItem Header="Sequences">
+                    <ContentControl prism:RegionManager.RegionName="AttractRegion"/>
+                </TabItem>
+
+                <!--RECORDINGS / PLAYBACKS-->
+                <TabItem Header="Recordings"                                              
                                              IsEnabled="True">
-                                        <ContentControl prism:RegionManager.RegionName="RecordingsRegion"/>
-                                    </TabItem>
+                    <ContentControl prism:RegionManager.RegionName="RecordingsRegion"/>
+                </TabItem>
 
-                                    <!--SCENE GRABBER-->
-                                    <TabItem Header="Scene Grab" 
-                                             
+                <!--SCENE GRABBER-->
+                <TabItem Header="Scene Grab" 
+                         IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
+                    <ContentControl prism:RegionManager.RegionName="ScenesRegion"/>
+                </TabItem>
+
+                <!--GAME DATA / TROPHYS-->
+                <TabItem Header="Trophy" 
                                              IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
+                    <ContentControl prism:RegionManager.RegionName="GameDataRegion"/>
+                </TabItem>
 
-                                        <ContentControl prism:RegionManager.RegionName="ScenesRegion"/>
+            </TabControl>
 
-                                    </TabItem>
-                                    
-                                    <!--GAME DATA / TROPHYS-->
-                                    <TabItem Header="Trophy" 
-                                             IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
-                                        <ContentControl prism:RegionManager.RegionName="GameDataRegion"/>
-                                    </TabItem>
+        </Grid>
 
-                                </TabControl>
+        <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
+            <!--FILE MENU-->
+            <Menu>
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New..." Command="{Binding CreateNewGameCommand}" InputGestureText="Ctrl+N"/>
+                    <MenuItem Header="_Open..." Command="{Binding SetDirectoryCommand}" InputGestureText="Ctrl+O"/>
+                    <MenuItem Header="Recent">
+                        <MenuItem Command="{Binding OpenRecentCommand}" 
+                                  Header="C:\P-ROC\Games\Jaws"
+                                  CommandParameter="C:\P-ROC\Games\Jaws"
+                                  />
+                        <MenuItem Header="C:\P-ROC\Games\EvilDead"/>
+                    </MenuItem>
+                    <MenuItem Header="_Quit" Command="{x:Static ApplicationCommands.Close}" InputGestureText="Ctrl+Q"/>
+                </MenuItem>
 
-                            </Grid>
+                <MenuItem Header="_Game">
+                    <MenuItem Header="_Browse" Command="{Binding BrowseGameFolderCommand}" InputGestureText="Ctrl+B"/>
+                    <MenuItem Header="R_eload" Command="{Binding ReloadGameCommand}"/>
+                    <MenuItem Header="_Run" Command="{Binding RunGameCommand}" InputGestureText="Ctrl+R"/>
+                </MenuItem>
 
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>
-    
+                <MenuItem Header="_Export">
+                    <MenuItem Header="_Pyprocgame">
+                        <MenuItem Header="Switch Methods"/>
+                    </MenuItem>
+
+                    <MenuItem Header="_Visual Pinball">
+                        <MenuItem Header="Switch Methods"/>
+                        <MenuItem Header="Solenoid Callbacks"/>
+                        <MenuItem Header="Full Table Script"/>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+
+            <ToolBarTray>
+                <ToolBar Header="Tools"/>
+            </ToolBarTray>
+        </StackPanel>
+
+    </Grid>
+
 </Window>
 

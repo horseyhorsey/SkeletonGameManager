@@ -4,10 +4,12 @@ using System.Windows;
 using Prism.Modularity;
 using SkeletonGame.Engine;
 using SkeletonGameManager.WPF.Views;
-using SkeletonGameManager.WPF.Providers;
 using Prism.Regions;
 using SkeletonGameManager.WPF.ViewModels;
-using Prism.Mvvm;
+using SkeletonGameManager.Base;
+using SkeletonGameManager.WPF.Providers;
+using SkeletonGameManager.Module.Assets.Views;
+using SkeletonGameManager.Module.Assets.ViewModels;
 
 namespace SkeletonGameManager.WPF
 {
@@ -22,19 +24,13 @@ namespace SkeletonGameManager.WPF
             //Register views with regions
             var regionManager = this.Container.Resolve<IRegionManager>();
             if (regionManager != null)
-            {                                
-                regionManager.RegisterViewWithRegion("ConfigRegion", typeof(GameConfigView));
-                regionManager.RegisterViewWithRegion("RecordingsRegion", typeof(RecordingsView));
+            {
                 regionManager.RegisterViewWithRegion("AssetsRegion", typeof(AssetListView));
-                regionManager.RegisterViewWithRegion("AttractRegion", typeof(AttractView));
-                regionManager.RegisterViewWithRegion("ScenesRegion", typeof(ScenesView));
-                regionManager.RegisterViewWithRegion("MachineRegion", typeof(MachineConfigView));
-                regionManager.RegisterViewWithRegion("SequencesRegion", typeof(SequenceView));
                 regionManager.RegisterViewWithRegion("ScoreLayoutRegion", typeof(ScoreLayoutView));
                 regionManager.RegisterViewWithRegion("GameDataRegion", typeof(GameDataView));
 
                 //Game Data
-                regionManager.RegisterViewWithRegion("TrophyDataRegion", typeof(TrophyDataView));
+                regionManager.RegisterViewWithRegion("TrophyDataRegion", typeof(TrophyDataView));                
             }
 
             Application.Current.MainWindow.Show();                                            
@@ -44,7 +40,11 @@ namespace SkeletonGameManager.WPF
         {
             var moduleCatalog = (ModuleCatalog)ModuleCatalog;
 
-            //moduleCatalog.AddModule(typeof(Skeleton.Assets.AssetsModule));
+            moduleCatalog.AddModule(typeof(Module.Assets.AssetsModule));
+            moduleCatalog.AddModule(typeof(Module.Config.ConfigModule));
+            moduleCatalog.AddModule(typeof(Module.Recordings.RecordingsModule));
+            moduleCatalog.AddModule(typeof(Module.SceneGrab.SceneGrabModule));
+            moduleCatalog.AddModule(typeof(Module.SceneManage.SceneManageModule));
         }
 
         protected override void ConfigureContainer()
@@ -61,11 +61,9 @@ namespace SkeletonGameManager.WPF
             Container.RegisterInstance<ISkeletonGameSerializer>(Container.Resolve<SkeletonGameSerializer>());
             Container.RegisterInstance<ISkeletonGameFiles>(Container.Resolve<SkeletonGameFiles>());
             Container.RegisterInstance<ISkeletonGameProvider>(Container.Resolve<SkeletonGameProvider>());
-            Container.RegisterInstance<ISkeletonGameExport>(Container.Resolve<SkeletonGameExport>());
-            Container.RegisterInstance(Container.Resolve<KeyboardMappingsViewModel>());
+            Container.RegisterInstance<ISkeletonGameExport>(Container.Resolve<SkeletonGameExport>());            
             Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>());
             Container.RegisterInstance(Container.Resolve<TrophyDataViewModel>());
-            Container.RegisterTypeForNavigation<GameConfigView>("GameConfigView");
         }
     }
 }

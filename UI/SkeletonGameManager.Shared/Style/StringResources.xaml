@@ -1,0 +1,270 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                    
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="GameFolder">Skeleton Game Folder</sys:String>
+
+    <sys:String x:Key="CoilBallSearch">
+        Coils tagged for ballsearch are fired when the ball has not been seen or at the start of the game when all balls can't be found so these coils are coils that help return the ball to the trough. NOTE: trough should NOT be tagged for ballsearch since firing the
+        # trough would not help fill the trough...Add the tag autoPlunger to a coil to support autoplunging on ball save
+    </sys:String>
+
+    <sys:String x:Key="OpenDir">
+        Opens the current directory
+    </sys:String>
+
+    <sys:String x:Key="DropFilesInfo">
+        Drop files to copy to list
+    </sys:String>
+
+    <sys:String x:Key="FileOptionInfo">
+        Double clicking opens with default process
+    </sys:String>
+
+    <sys:String x:Key="GameLaunchInfo">
+        Launches the game with your default python install.
+    </sys:String>
+    
+    <!--GAME CONFIG-->
+
+    <sys:String x:Key="ConfigYaml">
+        This file contains global configuration for the game. Paths, Dmd, Audio, Modes.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsDmd">
+        Asset manager path for display files. Images, movie, .dmd
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsSound">
+        Asset manager path for the parent Sound folder.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsVoice">
+        Asset manager path for the parent Voice folder.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsSfx">
+        Asset manager for the sfx dir.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsHdFonts">
+        Asset manager path for fonts. .ttf
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsSdlPath">
+        The display uses SDL2. The Dlls path is the needed SDL2 Dlls.
+    </sys:String>
+
+    <sys:String x:Key="Tip_PathsVpGameMap">
+        The is where the vp_game_map.yaml can be found. This is more of a globally used path, not per game.
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdGrid">
+        Where to find the dmdgrid32x32.png file
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdBordered">
+        Shows a border around the window. (F11 toggles window border and F12 will save position when window is running)
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdFlipped">
+        Flips the display. Options are 0, 1, 2, 3
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdResolution">
+        Display resolution. Shouldn't be changed after doing work to a game.
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdScale">
+        The display scale is the multiplier per dot.  At 5 each dot is 5x5 pixels
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdFramerate">
+        The displays framerate
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdPosition">
+        Sets the displays position.
+    </sys:String>
+
+    <sys:String x:Key="Tip_DmdFullScreen">
+        Full-screen mode scales the contents to fit the full display; may not look right
+    </sys:String>
+
+    <sys:String x:Key="Tip_SaveConfigGame">
+        Overwrites the config.yaml in the current game folder
+    </sys:String>
+
+    <sys:String x:Key="Tip_SaveConfigMachine">
+        Overwrites the machine.yaml in the games config folder
+    </sys:String>
+
+    <sys:String x:Key="Tip_SaveScoreDisplayConfig">
+        Overwrites the new_score_display.yaml in the games config folder
+    </sys:String>
+
+    <sys:String x:Key="Tip_SaveAssetsFile">
+        Saves the asset_list.yaml
+    </sys:String>
+
+    <sys:String x:Key="Tip_SaveSequences">
+        Saves the sequence file that's in view.
+    </sys:String>
+
+    <!--DEFAULT MODES-->
+
+    <sys:String x:Key="Tip_OSC">
+        Enables an OSC server which listens for switches pushed from a UI. eg SwitchMatrix Gui
+    </sys:String>
+
+    <sys:String x:Key="Tip_Profiles">
+        Enables a profile menu players where players can create &amp; select players
+    </sys:String>
+
+    <sys:String x:Key="Tip_Trophys">
+        Enables a mode that displays trophys when complete. See the trophy_default_data.
+    </sys:String>
+
+    <sys:String x:Key="Tip_TiltConfig">
+        Enables/Disables the Tilt mode.
+    </sys:String>
+
+    <sys:String x:Key="Tip_BallSearch">
+        Enables/Disables the BallSearch Mode
+    </sys:String>
+
+    <sys:String x:Key="Tip_BallSearchDelay">
+        How long to wait for a ball search to start.
+    </sys:String>
+
+    <sys:String x:Key="Tip_ServiceMenu">
+        Enables/Disables the Service Mode Menu
+    </sys:String>
+
+    <sys:String x:Key="Tip_BonusTally">
+        Enables/Disables the Bonus mode. 
+    </sys:String>
+
+    <sys:String x:Key="Tip_Attract">
+        Todo
+    </sys:String>
+
+    <!--#region SEQUENCES-->
+
+    <sys:String x:Key="Tip_SeqLastScores">
+        Displays the last games scores.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqAnimation">
+        An animation layer, no text.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqHighScores">
+        Displays the high scores.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqCombo">
+       A multi-line text layer and animation Combo.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqCredits">
+        A static animation with a moving image(credit scroll) that scrolls over animation.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqMarkupLayer">
+        Has a Bold # and Normal [ font. eg:
+        # Left, Right #, # Center #
+        [ Left, Right ], [ Center ]
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqMoveLayer">
+        Moves an animation or text.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqPanningLayer">
+        TODO
+    </sys:String>
+    
+    <sys:String x:Key="Tip_SeqRandomText">
+        Create a list of sentances to display at random when this layer is used.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqTextLayer">
+        A text layer with no animation.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqGroupLayer">
+        Groups multiple display layers together.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqScriptedText">
+        Runs a script of text lists. Duration is how long each text list will be displayed. If an animation is set to play with the layers and the duration of the animation is longer than the text script, then the duration is set to let the whole animtion finish.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SeqParticleLayer">
+        Displays particle emitters in a layer
+    </sys:String>
+
+    <!--#endregion-->
+    
+    <!--#region MACHINE CONFIG-->
+
+    <sys:String x:Key="Tip_MachineYaml">
+        This file contains all the configuration for a machine.
+    </sys:String>
+
+    <sys:String x:Key="Tip_SwitchMatrix">
+        This view allows you configure the switches. Switches must have a name to be exported to yaml and will be skipped if NOT USED. Don't use spaces in names, use the label. Some tags are needed for Skeleton game. Noteably; shooter, trough, early_save.
+    </sys:String>
+
+    <sys:String x:Key="Tip_LampMatrix">
+        This view allows you to configure all the lamps in a machine. Lamps must have a name to be exported to yaml and will be skipped if NOT USED. Some tags are needed for Skeleton game. Noteably; shoot_again (Used for ball save).
+    </sys:String>
+
+    <sys:String x:Key="Tip_CoilFlashTable">
+        This view allows you to configure all the coils/flashers in a machine. Coils in the table must have a name to be exported to yaml and will be skipped if NOT USED. The SolenoidType isn't needed for pyprocgame but just as extra options for reference.
+    </sys:String>
+
+    <sys:String x:Key="Tip_VPExportSwitch">
+        Export VP_Switch.txt -  all the switches into Visual Pinball switch hits. Creates Sub routines for switches and these can be copied into a tables script.
+    </sys:String>
+
+    <sys:String x:Key="Tip_VPExportSolenoid">
+        Export VP_Coil.txt - all the coils into Visual Pinball 'SolCallBacks'. Creates Sub routines for the Solenoid callback and a list of SolCallBacks. Flippers should be skipped from this process.
+    </sys:String>
+
+    <sys:String x:Key="Tip_ExportPythonSwitchCallbacks">
+        Exports a python file that contains active switch method callbacks. All switches in the machine are exported except for the trough and dedicated switches.
+    </sys:String>
+
+    <sys:String x:Key="Tip_ExportLampshowUI">
+        Exports all the lamps into a compatible rampantslug LampshowUI project. 
+    </sys:String>
+
+
+    <!--#endregion-->
+    
+    <!--#region Recording Tips-->
+
+
+    <sys:String x:Key="Tip_EnableRecording">
+        Enabled game recording. This will set the skeletons base class to BasicGameRecordable and set it back providing the game window is closed before the UI. Recordings are saved to the recordings directory.
+    </sys:String>
+
+    <sys:String x:Key="Tip_EnablePlayback">
+        Enabled game recording plaback. This will set the FakePinProc class to use the Playback version and set back when game is closed. The selected playback in the list will be copied to the main game directory as playback.txt.
+    </sys:String>
+
+    <sys:String x:Key="Tip_LaunchRecording">
+        Launches the game with the options set.
+    </sys:String>
+
+
+    <!--#endregion-->
+
+    <sys:String x:Key="Tip_AudioStreamingLoad">
+        Disabling will load into memory. (Only compatible with music). If using lots of music it's probably best to disable streaming load.
+    </sys:String>
+
+</ResourceDictionary>
+    

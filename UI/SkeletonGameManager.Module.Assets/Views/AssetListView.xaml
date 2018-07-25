@@ -1,0 +1,179 @@
+﻿<UserControl x:Class="SkeletonGameManager.Module.Assets.Views.AssetListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:base="clr-namespace:SkeletonGameManager.Base;assembly=SkeletonGameManager.Base"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <Style x:Key="SwitchViewButtonStyle" TargetType="Button">
+            <Setter Property="Command" Value="{Binding SwitchViewCommand}"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ToolBarTray>
+            <ToolBar MaxHeight="40">
+
+                <Button Content="{Binding Source={StaticResource Path_Lamps}}"
+                        Style="{StaticResource SwitchViewButtonStyle}" 
+                        CommandParameter="Lampshows" 
+                        />
+                
+                <Button Content="{Binding Source={StaticResource Path_Fonts}}"
+                        Style="{StaticResource SwitchViewButtonStyle}" 
+                        CommandParameter="Fonts" 
+                        />
+                
+                <Button Content="{Binding Source={StaticResource Path_Progress}}"
+                        Style="{StaticResource SwitchViewButtonStyle}" 
+                        CommandParameter="Progress"                         
+                        />
+                
+                <Button Content="{Binding Source={StaticResource Path_Assets}}"
+                        Style="{StaticResource SwitchViewButtonStyle}"   
+                        CommandParameter="Anims"  
+                        />
+                
+                <Button Content="{Binding Source={StaticResource Path_Sound}}"
+                        Style="{StaticResource SwitchViewButtonStyle}" 
+                        CommandParameter="Music" 
+                        />
+                
+                <Button Content="{Binding Source={StaticResource Path_Voice}}"
+                        Style="{StaticResource SwitchViewButtonStyle}" 
+                        CommandParameter="Voice"                         
+                        />
+                
+                <Button Content="{Binding Source={StaticResource Path_Sfx}}"
+                        Style="{StaticResource SwitchViewButtonStyle}" 
+                        CommandParameter="Sfx" 
+                        />
+                
+                <!--SAVE-->
+                <Button Style="{DynamicResource StyleSaveButton}"                             
+                    ToolTip="{StaticResource Tip_SaveAssetsFile}"/>
+            </ToolBar>
+        </ToolBarTray>
+
+        <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static base:Regions.CurrentAssetRegion}"/>
+
+        <!--<TabControl Visibility="Collapsed">
+
+            --><!--LAMPSHOWS--><!--
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel ToolTip="Lampshows">
+                        <ContentPresenter Content="{StaticResource Path_Lamps}"/>
+                        <TextBlock Text="Shows"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <views:LampshowView DataContext="{Binding LampshowViewModel}"/>
+
+            </TabItem>
+
+            --><!--FONTS / FONT STYLES--><!--
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel ToolTip="Fonts">
+                        <ContentPresenter Content="{StaticResource Path_Fonts}"/>
+                        <TextBlock Text="Fonts"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <views:FontsView DataContext="{Binding FontsViewModel}"/>
+
+            </TabItem>
+
+            --><!--GAME LOADING PROGRESS--><!--
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel ToolTip="Loader">
+                        <ContentPresenter Content="{StaticResource Path_Progress}"/>
+                        <TextBlock Text="Progress"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <views:LoadingProgressView DataContext="{Binding LoadingProgressViewModel}"/>
+
+            </TabItem>
+
+            --><!--ANIMATIONS--><!--
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel ToolTip="Animations">
+                        <ContentPresenter Content="{StaticResource Path_Assets}"/>
+                        <TextBlock Text="Anims"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <views:AnimationsView DataContext="{Binding AnimationsViewModel}"/>
+
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel ToolTip="Sound">
+                        <ContentPresenter Content="{StaticResource Path_Sound}"/>
+                        <TextBlock Text="Sound"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <TabControl>
+
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel ToolTip="Music">
+                                <ContentPresenter Content="{StaticResource Path_Music}"/>
+                                <TextBlock Text="Music"/>
+                            </StackPanel>
+                        </TabItem.Header>
+
+                        <views:SoundView DataContext="{Binding MusicViewModel}"/>
+
+                    </TabItem>
+
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel ToolTip="Voice">
+                                <ContentPresenter Content="{StaticResource Path_Voice}"/>
+                                <TextBlock Text="Voice"/>
+                            </StackPanel>
+                        </TabItem.Header>
+
+                        <views:SoundView DataContext="{Binding VoiceViewModel}"/>
+
+                    </TabItem>
+
+                    <TabItem>
+                        <TabItem.Header>
+                            <StackPanel ToolTip="Sfx">
+                                <ContentPresenter Content="{StaticResource Path_Sfx}"/>
+                                <TextBlock Text="Sfx"/>
+                            </StackPanel>
+                        </TabItem.Header>
+
+                        <views:SoundView DataContext="{Binding SfxViewModel}"/>
+
+                    </TabItem>
+
+                </TabControl>
+
+            </TabItem>
+
+        </TabControl>-->
+
+    </Grid>
+</UserControl>
+
+    
