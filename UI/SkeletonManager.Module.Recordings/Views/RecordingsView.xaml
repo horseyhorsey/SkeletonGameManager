@@ -30,17 +30,17 @@
 
                 <RadioButton Content="Record" Margin="3" IsChecked="{Binding RecordIsChecked}" 
                              IsEnabled="{Binding ElementName=LaunchGameButton, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"
-                             ToolTip="{StaticResource Tip_EnableRecording}"
+                             ToolTip="{Binding Tip_EnableRecording, Source={StaticResource ResourceKey=AppStringResource}}"
                              />
                 
                 <RadioButton Content="Playback" Grid.Column="1" Margin="3" IsChecked="{Binding PlaybackIsChecked}" 
                              IsEnabled="{Binding ElementName=LaunchGameButton, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"
-                             ToolTip="{StaticResource Tip_EnablePlayback}"
+                             ToolTip="{Binding Tip_EnablePlayback, Source={StaticResource ResourceKey=AppStringResource}}"
                              />
 
                 <Button Grid.Column="2" x:Name="LaunchGameButton" 
                         Content="{DynamicResource Path_Game}" Command="{Binding LaunchGameCommand}"
-                        ToolTip="{StaticResource Tip_LaunchRecording}"
+                        ToolTip="{Binding Tip_LaunchRecording, Source={StaticResource ResourceKey=AppStringResource}}"                        
                         />
             </Grid>
         </GroupBox>

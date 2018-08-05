@@ -322,7 +322,9 @@
             <TabItem Header="Switches">
                 <TabControl>
 
-                    <TabItem Header="Matrix" ToolTip="{StaticResource Tip_SwitchMatrix}">
+                    <TabItem Header="Matrix" 
+                             ToolTip="{Binding Tip_SwitchMatrix, Source={StaticResource ResourceKey=AppStringResource}}"                        
+                             >
                         
                         <Grid>
                             
@@ -410,7 +412,9 @@
             </TabItem>
 
             <!--LAMP MATRIX-->
-            <TabItem Header="Lamps" Background="{StaticResource Brush_Paper}" ToolTip="{StaticResource Tip_LampMatrix}">
+            <TabItem Header="Lamps" Background="{StaticResource Brush_Paper}" 
+                     ToolTip="{Binding Tip_LampMatrix, Source={StaticResource ResourceKey=AppStringResource}}"                        
+                     >
                 <ItemsControl ItemsSource="{Binding Lamps}">
 
                     <ItemsControl.Resources>
@@ -443,7 +447,9 @@
             </TabItem>
 
             <!--COIL FLASHER TABLE-->
-            <TabItem Header="Coils" ToolTip="{StaticResource Tip_CoilFlashTable}">
+            <TabItem Header="Coils" 
+                     ToolTip="{Binding Tip_CoilFlashTable, Source={StaticResource ResourceKey=AppStringResource}}"                        
+                     >
                 <Grid>
 
                     <!--STANDARD FLASHER / COILS-->
@@ -468,7 +474,7 @@
                                     <TextBlock Text="Search">
                                         <TextBlock.ToolTip>
                                             <TextBlock TextWrapping="Wrap" Width="150" MaxWidth="150" 
-                                                   Text="{StaticResource CoilBallSearch}"/>
+                                                       Text="{Binding Tip_CoilBallSearch, Source={StaticResource ResourceKey=AppStringResource}}"/>
                                         </TextBlock.ToolTip>
                                 </TextBlock>
                                 </DataGridCheckBoxColumn.Header>
@@ -531,8 +537,8 @@
         <GroupBox Header="Save" Grid.Column="2" Grid.Row="1" Margin="3">
             <!--SAVE MACHINE BUTTON-->
             <Button Command="{Binding SaveMachineConfigCommand}" 
-                        Style="{DynamicResource StyleSaveButton}"                        
-                        ToolTip="{StaticResource Tip_SaveConfigMachine}"
+                        Style="{DynamicResource StyleSaveButton}"         
+                        ToolTip="{Binding Tip_SaveConfigMachine, Source={StaticResource ResourceKey=AppStringResource}}"                        
                         Height="35" Width="50"
                         />
         </GroupBox>

@@ -85,37 +85,37 @@
             <StackPanel>
                 <TextBlock Text="DMD Path"/>
                 <TextBox Text="{Binding GameConfigModel.DmdPath, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="{DynamicResource Tip_PathsDmd}"
+                         ToolTip="{Binding Tip_PathsDmd, Source={StaticResource ResourceKey=AppStringResource}}"
                          />
 
                 <TextBlock Text="Sound Path"/>
                 <TextBox Text="{Binding GameConfigModel.SoundPath, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="{DynamicResource Tip_PathsSound}"
+                         ToolTip="{Binding Tip_PathsSound, Source={StaticResource ResourceKey=AppStringResource}}"
                          />
 
                 <TextBlock Text="Voice Dir"/>
                 <TextBox Text="{Binding GameConfigModel.VoiceDir, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="{DynamicResource Tip_PathsVoice}"
+                         ToolTip="{Binding Tip_PathsVoice, Source={StaticResource ResourceKey=AppStringResource}}"
                          />
 
                 <TextBlock Text="Sfx Dir"/>
                 <TextBox Text="{Binding GameConfigModel.SfxDir, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="{DynamicResource Tip_PathsSfx}"
+                         ToolTip="{Binding Tip_PathsSfx, Source={StaticResource ResourceKey=AppStringResource}}"
                          />
 
                 <TextBlock Text="HdFont Path"/>
                 <TextBox Text="{Binding GameConfigModel.HdFontPath, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="{DynamicResource Tip_PathsHdFonts}"
+                         ToolTip="{Binding Tip_PathsHdFonts, Source={StaticResource ResourceKey=AppStringResource}}"
                          />
 
                 <TextBlock Text="SDL DLL Path"/>
                 <TextBox Text="{Binding GameConfigModel.PySdlDllPath, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="{DynamicResource Tip_PathsSdlPath}"
+                         ToolTip="{Binding Tip_PathsSdlPath, Source={StaticResource ResourceKey=AppStringResource}}"
                          />
 
                 <TextBlock Text="VP Game Map file"/>
                 <TextBox Text="{Binding GameConfigModel.VpGameMapFile, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="{DynamicResource Tip_PathsVpGameMap}"
+                         ToolTip="{Binding Tip_PathsVpGameMap, Source={StaticResource ResourceKey=AppStringResource}}"
                          />
             </StackPanel>
 
@@ -151,46 +151,52 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Text="Attract" Grid.Row="0"/>
-                <CheckBox Grid.Row="0" Grid.Column="1" 
-                          ToolTip="{DynamicResource Tip_Attract}"
-                          IsChecked="{Binding GameConfigModel.DefaultModes.Attract, UpdateSourceTrigger=PropertyChanged}"/>
+                <CheckBox Grid.Row="0" Grid.Column="1"                           
+                          IsChecked="{Binding GameConfigModel.DefaultModes.Attract, UpdateSourceTrigger=PropertyChanged}"
+                          ToolTip="{Binding Tip_Attract, Source={StaticResource ResourceKey=AppStringResource}}"
+                          />
 
                 <TextBlock Text="Bonus Tally" Grid.Column="2"/>
                 <CheckBox Grid.Column="3" 
-                          ToolTip="{DynamicResource Tip_BonusTally}"
+                          ToolTip="{Binding Tip_BonusTally, Source={StaticResource ResourceKey=AppStringResource}}"
                           IsChecked="{Binding GameConfigModel.DefaultModes.BonusTally, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Service" Grid.Row="0" Grid.Column="4"/>
                 <CheckBox Grid.Row="0" Grid.Column="5" 
-                          ToolTip="{DynamicResource Tip_ServiceMenu}"
+                          ToolTip="{Binding Tip_ServiceMenu, Source={StaticResource ResourceKey=AppStringResource}}"
                           IsChecked="{Binding GameConfigModel.DefaultModes.ServiceMode, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Ball Search" Grid.Row="1"/>
                 <CheckBox Grid.Row="1" Grid.Column="1" 
-                          ToolTip="{DynamicResource Tip_BallSearch}"
+                          ToolTip="{Binding Tip_BallSearch, Source={StaticResource ResourceKey=AppStringResource}}"
                           IsChecked="{Binding GameConfigModel.DefaultModes.BallSearch, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <TextBlock Text="Ball Search Delay" Grid.Row="1" Grid.Column="2" ToolTip="{DynamicResource Tip_BallSearchDelay}"/>
-                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Maximum="60" ToolTip="{DynamicResource Tip_BallSearchDelay}"
-                        Value="{Binding GameConfigModel.DefaultModes.BallSearchDelay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Ball Search Delay" Grid.Row="1" Grid.Column="2" 
+                           ToolTip="{Binding Tip_BallSearchDelay, Source={StaticResource ResourceKey=AppStringResource}}"
+                           />
+                
+                <xctk:IntegerUpDown Grid.Row="1" Grid.Column="3" Maximum="60" 
+                                    
+                                    Value="{Binding GameConfigModel.DefaultModes.BallSearchDelay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Tilt" Grid.Row="2"/>
-                <CheckBox Grid.Row="2" Grid.Column="1" ToolTip="{DynamicResource Tip_TiltConfig}"
+                <CheckBox Grid.Row="2" Grid.Column="1" 
+                          ToolTip="{Binding Tip_TiltConfig, Source={StaticResource ResourceKey=AppStringResource}}"
                           IsChecked="{Binding GameConfigModel.DefaultModes.TiltMode, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="OSC Input" Grid.Row="2" Grid.Column="2" />
                 <CheckBox  Grid.Row="2" Grid.Column="3" 
-                           ToolTip="{DynamicResource Tip_OSC}"
+                           ToolTip="{Binding Tip_OSC, Source={StaticResource ResourceKey=AppStringResource}}"
                            IsChecked="{Binding GameConfigModel.DefaultModes.OscInput, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Profiles" Grid.Row="3" Grid.Column="0"/>
                 <CheckBox Grid.Row="3" Grid.Column="1" x:Name="ProfileCheckBox"
-                          ToolTip="{DynamicResource Tip_Profiles}"
+                          ToolTip="{Binding Tip_Profiles, Source={StaticResource ResourceKey=AppStringResource}}"
                           IsChecked="{Binding GameConfigModel.DefaultModes.PlayerProfiles, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Trophys" Grid.Row="3" Grid.Column="2"/>
                 <CheckBox Grid.Row="3" Grid.Column="3" IsEnabled="{Binding ElementName=ProfileCheckBox, Path=IsChecked}"
-                          ToolTip="{DynamicResource Tip_Trophys}"
+                          ToolTip="{Binding Tip_Trophys, Source={StaticResource ResourceKey=AppStringResource}}"
                           IsChecked="{Binding GameConfigModel.DefaultModes.PlayerTrophys, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
@@ -199,7 +205,8 @@
         <!--SAVE-->
         <Button Grid.Row="4" Grid.ColumnSpan="3"                
                 Style="{DynamicResource StyleSaveButton}"                             
-                ToolTip="{DynamicResource Tip_SaveConfigGame}"/>
+                ToolTip="{Binding Tip_SaveConfigGame, Source={StaticResource ResourceKey=AppStringResource}}"
+                />
 
         <!--DMD OPTIONS-->
         <StackPanel Grid.Column="0">
@@ -218,7 +225,7 @@
 
                     <TextBlock Text="Dmd Grid Path"/>
                     <TextBox Text="{Binding GameConfigModel.DmdGridPath, UpdateSourceTrigger=PropertyChanged}"
-                             ToolTip="{DynamicResource Tip_DmdGrid}"
+                             ToolTip="{Binding Tip_DmdGrid, Source={StaticResource ResourceKey=AppStringResource}}"
                              />
 
                     <Grid Margin="5">
@@ -242,56 +249,58 @@
 
                         <TextBlock Text="Width"/>
                         <xctk:IntegerUpDown Grid.Column="1"
-                                            ToolTip="{DynamicResource Tip_DmdResolution}"
+                                            ToolTip="{Binding Tip_DmdResolution, Source={StaticResource ResourceKey=AppStringResource}}"
                                             Value="{Binding GameConfigModel.DmdDotsWidth, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <TextBlock Text="Height" Grid.Column="2"/>
                         <xctk:IntegerUpDown Grid.Column="3" 
-                                            ToolTip="{DynamicResource Tip_DmdResolution}"
+                                            ToolTip="{Binding Tip_DmdResolution, Source={StaticResource ResourceKey=AppStringResource}}"
                                             Value="{Binding GameConfigModel.DmdDotsHeight, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <TextBlock Text="Scale" Grid.Column="4"/>
                         <xctk:IntegerUpDown Grid.Column="5" Minimum="1" Maximum="10"    
-                                            ToolTip="{DynamicResource Tip_DmdScale}"
+                                            ToolTip="{Binding Tip_DmdScale, Source={StaticResource ResourceKey=AppStringResource}}"
                                             Text="{Binding GameConfigModel.DesktopDmdScale, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <TextBlock Text="Framerate" Grid.Row="1"/>
-                        <xctk:DoubleUpDown Grid.Column="1" Grid.Row="1" ToolTip="{DynamicResource Tip_DmdScale}"
+                        <xctk:DoubleUpDown Grid.Column="1" Grid.Row="1" 
+                                           ToolTip="{Binding Tip_DmdScale, Source={StaticResource ResourceKey=AppStringResource}}"
                                            Text="{Binding GameConfigModel.DmdFramerate, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <TextBlock Text="Pos X" Grid.Row="2"/>
                         <xctk:IntegerUpDown Grid.Row="2" Grid.Column="1"
-                                            ToolTip="{DynamicResource Tip_DmdPosition}"
+                                            ToolTip="{Binding Tip_DmdPosition, Source={StaticResource ResourceKey=AppStringResource}}"
                                             Value="{Binding GameConfigModel.ScreenPosX, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <TextBlock Text="Pos Y" Grid.Column="2" Grid.Row="2"/>
                         <xctk:IntegerUpDown Grid.Column="3" Grid.Row="2" 
-                                            ToolTip="{DynamicResource Tip_DmdPosition}"
+                                            ToolTip="{Binding Tip_DmdPosition, Source={StaticResource ResourceKey=AppStringResource}}"
                                             Value="{Binding GameConfigModel.ScreenPosY, UpdateSourceTrigger=PropertyChanged}"/>
 
 
                         <TextBlock Text="Flip" Grid.Column="0" Grid.Row="3"/>
                         <xctk:IntegerUpDown Grid.Column="1" Grid.Row="3" Margin="3" Minimum="0" Maximum="3"
-                                            ToolTip="{DynamicResource Tip_DmdFlipped}"
+                                            ToolTip="{Binding Tip_DmdFlipped, Source={StaticResource ResourceKey=AppStringResource}}"
                                   Value="{Binding GameConfigModel.DmdFlip, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.ColumnSpan="6">
                             <CheckBox Grid.Row="4" Margin="3" Grid.Column="0" Content="Bordered Window"
-                                  ToolTip="{DynamicResource Tip_DmdBordered}"
+                                  ToolTip="{Binding Tip_DmdBordered, Source={StaticResource ResourceKey=AppStringResource}}"
                                   IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" />
 
                             <CheckBox Grid.Column="1" Grid.Row="4" Margin="3"
-                                   ToolTip="{DynamicResource Tip_DmdFramerate}"
+                                   ToolTip="{Binding Tip_DmdFramerate, Source={StaticResource ResourceKey=AppStringResource}}"
                                   IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}" Content="Dot Filter"/>
 
                             <CheckBox Grid.Column="2" Grid.Row="4" Margin="3"
-                                  ToolTip="Raises the window above every other window. Good for Visual Pinball or always having the display in view"
+                                  ToolTip="{Binding Tip_DmdOnTop, Source={StaticResource ResourceKey=AppStringResource}}"
                                   IsChecked="{Binding GameConfigModel.AlwaysOnTop, UpdateSourceTrigger=PropertyChanged}" Content="On Top"                                  
                                   />
 
                             <CheckBox Grid.Column="2" Grid.Row="4" Margin="3"
                                   IsChecked="{Binding GameConfigModel.DmdFullscreen, UpdateSourceTrigger=PropertyChanged}" 
-                                      Content="Full Screen" ToolTip="{StaticResource Tip_DmdFullScreen}"
+                                      Content="Full Screen" 
+                                      ToolTip="{Binding Tip_DmdFullScreen, Source={StaticResource ResourceKey=AppStringResource}}"
                                   />
                         </StackPanel>
 
@@ -313,7 +322,8 @@
                 
                 <StackPanel>
                     <TextBlock Text="Buffer size"/>
-                    <ComboBox ItemsSource="{Binding Source={StaticResource BufferSizes}}" SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox ItemsSource="{Binding Source={StaticResource BufferSizes}}" 
+                              SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox Text="{Binding GameConfigModel.AudioFrequency}"/>
                 </StackPanel>
             </GroupBox>

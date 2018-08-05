@@ -4,9 +4,11 @@
         xmlns:prism="http://prismlibrary.com/"        
         prism:ViewModelLocator.AutoWireViewModel="True"       
         WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip"
-        ShowInTaskbar="True"
-        Background="White"                
-        Title="{Binding Title}" Width="1024" Height="768">
+        ShowInTaskbar="True" SizeToContent="WidthAndHeight" Background="White"                
+        Title="{Binding Title}"
+        Width="1024" Height="768"
+        xml:lang="en-US"
+        >
 
     <Window.Resources>
 
@@ -63,9 +65,10 @@
             <!--TITLE-->
             <StackPanel Orientation="Horizontal" Visibility="Collapsed">
 
-                <ContentPresenter Margin="5" VerticalAlignment="Bottom" Content="{StaticResource Path_Skele}"/>
+                <ContentPresenter Margin="5" VerticalAlignment="Bottom" 
+                                  Content="{StaticResource Path_Skele}"/>
 
-                <TextBlock Grid.Row="0" Text="SkeletonGame Manager" 
+                <TextBlock Grid.Row="0"  
                                                FontSize="24" FontStyle="Italic"
                                                VerticalAlignment="Bottom"
                                                FontWeight="DemiBold" Margin="5,10,0,0"
@@ -74,7 +77,8 @@
                 <DockPanel Margin="20,3" Grid.Row="2" VerticalAlignment="Bottom">
 
                     <!--HEADER-->
-                    <TextBlock Text="{StaticResource GameFolder}" Margin="20,0"
+                    <TextBlock Text="{Binding GameFolder,Source={StaticResource ResourceKey=AppStringResource}}" 
+                               Margin="20,0"
                                                    FontStyle="Italic" VerticalAlignment="Bottom"
                                                    FontWeight="Bold"
                                                    DockPanel.Dock="Left"/>
@@ -105,7 +109,7 @@
                                             Width="25" Height="20"
                                             VerticalAlignment="Bottom"
                                             DockPanel.Dock="Right"
-                                            ToolTip="{StaticResource GameLaunchInfo}"                                            
+                                            ToolTip="{Binding Tip_GameLaunchInfo, Source={StaticResource ResourceKey=AppStringResource}}"                           
                                             Command="{Binding LaunchGameCommand}"/>
 
                     <!--OPEN GAME FOLDER-->
@@ -113,7 +117,7 @@
                                             Width="25" Height="20"
                                             VerticalAlignment="Bottom"
                                             DockPanel.Dock="Right"
-                                            ToolTip="Open this game path"                                            
+                                            ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"                            
                                             Command="{Binding OpenGameFolderCommand}"/>
 
                 </DockPanel>
@@ -123,7 +127,7 @@
             <TabControl Grid.Row="3" Margin="3" IsEnabled="{Binding IsMainTabEnabled}">
 
                 <!--SKELETON GAME CONFIG-->
-                <TabItem ToolTip="{StaticResource ConfigYaml}">
+                <TabItem ToolTip="{Binding Cfg_ConfigYaml, Source={StaticResource ResourceKey=AppStringResource}}">
 
                     <TabItem.Header>
                         <DockPanel>
@@ -196,8 +200,7 @@
                 </TabItem>
 
                 <!--GAME DATA / TROPHYS-->
-                <TabItem Header="Trophy" 
-                                             IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
+                <TabItem Header="Trophy" IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
                     <ContentControl prism:RegionManager.RegionName="GameDataRegion"/>
                 </TabItem>
 

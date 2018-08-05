@@ -23,14 +23,17 @@
 
         <StackPanel Orientation="Horizontal">
             <Button Content="{DynamicResource Path_Dir}"
-                    ToolTip="{DynamicResource OpenDir}"
+                    ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"
                     VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
         </StackPanel>
-
+        
         <StackPanel Orientation="Horizontal"  Grid.Row="1">
-            <TextBlock FontStyle="Italic" Text="{DynamicResource DropFilesInfo}"/>
+            <TextBlock FontStyle="Italic" 
+                       Text="{Binding Tip_DropFilesInfo, Source={StaticResource ResourceKey=AppStringResource}}"
+                       />
             <TextBlock Text=" - " />
-            <TextBlock FontStyle="Italic" Text="{DynamicResource FileOptionInfo}" 
+            <TextBlock FontStyle="Italic" 
+                       Text="{Binding Tip_FileOptionInfo, Source={StaticResource ResourceKey=AppStringResource}}"
                        Margin="10,0"/>
         </StackPanel>
 

@@ -48,7 +48,8 @@
                             <CheckBox x:Name="ChkBoxFromSaved" Content="From Saved" VerticalAlignment="Center" 
                                       IsChecked="{Binding ScoreLayout.SinglePlayer.Background.Animation.FromSaved, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
                             
-                            <TextBox  Grid.Row="0" Grid.Column="0"  ToolTip="Enter a layer name that is in your saved sequences, not the attract.yaml"
+                            <TextBox  Grid.Row="0" Grid.Column="0"  
+                                      ToolTip="Enter a layer name that is in your saved sequences, not the attract.yaml"
                                       IsEnabled="{Binding ElementName=ChkBoxFromSaved, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                       Text="{Binding ScoreLayout.SinglePlayer.Background.Animation.Name}" Margin="3"/>
                         </StackPanel>
@@ -122,7 +123,8 @@
                         <StackPanel Orientation="Horizontal">
                             <ComboBox Grid.Column="0" ItemsSource="{Binding Animations}" MinWidth="100" SelectedValue="{Binding ScoreLayout.MultiPlayer.Background.Animation.Name}"/>
                             <CheckBox x:Name="ChkBoxFromSavedMulti" Content="From Saved" VerticalAlignment="Center" IsChecked="{Binding ScoreLayout.MultiPlayer.Background.Animation.FromSaved}" Margin="3"/>
-                            <TextBox  Grid.Row="0" Grid.Column="0"  ToolTip="Enter Same here to use the single player animation."
+                            <TextBox  Grid.Row="0" Grid.Column="0"  
+                                      ToolTip="Enter Same here to use the single player animation."
                                       IsEnabled="{Binding ElementName=ChkBoxFromSaved, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                       Text="{Binding ScoreLayout.MultiPlayer.Background.Animation.Name}" Margin="3"/>
                         </StackPanel>
@@ -189,8 +191,7 @@
                         VerticalAlignment="Bottom"
                         Command="{Binding SaveCommand}" 
                         Style="{DynamicResource StyleSaveButton}" 
-                        ToolTip="{StaticResource Tip_SaveConfigMachine}"
-                        
+                        ToolTip="{Binding Tip_SaveConfigMachine, Source={StaticResource ResourceKey=AppStringResource}}"                        
                         />
 
     </Grid>

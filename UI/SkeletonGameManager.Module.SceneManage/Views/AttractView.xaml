@@ -140,7 +140,7 @@
                         VerticalAlignment="Bottom"
                         HorizontalAlignment="Right" Margin="30,10"
                         Style="{DynamicResource StyleSaveButton}"
-                        ToolTip="{StaticResource Tip_SaveSequences}"
+                        ToolTip="{Binding Tip_SaveSequences, Source={StaticResource ResourceKey=AppStringResource}}"
                         Command="{Binding SaveAttractCommand}" />
             
             

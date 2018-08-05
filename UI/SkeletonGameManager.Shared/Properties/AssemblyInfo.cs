@@ -55,10 +55,7 @@ using System.Windows.Markup;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-//[assembly: XmlnsDefinition("http://schemas/skelegamemanager", "Horsesoft.Horsify.Resource.Windows.Behaviors")]
-//[assembly: XmlnsDefinition("http://schemas/horsesoft.co.uk", "Horsesoft.Horsify.Resource.Windows.CustomControls")]
-//[assembly: XmlnsDefinition("http://schemas/horsesoft.co.uk", "Horsesoft.Horsify.Resource.Windows.Panels")]
-//[assembly: XmlnsDefinition("http://schemas/horsesoft.co.uk", "Horsesoft.Horsify.Resource.Windows.Selectors")]
-
 [assembly: XmlnsDefinition("http://schemas/horsesoft.co.uk", "SkeletonGameManager.Resources.Windows.Panels")]
+//[assembly: XmlnsDefinition("http://schemas/horsesoft.co.uk", "SkeletonGameManager.Resources.Properties")]
+
 [assembly: XmlnsPrefix("http://schemas/horsesoft.co.uk", "skelman")]
