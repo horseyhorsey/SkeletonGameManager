@@ -1,8 +1,8 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using Prism.Mvvm;
+using SkeletonGameManager.Base;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -14,7 +14,8 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
 
         public void OpenDirectory(string path)
         {
-            Process.Start(path);
+            if(!string.IsNullOrWhiteSpace(path))
+                FileFolder.Explore(path);
         }
 
         private ObservableCollection<string> assetFiles = new ObservableCollection<string>();
