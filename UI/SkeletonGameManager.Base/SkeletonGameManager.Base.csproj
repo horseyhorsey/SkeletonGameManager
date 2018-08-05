@@ -53,7 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\EventArgs.cs" />
     <Compile Include="Events\Events.cs" />
+    <Compile Include="Helpers\FileFolder.cs" />
     <Compile Include="Interface\IGameRunnner.cs" />
     <Compile Include="Interface\IMediaPlayer.cs" />
     <Compile Include="Interface\ISkeletonGameProvider.cs" />
