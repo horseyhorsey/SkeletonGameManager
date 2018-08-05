@@ -23,6 +23,7 @@ namespace SkeletonGame.Tests
         //[InlineData("EmptyGame")]
         [InlineData("SampleGame")]
         //[InlineData("EvilDead")]
+        //[InlineData("Bottom")]
         public void DeseralizeSkeletonGameConfig(string gameFolder)
         {
             var gameConfig = _skeleSerializer.DeserializeSkeletonYaml<GameConfig>(@"TestData/" + gameFolder + "/config.yaml");
@@ -34,6 +35,7 @@ namespace SkeletonGame.Tests
         [InlineData("EmptyGame")]
         [InlineData("SampleGame")]
         [InlineData("EvilDead")]
+        [InlineData("Bottom")]
         public void DeseralizeSkeletonGameAssets(string gameFolder)
         {
             var assets = _skeleSerializer.DeserializeSkeletonYaml<AssetsFile>(@"TestData/" + gameFolder + "/config/asset_list.yaml");
@@ -55,9 +57,10 @@ namespace SkeletonGame.Tests
         }
 
         [Theory()]
-        [InlineData("EmptyGame")]
-        [InlineData("SampleGame")]
-        [InlineData("EvilDead")]
+        //[InlineData("EmptyGame")]
+        //[InlineData("SampleGame")]
+        //[InlineData("EvilDead")]
+        [InlineData("Bottom")]
         public void DeserializeSkeletonScoreDisplay(string gameFolder)
         {
             var scoreDisplayYaml = @"TestData/" + gameFolder + "/config/new_score_display.yaml";

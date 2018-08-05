@@ -18,6 +18,27 @@
     <ProjectReference Include="..\..\Modules\SkeletonGame.Engine\SkeletonGame.Engine.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="TestData\Bottom\config.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Bottom\config\asset_list.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Bottom\config\attract.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Bottom\config\machine.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Bottom\config\new_score_display.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Bottom\config\profile_default_data.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Bottom\config\trophy_default_data.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\EmptyGame\assets\lampshows\GoingUp.lampshow">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
