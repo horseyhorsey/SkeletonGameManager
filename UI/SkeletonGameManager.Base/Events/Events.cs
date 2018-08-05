@@ -9,5 +9,7 @@ namespace SkeletonGameManager.Base
         public class OnLaunchGameEvent : PubSubEvent<object> { }
 
         public class VideoSourceEvent : PubSubEvent<string> { }
+
+        public class ApplicationBusyEvent : PubSubEvent<bool> { }
     }
 }
