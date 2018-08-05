@@ -1,16 +1,16 @@
-﻿using Prism.Commands;
+﻿using Microsoft.Practices.Unity;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using SkeletonGameManager.Base;
 using SkeletonGameManager.Module.Menus.Views;
+using SkeletonGameManager.Module.Recordings.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 using static SkeletonGameManager.Base.Events;
 
@@ -21,7 +21,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         #region Fields
         private IEventAggregator _eventAggregator;
         private ISkeletonGameProvider _skeletonGameProvider;
-        private IGameRunnner _gameRunnner; 
+        private IGameRunnner _gameRunnner;        
         #endregion
 
         #region Commands
@@ -33,14 +33,41 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         public DelegateCommand LaunchGameCommand { get;}
         public DelegateCommand<string> ExportCommand { get; }
         public DelegateCommand BrowseFolderCommand { get; }
+        public DelegateCommand<string> LaunchRecordingCommand { get; }
         #endregion
 
+        public List<string> RecentDirectories { get; set; } = new List<string>();
+
         #region Constructors
-        public FileMenuViewModel(ISkeletonGameProvider skeletonGameProvider, IGameRunnner gameRunnner, IEventAggregator eventAggregator)
+        public FileMenuViewModel(ISkeletonGameProvider skeletonGameProvider, IGameRunnner gameRunnner, 
+            IEventAggregator eventAggregator, IUnityContainer unityContainer)
         {
             _eventAggregator = eventAggregator;
             _skeletonGameProvider = skeletonGameProvider;
             _gameRunnner = gameRunnner;
+
+            //Recent dirs
+            RecentDirectories.AddRange(new string[] { @"C:\P-ROC\Games\Jaws", @"C:\P-ROC\Games\EvilDead" });
+
+            //Get the recordings stored from containers view model
+            Recordings = unityContainer.Resolve<RecordingsViewModel>().PlaybackItemViewModels;
+
+            LaunchRecordingCommand = new DelegateCommand<string>((playbackItem) =>
+            {
+                if (playbackItem != null)
+                {
+                    IsGameRunning = true;
+                    UpdateCanExecuteCommands();
+                    unityContainer.Resolve<RecordingsViewModel>().LaunchPlaybackFile(_skeletonGameProvider.GameFolder, playbackItem, true);                    
+                }
+                    
+            }, (x) => !IsGameRunning);
+
+            _eventAggregator.GetEvent<OnLaunchGameEvent>().Subscribe(async (x) =>
+            {
+                IsGameRunning = true;
+                await OnLaunchedGame();
+            });
 
             #region Commands
             BrowseFolderCommand = new DelegateCommand(() => FileFolder.Explore(_skeletonGameProvider.GameFolder), () => IsValidGameFolder());
@@ -58,14 +85,10 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory(), () => !IsGameRunning);
             #endregion
 
-            _eventAggregator.GetEvent<OnLaunchGameEvent>().Subscribe(async (x) =>
-            {
-                IsGameRunning = true;
-                await OnLaunchedGame();
-            });
-
-        }         
+        }
         #endregion
+
+        #region Properties        
 
         private bool isGameRunning = false;
         /// <summary>
@@ -95,6 +118,9 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 UpdateCanExecuteCommands();
             }
         }
+
+        public ObservableCollection<PlaybackItemViewModel> Recordings { get; private set; }
+        #endregion
 
         #region Private Methods
 
@@ -167,7 +193,11 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         /// <param name="obj">The object.</param>
         private async void OnOpenRecent(string obj)
         {
-            await SetGamePath(obj);
+            try
+            {
+                await SetGamePath(obj);
+            }
+            catch (Exception) { }
         }
 
         /// <summary>
@@ -267,6 +297,10 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
                 System.Windows.MessageBox.Show($"Failed loading skeleton game files. {ex.Data["yaml"]} {ex.Message}");
             }
+            finally
+            {
+                UpdateCanExecuteCommands();
+            }
         }
 
         /// <summary>
@@ -279,6 +313,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             ReloadGameCommand.RaiseCanExecuteChanged();            
             SetDirectoryCommand.RaiseCanExecuteChanged();
             ExportCommand.RaiseCanExecuteChanged();
+            LaunchRecordingCommand.RaiseCanExecuteChanged();
         }
 
 

@@ -95,6 +95,10 @@
       <Project>{BE479251-3B5F-4138-A6CD-5C3701C1FE8E}</Project>
       <Name>SkeletonGameManager.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SkeletonManager.Module.Recordings\SkeletonGameManager.Module.Recordings.csproj">
+      <Project>{84DF587A-E917-419D-9902-DB61E2D073CD}</Project>
+      <Name>SkeletonGameManager.Module.Recordings</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CreateNewGameWindow.xaml">

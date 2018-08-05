@@ -27,7 +27,7 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
 
             LaunchGameCommand = new DelegateCommand(() =>
             {
-                LaunchGame();
+                LaunchGame(this.PlaybackItemViewModel);
             }, () => _launchCommandEnabled);
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
@@ -95,31 +95,42 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
 
         #region Private Methods
 
-        private void LaunchGame()
+        private void LaunchGame(PlaybackItemViewModel playbackItem = null)
         {
-            _launchCommandEnabled = false;
-            this.LaunchGameCommand.RaiseCanExecuteChanged();
-
             if (PlaybackIsChecked)
             {
-                if (this.PlaybackItemViewModel != null)
-                    RecordingManager.CopyPlayBackFileToGameRoot(_skeletonGameProvider.GameFolder, this.playbackItemViewModel.PlaybackFile);
-
-                RecordingManager.SetFakePinProcPlayback(_skeletonGameProvider.GameFolder, true);
-
-                _launchedWithPlayback = true;
+                if (playbackItem != null)
+                {
+                    LaunchPlaybackFile(_skeletonGameProvider.GameFolder, this.playbackItemViewModel.PlaybackFile, true);
+                }
             }
             else
             {
                 //Replace the skeleton game base class, could be recording or not.
-                var skeleGame = Path.Combine(_skeletonGameProvider.GameFolder, "procgame", "game", "skeletongame.py");                
-                RecordingManager.SetSkeletonGameBaseClass(skeleGame, true);
+                var skeleGame = Path.Combine("procgame", "game", "skeletongame.py");
+                LaunchPlaybackFile(_skeletonGameProvider.GameFolder, skeleGame);
+            }
+        }
 
-                _launchedWithPlayback = false;
+        public void LaunchPlaybackFile(string gameFolder, string playbackFile, bool playback = false)
+        {
+            _launchCommandEnabled = false;
+            this.LaunchGameCommand.RaiseCanExecuteChanged();
+
+            if (playback)
+            {
+                RecordingManager.CopyPlayBackFileToGameRoot(gameFolder, playbackFile);
+                RecordingManager.SetFakePinProcPlayback(gameFolder, playback);
+            }
+            else
+            {
+                RecordingManager.SetSkeletonGameBaseClass(Path.Combine(gameFolder, playbackFile), true);
             }
 
+            _launchedWithPlayback = playback;
             _eventAggregator.GetEvent<OnLaunchGameEvent>().Publish(null);
         }
+
 
         /// <summary>
         /// Called when [game ended event changed]. Sets any recording parameters back to the normal game classes.

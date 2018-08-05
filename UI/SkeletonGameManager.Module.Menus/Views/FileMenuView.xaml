@@ -8,18 +8,34 @@
              d:DesignHeight="300" d:DesignWidth="300"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" >
-    <Grid>
+    <Grid x:Name="LayoutRoot">
         <Menu>
             <MenuItem Header="_File">
+
+                <!--NEW GAME-->
                 <MenuItem Header="_New..." Command="{Binding CreateNewGameCommand}" InputGestureText="Ctrl+N"/>
+                
+                <!--OPEN GAME-->
                 <MenuItem Header="_Open..." Command="{Binding SetDirectoryCommand}" InputGestureText="Ctrl+O"/>
+
+                <!--RecentDirectories-->
                 <MenuItem Header="Recent">
-                    <MenuItem Command="{Binding OpenRecentCommand}" 
-                                  Header="C:\P-ROC\Games\Jaws"
-                                  CommandParameter="C:\P-ROC\Games\Jaws"
-                                  />
-                    <MenuItem Header="C:\P-ROC\Games\EvilDead"/>
+
+                    <MenuItem.Resources>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Command" Value="{Binding OpenRecentCommand}"/>
+                            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self},Path=Header}"/>
+                        </Style>
+                    </MenuItem.Resources>
+                    
+                    <MenuItem Header="{Binding RecentDirectories[0]}"/>
+                    <MenuItem Header="{Binding RecentDirectories[1]}"/>
+                    <MenuItem Header="{Binding RecentDirectories[2]}"/>
+                    <MenuItem Header="{Binding RecentDirectories[3]}"/>
+                    <MenuItem Header="{Binding RecentDirectories[4]}"/>
                 </MenuItem>
+                
+                <!--QUIT UI-->
                 <MenuItem Header="_Quit" Command="{x:Static ApplicationCommands.Close}" InputGestureText="Ctrl+Q"/>
             </MenuItem>
 
@@ -64,6 +80,29 @@
                             CommandParameter="lampshowUi"
                           />
             </MenuItem>
+
+            <!--RECORDINGS / PLAYBACK-->
+            <MenuItem Header="Recordings"                     
+                      >
+
+                <MenuItem Header="Record New"/>
+
+                <MenuItem Header="Playback" 
+                          ItemsSource="{Binding Recordings}"
+                          DisplayMemberPath="PlaybackFile"                          
+                          >
+
+                    <MenuItem.Resources>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Command" Value="{Binding ElementName=LayoutRoot,Path=DataContext.LaunchRecordingCommand}"/>
+                            <Setter Property="CommandParameter" Value="{Binding PlaybackFile}"/>
+                        </Style>
+                    </MenuItem.Resources>
+                    
+                </MenuItem>
+                    
+            </MenuItem>
+            
         </Menu>
     </Grid>
 </UserControl>

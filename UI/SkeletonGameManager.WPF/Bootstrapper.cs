@@ -8,6 +8,7 @@ using Prism.Regions;
 using SkeletonGameManager.Base;
 using SkeletonGameManager.Module.Assets.Views;
 using SkeletonGameManager.Module.Services;
+using SkeletonGameManager.Module.Recordings.ViewModels;
 
 namespace SkeletonGameManager.WPF
 {
@@ -65,6 +66,7 @@ namespace SkeletonGameManager.WPF
             Container.RegisterInstance<ISkeletonGameFiles>(Container.Resolve<SkeletonGameFiles>());
             Container.RegisterInstance<ISkeletonGameExport>(Container.Resolve<SkeletonGameExport>());
 
+            Container.RegisterType<RecordingsViewModel>(new ContainerControlledLifetimeManager());
             //Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>());
             //Container.RegisterInstance(Container.Resolve<TrophyDataViewModel>());
         }
