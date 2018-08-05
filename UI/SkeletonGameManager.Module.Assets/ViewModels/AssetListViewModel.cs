@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Logging;
 using Prism.Regions;
 using SkeletonGame.Engine;
 using SkeletonGame.Models;
@@ -22,7 +23,8 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         #endregion
 
         #region Constructors
-        public AssetListViewModel(IRegionManager regionManager, IUnityContainer unityContainer, IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonGameFiles skeletonGameFiles) : base(eventAggregator)
+        public AssetListViewModel(IRegionManager regionManager, IUnityContainer unityContainer, IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonGameFiles skeletonGameFiles, ILoggerFacade loggerFacade) : 
+            base(eventAggregator, loggerFacade)
         {
             _regionManager = regionManager;
             _unityContainer = unityContainer;

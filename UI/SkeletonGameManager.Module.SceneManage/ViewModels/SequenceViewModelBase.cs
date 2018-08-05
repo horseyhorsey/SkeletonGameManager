@@ -1,4 +1,5 @@
 ﻿using Prism.Events;
+using Prism.Logging;
 using SkeletonGame.Models;
 using SkeletonGameManager.Base;
 using System.Collections.ObjectModel;
@@ -8,7 +9,7 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
 {
     public class SequenceViewModelBase : SkeletonGameManagerViewModelBase
     {
-        public SequenceViewModelBase(IEventAggregator eventAggregator) : base(eventAggregator)
+        public SequenceViewModelBase(IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
 
         }

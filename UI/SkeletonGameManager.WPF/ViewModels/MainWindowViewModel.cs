@@ -2,9 +2,10 @@
 using System.IO;
 using Prism.Events;
 using SkeletonGame.Engine;
-using System.Collections.Generic;
 using SkeletonGameManager.Base;
 using System.Windows.Input;
+using Prism.Logging;
+using System;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -12,43 +13,25 @@ namespace SkeletonGameManager.WPF.ViewModels
     {
         #region Fields
         private ISkeletonGameProvider _skeletonGameProvider;
-        private ISkeletonLogger _skeletonLogger;
         #endregion
 
         #region Commands
-
         public ICommand OpenFileFolderCommand { get; }
         #endregion
 
         #region Constructors
 
-        public MainWindowViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonLogger skeletonLogger) : base(eventAggregator)
+        public MainWindowViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, 
+            ISkeletonLogger skeletonLogger, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
-            _skeletonGameProvider = skeletonGameProvider;
-            _skeletonLogger = skeletonLogger;
-            IsGameRunning = false;
-
+            _skeletonGameProvider = skeletonGameProvider;            
             _skeletonGameProvider.StatusChanged += _skeletonGameProvider_StatusChanged;
 
-            OpenFileFolderCommand = new DelegateCommand<string>((x) =>
-            {
-                switch (x)
-                {
-                    case "asset_list.yaml":
-                    case "new_score_display.yaml":
-                    case "machine.yaml":
-                    case "attract.yaml":
-                    case "game_default_data.yaml":
-                    case "game_default_settings.yaml":
-                        FileFolder.Explore(Path.Combine(_skeletonGameProvider.GameFolder, "config", x));
-                        break;
-                    case "config.yaml":
-                        FileFolder.Explore(Path.Combine(_skeletonGameProvider.GameFolder, x));
-                        break;
-                    default:
-                        break;
-                }
-            });
+            IsGameRunning = false;
+
+            OpenFileFolderCommand = new DelegateCommand<string>(OnOpenFileFolder);
+
+            Log("Initialized");
         }
 
         #endregion
@@ -82,7 +65,6 @@ namespace SkeletonGameManager.WPF.ViewModels
         }
 
         private bool isGameRunning = false;
-
         /// <summary>
         /// Gets or sets the IsGameRunning.
         /// </summary>
@@ -95,25 +77,58 @@ namespace SkeletonGameManager.WPF.ViewModels
             }
         }
 
-        /// <summary>
-        /// The last game launched log
-        /// </summary>
-        private IList<string> _lastgameLog;
-
         #endregion
 
         #region Private methods
+
         private void OnApplicationBusyChanged(bool isBusy)
         {
             this.IsMainTabEnabled = !isBusy;
         }
 
+        /// <summary>
+        /// Called when [open file folder]. Deals with opening certain SkeletonGame files from filename.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        private void OnOpenFileFolder(string path)
+        {
+            Log($"Attempting to open file. {path}");
+
+            try
+            {
+                switch (path)
+                {
+                    case "asset_list.yaml":
+                    case "new_score_display.yaml":
+                    case "machine.yaml":
+                    case "attract.yaml":
+                    case "game_default_data.yaml":
+                    case "game_default_settings.yaml":
+                        FileFolder.Explore(Path.Combine(_skeletonGameProvider.GameFolder, "config", path));
+                        break;
+                    case "config.yaml":
+                        FileFolder.Explore(Path.Combine(_skeletonGameProvider.GameFolder, path));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log($"Error loading file {path}. {ex.Message}", Category.Warn);
+            }
+        }
+
         private void _skeletonGameProvider_StatusChanged(object sender, ProviderUpdatedEventArgs e)
         {
+            Log($"Provider status changed. {e.Status}");
+
             if (e.Status == 2)
                 this.IsMainTabEnabled = false;
             else
                 this.IsMainTabEnabled = true;
+
+            Log($"Main tab is enabled: {this.IsMainTabEnabled}");
         }
         #endregion
     }

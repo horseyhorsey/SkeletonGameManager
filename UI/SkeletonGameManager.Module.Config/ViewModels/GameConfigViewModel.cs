@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using Microsoft.Practices.Unity;
 using SkeletonGameManager.Base;
 using static SkeletonGameManager.Base.Events;
+using Prism.Logging;
 
 namespace SkeletonGameManager.Module.Config.ViewModels
 {
@@ -16,7 +17,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels
 
         #region Constructors
 
-        public GameConfigViewModel(IEventAggregator ea, ISkeletonGameProvider skeletonGameProvider, IUnityContainer unityContainer) : base(ea)
+        public GameConfigViewModel(IEventAggregator ea, ISkeletonGameProvider skeletonGameProvider, IUnityContainer unityContainer, ILoggerFacade loggerFacade) : base(ea, loggerFacade)
         {            
             _skeletonGameProvider = skeletonGameProvider;
             _unityContainer = unityContainer;

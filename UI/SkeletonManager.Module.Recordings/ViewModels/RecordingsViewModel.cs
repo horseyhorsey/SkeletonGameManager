@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Events;
+using Prism.Logging;
 using SkeletonGame.Engine;
 using SkeletonGameManager.Base;
 using System.Collections.ObjectModel;
@@ -21,7 +22,7 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
         #endregion
 
         #region Constructors
-        public RecordingsViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
+        public RecordingsViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             _skeletonGameProvider = skeletonGameProvider;
 

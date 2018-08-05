@@ -14,6 +14,7 @@ using System.IO;
 using SkeletonGameManager.Base;
 using static SkeletonGameManager.Base.Events;
 using SkeletonGameManager.Module.Config.ViewModels.Machine;
+using Prism.Logging;
 
 namespace SkeletonGameManager.Module.Config.ViewModels
 {
@@ -28,7 +29,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         public ICommand SendOscMessageCommand { get; set; }   
 
         #region Constructors
-        public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC, ISkeletonGameExport skeletonGameExport) : base(eventAggregator)
+        public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC, ISkeletonGameExport skeletonGameExport, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonOSC = skeletonOSC;

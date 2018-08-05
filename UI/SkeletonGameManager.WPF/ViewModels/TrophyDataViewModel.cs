@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Events;
+using Prism.Logging;
 using SkeletonGame.Models.Data;
 using SkeletonGameManager.Base;
 using System;
@@ -24,7 +25,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         #endregion
 
         #region Constructors
-        public TrophyDataViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
+        public TrophyDataViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             _skeletonGameProvider = skeletonGameProvider;            
 

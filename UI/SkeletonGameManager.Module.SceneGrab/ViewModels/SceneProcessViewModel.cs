@@ -11,6 +11,7 @@ using System.Configuration;
 using SkeletonGameManager.Base;
 using SkeletonGameManager.Module.SceneGrab.Model;
 using static SkeletonGameManager.Module.SceneGrab.Events.ViewModelEvents;
+using Prism.Logging;
 
 namespace SkeletonGameManager.Module.SceneGrab.ViewModels
 {
@@ -23,7 +24,8 @@ namespace SkeletonGameManager.Module.SceneGrab.ViewModels
 
         public ICommand ProcessListCommand { get; set; }
 
-        public SceneProcessViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
+        public SceneProcessViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) 
+            : base(eventAggregator, loggerFacade)
         {
             _skeletonGameProvider = skeletonGameProvider;
             _eventAggregator.GetEvent<VideoProcessItemAddedEvent>().Subscribe(OnVideoProcessAdded);

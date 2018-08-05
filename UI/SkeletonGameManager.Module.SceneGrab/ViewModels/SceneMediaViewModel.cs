@@ -12,6 +12,7 @@ using SkeletonGameManager.Base;
 using SkeletonGameManager.Module.SceneGrab.Model;
 using static SkeletonGameManager.Module.SceneGrab.Events.ViewModelEvents;
 using static SkeletonGameManager.Base.Events;
+using Prism.Logging;
 
 namespace SkeletonGameManager.Module.SceneGrab.ViewModels
 {
@@ -29,7 +30,8 @@ namespace SkeletonGameManager.Module.SceneGrab.ViewModels
 
         #endregion
 
-        public SceneMediaViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
+        public SceneMediaViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) 
+            : base(eventAggregator, loggerFacade)
         {
             _skeletonGameProvider = skeletonGameProvider;
 

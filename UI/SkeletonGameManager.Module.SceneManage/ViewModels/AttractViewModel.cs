@@ -12,6 +12,7 @@ using SkeletonGame.Models.Layers;
 using System.Windows;
 using SkeletonGameManager.Base;
 using static SkeletonGameManager.Base.Events;
+using Prism.Logging;
 
 namespace SkeletonGameManager.Module.SceneManage.ViewModels
 {
@@ -30,7 +31,7 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
         #endregion
 
         #region Constructors
-        public AttractViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
+        public AttractViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonGameAttract = new SkeletonGameAttract();

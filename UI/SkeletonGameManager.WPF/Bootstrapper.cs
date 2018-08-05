@@ -9,6 +9,7 @@ using SkeletonGameManager.Base;
 using SkeletonGameManager.Module.Assets.Views;
 using SkeletonGameManager.Module.Services;
 using SkeletonGameManager.Module.Recordings.ViewModels;
+using Prism.Logging;
 
 namespace SkeletonGameManager.WPF
 {
@@ -74,6 +75,11 @@ namespace SkeletonGameManager.WPF
         protected override void ConfigureViewModelLocator()
         {
             base.ConfigureViewModelLocator();
+        }
+
+        protected override ILoggerFacade CreateLogger()
+        {
+            return new SkeletonGameLogger("Sgm_Logger");
         }
     }
 }

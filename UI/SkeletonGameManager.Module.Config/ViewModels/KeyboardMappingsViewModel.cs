@@ -5,6 +5,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Logging;
 using SkeletonGame.Models.Machine;
 using SkeletonGameManager.Base;
 using static SkeletonGame.Models.SdlKeyCode;
@@ -22,7 +23,8 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         #endregion
 
         #region Constructors
-        public KeyboardMappingsViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
+        public KeyboardMappingsViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) 
+            : base(eventAggregator, loggerFacade)
         {
             _skeletonGameProvider = skeletonGameProvider;            
 
