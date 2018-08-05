@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace SkeletonGameManager.WPF.Providers
+namespace SkeletonGameManager.Module.Services
 {
     /// <summary>
     /// Provides data from the yaml files from SkeletonGame
@@ -23,14 +23,18 @@ namespace SkeletonGameManager.WPF.Providers
         #region Fields
         private ISkeletonGameSerializer _skeletonGameSerializer;
         private ISkeletonGameFiles _skeletonGameFiles;
+        private IVpScriptExporter _vpScriptExporter;
         #endregion
 
         #region Constructors
 
-        public SkeletonGameProvider(ISkeletonGameSerializer skeletonGameSerializer, ISkeletonGameFiles skeletonGameFiles)
+        public SkeletonGameProvider(ISkeletonGameSerializer skeletonGameSerializer, 
+            ISkeletonGameFiles skeletonGameFiles,
+            IVpScriptExporter vpScriptExporter)
         {
             _skeletonGameSerializer = skeletonGameSerializer;
             _skeletonGameFiles = skeletonGameFiles;
+            _vpScriptExporter = vpScriptExporter;
         }
 
         #endregion
@@ -159,6 +163,40 @@ namespace SkeletonGameManager.WPF.Providers
                     }
 
             });
+        }
+
+        /// <summary>
+        /// Exports the vp script.
+        /// </summary>
+        /// <param name="exportType">Type of the machine item eg Switch, Coil, ScriptFull</param>
+        public void ExportVpScript(string exportType)
+        {
+            var scriptString = string.Empty;
+            var scriptFileName = $"{GameFolder}\\VP_{exportType}.txt";
+
+            //Delete exisitng scripts
+            if (File.Exists(scriptFileName))
+                File.Delete(scriptFileName);
+
+            if (exportType == "switch")
+                scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Switch);
+            else if (exportType == "coil")
+                scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Coil);
+            else if (exportType == "ScriptFull")
+            {
+                scriptString = _vpScriptExporter.CreateVisualPinballScript(this.MachineConfig,
+                    Path.GetFileName(GameFolder));
+            }
+            else
+            {
+                throw new InvalidDataException($"Invalid VP  script option. {exportType}");
+            }
+
+            //Write the script
+            using (var sw = File.CreateText(scriptFileName))
+            {
+                sw.Write(scriptString);
+            }
         }
 
         public SequenceYaml GetSequence(string yamlPath)

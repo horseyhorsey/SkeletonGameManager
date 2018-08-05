@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\Events.cs" />
+    <Compile Include="Interface\IGameRunnner.cs" />
     <Compile Include="Interface\IMediaPlayer.cs" />
     <Compile Include="Interface\ISkeletonGameProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

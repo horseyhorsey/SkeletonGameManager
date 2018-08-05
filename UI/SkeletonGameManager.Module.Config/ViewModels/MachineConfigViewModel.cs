@@ -48,11 +48,6 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                 SaveMachineConfig();
             });
 
-            ExportToVpCommand = new DelegateCommand<string>((x) =>
-            {
-                ExportVpScript(x);
-            });
-
             ExportToLampshowUiCommand = new DelegateCommand(() =>
             {
                 _skeletonExport.ExportLampsToLampshowUI(
@@ -405,36 +400,6 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                     AddToLampMatrix(i);
                 }
 
-            }
-        }
-
-        /// <summary>
-        /// Exports the vp script.
-        /// </summary>
-        /// <param name="machineItemType">Type of the machine item eg Switch, Coil</param>
-        private void ExportVpScript(string machineItemType)
-        {
-            var scriptString = string.Empty;
-            var scriptFileName = $"{_skeletonGameProvider.GameFolder}\\VP_{machineItemType}.txt";
-
-            //Delete exisitng scripts
-            if (File.Exists(scriptFileName))
-                File.Delete(scriptFileName);
-
-            if (machineItemType == "Switch")
-                scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Switch);
-            else if (machineItemType == "Coil")
-                scriptString = _vpScriptExporter.ExportMachineValuesToScript(this.MachineConfig, SkeletonGame.Models.VpScriptExportType.Coil);
-            else if (machineItemType == "ScriptFull")
-            {
-                scriptString = _vpScriptExporter.CreateVisualPinballScript(this.MachineConfig,
-                    Path.GetFileName(_skeletonGameProvider.GameFolder));
-            }
-
-            //Write the script
-            using (var sw = File.CreateText(scriptFileName))
-            {
-                sw.Write(scriptString);
             }
         }
 

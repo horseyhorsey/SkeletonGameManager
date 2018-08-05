@@ -23,6 +23,7 @@ namespace SkeletonGameManager.Base
         void ClearConfigs();
         SequenceYaml GetSequence(string yamlPath);
         Task LoadYamlEntriesAsync();
+        void ExportVpScript(string exportType);
         void SaveAssetsFile(AssetsFile assetsFile);
         void SaveGameConfig(GameConfig config);
         void SaveMachineConfig(MachineConfig mConfig);
