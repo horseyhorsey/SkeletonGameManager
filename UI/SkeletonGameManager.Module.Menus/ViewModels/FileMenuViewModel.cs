@@ -71,7 +71,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
             #region Commands
             BrowseFolderCommand = new DelegateCommand(() => FileFolder.Explore(_skeletonGameProvider.GameFolder), () => IsValidGameFolder());
-            CreateNewGameCommand = new DelegateCommand(OnCreateNewGame);
+            CreateNewGameCommand = new DelegateCommand(OnCreateNewGame, () => true);
             ExportCommand = new DelegateCommand<string>(OnExport, (x) => IsValidGameFolder());
             LaunchGameCommand = new DelegateCommand(async () =>
             {

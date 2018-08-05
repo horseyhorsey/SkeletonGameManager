@@ -8,12 +8,25 @@
              d:DesignHeight="300" d:DesignWidth="300"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True" >
+
+
     <Grid x:Name="LayoutRoot">
+
+        <Grid.InputBindings>
+            <KeyBinding Key="N" 
+                        Gesture="Ctrl+N" 
+                        Modifiers="Ctrl"
+                        Command="{Binding CreateNewGameCommand}"/>
+        </Grid.InputBindings>
+        
         <Menu>
             <MenuItem Header="_File">
 
                 <!--NEW GAME-->
-                <MenuItem Header="_New..." Command="{Binding CreateNewGameCommand}" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="_New..." 
+                          Command="{Binding CreateNewGameCommand}"                          
+                          InputGestureText="Ctrl+N"        
+                          />
                 
                 <!--OPEN GAME-->
                 <MenuItem Header="_Open..." Command="{Binding SetDirectoryCommand}" InputGestureText="Ctrl+O"/>

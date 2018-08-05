@@ -45,7 +45,6 @@
     </Window.CommandBindings>
 
     <Window.InputBindings>
-        <KeyBinding Key="N" Gesture="Ctrl+N" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.New}"/>
         <KeyBinding Key="O" Gesture="Ctrl+O" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.Open}"/>
         <KeyBinding Key="Q" Gesture="Ctrl+Q" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.Close}"/>
     </Window.InputBindings>
