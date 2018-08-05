@@ -23,7 +23,12 @@ namespace SkeletonGameManager.WPF.Views
 
         private void Close_Executed(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
         {
-            this.Close();
+            var result = MessageBox.Show("Sure you want to exit?", "Closing...", MessageBoxButton.YesNoCancel);
+
+            if (result == MessageBoxResult.Yes)
+                this.Close();
+            else
+                e.Handled = true;
         }
     }
 }

@@ -206,45 +206,9 @@
 
         </Grid>
 
-        <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
-            <!--FILE MENU-->
-            <Menu>
-                <MenuItem Header="_File">
-                    <MenuItem Header="_New..." Command="{Binding CreateNewGameCommand}" InputGestureText="Ctrl+N"/>
-                    <MenuItem Header="_Open..." Command="{Binding SetDirectoryCommand}" InputGestureText="Ctrl+O"/>
-                    <MenuItem Header="Recent">
-                        <MenuItem Command="{Binding OpenRecentCommand}" 
-                                  Header="C:\P-ROC\Games\Jaws"
-                                  CommandParameter="C:\P-ROC\Games\Jaws"
-                                  />
-                        <MenuItem Header="C:\P-ROC\Games\EvilDead"/>
-                    </MenuItem>
-                    <MenuItem Header="_Quit" Command="{x:Static ApplicationCommands.Close}" InputGestureText="Ctrl+Q"/>
-                </MenuItem>
-
-                <MenuItem Header="_Game">
-                    <MenuItem Header="_Browse" Command="{Binding BrowseGameFolderCommand}" InputGestureText="Ctrl+B"/>
-                    <MenuItem Header="R_eload" Command="{Binding ReloadGameCommand}"/>
-                    <MenuItem Header="_Run" Command="{Binding RunGameCommand}" InputGestureText="Ctrl+R"/>
-                </MenuItem>
-
-                <MenuItem Header="_Export">
-                    <MenuItem Header="_Pyprocgame">
-                        <MenuItem Header="Switch Methods"/>
-                    </MenuItem>
-
-                    <MenuItem Header="_Visual Pinball">
-                        <MenuItem Header="Switch Methods"/>
-                        <MenuItem Header="Solenoid Callbacks"/>
-                        <MenuItem Header="Full Table Script"/>
-                    </MenuItem>
-                </MenuItem>
-            </Menu>
-
-            <ToolBarTray>
-                <ToolBar Header="Tools"/>
-            </ToolBarTray>
-        </StackPanel>
+        <!--FILE MENU-->
+        <ContentControl prism:RegionManager.RegionName="FileMenuRegion"
+                        VerticalAlignment="Top"/>
 
     </Grid>
 

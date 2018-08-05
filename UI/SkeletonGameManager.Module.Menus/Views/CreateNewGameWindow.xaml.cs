@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace SkeletonGameManager.WPF.Views
+namespace SkeletonGameManager.Module.Menus.Views
 {
     /// <summary>
     /// Interaction logic for CreateNewGameWindow.xaml

@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeletonGameManager.Module.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeletonGameManager.Module.SceneManage", "UI\SkeletonGameManager.Module.SceneManage\SkeletonGameManager.Module.SceneManage.csproj", "{DE6D7034-570D-4AAF-BDBE-9BB2EF0730BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkeletonGameManager.Module.Menus", "UI\SkeletonGameManager.Module.Menus\SkeletonGameManager.Module.Menus.csproj", "{9439EE15-2360-4006-801B-7207648BFA2C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		UI\SkeletonGameManager.Shared\SkeletonGameManager.Shared.projitems*{ce1e49c2-ec38-4853-b807-ca94248a1780}*SharedItemsImports = 4
@@ -107,6 +109,10 @@ Global
 		{DE6D7034-570D-4AAF-BDBE-9BB2EF0730BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6D7034-570D-4AAF-BDBE-9BB2EF0730BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE6D7034-570D-4AAF-BDBE-9BB2EF0730BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9439EE15-2360-4006-801B-7207648BFA2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9439EE15-2360-4006-801B-7207648BFA2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9439EE15-2360-4006-801B-7207648BFA2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9439EE15-2360-4006-801B-7207648BFA2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,6 +133,7 @@ Global
 		{84DF587A-E917-419D-9902-DB61E2D073CD} = {C0262CA2-636D-47CE-8D00-EE53F241C2C4}
 		{7F3090F9-152D-478E-84BB-BAD4454B0255} = {C0262CA2-636D-47CE-8D00-EE53F241C2C4}
 		{DE6D7034-570D-4AAF-BDBE-9BB2EF0730BE} = {C0262CA2-636D-47CE-8D00-EE53F241C2C4}
+		{9439EE15-2360-4006-801B-7207648BFA2C} = {C0262CA2-636D-47CE-8D00-EE53F241C2C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BEB539EF-392F-4249-9853-6420517BBF01}

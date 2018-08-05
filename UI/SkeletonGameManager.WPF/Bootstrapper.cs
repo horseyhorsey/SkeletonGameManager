@@ -5,11 +5,9 @@ using Prism.Modularity;
 using SkeletonGame.Engine;
 using SkeletonGameManager.WPF.Views;
 using Prism.Regions;
-using SkeletonGameManager.WPF.ViewModels;
 using SkeletonGameManager.Base;
-using SkeletonGameManager.WPF.Providers;
 using SkeletonGameManager.Module.Assets.Views;
-using SkeletonGameManager.Module.Assets.ViewModels;
+using SkeletonGameManager.Module.Services;
 
 namespace SkeletonGameManager.WPF
 {
@@ -38,13 +36,14 @@ namespace SkeletonGameManager.WPF
 
         protected override void ConfigureModuleCatalog()
         {
-            var moduleCatalog = (ModuleCatalog)ModuleCatalog;
-
+            var moduleCatalog = (ModuleCatalog)ModuleCatalog;                                   
             moduleCatalog.AddModule(typeof(Module.Assets.AssetsModule));
             moduleCatalog.AddModule(typeof(Module.Config.ConfigModule));
             moduleCatalog.AddModule(typeof(Module.Recordings.RecordingsModule));
             moduleCatalog.AddModule(typeof(Module.SceneGrab.SceneGrabModule));
             moduleCatalog.AddModule(typeof(Module.SceneManage.SceneManageModule));
+            moduleCatalog.AddModule(typeof(Module.Menus.MenusModule));
+            moduleCatalog.Initialize();
         }
 
         protected override void ConfigureContainer()
@@ -56,14 +55,23 @@ namespace SkeletonGameManager.WPF
             //    return Container.Resolve(type);
             //});
 
+            Container.RegisterType<ISkeletonGameProvider, SkeletonGameProvider>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IGameRunnner, SkeletonGameRunner>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IVpScriptExporter, VpScriptExporter>(new ContainerControlledLifetimeManager());            
+
             Container.RegisterInstance<ISkeletonLogger>(Container.Resolve<SkeletonLogger>());
             Container.RegisterInstance<ISkeletonOSC>(Container.Resolve<SkeletonOSC>());
             Container.RegisterInstance<ISkeletonGameSerializer>(Container.Resolve<SkeletonGameSerializer>());
             Container.RegisterInstance<ISkeletonGameFiles>(Container.Resolve<SkeletonGameFiles>());
-            Container.RegisterInstance<ISkeletonGameProvider>(Container.Resolve<SkeletonGameProvider>());
-            Container.RegisterInstance<ISkeletonGameExport>(Container.Resolve<SkeletonGameExport>());            
-            Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>());
-            Container.RegisterInstance(Container.Resolve<TrophyDataViewModel>());
+            Container.RegisterInstance<ISkeletonGameExport>(Container.Resolve<SkeletonGameExport>());
+
+            //Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>());
+            //Container.RegisterInstance(Container.Resolve<TrophyDataViewModel>());
+        }
+
+        protected override void ConfigureViewModelLocator()
+        {
+            base.ConfigureViewModelLocator();
         }
     }
 }

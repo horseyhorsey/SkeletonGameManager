@@ -8,7 +8,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Input;
 
-namespace SkeletonGameManager.WPF.ViewModels
+namespace SkeletonGameManager.Module.Menus.ViewModels
 {
     public class CreateNewGameWindowViewModel : BindableBase
     {

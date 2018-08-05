@@ -124,7 +124,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviours\DragBehaviour.cs" />
-    <Compile Include="ViewModels\CreateNewGameWindowViewModel.cs" />
     <Compile Include="ViewModels\GameDataViewModel.cs" />
     <Compile Include="ViewModels\TrophyDataViewModel.cs" />
     <Compile Include="ViewModels\ScoreLayoutViewModel.cs" />
@@ -140,9 +139,6 @@
     <Compile Include="Views\ScoreLayoutView.xaml.cs">
       <DependentUpon>ScoreLayoutView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CreateNewGameWindow.xaml.cs">
-      <DependentUpon>CreateNewGameWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="Views\GameDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -156,10 +152,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ScoreLayoutView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CreateNewGameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -234,6 +226,10 @@
     <ProjectReference Include="..\SkeletonGameManager.Module.Config\SkeletonGameManager.Module.Config.csproj">
       <Project>{0fd93fc7-fa0a-4119-ab3f-0d77218e828b}</Project>
       <Name>SkeletonGameManager.Module.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Module.Menus\SkeletonGameManager.Module.Menus.csproj">
+      <Project>{9439ee15-2360-4006-801b-7207648bfa2c}</Project>
+      <Name>SkeletonGameManager.Module.Menus</Name>
     </ProjectReference>
     <ProjectReference Include="..\SkeletonGameManager.Module.SceneGrab\SkeletonGameManager.Module.SceneGrab.csproj">
       <Project>{7f3090f9-152d-478e-84bb-bad4454b0255}</Project>
