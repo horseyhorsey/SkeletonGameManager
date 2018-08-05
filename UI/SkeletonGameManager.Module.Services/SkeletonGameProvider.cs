@@ -25,11 +25,13 @@ namespace SkeletonGameManager.Module.Services
         private ISkeletonGameFiles _skeletonGameFiles;
         private IVpScriptExporter _vpScriptExporter;
         private ISkeletonGameExport _skeletonGameExport;
+
+        public event EventHandler<ProviderUpdatedEventArgs> StatusChanged;
         #endregion
 
         #region Constructors
 
-        public SkeletonGameProvider(ISkeletonGameSerializer skeletonGameSerializer, 
+        public SkeletonGameProvider(ISkeletonGameSerializer skeletonGameSerializer,
             ISkeletonGameFiles skeletonGameFiles,
             IVpScriptExporter vpScriptExporter, ISkeletonGameExport skeletonGameExport)
         {
@@ -86,87 +88,109 @@ namespace SkeletonGameManager.Module.Services
             ClearConfigs();
 
             return Task.Run(async () =>
-            {                
+            {
+                var errored = false;
+                var args = new ProviderUpdatedEventArgs() { Status = 2 };
+                this.OnProviderFinished(args);
+
+                try
+                {
+                    GameConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<GameConfig>(Path.Combine(GameFolder, YamlFiles[0]));
+
+                    if (GameConfig == null)
+                        throw new NullReferenceException("Config.yaml returned null, please check your config.yaml");
+
+                    if (File.Exists(Path.Combine(GameFolder, YamlFiles[1])))
+                        AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
+
+                    AttractConfig = GetSequence(Path.Combine(GameFolder, YamlFiles[2]));
+
+                    var newScoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[3]);
+                    var scoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[4]);
+
+                    //Deal with the updated score display
+                    if (File.Exists(newScoreDisplayYaml))
+                        ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(newScoreDisplayYaml);
+                    else if (File.Exists(scoreDisplayYaml))
+                        ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(scoreDisplayYaml);
+
                     try
-                    {                    
-                        GameConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<GameConfig>(Path.Combine(GameFolder, YamlFiles[0]));
-
-                        if (GameConfig == null)
-                            throw new NullReferenceException("Config.yaml returned null, please check your config.yaml");
-
-                        if (File.Exists(Path.Combine(GameFolder, YamlFiles[1])))
-                            AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
-
-                        AttractConfig = GetSequence(Path.Combine(GameFolder, YamlFiles[2]));
-
-                        var newScoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[3]);
-                        var scoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[4]);
-
-                        //Deal with the updated score display
-                        if (File.Exists(newScoreDisplayYaml))
-                            ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(newScoreDisplayYaml);
-                        else if (File.Exists(scoreDisplayYaml))
-                            ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(scoreDisplayYaml);
-
-                        try
+                    {
+                        MachineConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfig>(Path.Combine(GameFolder, YamlFiles[5]));
+                    }
+                    catch (FileNotFoundException ex)
+                    {
+                        Dispatcher.CurrentDispatcher.Invoke(() =>
                         {
-                            MachineConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfig>(Path.Combine(GameFolder, YamlFiles[5]));
-                        }
-                        catch (FileNotFoundException ex)
-                        {
-                            Dispatcher.CurrentDispatcher.Invoke(() =>
-                            {
-                                System.Windows.MessageBox.Show($"{ex.Message}");
-                            });
-                        }
-                        catch (System.Exception ex)
-                        {
-                            Dispatcher.CurrentDispatcher.Invoke(() =>
-                            {
-                                ParseMachineConfigWithKeyValues(ex);
-                            });
-                        }
-
-                        SequenceYamls.Clear();
-
-                        //Add the base sequences.yaml found in config
-                        var baseSeqFile = Path.Combine(GameFolder, @"config\sequences.yaml");
-                        if (File.Exists(baseSeqFile))
-                            SequenceYamls.Add(baseSeqFile);
-
-                        //Get sequence files and add to list       
-                        var seqDir = Path.Combine(GameFolder, @"config\sequences");
-                        Directory.CreateDirectory(seqDir);
-                        var seqFiles = await _skeletonGameFiles.GetFilesAsync(seqDir, AssetTypes.Sequences);
-                        foreach (var item in seqFiles)
-                        {
-                            SequenceYamls.Add(item);
-                        }
-
-                        Directory.CreateDirectory(GameFolder + @"\recordings");
-                        RecordingManager.GetPlaybackFiles(GameFolder + @"\recordings");
-
-                        //TROPHYS
-                        try
-                        {
-                            TrophyData = _skeletonGameSerializer.DeserializeSkeletonYaml<TrophyData>(Path.Combine(GameFolder, YamlFiles[6]));
-                        }
-                        catch (System.Exception ex)
-                        {
-                            System.Windows.MessageBox.Show($"Trophy data error: {ex.Message}");
-                        }
-                    
+                            System.Windows.MessageBox.Show($"{ex.Message}");
+                        });
                     }
                     catch (System.Exception ex)
                     {
-                        ClearConfigs();
-
-                        throw ex;
+                        Dispatcher.CurrentDispatcher.Invoke(() =>
+                        {
+                            ParseMachineConfigWithKeyValues(ex);
+                        });
                     }
+
+                    SequenceYamls.Clear();
+
+                    //Add the base sequences.yaml found in config
+                    var baseSeqFile = Path.Combine(GameFolder, @"config\sequences.yaml");
+                    if (File.Exists(baseSeqFile))
+                        SequenceYamls.Add(baseSeqFile);
+
+                    //Get sequence files and add to list       
+                    var seqDir = Path.Combine(GameFolder, @"config\sequences");
+                    Directory.CreateDirectory(seqDir);
+                    var seqFiles = await _skeletonGameFiles.GetFilesAsync(seqDir, AssetTypes.Sequences);
+                    foreach (var item in seqFiles)
+                    {
+                        SequenceYamls.Add(item);
+                    }
+
+                    Directory.CreateDirectory(GameFolder + @"\recordings");
+                    RecordingManager.GetPlaybackFiles(GameFolder + @"\recordings");
+
+                    //TROPHYS
+                    try
+                    {
+                        TrophyData = _skeletonGameSerializer.DeserializeSkeletonYaml<TrophyData>(Path.Combine(GameFolder, YamlFiles[6]));
+                    }
+                    catch (System.Exception ex)
+                    {
+                        System.Windows.MessageBox.Show($"Trophy data error: {ex.Message}");
+                    }
+
+                }
+                catch (System.Exception ex)
+                {
+                    ClearConfigs();
+                    errored = true;
+
+                    throw ex;
+                }
+                finally
+                {
+                    if (errored)
+                        args.Status = 0;
+                    else
+                        args.Status = -1;
+
+                    OnProviderFinished(args);
+                }
 
             });
         }
 
+        protected virtual void OnProviderFinished(ProviderUpdatedEventArgs e)
+        {
+            EventHandler<ProviderUpdatedEventArgs> handler = this.StatusChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
         /// <summary>
         /// Exports the vp script.
         /// </summary>
@@ -220,7 +244,7 @@ namespace SkeletonGameManager.Module.Services
                 .Select(x => x.Combo);
 
             var move = sequenceYaml.AttractSequences
-                .Select(x => x.MoveLayer);  
+                .Select(x => x.MoveLayer);
 
             var grouped = sequenceYaml.AttractSequences
                 .Select(x => x.GroupLayer);
@@ -236,9 +260,9 @@ namespace SkeletonGameManager.Module.Services
 
             foreach (var group in grouped.Where(x => x != null))
             {
-                foreach (var item in group.Contents.Where(x => x.markup_layer !=null))
+                foreach (var item in group.Contents.Where(x => x.markup_layer != null))
                 {
-                    item.markup_layer.TextList.Clear();                    
+                    item.markup_layer.TextList.Clear();
                     if (item.markup_layer.TextList != null)
                         item.markup_layer.TextList.Clear();
 
@@ -247,7 +271,7 @@ namespace SkeletonGameManager.Module.Services
                 }
 
                 foreach (var item in group.Contents.Where(x => x.combo_layer != null))
-                {                    
+                {
                     if (item.combo_layer.TextList != null)
                         item.combo_layer.TextList.Clear();
 
@@ -289,7 +313,7 @@ namespace SkeletonGameManager.Module.Services
             {
                 foreach (var item2 in item.TextOptions)
                 {
-                    item2.TextList = item2.TextEntries.Select(x=> x.TextLine).ToList();
+                    item2.TextList = item2.TextEntries.Select(x => x.TextLine).ToList();
                 }
             }
 
@@ -302,14 +326,14 @@ namespace SkeletonGameManager.Module.Services
                 }
             }
 
-            foreach (var item in combo.Where(x => x!= null))
+            foreach (var item in combo.Where(x => x != null))
             {
 
                 if (item.TextList != null)
                     item.TextList.Clear();
 
                 item.TextList = item.TextEntries.Select(x => x.TextLine).ToList();
-                       
+
             }
 
             //foreach (var item in move.Where(x => x != null))
@@ -416,12 +440,12 @@ namespace SkeletonGameManager.Module.Services
                 case "lampshowUi":
                     _skeletonGameExport.ExportLampsToLampshowUI(
                     this.MachineConfig.PRLamps,
-                    Path.GetFileName(GameFolder),GameFolder);
+                    Path.GetFileName(GameFolder), GameFolder);
                     break;
                 default:
                     break;
-            }           
-            
+            }
+
         }
 
         #endregion

@@ -2,6 +2,7 @@
 using SkeletonGame.Models.Data;
 using SkeletonGame.Models.Machine;
 using SkeletonGame.Models.Score;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -18,6 +19,8 @@ namespace SkeletonGameManager.Base
         ScoreDisplay ScoreDisplayConfig { get; set; }
         ObservableCollection<string> SequenceYamls { get; set; }        
         TrophyData TrophyData { get; set; }
+
+        event EventHandler<ProviderUpdatedEventArgs> StatusChanged;
 
         #region Methods
         void ClearConfigs();

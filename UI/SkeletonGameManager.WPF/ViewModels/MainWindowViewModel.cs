@@ -1,16 +1,10 @@
 ﻿using Prism.Commands;
-using System.Windows.Forms;
-using System;
 using System.IO;
-using System.Threading.Tasks;
 using Prism.Events;
-using SkeletonGameManager.WPF.Views;
-using System.Diagnostics;
-using System.Windows;
 using SkeletonGame.Engine;
 using System.Collections.Generic;
 using SkeletonGameManager.Base;
-using static SkeletonGameManager.Base.Events;
+using System.Windows.Input;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -23,7 +17,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         #region Commands
 
-        
+        public ICommand OpenFileFolderCommand { get; }
         #endregion
 
         #region Constructors
@@ -33,6 +27,28 @@ namespace SkeletonGameManager.WPF.ViewModels
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonLogger = skeletonLogger;
             IsGameRunning = false;
+
+            _skeletonGameProvider.StatusChanged += _skeletonGameProvider_StatusChanged;
+
+            OpenFileFolderCommand = new DelegateCommand<string>((x) =>
+            {
+                switch (x)
+                {
+                    case "asset_list.yaml":
+                    case "new_score_display.yaml":
+                    case "machine.yaml":
+                    case "attract.yaml":
+                    case "game_default_data.yaml":
+                    case "game_default_settings.yaml":
+                        FileFolder.Explore(Path.Combine(_skeletonGameProvider.GameFolder, "config", x));
+                        break;
+                    case "config.yaml":
+                        FileFolder.Explore(Path.Combine(_skeletonGameProvider.GameFolder, x));
+                        break;
+                    default:
+                        break;
+                }
+            });
         }
 
         #endregion
@@ -84,6 +100,21 @@ namespace SkeletonGameManager.WPF.ViewModels
         /// </summary>
         private IList<string> _lastgameLog;
 
+        #endregion
+
+        #region Private methods
+        private void OnApplicationBusyChanged(bool isBusy)
+        {
+            this.IsMainTabEnabled = !isBusy;
+        }
+
+        private void _skeletonGameProvider_StatusChanged(object sender, ProviderUpdatedEventArgs e)
+        {
+            if (e.Status == 2)
+                this.IsMainTabEnabled = false;
+            else
+                this.IsMainTabEnabled = true;
+        }
         #endregion
     }
 }
