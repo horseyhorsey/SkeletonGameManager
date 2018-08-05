@@ -115,7 +115,8 @@ namespace SkeletonGame.Tests
             var attract = _skeleSerializer.ConvertToJson(@"TestData/EmptyGame/config.yaml");
         }
 
-        [Fact(Skip = "Just used for creating the extraction method")]
+        //[Fact(Skip = "Just used for creating the extraction method")]
+        [Fact]
         public void ExtractZipArchive()
         {
             var createSkele = new CreateSkeletonGame();

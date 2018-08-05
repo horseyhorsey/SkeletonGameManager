@@ -1,4 +1,4 @@
-﻿<Window x:Class="SkeletonGameManager.Module.Menus.Views.CreateNewGameWindow"
+﻿<UserControl x:Class="SkeletonGameManager.Module.Menus.Views.CreateNewGameWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,18 +6,18 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:skele="clr-namespace:SkeletonGame.Models.Machine;assembly=SkeletonGame.Models"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d" Title="Create New Game"
-        WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow"
-        ResizeMode="NoResize"
+        mc:Ignorable="d" 
+        xmlns:prism="http://prismlibrary.com/"
+        prism:ViewModelLocator.AutoWireViewModel="True" 
         Height="240" Width="300">
 
-    <Window.Resources>
+    <UserControl.Resources>
         <ObjectDataProvider x:Key="MachineTypes" MethodName="GetValues" ObjectType="sys:Enum">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="skele:MachineType"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-    </Window.Resources>
+    </UserControl.Resources>
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -59,7 +59,11 @@
 
         <!--GAME TEMPLATE-->
         <TextBlock Grid.Row="4" Text="Skele Template" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" Margin="3" SelectedItem="{Binding SelectedTemplate}" SelectedIndex="1">
+        <ComboBox Grid.Row="4" Grid.Column="1" Margin="3"                   
+                  SelectedIndex="1"
+                  SelectedValuePath="Content"
+                  SelectedValue="{Binding SelectedTemplate}"
+                  >
             <ComboBoxItem Content="EmptyGame"/>
             <ComboBoxItem Content="EmptyGameVP"/>
         </ComboBox>
@@ -70,4 +74,4 @@
                 HorizontalAlignment="Right" Width="50"
                 Content="Create" IsDefault="True" />
     </Grid>
-</Window>
+</UserControl>

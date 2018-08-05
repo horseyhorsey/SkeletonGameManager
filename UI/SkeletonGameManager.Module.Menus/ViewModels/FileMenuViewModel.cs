@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Mvvm;
 using SkeletonGameManager.Base;
 using SkeletonGameManager.Module.Menus.Views;
@@ -21,30 +22,36 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         #region Fields
         private IEventAggregator _eventAggregator;
         private ISkeletonGameProvider _skeletonGameProvider;
-        private IGameRunnner _gameRunnner;        
+        private IGameRunnner _gameRunnner;
         #endregion
 
         #region Commands
         public DelegateCommand CreateNewGameCommand { get; }
         public DelegateCommand OpenGameFolderCommand { get; }
-        public DelegateCommand SetDirectoryCommand { get;  }
+        public DelegateCommand SetDirectoryCommand { get; }
         public DelegateCommand ReloadGameCommand { get; }
-        public DelegateCommand<string> OpenRecentCommand { get; }        
-        public DelegateCommand LaunchGameCommand { get;}
+        public DelegateCommand<string> OpenRecentCommand { get; }
+        public DelegateCommand LaunchGameCommand { get; }
         public DelegateCommand<string> ExportCommand { get; }
         public DelegateCommand BrowseFolderCommand { get; }
         public DelegateCommand<string> LaunchRecordingCommand { get; }
         #endregion
 
+        #region Requests
+        public InteractionRequest<IRequestNewGame> CreateNewGameRequest { get; set; }
+        #endregion
+
         public List<string> RecentDirectories { get; set; } = new List<string>();
 
         #region Constructors
-        public FileMenuViewModel(ISkeletonGameProvider skeletonGameProvider, IGameRunnner gameRunnner, 
+        public FileMenuViewModel(ISkeletonGameProvider skeletonGameProvider, IGameRunnner gameRunnner,
             IEventAggregator eventAggregator, IUnityContainer unityContainer)
         {
             _eventAggregator = eventAggregator;
             _skeletonGameProvider = skeletonGameProvider;
             _gameRunnner = gameRunnner;
+
+            CreateNewGameRequest = new InteractionRequest<IRequestNewGame>();
 
             //Recent dirs
             RecentDirectories.AddRange(new string[] { @"C:\P-ROC\Games\Jaws", @"C:\P-ROC\Games\EvilDead" });
@@ -58,9 +65,9 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 {
                     IsGameRunning = true;
                     UpdateCanExecuteCommands();
-                    unityContainer.Resolve<RecordingsViewModel>().LaunchPlaybackFile(_skeletonGameProvider.GameFolder, playbackItem, true);                    
+                    unityContainer.Resolve<RecordingsViewModel>().LaunchPlaybackFile(_skeletonGameProvider.GameFolder, playbackItem, true);
                 }
-                    
+
             }, (x) => !IsGameRunning);
 
             _eventAggregator.GetEvent<OnLaunchGameEvent>().Subscribe(async (x) =>
@@ -207,7 +214,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         /// <returns></returns>
         private Task SetGamePath(string path)
         {
-            _skeletonGameProvider.ClearConfigs();            
+            _skeletonGameProvider.ClearConfigs();
             GameFolder = path;
 
             if (!IsValidGameFolder())
@@ -237,7 +244,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                     {
                         //IsMainTabEnabled = true;
                     }
-                        
+
                     return true;
                 }
 
@@ -251,11 +258,17 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         private void OnCreateNewGame()
         {
             //TODO: Use Prism request dialog
-            var vm = new CreateNewGameWindowViewModel();
-            var window = new CreateNewGameWindow();
-            window.DataContext = vm;
+            //var vm = new CreateNewGameWindowViewModel();
+            //var window = new CreateNewGameWindow();
+            //window.DataContext = vm;
 
-            var dialog = window.ShowDialog();
+            var result = false;
+            this.CreateNewGameRequest.Raise(new RequestNewGame { Title = "Request new game", Content = "Custom message" },
+                r =>
+                {
+                    result = r.Success;
+
+                });
         }
 
         private void OnExport(string exportParam)
@@ -310,7 +323,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         {
             LaunchGameCommand.RaiseCanExecuteChanged();
             CreateNewGameCommand.RaiseCanExecuteChanged();
-            ReloadGameCommand.RaiseCanExecuteChanged();            
+            ReloadGameCommand.RaiseCanExecuteChanged();
             SetDirectoryCommand.RaiseCanExecuteChanged();
             ExportCommand.RaiseCanExecuteChanged();
             LaunchRecordingCommand.RaiseCanExecuteChanged();
@@ -318,5 +331,15 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
 
         #endregion
+    }
+
+    public interface IRequestNewGame : IConfirmation
+    {
+        bool Success { get; set; }
+    }
+
+    public class RequestNewGame : Confirmation, IRequestNewGame
+    {
+        public bool Success { get; set; }
     }
 }

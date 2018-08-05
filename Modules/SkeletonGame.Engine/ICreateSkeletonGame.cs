@@ -36,10 +36,10 @@ namespace SkeletonGame.Engine
                 {
                     var fullname = entry.FullName;
 
-                    if (fullname.Contains($"PyProcGameHD-SkeletonGame-dev/{templateName}"))
-                        ExtractFile(gamePath, entry, fullname, $"PyProcGameHD-SkeletonGame-dev/{templateName}/");
-                    else if (fullname.Contains("PyProcGameHD-SkeletonGame-dev/procgame/"))
-                        ExtractFile(gamePath, entry, fullname, "PyProcGameHD-SkeletonGame-dev/");
+                    if (fullname.Contains($@"PyProcGameHD-SkeletonGame-dev/{templateName}"))
+                        ExtractFile(gamePath, entry, fullname, $@"PyProcGameHD-SkeletonGame-dev/{templateName}/");
+                    else if (fullname.Contains(@"PyProcGameHD-SkeletonGame-dev/procgame/"))
+                        ExtractFile(gamePath, entry, fullname, @"PyProcGameHD-SkeletonGame-dev/");
                     else if (fullname.Contains("PyProcGameHD-SkeletonGame-dev/SampleGame/UNZIP ME assets.zip"))
                     {                        
                         using (ZipArchive assetArchive = new ZipArchive(entry.Open(), ZipArchiveMode.Read))
@@ -60,7 +60,6 @@ namespace SkeletonGame.Engine
                     .Replace($"{replaceString}", string.Empty);
 
                 var extractPath = Path.Combine(gamePath, fileNameAndDir);
-
                 if (!File.Exists(extractPath))
                 {
                     entry.ExtractToFile(extractPath);
