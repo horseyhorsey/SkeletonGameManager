@@ -41,8 +41,6 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         public InteractionRequest<IRequestNewGame> CreateNewGameRequest { get; set; }
         #endregion
 
-        public List<string> RecentDirectories { get; set; } = new List<string>();
-
         #region Constructors
         public FileMenuViewModel(ISkeletonGameProvider skeletonGameProvider, IGameRunnner gameRunnner,
             IEventAggregator eventAggregator, IUnityContainer unityContainer)
@@ -54,7 +52,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             CreateNewGameRequest = new InteractionRequest<IRequestNewGame>();
 
             //Recent dirs
-            RecentDirectories.AddRange(new string[] { @"C:\P-ROC\Games\Jaws", @"C:\P-ROC\Games\EvilDead" });
+            //RecentDirectories.AddRange(new string[] { @"C:\P-ROC\Games\Jaws", @"C:\P-ROC\Games\EvilDead" });
 
             //Get the recordings stored from containers view model
             Recordings = unityContainer.Resolve<RecordingsViewModel>().PlaybackItemViewModels;
@@ -124,6 +122,13 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
                 UpdateCanExecuteCommands();
             }
+        }
+
+        private ObservableCollection<string> _recentDirectories = new ObservableCollection<string>();
+        public ObservableCollection<string> RecentDirectories
+        {
+            get { return _recentDirectories; }
+            set { SetProperty(ref _recentDirectories, value); }
         }
 
         public ObservableCollection<PlaybackItemViewModel> Recordings { get; private set; }
