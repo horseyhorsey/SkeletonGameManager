@@ -29,7 +29,8 @@ namespace SkeletonGameManager.Base
         void SaveMachineConfig(MachineConfig mConfig);
         void SaveScoreDsiplayFile(ScoreDisplay scoreDisplay);
         void SaveSequenceFile(SequenceYaml sequenceYaml, string saveFile);
-        void SaveTrophyData(TrophyData trophyData); 
+        void SaveTrophyData(TrophyData trophyData);
+        void ExportPyProcgame(string exportParam);
         #endregion
     }
 }

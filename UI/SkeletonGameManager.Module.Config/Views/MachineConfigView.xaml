@@ -527,37 +527,6 @@
             </StackPanel>
         </GroupBox>
 
-        <!--VP SCRIPT EXPORTS-->
-        <GroupBox Header="VP Script Exports" Grid.Column="1"
-                  Grid.Row="1" Margin="3"
-                  >
-            <StackPanel Orientation="Horizontal">
-
-                <Button Content="SwitchHits" VerticalAlignment="Center" Margin="5,0"
-                        Command="{Binding ExportToVpCommand}" CommandParameter="Switch"
-                        ToolTip="{StaticResource Tip_VPExportSwitch}"
-                        />
-
-                <Button Content="SolCallBacks" VerticalAlignment="Center" Margin="5,0" 
-                        Command="{Binding ExportToVpCommand}" CommandParameter="Coil"
-                        ToolTip="Exports SolCallBacks for Visual Pinball"/>
-
-                <Button Content="ScriptFull" VerticalAlignment="Center" Margin="5, 0"
-                        Command="{Binding ExportToVpCommand}" CommandParameter="ScriptFull"
-                        ToolTip="Creates a full script to be used in Visual Pinball"
-                        />
-
-                <Button Content="Lampshow UI" VerticalAlignment="Center" Margin="5,0" 
-                        Command="{Binding ExportToLampshowUiCommand}" CommandParameter="Coil"
-                        ToolTip="{StaticResource Tip_ExportLampshowUI}"/>
-
-                <Button Content="pyproc switch" VerticalAlignment="Center" Margin="5,0" 
-                        Command="{Binding ExportToPythonSwitcheMethodsCommand}" CommandParameter="Coil"
-                        ToolTip="{StaticResource Tip_ExportPythonSwitchCallbacks}"/>
-
-            </StackPanel>
-        </GroupBox>
-
         <!--SAVE-->
         <GroupBox Header="Save" Grid.Column="2" Grid.Row="1" Margin="3">
             <!--SAVE MACHINE BUTTON-->

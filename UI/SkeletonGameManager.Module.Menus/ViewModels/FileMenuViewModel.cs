@@ -99,6 +99,10 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 case "ScriptFull":
                     _skeletonGameProvider.ExportVpScript(exportParam);
                     break;
+                case "switchPy":
+                case "lampshowUi":
+                    _skeletonGameProvider.ExportPyProcgame(exportParam);
+                    break;
                 default:
                     break;
             }            

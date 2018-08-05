@@ -24,17 +24,19 @@ namespace SkeletonGameManager.Module.Services
         private ISkeletonGameSerializer _skeletonGameSerializer;
         private ISkeletonGameFiles _skeletonGameFiles;
         private IVpScriptExporter _vpScriptExporter;
+        private ISkeletonGameExport _skeletonGameExport;
         #endregion
 
         #region Constructors
 
         public SkeletonGameProvider(ISkeletonGameSerializer skeletonGameSerializer, 
             ISkeletonGameFiles skeletonGameFiles,
-            IVpScriptExporter vpScriptExporter)
+            IVpScriptExporter vpScriptExporter, ISkeletonGameExport skeletonGameExport)
         {
             _skeletonGameSerializer = skeletonGameSerializer;
             _skeletonGameFiles = skeletonGameFiles;
             _vpScriptExporter = vpScriptExporter;
+            _skeletonGameExport = skeletonGameExport;
         }
 
         #endregion
@@ -198,6 +200,8 @@ namespace SkeletonGameManager.Module.Services
                 sw.Write(scriptString);
             }
         }
+
+
 
         public SequenceYaml GetSequence(string yamlPath)
         {
@@ -397,6 +401,27 @@ namespace SkeletonGameManager.Module.Services
                     MachineConfigDict = null;
                 }
             }
+        }
+
+        public void ExportPyProcgame(string exportParam)
+        {
+
+            switch (exportParam)
+            {
+                case "switchPy":
+                    _skeletonGameExport.ExportToPyprocgameSwitchHits(
+                        this.MachineConfig.PRSwitches,
+                        GameFolder);
+                    break;
+                case "lampshowUi":
+                    _skeletonGameExport.ExportLampsToLampshowUI(
+                    this.MachineConfig.PRLamps,
+                    Path.GetFileName(GameFolder),GameFolder);
+                    break;
+                default:
+                    break;
+            }           
+            
         }
 
         #endregion

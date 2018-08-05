@@ -24,11 +24,8 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         private ISkeletonGameExport _skeletonExport;
         private IVpScriptExporter _vpScriptExporter;
 
-        public ICommand SaveMachineConfigCommand { get; set; }
-        public ICommand ExportToVpCommand { get; set; }
-        public ICommand ExportToLampshowUiCommand { get; set; }
-        public ICommand SendOscMessageCommand { get; set; }
-        public ICommand ExportToPythonSwitcheMethodsCommand { get; set; }        
+        public ICommand SaveMachineConfigCommand { get; set; }  
+        public ICommand SendOscMessageCommand { get; set; }   
 
         #region Constructors
         public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC, ISkeletonGameExport skeletonGameExport) : base(eventAggregator)
@@ -46,21 +43,6 @@ namespace SkeletonGameManager.Module.Config.ViewModels
             SaveMachineConfigCommand = new DelegateCommand(() =>
             {
                 SaveMachineConfig();
-            });
-
-            ExportToLampshowUiCommand = new DelegateCommand(() =>
-            {
-                _skeletonExport.ExportLampsToLampshowUI(
-                    this.MachineConfig.PRLamps, 
-                    Path.GetFileName(_skeletonGameProvider.GameFolder), 
-                    _skeletonGameProvider.GameFolder);
-            });
-
-            ExportToPythonSwitcheMethodsCommand = new DelegateCommand(() =>
-            {
-                _skeletonExport.ExportToPyprocgameSwitchHits(
-                    this.MachineConfig.PRSwitches,
-                    _skeletonGameProvider.GameFolder);
             });
 
             SendOscMessageCommand = new DelegateCommand<object>((x) =>

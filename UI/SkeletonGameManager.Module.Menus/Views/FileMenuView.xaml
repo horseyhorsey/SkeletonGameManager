@@ -30,28 +30,39 @@
             </MenuItem>
 
             <MenuItem Header="_Export">
+                
                 <MenuItem Header="_Pyprocgame">
                     <MenuItem 
                         Header="Switch Methods"
+                        ToolTip="{DynamicResource Tip_ExportPythonSwitchCallbacks}"
                         Command="{Binding ExportCommand}"                               
-                        CommandParameter="SwitchPyProc"
+                        CommandParameter="switchPy"
                               />
                 </MenuItem>
 
                 <MenuItem Header="_Visual Pinball">
                     <MenuItem Header="Switch Methods"
-                            Command="{Binding ExportCommand}"                               
-                            CommandParameter="switch"
+                                ToolTip="{DynamicResource Tip_VPExportSwitch}"
+                                Command="{Binding ExportCommand}"                               
+                                CommandParameter="switch"
                               />
                     <MenuItem Header="Solenoid Callbacks"
+                            ToolTip="Exports SolCallBacks for Visual Pinball"
                             Command="{Binding ExportCommand}"                               
                             CommandParameter="coil"
                               />
                     <MenuItem Header="Full Table Script"
+                            ToolTip="Creates a full script to be used in Visual Pinball"
                             Command="{Binding ExportCommand}"                               
                             CommandParameter="ScriptFull"
                               />
                 </MenuItem>
+
+                <MenuItem Header="LampshowUI"
+                          ToolTip="{DynamicResource Tip_ExportLampshowUI}"
+                            Command="{Binding ExportCommand}"                               
+                            CommandParameter="lampshowUi"
+                          />
             </MenuItem>
         </Menu>
     </Grid>
