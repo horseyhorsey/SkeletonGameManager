@@ -11,7 +11,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 {
     public class ScoreLayoutViewModel : SkeletonGameManagerViewModelBase
     {
-        public ISkeletonGameProvider _skeletonGameProvider { get; set; }        
+        public ISkeletonGameProvider _skeletonGameProvider { get; set; }
 
         public ScoreLayoutViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider) : base(eventAggregator)
         {
@@ -23,7 +23,18 @@ namespace SkeletonGameManager.WPF.ViewModels
                 OnSaveCommand();
             });
 
-            _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
+            _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x =>
+            {
+                try
+                {
+                    await OnLoadYamlFilesChanged();
+                }
+                catch (System.Exception)
+                {
+                    throw;
+                }
+            }            
+            );
         }
 
         public async override Task OnLoadYamlFilesChanged()
@@ -31,7 +42,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             ScoreLayout = _skeletonGameProvider.ScoreDisplayConfig?.ScoreLayout;
 
             Animations = new ObservableCollection<string>(
-                _skeletonGameProvider.AssetsConfig.Animations
+                _skeletonGameProvider.AssetsConfig?.Animations
                 .Select(x => x.Key));
 
             await Task.Delay(100);
@@ -53,7 +64,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         private void OnSaveCommand()
         {
-            _skeletonGameProvider.ScoreDisplayConfig.ScoreLayout = ScoreLayout;            
+            _skeletonGameProvider.ScoreDisplayConfig.ScoreLayout = ScoreLayout;
             _skeletonGameProvider.SaveScoreDsiplayFile(_skeletonGameProvider.ScoreDisplayConfig);
         }
     }

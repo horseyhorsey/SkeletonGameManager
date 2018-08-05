@@ -74,7 +74,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             }
 
             //Clear trophys if failed
-            _skeletonGameProvider.TrophyData.Trophys.Clear();
+            _skeletonGameProvider.TrophyData?.Trophys?.Clear();
             return Task.CompletedTask;
         }
         #endregion

@@ -28,7 +28,18 @@ namespace SkeletonGameManager.Module.Config.ViewModels
 
             AddUnusedSwitchCommand = new DelegateCommand<PRSwitch>(AddToUnusedSwitch);
 
-            _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
+            _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x =>
+            {
+                try
+                {
+                    await OnLoadYamlFilesChanged();
+                }
+                catch (System.Exception)
+                {
+
+                    throw;
+                }                
+            });
         } 
         #endregion
 
