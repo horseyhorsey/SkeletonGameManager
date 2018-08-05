@@ -86,14 +86,6 @@ namespace SkeletonGame.Tests
         }
 
         [Fact]
-        public void DeserializeMachineYamlKeyValues()
-        {
-            //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
-            var machine = _skeleSerializer
-                .DeserializeSkeletonYaml<MachineConfigDict>(@"C:\P-ROC\Games\jaws\config\machine_jaws.yaml");
-        }
-
-        [Fact]
         public void DeserializeGameData()
         {
             //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
