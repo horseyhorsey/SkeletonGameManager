@@ -18,95 +18,54 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 {
     public class FileMenuViewModel : BindableBase
     {
+        #region Fields
         private IEventAggregator _eventAggregator;
         private ISkeletonGameProvider _skeletonGameProvider;
-        private IGameRunnner _gameRunnner;
+        private IGameRunnner _gameRunnner; 
+        #endregion
+
         #region Commands
         public DelegateCommand CreateNewGameCommand { get; }
         public DelegateCommand OpenGameFolderCommand { get; }
         public DelegateCommand SetDirectoryCommand { get;  }
-        public DelegateCommand RefreshObjectsCommand { get; }
-        public DelegateCommand<string> OpenRecentCommand { get; }
-        public DelegateCommand<string> OpenFileFolderCommand { get;}
+        public DelegateCommand ReloadGameCommand { get; }
+        public DelegateCommand<string> OpenRecentCommand { get; }        
         public DelegateCommand LaunchGameCommand { get;}
-        public DelegateCommand<string> ExportCommand { get; }        
+        public DelegateCommand<string> ExportCommand { get; }
+        public DelegateCommand BrowseFolderCommand { get; }
         #endregion
 
+        #region Constructors
         public FileMenuViewModel(ISkeletonGameProvider skeletonGameProvider, IGameRunnner gameRunnner, IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             _skeletonGameProvider = skeletonGameProvider;
             _gameRunnner = gameRunnner;
 
+            #region Commands
+            BrowseFolderCommand = new DelegateCommand(() => FileFolder.Explore(_skeletonGameProvider.GameFolder), () => IsValidGameFolder());
             CreateNewGameCommand = new DelegateCommand(OnCreateNewGame);
-            OpenGameFolderCommand = new DelegateCommand(() => Process.Start(skeletonGameProvider.GameFolder), () => IsValidGameFolder());
-
-            LaunchGameCommand = new DelegateCommand(async () =>
-            {
-                IsGameRunning = true;
-                await OnLaunchedGame();
-
-            }, () => IsValidGameFolder());
-
-            SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory(), () => !IsGameRunning);
-
-            RefreshObjectsCommand = new DelegateCommand(async () => await OnRefreshSkeletonGameObjects(), () => IsValidGameFolder());
-
-            OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent);
-
-            OpenFileFolderCommand = new DelegateCommand<string>((x) =>
-            {
-                switch (x)
-                {
-                    case "asset_list.yaml":
-                    case "new_score_display.yaml":
-                    case "machine.yaml":
-                    case "attract.yaml":
-                    case "game_default_data.yaml":
-                    case "game_default_settings.yaml":
-                        Process.Start(Path.Combine(_skeletonGameProvider.GameFolder, "config", x));
-                        break;
-                    case "config.yaml":
-                        Process.Start(Path.Combine(_skeletonGameProvider.GameFolder, x));
-                        break;
-                    default:
-                        break;
-                }
-            });
-
-            LaunchGameCommand = new DelegateCommand(async () =>
-            {
-                IsGameRunning = true;
-                await OnLaunchedGame();
-
-            }, () => IsValidGameFolder());
-
             ExportCommand = new DelegateCommand<string>(OnExport, (x) => IsValidGameFolder());
+            LaunchGameCommand = new DelegateCommand(async () =>
+            {
+                IsGameRunning = true;
+                await OnLaunchedGame();
+
+            }, () => IsValidGameFolder());
+            OpenGameFolderCommand = new DelegateCommand(() => Process.Start(skeletonGameProvider.GameFolder), () => IsValidGameFolder());
+            OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent);
+            ReloadGameCommand = new DelegateCommand(async () => await OnReloadGame(), () => IsValidGameFolder());
+            SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory(), () => !IsGameRunning);
+            #endregion
 
             _eventAggregator.GetEvent<OnLaunchGameEvent>().Subscribe(async (x) =>
             {
                 IsGameRunning = true;
                 await OnLaunchedGame();
             });
-        }
 
-        private void OnExport(string exportParam)
-        {
-            switch (exportParam)
-            {
-                case "switch":
-                case "coil":
-                case "ScriptFull":
-                    _skeletonGameProvider.ExportVpScript(exportParam);
-                    break;
-                case "switchPy":
-                case "lampshowUi":
-                    _skeletonGameProvider.ExportPyProcgame(exportParam);
-                    break;
-                default:
-                    break;
-            }            
-        }
+        }         
+        #endregion
 
         private bool isGameRunning = false;
         /// <summary>
@@ -132,11 +91,8 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             {
                 SetProperty(ref gameFolder, value);
                 _skeletonGameProvider.GameFolder = value;
-                RefreshObjectsCommand.RaiseCanExecuteChanged();
-                LaunchGameCommand.RaiseCanExecuteChanged();
-                SetDirectoryCommand.RaiseCanExecuteChanged();
-                ExportCommand.RaiseCanExecuteChanged();
-                this.OpenGameFolderCommand.RaiseCanExecuteChanged();
+
+                UpdateCanExecuteCommands();
             }
         }
 
@@ -154,12 +110,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             if (!File.Exists(gameEntryPointFile))
                 return;
 
-            LaunchGameCommand.RaiseCanExecuteChanged();
-            CreateNewGameCommand.RaiseCanExecuteChanged();
-            RefreshObjectsCommand.RaiseCanExecuteChanged();
-            OpenFileFolderCommand.RaiseCanExecuteChanged();
-            SetDirectoryCommand.RaiseCanExecuteChanged();
-            ExportCommand.RaiseCanExecuteChanged();
+            UpdateCanExecuteCommands();
 
             try
             {
@@ -183,12 +134,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             {
                 IsGameRunning = false;
 
-                LaunchGameCommand.RaiseCanExecuteChanged();
-                CreateNewGameCommand.RaiseCanExecuteChanged();
-                RefreshObjectsCommand.RaiseCanExecuteChanged();
-                OpenFileFolderCommand.RaiseCanExecuteChanged();
-                SetDirectoryCommand.RaiseCanExecuteChanged();
-                ExportCommand.RaiseCanExecuteChanged();
+                UpdateCanExecuteCommands();
 
                 //if (_skeletonLogger?.LogData?.Count > 0)
                 //{
@@ -199,7 +145,6 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 _eventAggregator.GetEvent<OnGameEndedEvent>().Publish(true);
             }
         }
-
 
         /// <summary>
         /// Sets the current skeleton game folder path and loads the configuration for a game if a valid folder is given
@@ -230,7 +175,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         /// </summary>
         /// <param name="path">The path.</param>
         /// <returns></returns>
-        private async Task SetGamePath(string path)
+        private Task SetGamePath(string path)
         {
             _skeletonGameProvider.ClearConfigs();            
             GameFolder = path;
@@ -239,32 +184,10 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             {
                 System.Windows.MessageBox.Show($"Not a valid Game folder -  {GameFolder}");
                 GameFolder = null;
+                return null;
             }
             else
-                await this.OnRefreshSkeletonGameObjects();
-        }
-
-        /// <summary>
-        /// Called when [refresh skeleton game objects], loads all yaml files into the provider
-        /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
-        private async Task OnRefreshSkeletonGameObjects()
-        {
-            try
-            {
-                await _skeletonGameProvider.LoadYamlEntriesAsync();
-
-                _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
-
-                //Disable machine tab if failed top parse
-                //IsMachineConfigEnabled = _skeletonGameProvider.MachineConfig == null ? false : true;
-            }
-            catch (Exception ex)
-            {
-                //IsMainTabEnabled = false;
-
-                System.Windows.MessageBox.Show($"Failed loading skeleton game files. {ex.Data["yaml"]} {ex.Message}");
-            }
+                return this.OnReloadGame();
         }
 
         /// <summary>
@@ -304,6 +227,60 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
             var dialog = window.ShowDialog();
         }
+
+        private void OnExport(string exportParam)
+        {
+            switch (exportParam)
+            {
+                case "switch":
+                case "coil":
+                case "ScriptFull":
+                    _skeletonGameProvider.ExportVpScript(exportParam);
+                    break;
+                case "switchPy":
+                case "lampshowUi":
+                    _skeletonGameProvider.ExportPyProcgame(exportParam);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Called when [refresh skeleton game objects], loads all yaml files into the provider
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private async Task OnReloadGame()
+        {
+            try
+            {
+                await _skeletonGameProvider.LoadYamlEntriesAsync();
+
+                _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
+
+                //Disable machine tab if failed top parse
+                //IsMachineConfigEnabled = _skeletonGameProvider.MachineConfig == null ? false : true;
+            }
+            catch (Exception ex)
+            {
+                //IsMainTabEnabled = false;
+
+                System.Windows.MessageBox.Show($"Failed loading skeleton game files. {ex.Data["yaml"]} {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Updates the can execute commands.
+        /// </summary>
+        private void UpdateCanExecuteCommands()
+        {
+            LaunchGameCommand.RaiseCanExecuteChanged();
+            CreateNewGameCommand.RaiseCanExecuteChanged();
+            ReloadGameCommand.RaiseCanExecuteChanged();            
+            SetDirectoryCommand.RaiseCanExecuteChanged();
+            ExportCommand.RaiseCanExecuteChanged();
+        }
+
 
         #endregion
     }

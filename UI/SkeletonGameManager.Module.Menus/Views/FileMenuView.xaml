@@ -24,7 +24,7 @@
             </MenuItem>
 
             <MenuItem Header="_Game">
-                <MenuItem Header="_Browse" Command="{Binding BrowseGameFolderCommand}" InputGestureText="Ctrl+B"/>
+                <MenuItem Header="_Browse" Command="{Binding BrowseFolderCommand}" InputGestureText="Ctrl+B"/>
                 <MenuItem Header="R_eload" Command="{Binding ReloadGameCommand}"/>
                 <MenuItem Header="_Run" Command="{Binding LaunchGameCommand}" InputGestureText="Ctrl+R"/>
             </MenuItem>
