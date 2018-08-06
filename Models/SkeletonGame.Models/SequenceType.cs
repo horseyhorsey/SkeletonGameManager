@@ -15,6 +15,7 @@
         RandomText,
         ScriptedText,
         TextLayer,
-        ZoomLayer,        
+        ZoomLayer,
+        AnimationLayer,
     }
 }

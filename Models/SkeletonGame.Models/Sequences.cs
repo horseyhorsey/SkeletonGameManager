@@ -58,6 +58,8 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "move_layer", ApplyNamingConventions = false)]
         public MoveLayer MoveLayer { get; set; }
 
+        [YamlMember(Alias = "animation_layer", ApplyNamingConventions = false)]
+        public AttractAnimation animation_layer { get; set; }
 
         [YamlMember(Alias = "zoom_layer", ApplyNamingConventions = false)]
         public ZoomLayer ZoomLayer { get; set; }
@@ -77,6 +79,9 @@ namespace SkeletonGame.Models
             {
                 case SequenceType.Animation:
                     AttractAnimation = (AttractAnimation)sequenceBase;
+                    break;
+                case SequenceType.AnimationLayer:
+                    animation_layer = (AttractAnimation)sequenceBase;
                     break;
                 case SequenceType.Combo:
                     Combo = (Combo)sequenceBase;
