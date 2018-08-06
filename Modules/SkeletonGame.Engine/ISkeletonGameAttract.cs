@@ -24,46 +24,53 @@ namespace SkeletonGame.Engine
         {            
             attractYaml.Sequences.Clear();
 
-            foreach (var seq in attractYaml.AttractSequences)
+            try
             {
-                var notNullSequence = (SequenceBase)typeof(Sequence).GetProperties()
-                          .Select(prop => prop.GetValue(seq, null))
-                          .Where(val => val != null).First();
-
-                if (notNullSequence != null)
+                foreach (var seq in attractYaml.AttractSequences)
                 {
-                    //Apply group layer
-                    if (notNullSequence.GetType() == typeof(GroupLayer))
+                    var notNullSequence = (SequenceBase)typeof(Sequence)
+                        .GetProperties().Select(prop => prop.GetValue(seq, null))
+                        .Where(val => val != null).FirstOrDefault();
+
+                    if (notNullSequence != null)
                     {
-                        var group = notNullSequence as GroupLayer;
-                        foreach (var item in group.Contents)
-                        {                            
-                            //notNullSequence.SeqType = item.SeqType;
-                            if (item.markup_layer != null)
-                            {                                
-                                item.SeqType = item.markup_layer.SeqType;
-                            }                                
-                            else if (item.animation_layer != null)
-                                item.SeqType = item.animation_layer.SeqType;
-                            else if (item.text_layer != null)
-                                item.SeqType = item.text_layer.SeqType;
-                            else if (item.combo_layer != null)
-                                item.SeqType = item.combo_layer.SeqType;
-                            else if (item.move_layer != null)
-                                item.SeqType = item.move_layer.SeqType;
-                            else if (item.scripted_text_layer != null)
-                                item.SeqType = item.scripted_text_layer.SeqType;
-                            else if (item.particle_layer != null)
-                                item.SeqType = item.particle_layer.SeqType;
+                        //Apply group layer
+                        if (notNullSequence.GetType() == typeof(GroupLayer))
+                        {
+                            var group = notNullSequence as GroupLayer;
+                            foreach (var item in group.Contents)
+                            {
+                                //notNullSequence.SeqType = item.SeqType;
+                                if (item.markup_layer != null)
+                                {
+                                    item.SeqType = item.markup_layer.SeqType;
+                                }
+                                else if (item.animation_layer != null)
+                                    item.SeqType = item.animation_layer.SeqType;
+                                else if (item.text_layer != null)
+                                    item.SeqType = item.text_layer.SeqType;
+                                else if (item.combo_layer != null)
+                                    item.SeqType = item.combo_layer.SeqType;
+                                else if (item.move_layer != null)
+                                    item.SeqType = item.move_layer.SeqType;
+                                else if (item.scripted_text_layer != null)
+                                    item.SeqType = item.scripted_text_layer.SeqType;
+                                else if (item.particle_layer != null)
+                                    item.SeqType = item.particle_layer.SeqType;
 
-                            //Assign style name
-                            item.SequenceName = item.SeqType + "SequenceStyle";
-                        }                        
+                                //Assign style name
+                                item.SequenceName = item.SeqType + "SequenceStyle";
+                            }
+                        }
+
+                        notNullSequence.SequenceName = notNullSequence.GetType().Name;
+                        attractYaml.Sequences.Add(notNullSequence);
                     }
-
-                    notNullSequence.SequenceName = notNullSequence.GetType().Name;
-                    attractYaml.Sequences.Add(notNullSequence);
-                }                
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
             }
         }
     }
