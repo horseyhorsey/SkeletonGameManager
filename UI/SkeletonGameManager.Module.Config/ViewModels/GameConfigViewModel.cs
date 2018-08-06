@@ -7,10 +7,11 @@ using Microsoft.Practices.Unity;
 using SkeletonGameManager.Base;
 using static SkeletonGameManager.Base.Events;
 using Prism.Logging;
+using System;
 
 namespace SkeletonGameManager.Module.Config.ViewModels
 {
-    public class GameConfigViewModel : SkeletonGameManagerViewModelBase
+    public class GameConfigViewModel : SkeletonTabViewModel
     {
         private ISkeletonGameProvider _skeletonGameProvider;
         private IUnityContainer _unityContainer;        
@@ -18,23 +19,20 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         #region Constructors
 
         public GameConfigViewModel(IEventAggregator ea, ISkeletonGameProvider skeletonGameProvider, IUnityContainer unityContainer, ILoggerFacade loggerFacade) : base(ea, loggerFacade)
-        {            
+        {
+            Title = "Game Config";
+            FileName = "config.yaml";
+
             _skeletonGameProvider = skeletonGameProvider;
-            _unityContainer = unityContainer;
+            _unityContainer = unityContainer;            
 
             KeyboardMappingsVm = _unityContainer.Resolve<KeyboardMappingsViewModel>();
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x =>await  OnLoadYamlFilesChanged());
 
-            SaveCommand = new DelegateCommand(() =>
-            {
-                GameConfigModel.AudioBufferSize = (int)SelectedBufferSize;
+            SaveCommand = new DelegateCommand(OnSaveInvoked, () => GameConfigModel == null ? false : true);
 
-                UpdateSwitchMaps();
-
-                _skeletonGameProvider.SaveGameConfig(GameConfigModel);
-
-            }, () => GameConfigModel == null ? false : true);
+            Log("Iniitalized Game Config", Category.Debug);
         }
 
         #endregion
@@ -64,10 +62,16 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         #endregion
 
         #region Public Methods
-
+        
         public async override Task OnLoadYamlFilesChanged()
         {
+            Log("Updating Game Config", Category.Debug);
+
             GameConfigModel = _skeletonGameProvider.GameConfig;
+            if (GameConfigModel == null)
+            {
+                Log("Game Config unavailable", Category.Debug);
+            }
 
             await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
             {
@@ -79,13 +83,23 @@ namespace SkeletonGameManager.Module.Config.ViewModels
 
         #region Private Methods
 
+        private void OnSaveInvoked()
+        {
+            GameConfigModel.AudioBufferSize = (int)SelectedBufferSize;
+            UpdateSwitchMaps();
+
+            Log("Saving config.yaml");
+            _skeletonGameProvider.SaveGameConfig(GameConfigModel);
+        }
+
+
         /// <summary>
-        /// Updates the switch maps before running save.
+        /// Update the Keyboard switch maps before running save.
         /// </summary>
         private void UpdateSwitchMaps()
         {
+            Log("Updating Keyboard Switch Maps");
             _skeletonGameProvider.GameConfig.KeyboardSwitchMap.Clear();
-
             //KeyboardMappingsVm.SwitchKeys.OrderBy(x => x.Key);
 
             foreach (var item in KeyboardMappingsVm.SwitchKeys)
