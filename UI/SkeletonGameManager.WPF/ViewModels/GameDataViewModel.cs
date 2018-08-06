@@ -4,10 +4,13 @@ using SkeletonGameManager.Base;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
-    public class GameDataViewModel : SkeletonGameManagerViewModelBase
+    public class GameDataViewModel : SkeletonTabViewModel
     {
+        
         public GameDataViewModel(IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
+            //Todo: empty?
+            Title = "Game Data";
         }
     }
 }

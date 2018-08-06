@@ -1,13 +1,11 @@
 ﻿using Prism.Events;
 using Prism.Logging;
-using SkeletonGame.Models;
 using SkeletonGameManager.Base;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace SkeletonGameManager.Module.SceneManage.ViewModels
 {
-    public class SequenceViewModelBase : SkeletonGameManagerViewModelBase
+    public class SequenceViewModelBase : SkeletonTabViewModel
     {
         public SequenceViewModelBase(IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {

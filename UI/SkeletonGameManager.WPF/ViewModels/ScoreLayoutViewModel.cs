@@ -10,12 +10,14 @@ using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
-    public class ScoreLayoutViewModel : SkeletonGameManagerViewModelBase
+    public class ScoreLayoutViewModel : SkeletonTabViewModel
     {
         public ISkeletonGameProvider _skeletonGameProvider { get; set; }
 
         public ScoreLayoutViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
+            Title = "Score Display";
+
             _skeletonGameProvider = skeletonGameProvider;
 
             //Save new_score_display.yaml

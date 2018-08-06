@@ -12,7 +12,7 @@ using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
-    public class TrophyDataViewModel : SkeletonGameManagerViewModelBase
+    public class TrophyDataViewModel : SkeletonTabViewModel
     {
 
         #region Commands
@@ -27,7 +27,9 @@ namespace SkeletonGameManager.WPF.ViewModels
         #region Constructors
         public TrophyDataViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
-            _skeletonGameProvider = skeletonGameProvider;            
+            _skeletonGameProvider = skeletonGameProvider;
+
+            Title = "Trophy";
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
 
@@ -44,12 +46,15 @@ namespace SkeletonGameManager.WPF.ViewModels
         #endregion
 
         #region Public Methods
+
         public override Task OnLoadYamlFilesChanged()
         {            
             TrophyData = _skeletonGameProvider.TrophyData;
 
             if (TrophyData != null)
             {
+                Log("Loading trophy data");
+
                 return Task.Run(() =>
                 {
                     //UiIcon
@@ -87,13 +92,20 @@ namespace SkeletonGameManager.WPF.ViewModels
         /// </summary>
         private void OnCreateTrophy()
         {
-            if (!TrophyData.Trophys.ContainsKey(this.NewTrophyName))
+            if (TrophyData == null)
             {
+                Log($"Cannot create trophy's with no default trophy data file.", Category.Warn);
+                return;
+            }
+
+            if (!TrophyData.Trophys.ContainsKey(this.NewTrophyName))
+            {                
                 TrophyData.Trophys.Add(this.NewTrophyName, new Trophy
                 {
                     Description = this.NewTrophyDesc                    
                 });
-            }            
+                Log($"Created new trophy. {this.NewTrophyName}");
+            }    
         }
 
         #endregion
