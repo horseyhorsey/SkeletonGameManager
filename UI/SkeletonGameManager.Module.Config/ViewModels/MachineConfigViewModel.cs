@@ -18,7 +18,7 @@ using Prism.Logging;
 
 namespace SkeletonGameManager.Module.Config.ViewModels
 {
-    public class MachineConfigViewModel : SkeletonGameManagerViewModelBase
+    public class MachineConfigViewModel : SkeletonTabViewModel
     {
         private ISkeletonGameProvider _skeletonGameProvider;
         private ISkeletonOSC _skeletonOSC;
@@ -31,9 +31,11 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         #region Constructors
         public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonOSC skeletonOSC, ISkeletonGameExport skeletonGameExport, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
+            Title = "Machine";
+
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonOSC = skeletonOSC;
-            _skeletonExport = skeletonGameExport;
+            _skeletonExport = skeletonGameExport;            
 
             _vpScriptExporter = new VpScriptExporter();
 
@@ -136,7 +138,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         /// <returns></returns>
         public async override Task OnLoadYamlFilesChanged()
         {
-
+            Log("Loading machine configuration");
             MachineConfig = _skeletonGameProvider.MachineConfig;
 
             if (MachineConfig != null)
@@ -149,7 +151,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                 //Lamps
                 foreach (var prLamp in MachineConfig.PRLamps)
                 {
-                    var lamp = Lamps.FirstOrDefault(x => x.Number == prLamp.Number);
+                    var lamp = Lamps.FirstOrDefault(x => x.Number == prLamp.Number.ToUpper());
                     if (lamp != null)
                     {
                         //lamp.Number = prLamp.Number;
@@ -165,7 +167,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                 {
                     if (prSwitch.Number.Contains("D"))
                     {
-                        var dSw = DedicatedSwitches.FirstOrDefault(x => x.Number == prSwitch.Number);
+                        var dSw = DedicatedSwitches.FirstOrDefault(x => x.Number == prSwitch.Number.ToUpper());
                         if (dSw != null)
                         {
                             dSw.Name = prSwitch.Name;
@@ -177,7 +179,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                         FlippersSwitches.Add(prSwitch);
                     else
                     {
-                        var sw = Switches.FirstOrDefault(x => x.Number == prSwitch.Number);
+                        var sw = Switches.FirstOrDefault(x => x.Number == prSwitch.Number.ToUpper());
                         if (sw != null)
                         {
                             sw.Name = prSwitch.Name;
@@ -202,7 +204,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels
 
                 foreach (var prCoil in MachineConfig.PRCoils)
                 {
-                    var coil = Coils.FirstOrDefault(x => x.Number == prCoil.Number);
+                    var coil = Coils.FirstOrDefault(x => x.Number == prCoil.Number.ToUpper());
                     if (coil != null)
                     {
                         coil.Name = prCoil.Name;
@@ -391,10 +393,10 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         /// </summary>
         private void InitializeCollections()
         {
+            Log("Initializing Machine Config collections");
             Switches = new ObservableCollection<SwitchViewModel>();
             Lamps = new ObservableCollection<LampViewModel>();
             Coils = new ObservableCollection<SolenoidFlasherViewModel>();
-
             DedicatedSwitches = new ObservableCollection<SwitchViewModel>();
             FlippersSwitches = new ObservableCollection<PRSwitch>();
         }
