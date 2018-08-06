@@ -18,6 +18,30 @@
     <ProjectReference Include="..\..\Modules\SkeletonGame.Engine\SkeletonGame.Engine.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="TestData\!FrankTest\config.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\!FrankTest\config\asset_list.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\!FrankTest\config\attract.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\!FrankTest\config\game_default_data.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\!FrankTest\config\game_default_settings.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\!FrankTest\config\game_user_data.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\!FrankTest\config\game_user_settings.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\!FrankTest\config\machine.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\Bottom\config.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -105,6 +129,10 @@
     <None Update="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestData\!FrankTest\config\sequences\" />
+    <Folder Include="TestData\!FrankTest\recordings\" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>

@@ -1,32 +1,31 @@
-﻿using SkeletonGameManager.Module.Config.Views;
+﻿
+using SkeletonGameManager.Module.Config.Views;
 using Prism.Modularity;
-using Prism.Regions;
-using System;
 using Microsoft.Practices.Unity;
-using Prism.Unity;
 using SkeletonGameManager.Module.Config.ViewModels;
 
 namespace SkeletonGameManager.Module.Config
 {
     public class ConfigModule : IModule
     {
-        private IRegionManager _regionManager;
         private IUnityContainer _container;
 
-        public ConfigModule(IUnityContainer container, IRegionManager regionManager)
+        public ConfigModule(IUnityContainer container)
         {
-            _container = container;
-            _regionManager = regionManager;
+            _container = container;            
         }
 
         public void Initialize()
         {
-            //_container.RegisterTypeForNavigation<ViewA>();
-            //_container.RegisterTypeForNavigation<GameConfigView>("GameConfigView");
-
             _container.RegisterInstance(_container.Resolve<KeyboardMappingsViewModel>());
-            _regionManager.RegisterViewWithRegion("ConfigRegion", typeof(GameConfigView));
-            _regionManager.RegisterViewWithRegion("MachineRegion", typeof(MachineConfigView));
+
+            //Create and register as singletons
+            _container.RegisterInstance(_container.Resolve<GameConfigViewModel>(), new ContainerControlledLifetimeManager());
+            _container.RegisterInstance(_container.Resolve<MachineConfigViewModel>(), new ContainerControlledLifetimeManager());
+            
+            //Register type of view with container to be resolved.
+            _container.RegisterType<object, GameConfigView>("GameConfigView");
+            _container.RegisterType<object, MachineConfigView>("MachineConfigView");
         }
     }
 }

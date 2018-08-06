@@ -1,0 +1,95 @@
+## A P-ROC Project by Eric Priepke, Copyright 2012-2013
+## Built on the PyProcGame Framework from Adam Preble and Gerry Stellenberg
+## And PyPROCGameHD+SkeletonGame by Mike Ocean
+##
+# This file is a template for all of the settings used in the game.  The game code will
+# load this file along with a user_settings.yaml file.  Any settings not present in
+# the user_settings.yaml file will default to the default value specified here.  When
+# any setting is saved (via the in-game service menu), the user_settings.yaml file
+# will be updated with ALL of the entries here without overwriting existing settings.
+
+Machine (Standard):
+  'Attract Mode Sounds':
+    options: ['On','Off']
+    default: 'On'
+  'Attract Mode Music':
+    options: ['On','Off']
+    default: 'On'
+  'Color Display X Offset':
+    options: [-2500,2500]
+    increments: 1
+    default: 0
+  'Color Display Y Offset':
+    options: [-2500,2500]
+    increments: 1
+    default: -70
+  'Balls Per Game':
+    options: [1,10]
+    increments: 1
+    default: 3
+  'Tilt Warnings':
+    options: [1,10]
+    increments: 1
+    default: 2
+  'Maximum Extra Balls':
+    options: [0,10]
+    increments: 1
+    default: 2
+  'Game Restart':
+    options: [True,False]
+    default: True
+  'Slow Attract Pages':
+    options: ['Enabled','Disabled']
+    default: 'Disabled'
+  'Flipper Pulse':
+    options: [25,40]
+    increments: 1
+    default: 34
+  'Autoplunger Strength':
+    options: [20,50]
+    increments: 5
+    default: 20
+  'Trough Eject Strength':
+    options: [20,50]
+    increments: 5
+    default: 30
+  'Inactive Switch Warning':
+    options: [3,30]
+    increments: 1
+    default: 5
+  'Max Initials Length':
+    options: [3,12]
+    default: 3
+  'Replays':
+    options: ['Enabled','Disabled']
+    default: 'Enabled'
+  'Replay Award':
+    options: ['Extra Ball']
+    default: 'Extra Ball'
+  'Replay Score':
+    options: [3000000,9000000000]
+    increments: 500000
+    default: 10000000
+  'Replay Auto Adjust':
+    options: ['Yes','No']
+    default: 'Yes'
+  'Replay Score Pad':
+    options: [0,10000000]
+    increments: 500000
+    default: 0
+  'Match Percentage':
+    options: [1,100]
+    increments: 1
+    default: 10
+Gameplay (Feature):
+  'Ball Save Timer':
+    options: [5,20]
+    increments: 1
+    default: 12
+Sound:
+  'Initial volume':
+    options: [1,2,3,4,5,6,7,8,9,10]
+    default: 5
+  'Music volume offset':
+    options: [-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4]
+    default: 0

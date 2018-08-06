@@ -1,0 +1,565 @@
+UserInterface:
+  splash_screen: 'lov001.png'
+  progress_bar:
+      x_center: 0.5
+      y_center: 0.1
+      width: 0.9
+      height: 0.10
+      border:
+        - 64
+        - 64
+        - 64
+      fill:
+        - 255
+        - 0
+        - 0
+  text:
+    color: [192, 192,0]
+    y_center: 0.8
+LampShows:
+- key: cycle
+  file: cycle.lampshow
+- key: red
+  file: red.lampshow
+- key: green
+  file: green.lampshow
+- key: blue
+  file: blue.lampshow
+- key: orange
+  file: orange.lampshow
+- key: yellow
+  file: yellow.lampshow
+- key: maroon
+  file: maroon.lampshow
+- key: olive
+  file: olive.lampshow
+- key: lime
+  file: lime.lampshow
+- key: teal
+  file: teal.lampshow
+- key: aqua
+  file: aqua.lampshow
+- key: navy
+  file: navy.lampshow
+- key: purple
+  file: purple.lampshow
+- key: fuscia
+  file: fuscia.lampshow
+
+RGBShows:
+#- key: 'first'
+#  file: 'first.rgbshow'
+Animations:
+- key: 'Bonus1'
+  file: 'Bonus1.png'
+  holdLastFrame: True
+- streamingMovie: true
+  frame_time: 1
+  key: WarEnd
+  file: WarEnd.mp4
+- streamingMovie: true
+  frame_time: 1
+  key: viking_land
+  file: viking_land.mp4
+- streamingMovie: true
+  frame_time: 1
+  key: EndBonus
+  file: EndBonus.mp4
+- key: '1p_score_backdrop'
+  file: '4players total.png'
+  #file: '1player.png'
+  holdLastFrame: True
+- key: '2p_score_backdrop'
+  file: '4players total.png'
+  #file: '2player.png'
+  holdLastFrame: True
+- key: '3p_score_backdrop'
+  file: '4players total.png'
+  #file: '3player.png'
+  holdLastFrame: True
+- key: '4p_score_backdrop'
+  file: '4players total.png'
+  #file: '4player.png'
+  holdLastFrame: True
+- key: 'lov_logo_image'
+  file: 'lov001.png'
+  holdLastFrame: True
+- key: 'black'
+  file: 'black.png'
+  holdLastFrame: True
+- key: 'raidingparty'
+  file: 'raidingparty.png'
+  holdLastFrame: True
+- key: 'gameover'
+  file: 'black.png'
+  holdLastFrame: True
+- key: 'stern_logo_image'
+  file: 'riot-logo.png'
+  holdLastFrame: True
+- key: 'img_timer'
+  file: 'timer.png'
+  holdLastFrame: True
+- key: 'image_0'
+  file: 'axe_001.png'
+  holdLastFrame: True
+- key: 'image_1'
+  file: 'axe_002.png'
+  holdLastFrame: True
+- key: 'image_2'
+  file: 'axe_003.png'
+  holdLastFrame: True
+- key: 'image_3'
+  file: 'axe_004.png'
+  holdLastFrame: True
+- key: 'image_4'
+  file: 'axe_005.png'
+  holdLastFrame: True
+- key: 'image_5'
+  file: 'axe_006.png'
+  holdLastFrame: True
+- key: 'image_6'
+  file: 'axe_007.png'
+  holdLastFrame: True
+- key: 'image_7'
+  file: 'axe_008.png'
+  holdLastFrame: True
+- key: 'image_7'
+  file: 'axe_009.png'
+  holdLastFrame: True
+- key: 'tier_0'
+  file: 'main_mode_storm.png'
+  holdLastFrame: True
+- key: 'tier_1'
+  file: 'main_mode_storm.png'
+  holdLastFrame: True
+- key: 'tier_2'
+  file: 'main_mode_storm.png'
+  holdLastFrame: True
+- key: 'tier_3'
+  file: 'main_mode_storm.png'
+  holdLastFrame: True
+- key: 'tier_4'
+  file: 'main_mode_storm.png'
+  holdLastFrame: True
+- key: 'tier_5'
+  file: 'main_mode_storm.png'
+  holdLastFrame: True
+- key: 'tier_6'
+  file: 'main_mode_storm.png'
+  holdLastFrame: True
+- key: 'tier_7'
+  file: 'main_mode_storm.png'
+  holdLastFrame: True
+- key: 'tier_8'
+  file: 'main_mode_storm.png'
+  holdLastFrame: True
+- key: 'mode_selected'
+  file: 'selected.png'
+  holdLastFrame: True
+- key: 'mode_select_overlay'
+  file: 'mode_select_overlay.png'
+  holdLastFrame: True
+- key: 'mode_defeated_small'
+  file: 'mode_defeated_small.png'
+  holdLastFrame: True
+- key: 'mode_defeated'
+  file: 'mode_defeated.png'
+  holdLastFrame: True
+- key: 'mode_locked'
+  file: 'mode_images_locked.png'
+  holdLastFrame: True
+- key: 'locked_large'
+  file: 'locked_large.png'
+  holdLastFrame: True
+- key: 'locked_small'
+  file: 'locked_small.png'
+  holdLastFrame: True
+- key: 'banshee_small'
+  file: 'banshee_small.png'
+  holdLastFrame: True
+- key: 'banshee_large'
+  file: 'banshee_large.png'
+  holdLastFrame: True
+- key: 'deargdue_small'
+  file: 'deargdue_small.png'
+  holdLastFrame: True
+- key: 'deargdue_large'
+  file: 'deargdue_large.png'
+  holdLastFrame: True
+- key: 'balder_small'
+  file: 'mode_starts_balder_lit_small.png'
+  holdLastFrame: True
+- key: 'balder_large'
+  file: 'mode_starts_balder_lit.png'
+  holdLastFrame: True
+- key: 'Draugar_large'
+  file: 'mode_starts_Draugar_lit.png'
+  holdLastFrame: True
+- key: 'Draugar_small'
+  file: 'mode_starts_Draugar_lit_small.png'
+  holdLastFrame: True
+- key: 'tyr_large'
+  file: 'mode_starts_tyr_lit.png'
+  holdLastFrame: True
+- key: 'tyr_small'
+  file: 'mode_starts_tyr_lit_small.png'
+  holdLastFrame: True
+- key: 'thor_large'
+  file: 'mode_starts_thor_lit.png'
+  holdLastFrame: True
+- key: 'thor_small'
+  file: 'mode_starts_thor_lit_small.png'
+  holdLastFrame: True
+- key: 'loki_large'
+  file: 'mode_starts_loki_lit.png'
+  holdLastFrame: True
+- key: 'loki_small'
+  file: 'mode_starts_loki_lit_small.png'
+  holdLastFrame: True
+- key: 'leanan_sidhe_large'
+  file: 'mode_starts_leanan_sidhe_lit.png'
+  holdLastFrame: True
+- key: 'leanan_sidhe_small'
+  file: 'mode_starts_leanan_sidhe_lit_small.png'
+  holdLastFrame: True
+- key: 'kraken_large'
+  file: 'mode_starts_kraken_lit.png'
+  holdLastFrame: True
+- key: 'kraken_small'
+  file: 'mode_starts_kraken_lit_small.png'
+  holdLastFrame: True
+- key: 'jormungandr_large'
+  file: 'mode_starts_jormungandr_lit.png'
+  holdLastFrame: True
+- key: 'jormungandr_small'
+  file: 'mode_starts_jormungandr_lit_small.png'
+  holdLastFrame: True
+- key: 'hel_large'
+  file: 'mode_starts_hel_lit.png'
+  holdLastFrame: True
+- key: 'hel_small'
+  file: 'mode_starts_hel_lit_small.png'
+  holdLastFrame: True
+- key: 'gwyllgi_large'
+  file: 'mode_starts_gwyllgi_lit.png'
+  holdLastFrame: True
+- key: 'gwyllgi_small'
+  file: 'mode_starts_gwyllgi_lit_small.png'
+  holdLastFrame: True
+- key: 'grendel_large'
+  file: 'mode_starts_grendel_lit.png'
+  holdLastFrame: True
+- key: 'grendel_small'
+  file: 'mode_starts_grendel_lit_small.png'
+  holdLastFrame: True
+- key: 'fossegrimen_large'
+  file: 'mode_starts_fossegrimen_lit.png'
+  holdLastFrame: True
+- key: 'fossegrimen_small'
+  file: 'mode_starts_fossegrimen_lit_small.png'
+  holdLastFrame: True
+- key: 'fenrir_large'
+  file: 'mode_starts_fenrir_lit.png'
+  holdLastFrame: True
+- key: 'fenrir_small'
+  file: 'mode_starts_fenrir_lit_small.png'
+  holdLastFrame: True
+- key: 'dullahan_large'
+  file: 'mode_starts_dullahan_lit.png'
+  holdLastFrame: True
+- key: 'dullahan_small'
+  file: 'mode_starts_dullahan_lit_small.png'
+  holdLastFrame: True
+- key: 'blank'
+  file: 'blank.png'
+  holdLastFrame: True
+- key: 'status_bg'
+  file: 'status_bg.png'
+  holdLastFrame: True
+- key: 'leanan'
+  file: 'leanan.png'
+  holdLastFrame: True
+- key: 'legend_tally'
+  file: 'legend_tally.png'
+  holdLastFrame: True
+- key: 'hurryup_tally'
+  file: 'hurryup_tally.png'
+  holdLastFrame: True
+
+
+Fonts:
+  FontStyles:
+  - key: yellow
+    interior_color:
+      - 255
+      - 255
+      - 0
+    line_width: 4
+    line_color:
+      - 0
+      - 0
+      - 0
+  - key: gold
+    interior_color:
+      - 255
+      - 224
+      - 0
+    line_width: 4
+    line_color:
+      - 0
+      - 0
+      - 0
+  - key: grey
+    interior_color:
+      - 224
+      - 224
+      - 224
+    line_width: 3
+    line_color:
+      - 0
+      - 0
+      - 0
+  - key: whiplash_mb_0
+    interior_color:
+      - 169
+      - 42
+      - 0
+    line_width: 5
+    line_color:
+      - 203
+      - 197
+      - 55
+    fill_color:
+      - 0
+      - 0
+      - 0
+  - key: whiplash_mb_1
+    interior_color:
+      - 0
+      - 39
+      - 129
+    line_width: 5
+    line_color:
+      - 141
+      - 196
+      - 255
+    fill_color:
+      - 0
+      - 0
+      - 0
+  HDFonts:
+  - key: 'rueckleft'
+    file: 'rueck.left.ttf'
+    size: 120
+  - key: 'impact120'
+    file: '19927_impact.ttf'
+    size: 120
+  - key: 'impact90'
+    file: '19927_impact.ttf'
+    size: 90
+  - key: 'impact100'
+    file: '19927_impact.ttf'
+    size: 100
+  - key: 'impact50'
+    file: '19927_impact.ttf'
+    size: 50
+  - key: 'butchsundance40'
+    file: 'butchsundance.ttf'
+    size: 40
+  - key: 'butchsundance100'
+    file: 'butchsundance.ttf'
+    size: 100
+  - key: 'butchsundance'
+    file: 'butchsundance.ttf'
+    size: 160
+  - key: 'viking'
+    file: 'VIKING-N.ttf'
+    size: 120
+  - key: 'shield120'
+    file: 'bank_gothic_medium.ttf'
+    size: 120
+  - key: 'shield280'
+    file: 'bank_gothic_medium.ttf'
+    size: 280
+  - key: 'whiplash_450'
+    file: 'WOODCUTTER_STORM.ttf'
+    size: 450
+  - key: 'whiplash_300'
+    file: 'WOODCUTTER_STORM.ttf'
+    size: 300
+  - key: 'whiplash_200'
+    file: 'WOODCUTTER_STORM.ttf'
+    size: 200
+  - key: 'whiplash_150'
+    file: 'WOODCUTTER_STORM.ttf'
+    size: 150
+  - key: 'ptsans24'
+    file: 'PTSans.ttc'
+    size: 25
+  - key: 'bebas40'
+    file: 'BebasNeue.otf'
+    size: 40
+  - key: 'bebas80'
+    file: 'BebasNeue.otf'
+    size: 80
+  - key: 'bebas90'
+    file: 'BebasNeue.otf'
+    size: 90
+  - key: 'default_msg'
+    file: '19927_impact.ttf'
+    size: 90
+  - key: 'status_font'
+    file: '19927_impact.ttf'
+    size: 90
+#  - key: 'default_msg'
+#    file: 'BebasNeue.otf'
+#    size: 120
+#  - key: 'default'
+#    file: 'BebasNeue.otf'
+#    size: 120
+  - key: 'default'
+    file: 'butchsundance.ttf'
+    size: 90
+  - key: 'bebas180'
+    file: 'BebasNeue.otf'
+    size: 180
+  - key: 'bebas200'
+    file: 'BebasNeue.otf'
+    size: 200
+  - key: 'bebas300'
+    file: 'BebasNeue.otf'
+    size: 300
+  - key: 'main_score'
+    file: 'BebasNeue.otf'
+    size: 150
+  - key: 'bebas500'
+    file: 'BebasNeue.otf'
+    size: 500
+  - key: 'demo1'
+    file: 'AVENGEANCE MIGHTIEST AVENGER.otf'
+    size: 250
+  - key: 'demo2'
+    file: 'KOMIKAX_.ttf'
+    size: 250
+  - key: 'demo3'
+    file: 'arfmoochikncheez.ttf'
+    size: 250
+  - key: 'demo4'
+    file: 'Mechanical Machine.ttf'
+    size: 250
+  - key: 'demo5'
+    file: 'Plane Crash.ttf'
+    size: 250
+  - key: 'IM370'
+    file: 'IRON MAN OF WAR 002 NCV.ttf'
+    size: 370
+  - key: 'IM160'
+    file: 'IRON MAN OF WAR 002 NCV.ttf'
+    size: 160
+  - key: 'high_score_entry_inits'
+    file: 'IRON MAN OF WAR 002 NCV.ttf'
+    size: 200
+  - key: 'high_score_entry_msg'
+    file: 'BebasNeue.otf'
+    size: 120
+  - key: 'high_score_entry_letters'
+    file: 'BebasNeue.otf'
+    size: 150
+Audio:
+  Music:
+    - key: 'Flight of Icarus'
+      file: '01 Flight of Icarus.ogg'
+      volume: 1
+    - key: 'Still Life'
+      file: '02 Still Life.ogg'
+      volume: 1
+    - key: 'Aces High'
+      file: '03 Aces High.ogg'
+      volume: 1
+    - key: '2 Minutes to Midnight'
+      file: '04 2 Minutes to Midnight.ogg'
+      volume: 1
+    - key: 'Wasted Years'
+      file: '05 Wasted Years.ogg'
+      volume: 1
+    - key: 'Sea of Madness'
+      file: '06 Sea of Madness.ogg'
+      volume: 1
+    - key: 'Hallowed Be Thy Name'
+      file: '07 Hallowed Be Thy Name.ogg'
+      volume: 1
+    - key: 'The Trooper'
+      file: '08 The Trooper.ogg'
+      volume: 1
+    - key: 'Run to the Hills'
+      file: '09 Run to the Hills.ogg'
+      volume: 1
+    - key: 'The Evil That Men Do'
+      file: '10 The Evil That Men Do.ogg'
+      volume: 1
+    - key: 'Seventh Son of a Seventh Son'
+      file: '11 Seventh Son of a Seventh Son.ogg'
+      volume: 1
+    - key: 'Powerslave'
+      file: '12 Powerslave.ogg'
+      volume: 1
+    - key: 'Can I Play with Madness'
+      file: '13 Can I Play with Madness.ogg'
+      volume: 1
+    - key: '22 Acacia Avenue'
+      file: '14 22 Acacia Avenue.ogg'
+      volume: 1
+    - key: 'Children of the Damned'
+      file: '15 Children of the Damned.ogg'
+      volume: 1
+    - key: 'Revelations'
+      file: '16 Revelations.ogg'
+      volume: 1
+    - key: 'Powerslave (Instrumental)'
+      file: '21 Powerslave (Instrumental).ogg'
+      volume: 1
+    - key: 'main_shooter_lane'
+      file: 'Sound-03F8.wav'
+      volume: 1
+    - key: 'general_gameplay'
+      file: 'Sound-03FA.wav'
+      volume: 1
+    - key: 'game_over'
+      file: 'Area51.mp3'
+      volume: 1
+    - key: 'bonus'
+      file: 'Sound-03FD.wav'
+      volume: 1
+  Effects:
+    - key: 'hammer1'
+      file: 'hammer1.ogg'
+      volume: 1
+    - key: 'hammer3'
+      file: 'hammer3.ogg'
+      volume: 1
+    - key: 'drone_hit'
+      file: 'Sound-00A1.wav'
+      volume: 1
+    - key: 'drone_thunk'
+      file: 'Sound-00A0.wav'
+      volume: 1
+    - key: 'crowd1'
+      file: 'roar Sound-0x00F0.wav'
+      volume: 1
+    - key: 'crowd2'
+      file: 'roar Sound-0x00F1.wav'
+      volume: 1
+    - key: 'crowd3'
+      file: 'roar Sound-0x0118.wav'
+      volume: 1
+    - key: 'crowd4'
+      file: 'roar Sound-0x0119.wav'
+      volume: 1
+
+  Voice:
+    - key: 'im_script7a'
+      file: 'Sound-01A3.wav'
+      volume: 1
+    - key: 'im_script7b'
+      file: 'Sound-01A4.wav'
+      volume: 1

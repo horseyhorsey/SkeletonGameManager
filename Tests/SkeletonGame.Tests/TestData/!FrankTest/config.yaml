@@ -1,0 +1,80 @@
+pinproc_class: procgame.fakepinproc.FakePinPROC
+vp_game_map_file: C:/P-ROC/shared/vp_game_map.yaml
+PYSDL2_DLL_PATH: C:\P-ROC\DLLs\
+use_virtual_dmd_only: true
+font_path:
+- C:\P-ROC\shared\dmd\
+- ./assets/dmd/
+config_path:
+- C:\P-ROC\games\Jaws\config\
+dmd_path: ./assets/dmd/
+sound_path: ./assets/sound/
+voice_dir: voice/
+sfx_dir: sfx/
+music_dir: music/
+hdfont_path: ./assets/fonts/
+dmd_grid_path: ./assets/dmd/
+default_modes:
+  score_display: False
+  bonus_tally: False
+  attract: true
+  osc_input: True
+  service_mode: True
+  ball_search: true
+  ball_search_delay: 30
+  tilt_mode: true
+  multiline_highscore_entry: false
+  player_profiles: True
+  player_trophys: True
+dmd_dots_w: 1366
+dmd_dots_h: 768
+dmd_dot_filter: False
+dmd_window_border: False
+dmd_always_on_top: true
+desktop_dmd_scale: 1
+dmd_framerate: 23.98
+dmd_flip: 0
+audio_buffer_size: 1024
+audio_freq_rate: 44100
+screen_position_x: 1910
+screen_position_y: 210
+keyboard_switch_map:
+    1: centerRampEnter #trough1
+    2: rightRampEnter #trough2
+    3: trough3
+    4: trough4
+    5: RightSlingShot
+    6: LeftSlingShot
+    q: AinAXE
+    w: XinAXE
+    e: EinAXE
+    r: leftOrbit
+    t: rightOrbit
+    y: leftRampEnter
+    u: bloodtarget
+    i: ragetarget
+    o: scoop
+    p: ActionButton
+    a: spinner
+    s: startButton
+    d: shooterLane
+    f: Light
+    g: Ship
+    h: Locks
+    j: LeftRampStandup
+    k: CenterRampStandup
+    l: UnderShipStandup
+    z: berzerker
+    x: leftOutlane
+    c: leftReturnlane
+    v: rightReturnLane
+    b: rightOutlane
+    n: upperLoopLeft
+    m: upperLoopRight
+    n: rightShooterLane
+    -: leftOutlane
+    #:shiplock1
+    #:shiplock2
+    #:shiplock3
+    1073742053: flipperLwL
+    1073742049: flipperLwR

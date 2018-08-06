@@ -4,12 +4,10 @@ using System.Windows;
 using Prism.Modularity;
 using SkeletonGame.Engine;
 using SkeletonGameManager.WPF.Views;
-using Prism.Regions;
 using SkeletonGameManager.Base;
-using SkeletonGameManager.Module.Assets.Views;
 using SkeletonGameManager.Module.Services;
-using SkeletonGameManager.Module.Recordings.ViewModels;
 using Prism.Logging;
+using SkeletonGameManager.WPF.ViewModels;
 
 namespace SkeletonGameManager.WPF
 {
@@ -20,18 +18,6 @@ namespace SkeletonGameManager.WPF
         protected override void InitializeShell()
         {
             base.InitializeShell();
-
-            //Register views with regions
-            var regionManager = this.Container.Resolve<IRegionManager>();
-            if (regionManager != null)
-            {
-                regionManager.RegisterViewWithRegion("AssetsRegion", typeof(AssetListView));
-                regionManager.RegisterViewWithRegion("ScoreLayoutRegion", typeof(ScoreLayoutView));
-                regionManager.RegisterViewWithRegion("GameDataRegion", typeof(GameDataView));
-
-                //Game Data
-                regionManager.RegisterViewWithRegion("TrophyDataRegion", typeof(TrophyDataView));                
-            }
 
             Application.Current.MainWindow.Show();                                            
         }
@@ -52,11 +38,6 @@ namespace SkeletonGameManager.WPF
         {
             base.ConfigureContainer();
 
-            //ViewModelLocationProvider.SetDefaultViewModelFactory((type) =>
-            //{
-            //    return Container.Resolve(type);
-            //});
-
             Container.RegisterType<ISkeletonGameProvider, SkeletonGameProvider>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IGameRunnner, SkeletonGameRunner>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IVpScriptExporter, VpScriptExporter>(new ContainerControlledLifetimeManager());            
@@ -67,9 +48,11 @@ namespace SkeletonGameManager.WPF
             Container.RegisterInstance<ISkeletonGameFiles>(Container.Resolve<SkeletonGameFiles>());
             Container.RegisterInstance<ISkeletonGameExport>(Container.Resolve<SkeletonGameExport>());
 
-            Container.RegisterType<RecordingsViewModel>(new ContainerControlledLifetimeManager());
-            //Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>());
-            //Container.RegisterInstance(Container.Resolve<TrophyDataViewModel>());
+            //Register views for View discovery            
+            Container.RegisterType<object, ScoreLayoutView>("ScoreLayoutView");
+            Container.RegisterType<object, TrophyDataView>("TrophyDataView");
+
+            Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>(), new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureViewModelLocator()

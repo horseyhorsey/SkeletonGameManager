@@ -44,9 +44,10 @@ namespace SkeletonGame.Tests
         }
 
         [Theory()]
-        [InlineData("EmptyGame")]
-        [InlineData("SampleGame")]
-        [InlineData("EvilDead")]
+        //[InlineData("EmptyGame")]
+        //[InlineData("SampleGame")]
+        //[InlineData("EvilDead")]
+        [InlineData("!FrankTest")]
         public void DeserializeSkeletonAttract(string gameFolder)
         {
             var attractFilePath = "TestData/" + gameFolder + "/config/attract.yaml";

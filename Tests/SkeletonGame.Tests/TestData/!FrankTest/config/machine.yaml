@@ -1,0 +1,584 @@
+PRGame:
+    machineType: wpc
+    numBalls: 4
+PRBumpers:
+    - LeftSlingShot
+    - RightSlingShot
+PRFlippers:
+    - flipperLwR
+    - flipperLwL
+PRSwitches:
+    flipperMwL:
+        number: SF6
+        label: Mid Left Flipper Button
+        tags: Dedicated
+    flipperLwL:
+        number: SF2
+        label: Left Flipper Button
+        tags: Dedicated
+    flipperLwR:
+        number: SF4
+        label: Right Flipper Button
+        tags: Dedicated
+    tilt:
+        number: SD17
+        label: Tilt Pendulum
+        tags: Dedicated,tilt
+    exit:
+        number: SD21
+        label: Exit
+        tags: Dedicated,0,5
+    down:
+        number: SD22
+        label: Down
+        tags: Dedicated,0,6
+    up:
+        number: SD23
+        label: Up
+        tags: Dedicated,0,7
+    enter:
+        number: SD24
+        label: Enter
+        tags: Dedicated,0,8
+
+    #Matrix Switches
+
+    AinAXE:
+        number: S71
+        label: A in AXE
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,axe
+    XinAXE:
+        number: S72
+        label: X in AXE
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,axe
+    EinAXE:
+        number: S73
+        label: E in AXE
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,axe
+    leftOrbit:
+        number: S74
+        label: Left Orbit
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,7,1,Bonus
+    rightOrbit:
+        number: S75
+        label: Right Orbit
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,9,1,Bonus
+    leftRampEnter:
+        number: S76
+        label: Left Ramp Enter
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,12,1,Bonus
+    bloodtarget:
+        number: S77
+        label: bloodtarget
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,11,1,Bonus
+    ragetarget:
+        number: S78
+        label: ragetarget
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,13,1,Bonus
+    rightRampEnter:
+        number: S79
+        label: Right Ramp Enter
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,14,1,Bonus
+    centerRampEnter:
+        number: S86
+        label: Center Ramp Enter
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,12,1,Bonus
+    startButton:
+        number: S13
+        label: Start Button
+        tags: Standard,16,1
+    trough1:
+        number: S81
+        label: Trough Ball 1
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: trough
+    trough2:
+        number: S82
+        label: Trough Ball 2
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: trough
+    trough3:
+        number: S83
+        label: Trough Ball 3
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: trough
+    trough4:
+        number: S84
+        label: Trough Ball 4
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: trough
+    troughEject:
+        number: S85
+        label: Trough Stack
+        tags: Standard,2,6
+    shooterLane:
+        number: S41
+        label: shooter
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,2,7,shooter
+    rightShooterLane:
+        number: S42
+        label: Right Shooter Lane Entrance
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,2,7
+    leftOutlane:
+        number: S21
+        label: Left Outlane
+        tags: Standard,2,8,Bonus,early_save
+    leftReturnLane:
+        number: S22
+        label: left Return Lane
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,2,9,Bonus
+    rightOutlane:
+        number: S23
+        label: Right Outlane
+        tags: Standard,2,8,Bonus,early_save
+    LeftSlingShot:
+        number: S24
+        label: Left Slingshot
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,2,10,Bonus
+    RightSlingShot:
+        number: S25
+        label: Right Slingshot
+        tags: Standard,2,11,Bonus
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+#        debounce: False
+    rightReturnLane:
+        number: S26
+        label: Right Return Lane
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,2,12,Bonus
+    berzerker:
+        number: S27
+        label: Drop Target
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,2,15,Bonus
+    spinner:
+        number: S28
+        label: spinner
+        tags: Standard,2,16,Bonus
+    LeftRampStandup:
+        number: S45
+        label: LeftRamp Standup
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard
+    CenterRampStandup:
+        number: S46
+        label: CenterRamp Standup
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard
+    UnderShipStandup:
+        number: S47
+        label: UnderShip Standup
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard
+    Light:
+        number: S32
+        label: Target Light
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,3,13,Bonus,LockTargets
+    Ship:
+        number: S33
+        label: Target Ship
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,3,14,Bonus,LockTargets
+    Locks:
+        number: S34
+        label: Target Locks
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,4,2,Bonus,LockTargets
+    scoop:
+        number: S35
+        label: Scoop
+        tags: Standard,4,2
+    ActionButton:
+        number: S80
+        label: Action Button
+        tags: Standard,7,5
+    upperLoopLeft:
+        number: S36
+        label: upperLoopLeft
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,3,12,Bonus
+    upperLoopRight:
+        number: S37
+        label: upperLoopRight
+        ballsearch: reset # reset: this switch resets a ballsearch timer to occur X-seconds after this was seen
+        tags: Standard,3,12,Bonus
+    shiplock1:
+        number: S38
+        label: shiplock1
+        tags: Standard,5,4
+    shiplock2:
+        number: S39
+        label: shiplock2
+        tags: Standard,5,5
+    shiplock3:
+        number: S40
+        label: shiplock3
+        tags: Standard,5,6
+
+PRCoils:
+    ledPurple:
+        number: C50
+    ledFuscia:
+        number: C51
+    ledWhite:
+        number: C52
+    ledOrange:
+        number: C53
+    ledYellow:
+        number: C54
+    ledGreen:
+        number: C55
+    ledBlue:
+        number: C56
+    ledRed:
+        number: C57
+    ledMaroon:
+        number: C58
+    ledOlive:
+        number: C59
+    ledLime:
+        number: C60
+    ledTeal:
+        number: C61
+    ledAqua:
+        number: C62
+    ledNavy:
+        number: C63
+
+    trough:
+        number: C01
+        ballsearch: True
+    autoPlunger:
+        number: C10
+    UpPost:
+        number: C03
+        pulseTime: 8
+        label: UpPost
+        tags: Solenoid
+    scoop:
+        number: C04
+        pulseTime: 18
+        label: scoop
+        tags: Solenoid
+    berzerker:
+        number: C05
+        pulseTime: 18
+        label: DropTargetCoil
+        tags: Solenoid
+    PopPost:
+        number: C08
+        pulseTime: 18
+        label: PopPost
+        tags: Solenoid
+    ShipPost:
+        number: C09
+        pulseTime: 18
+        label: ShipPost
+        tags: Solenoid
+    ThorsHammer:
+        number: C02
+        pulseTime: 18
+        label: ThorsHammer
+        tags: Solenoid
+    ShipMagnet:
+        number: C11
+        pulseTime: 18
+        label: Ship Magnet
+        tags: Solenoid
+    flipperMwLMain:
+        number: FULM
+        label: Mid Flipper
+        tags: Solenoid
+    flipperMwLHold:
+        number: FULH
+        label: Mid Flipper Hold
+        tags: Solenoid
+    flipperLwLMain:
+        number: FLLM
+        tags: Solenoid
+    flipperLwLHold:
+        number: FLLH
+        tags: Solenoid
+    flipperLwRMain:
+        number: FLRM
+        tags: Solenoid
+    flipperLwRHold:
+        number: FLRH
+        tags: Solenoid
+    LeftSlingShot:
+        number: C16
+        tags: Solenoid
+    RightSlingShot:
+        number: C17
+        tags: Solenoid
+
+PRLamps:
+    knife:
+        number: l180
+        polarity: False
+        tags: Playfield
+    sling:
+        number: l81
+        polarity: False
+        tags: Playfield
+    bow:
+        number: l54
+        polarity: False
+        tags: Playfield
+    WrathOfThor:
+        number: l21
+        polarity: False
+        tags: Playfield
+    StartCombo:
+        number: l26
+        polarity: False
+        tags: Playfield
+    leftBumper:
+        number: l186
+        polarity: False
+        tags: Playfield
+    rightBumper:
+        number: l187
+        polarity: False
+        tags: Playfield
+    bottomBumper:
+        number: l188
+        polarity: False
+        tags: Playfield
+    ActionButton:
+        number: l189
+        polarity: False
+    Grace:
+        number: l190
+        polarity: False
+        tags: Playfield
+    Mystery:
+        number: l191
+        polarity: False
+        tags: Playfield
+    Special:
+        number: l32
+        polarity: False
+        tags: Playfield
+    LeftRampStandup:
+        number: l75
+        polarity: False
+    CenterRampStandup:
+        number: l76
+        polarity: False
+    UnderShipStandup:
+        number: l78
+        polarity: False
+        tags: Playfield
+    Berzerker:
+        number: l31
+        polarity: False
+        tags: Playfield, DropTarget
+    MonsterHurryup:
+        number: l1121
+        polarity: False
+        tags: Playfield
+    Shootagain:
+        number: l37
+        label: shoot_again
+        polarity: False
+    ArrowLeftScoop:
+        number: l24
+        polarity: False
+        tags: Playfield
+    ArrowLeftOrbit:
+        number: l65
+        polarity: False
+        tags: Playfield
+    ArrowLeftRamp:
+        number: l67
+        polarity: False
+        tags: Playfield
+    ArrowMiddleRamp:
+        number: l88
+        polarity: False
+        tags: Playfield
+    ArrowUpperOrbitLeft:
+        number: l79
+        polarity: False
+        tags: Playfield
+    ArrowUpperOrbitRight:
+        number: l51
+        polarity: False
+        tags: Playfield
+    ArrowUpperRamp:
+        number: l56
+        polarity: False
+        tags: Playfield
+    ArrowRightOrbit:
+        number: l63
+        polarity: False
+        tags: Playfield
+    ArrowShooterLane:
+        number: l50
+        polarity: False
+        tags: Playfield
+    ArrowLeftFlipper:
+        number: l89
+        polarity: False
+        tags: Playfield
+    ArrowAboveRage:
+        number: l41
+        polarity: False
+        tags: Playfield
+    Task1:
+        number: l58
+        polarity: False
+        tags: Playfield
+    Task2:
+        number: l38
+        polarity: False
+        tags: Playfield
+    Task3:
+        number: l42
+        polarity: False
+        tags: Playfield
+    Task4:
+        number: l61
+        polarity: False
+        tags: Playfield
+    Task5:
+        number: l62
+        polarity: False
+        tags: Playfield
+    Task6:
+        number: l64
+        polarity: False
+        tags: Playfield
+    Task7:
+        number: l66
+        polarity: False
+        tags: Playfield
+    Task8:
+        number: l68
+        polarity: False
+        tags: Playfield
+    Valhalla:
+        number: l11
+        polarity: False
+        tags: Playfield
+    Ragnarok:
+        number: l22
+        polarity: False
+        tags: Playfield
+    Extraball:
+        number: l82
+        polarity: False
+        tags: Playfield
+    Blood:
+        number: l57
+        polarity: False
+        tags: Playfield,BloodRage
+    Rage:
+        number: l55
+        polarity: False
+        tags: Playfield,BloodRage
+    Light:
+        number: l71
+        polarity: False
+        tags: Playfield
+    Ship:
+        number: l72
+        polarity: False
+        tags: Playfield
+    Locks:
+        number: l73
+        polarity: False
+        tags: Playfield
+    ModeStart:
+        number: l17
+        polarity: False
+        tags: Playfield
+    Crossbow:
+        number: l35
+        polarity: False
+        tags: Playfield
+    WarHammer:
+        number: l25
+        polarity: False
+        tags: Playfield
+    BroadAxe:
+        number: l34
+        polarity: False
+        tags: Playfield
+    Sword:
+        number: l33
+        polarity: False
+        tags: Playfield
+    Spear:
+        number: l12
+        polarity: False
+        tags: Playfield
+    Dagger:
+        number: l84
+        polarity: False
+        tags: Playfield
+    Helmet:
+        number: l28
+        polarity: False
+        tags: Playfield
+    LightWeapon:
+        number: l23
+        polarity: False
+        tags: Playfield
+    R:
+        number: l15
+        polarity: False
+        tags: Playfield, Raid
+    A2:
+        number: l16
+        polarity: False
+        tags: Playfield, Raid
+    I:
+        number: l14
+        polarity: False
+        tags: Playfield, Raid
+    D:
+        number: l13
+        polarity: False
+        tags: Playfield, Raid
+    A:
+        number: l85
+        polarity: False
+        label: god in god of thunder
+    X:
+        number: l86
+        polarity: False
+        label: of in god of thunder
+    E:
+        number: l87
+        polarity: False
+        label: thunder in god of thunder
+    startButton:
+        number: L91
+        label: Start Button
+
+PRBallSave:
+    pulseCoils: [leftSling,rightSling]
+    resetSwitches:
+        rightOutlane: open
+        leftOutlane: open
+    stopSwitches:
+        shooterLane: closed
+        flipperLwL: closed
+        flipperLwR: closed

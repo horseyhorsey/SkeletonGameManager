@@ -1,27 +1,27 @@
-﻿using SkeletonGameManager.Module.SceneManage.Views;
+﻿
+using SkeletonGameManager.Module.SceneManage.Views;
 using Prism.Modularity;
-using Prism.Regions;
-using System;
 using Microsoft.Practices.Unity;
-using Prism.Unity;
+
+using SkeletonGameManager.Module.SceneManage.ViewModels;
 
 namespace SkeletonGameManager.Module.SceneManage
 {
     public class SceneManageModule : IModule
     {
-        private IRegionManager _regionManager;
         private IUnityContainer _container;
 
-        public SceneManageModule(IUnityContainer container, IRegionManager regionManager)
+        public SceneManageModule(IUnityContainer container)
         {
             _container = container;
-            _regionManager = regionManager;
         }
 
         public void Initialize()
         {
-            _regionManager.RegisterViewWithRegion("AttractRegion", typeof(AttractView));
-            _regionManager.RegisterViewWithRegion("SequencesRegion", typeof(SequenceView));
+            _container.RegisterType<object, AttractView>("AttractView");
+            _container.RegisterType<object, SequenceView>("SequenceView");
+
+            _container.RegisterInstance(_container.Resolve<AttractViewModel>(), new ContainerControlledLifetimeManager());
         }
     }
 }
