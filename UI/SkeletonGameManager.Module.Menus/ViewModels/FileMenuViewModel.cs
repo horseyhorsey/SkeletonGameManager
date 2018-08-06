@@ -2,7 +2,9 @@
 using Prism.Commands;
 using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
+using Prism.Logging;
 using Prism.Mvvm;
+using Prism.Regions;
 using SkeletonGameManager.Base;
 using SkeletonGameManager.Module.Menus.Views;
 using SkeletonGameManager.Module.Recordings.ViewModels;
@@ -17,12 +19,13 @@ using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.Module.Menus.ViewModels
 {
-    public class FileMenuViewModel : BindableBase
+    public class FileMenuViewModel : SkeletonGameManagerViewModelBase
     {
         #region Fields
         private IEventAggregator _eventAggregator;
         private ISkeletonGameProvider _skeletonGameProvider;
         private IGameRunnner _gameRunnner;
+        private IRegionManager _regionManager;
         #endregion
 
         #region Commands
@@ -35,6 +38,8 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         public DelegateCommand<string> ExportCommand { get; }
         public DelegateCommand BrowseFolderCommand { get; }
         public DelegateCommand<string> LaunchRecordingCommand { get; }
+
+        public DelegateCommand<string> NavigateCommand { get; set; }
         #endregion
 
         #region Requests
@@ -42,12 +47,16 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         #endregion
 
         #region Constructors
+
         public FileMenuViewModel(ISkeletonGameProvider skeletonGameProvider, IGameRunnner gameRunnner,
-            IEventAggregator eventAggregator, IUnityContainer unityContainer)
-        {
-            _eventAggregator = eventAggregator;
+            IEventAggregator eventAggregator, IUnityContainer unityContainer, IRegionManager regionManager, ILoggerFacade loggerFacade): base(eventAggregator, loggerFacade)
+        {            
             _skeletonGameProvider = skeletonGameProvider;
+            _regionManager = regionManager;
             _gameRunnner = gameRunnner;
+
+            if (_eventAggregator == null)
+                _eventAggregator = eventAggregator;
 
             CreateNewGameRequest = new InteractionRequest<IRequestNewGame>();
 
@@ -66,7 +75,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                     unityContainer.Resolve<RecordingsViewModel>().LaunchPlaybackFile(_skeletonGameProvider.GameFolder, playbackItem, true);
                 }
 
-            }, (x) => !IsGameRunning);
+            }, (x) => IsValidGameFolder() && !IsGameRunning);
 
             _eventAggregator.GetEvent<OnLaunchGameEvent>().Subscribe(async (x) =>
             {
@@ -88,8 +97,18 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent);
             ReloadGameCommand = new DelegateCommand(async () => await OnReloadGame(), () => IsValidGameFolder());
             SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory(), () => !IsGameRunning);
+
+            NavigateCommand = new DelegateCommand<string>(OnNavigate, (x) => IsValidGameFolder());
             #endregion
 
+        }
+
+
+
+        private void OnNavigate(string navParam)
+        {
+            Log($"Navigating to {navParam}");            
+            _regionManager.RequestNavigate("OpenTabsRegion", navParam);
         }
         #endregion
 
@@ -310,10 +329,11 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 //IsMachineConfigEnabled = _skeletonGameProvider.MachineConfig == null ? false : true;
             }
             catch (Exception ex)
-            {
-                //IsMainTabEnabled = false;
-
-                System.Windows.MessageBox.Show($"Failed loading skeleton game files. {ex.Data["yaml"]} {ex.Message}");
+            {                
+                var msg = $"Failed loading Game. {ex.Data["yaml"]} {ex.Message}";
+                msg += $"/n/r {ex.Data["err"]}";
+                Log(msg, Category.Exception);
+                System.Windows.MessageBox.Show(msg);
             }
             finally
             {
@@ -332,6 +352,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             SetDirectoryCommand.RaiseCanExecuteChanged();
             ExportCommand.RaiseCanExecuteChanged();
             LaunchRecordingCommand.RaiseCanExecuteChanged();
+            NavigateCommand.RaiseCanExecuteChanged();
         }
 
 
