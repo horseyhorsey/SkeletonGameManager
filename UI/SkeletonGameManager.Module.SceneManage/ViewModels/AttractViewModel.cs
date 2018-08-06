@@ -16,7 +16,7 @@ using Prism.Logging;
 
 namespace SkeletonGameManager.Module.SceneManage.ViewModels
 {
-    public class AttractViewModel : SkeletonTabViewModel, IDropTarget
+    public class AttractViewModel : SequenceViewModelBase, IDropTarget
     {
         #region Fields
         public ISkeletonGameProvider _skeletonGameProvider { get; set; }
