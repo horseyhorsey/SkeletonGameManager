@@ -44,7 +44,7 @@ namespace SkeletonGame.Engine
             try
             {
                 var deserializer = new DeserializerBuilder()
-                .IgnoreUnmatchedProperties()                
+                //.IgnoreUnmatchedProperties()                
                 .WithNamingConvention(new CamelCaseNamingConvention())
                 .Build();
 
@@ -58,6 +58,7 @@ namespace SkeletonGame.Engine
             catch (System.Exception ex)
             {
                 ex.Data.Add("yaml", yamlFile);
+                ex.Data.Add("err", ex.InnerException.Message);
                 throw;
             }
         }
