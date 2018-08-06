@@ -1,4 +1,5 @@
-﻿using SkeletonGame.Engine;
+﻿using Prism.Logging;
+using SkeletonGame.Engine;
 using SkeletonGame.Models;
 using SkeletonGame.Models.Data;
 using SkeletonGame.Models.Machine;
@@ -25,6 +26,7 @@ namespace SkeletonGameManager.Module.Services
         private ISkeletonGameFiles _skeletonGameFiles;
         private IVpScriptExporter _vpScriptExporter;
         private ISkeletonGameExport _skeletonGameExport;
+        private ILoggerFacade _loggerFacade;
 
         public event EventHandler<ProviderUpdatedEventArgs> StatusChanged;
         #endregion
@@ -33,12 +35,13 @@ namespace SkeletonGameManager.Module.Services
 
         public SkeletonGameProvider(ISkeletonGameSerializer skeletonGameSerializer,
             ISkeletonGameFiles skeletonGameFiles,
-            IVpScriptExporter vpScriptExporter, ISkeletonGameExport skeletonGameExport)
+            IVpScriptExporter vpScriptExporter, ISkeletonGameExport skeletonGameExport, ILoggerFacade loggerFacade)
         {
             _skeletonGameSerializer = skeletonGameSerializer;
             _skeletonGameFiles = skeletonGameFiles;
             _vpScriptExporter = vpScriptExporter;
             _skeletonGameExport = skeletonGameExport;
+            _loggerFacade = loggerFacade;
         }
 
         #endregion
@@ -152,16 +155,16 @@ namespace SkeletonGameManager.Module.Services
                     Directory.CreateDirectory(GameFolder + @"\recordings");
                     RecordingManager.GetPlaybackFiles(GameFolder + @"\recordings");
 
-                    //TROPHYS
-                    try
-                    {
-                        TrophyData = _skeletonGameSerializer.DeserializeSkeletonYaml<TrophyData>(Path.Combine(GameFolder, YamlFiles[6]));
+                    //Trophy Data
+                    var trophydefaultData = Path.Combine(GameFolder, YamlFiles[6]);
+                    if (!File.Exists(trophydefaultData))
+                    {                        
+                        System.Windows.MessageBox.Show($"Couldn't find default trophy data at {trophydefaultData}");
                     }
-                    catch (System.Exception ex)
+                    else
                     {
-                        System.Windows.MessageBox.Show($"Trophy data error: {ex.Message}");
-                    }
-
+                        TrophyData = _skeletonGameSerializer.DeserializeSkeletonYaml<TrophyData>(trophydefaultData);
+                    }                        
                 }
                 catch (System.Exception ex)
                 {
@@ -357,9 +360,15 @@ namespace SkeletonGameManager.Module.Services
 
         public void SaveMachineConfig(MachineConfig mConfig)
         {
-            //var yamlFile = Path.Combine(GameFolder, YamlFiles[6]);
-            _skeletonGameSerializer.SerializeYaml(GameFolder + "\\" + YamlFiles[5], mConfig);
-            //_skeletonGameSerializer.SerializeYaml(yamlFile, mConfig);
+            try
+            {
+                Log($"Saving {GameFolder + "\\" + YamlFiles[5]}");
+                _skeletonGameSerializer.SerializeYaml(GameFolder + "\\" + YamlFiles[5], mConfig);
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message, Category.Exception);
+            }
         }
 
         public void SaveScoreDsiplayFile(ScoreDisplay scoreDisplay)
@@ -377,55 +386,6 @@ namespace SkeletonGameManager.Module.Services
         #endregion
 
         #region Private Properties
-
-        /// <summary>
-        /// Parses the machine configuration to MachineConfigDict then to a listed MachineConfig
-        /// </summary>
-        /// <param name="ex">The ex.</param>
-        private void ParseMachineConfigWithKeyValues(System.Exception ex)
-        {
-            var result = System.Windows.MessageBox.Show
-            ($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}", "Couldn't parse machine, Convert and backup?", System.Windows.MessageBoxButton.YesNo);
-
-            //Parse with different object
-            if (result == System.Windows.MessageBoxResult.Yes)
-            {
-                var machineConfigFile = Path.Combine(GameFolder, YamlFiles[5]);
-                MachineConfigDict = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfigDict>(machineConfigFile);
-
-                File.Delete(machineConfigFile + ".bak");
-                File.Copy(machineConfigFile, machineConfigFile + ".bak");
-
-                if (MachineConfigDict != null)
-                {
-                    foreach (var coil in MachineConfigDict.PRCoils.Select(x => x))
-                    {
-                        coil.Value.Name = coil.Key;
-                    }
-
-                    foreach (var lamp in MachineConfigDict.PRLamps.Select(x => x))
-                    {
-                        lamp.Value.Name = lamp.Key;
-                    }
-                    foreach (var sw in MachineConfigDict.PRSwitches.Select(x => x))
-                    {
-                        sw.Value.Name = sw.Key;
-                    }
-
-                    MachineConfig = new MachineConfig()
-                    {
-                        PRGame = MachineConfigDict.PRGame,
-                        PRBumpers = MachineConfigDict.PRBumpers,
-                        PRFlippers = MachineConfigDict.PRFlippers,
-                        PRCoils = MachineConfigDict.PRCoils.Select(x => x.Value).ToList(),
-                        PRLamps = MachineConfigDict.PRLamps.Select(x => x.Value).ToList(),
-                        PRSwitches = MachineConfigDict.PRSwitches.Select(x => x.Value).ToList()
-                    };
-
-                    MachineConfigDict = null;
-                }
-            }
-        }
 
         public void ExportPyProcgame(string exportParam)
         {
@@ -447,6 +407,68 @@ namespace SkeletonGameManager.Module.Services
             }
 
         }
+
+        private void Log(string message, Category category = Category.Debug)
+        {
+            _loggerFacade.Log(message, category, Priority.None);
+        }
+
+        /// <summary>
+        /// Parses the machine configuration to MachineConfigDict then to a listed MachineConfig
+        /// </summary>
+        /// <param name="ex">The ex.</param>
+        private void ParseMachineConfigWithKeyValues(System.Exception ex)
+        {
+            var result = System.Windows.MessageBox.Show
+            ($"Error parsing machine.yaml \n\r Yaml entries must be converted to list before use here\n\r See EmptyGames machine.yaml\n\r {ex.Message}", "Couldn't parse machine, Convert and backup?", System.Windows.MessageBoxButton.YesNo);
+
+            //Parse with different object
+            if (result == System.Windows.MessageBoxResult.Yes)
+            {                
+                var machineConfigFile = Path.Combine(GameFolder, YamlFiles[5]);
+                MachineConfigDict = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfigDict>(machineConfigFile);
+
+                Log($"Saving machine.yaml to {machineConfigFile}.bak");
+                File.Delete(machineConfigFile + ".bak");
+                File.Copy(machineConfigFile, machineConfigFile + ".bak");
+
+                if (MachineConfigDict != null)
+                {
+                    Log("Converting machine.yaml dictionary to list");
+
+                    foreach (var coil in MachineConfigDict.PRCoils.Select(x => x))
+                    {
+                        coil.Value.Name = coil.Key;
+                    }
+                    Log($"Coils converted = {string.Join(", ", MachineConfigDict.PRCoils.Select(x => x.Value.Name))}");
+
+                    foreach (var lamp in MachineConfigDict.PRLamps.Select(x => x))
+                    {
+                        lamp.Value.Name = lamp.Key;
+                    }
+                    Log($"Lamps converted = {string.Join(", ", MachineConfigDict.PRLamps.Select(x => x.Value.Name))}");
+
+                    foreach (var sw in MachineConfigDict.PRSwitches.Select(x => x))
+                    {
+                        sw.Value.Name = sw.Key;
+                    }
+                    Log($"Lamps converted = {string.Join(", ", MachineConfigDict.PRSwitches.Select(x => x.Value.Name))}");
+
+                    MachineConfig = new MachineConfig()
+                    {
+                        PRGame = MachineConfigDict.PRGame,
+                        PRBumpers = MachineConfigDict.PRBumpers,
+                        PRFlippers = MachineConfigDict.PRFlippers,
+                        PRCoils = MachineConfigDict.PRCoils.Select(x => x.Value).ToList(),
+                        PRLamps = MachineConfigDict.PRLamps.Select(x => x.Value).ToList(),
+                        PRSwitches = MachineConfigDict.PRSwitches.Select(x => x.Value).ToList()
+                    };
+                    
+                    this.SaveMachineConfig(MachineConfig);
+                    MachineConfigDict = null;
+                }
+            }
+        }        
 
         #endregion
     }
