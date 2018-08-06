@@ -16,7 +16,7 @@ using Prism.Logging;
 
 namespace SkeletonGameManager.Module.SceneManage.ViewModels
 {
-    public class AttractViewModel : SequenceViewModelBase, IDropTarget
+    public class AttractViewModel : SkeletonTabViewModel, IDropTarget
     {
         #region Fields
         public ISkeletonGameProvider _skeletonGameProvider { get; set; }
@@ -33,6 +33,8 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
         #region Constructors
         public AttractViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
+            Title = "Sequences";
+
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonGameAttract = new SkeletonGameAttract();
 
@@ -345,6 +347,9 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
                 case SequenceType.Animation:
                     seq.AttractAnimation = (AttractAnimation)sequenceBase;
                     break;
+                case SequenceType.AnimationLayer:
+                    seq.animation_layer = (AttractAnimation)sequenceBase;
+                    break;
                 case SequenceType.Combo:
                     seq.Combo = (Combo)sequenceBase;
                     break;
@@ -392,13 +397,17 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
             if (AttractConfig == null)
                 AttractConfig = _skeletonGameProvider.AttractConfig;
 
-            SequenceYamls?.Clear();
+            _skeletonGameProvider.SequenceYamls.Clear();
+            SequenceYamls?.Clear();            
 
             if (AttractConfig != null)
             {
                 //Assign the attract config
                 AttractConfig = _skeletonGameProvider.AttractConfig;
-                SequenceYamls.Add(new SequenceYamlItemViewModel(_skeletonGameProvider.GameFolder + @"\config\attract.yaml", AttractConfig));
+
+                //add attract file to provider                
+                var attractFile = _skeletonGameProvider.GameFolder + @"\config\attract.yaml";
+                _skeletonGameProvider.SequenceYamls.Add(attractFile);
 
                 //Assign from all files found in config/sequences
                 foreach (var item in _skeletonGameProvider.SequenceYamls)
@@ -427,21 +436,36 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
         #endregion
 
         #region Private Methods
+
         private async void OnUpdateSequenceYamlItem()
         {
-            if (SelectedSequenceFile == null) return;
-
-            //Clear sequences and convert the attract configs values to sequence item view models
-            await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+            if (SelectedSequenceFile == null)
             {
-                Sequences?.Clear();
-                _skeletonGameAttract.GetAvailableSequences(SelectedSequenceFile.SequenceYaml);
+                Log("Sequence File Doesn't exist", Category.Warn);
+                return;
+            }
 
-                foreach (var sequence in SelectedSequenceFile.SequenceYaml.Sequences)
+            Log("Updating sequences.");
+
+            try
+            {
+                //Clear sequences and convert the attract configs values to sequence item view models
+                await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
                 {
-                    Sequences.Add(new SequenceItemViewModel(sequence));
-                }
-            });
+                    Sequences?.Clear();
+                    _skeletonGameAttract.GetAvailableSequences(SelectedSequenceFile.SequenceYaml);
+
+                    foreach (var sequence in SelectedSequenceFile.SequenceYaml.Sequences)
+                    {
+                        Sequences.Add(new SequenceItemViewModel(sequence));
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message, Category.Exception);
+                throw;
+            }
         }
 
         private void SequenceYamls_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
