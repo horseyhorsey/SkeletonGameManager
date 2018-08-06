@@ -5,6 +5,7 @@
         prism:ViewModelLocator.AutoWireViewModel="True"       
         WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip"
         ShowInTaskbar="True" SizeToContent="WidthAndHeight" Background="White"                
+        xmlns:vm="clr-namespace:SkeletonGameManager.Module.Config.ViewModels;assembly=SkeletonGameManager.Module.Config"
         Title="{Binding Title}"
         Width="1024" Height="768"
         xml:lang="en-US"
@@ -39,11 +40,11 @@
 
         <!--NEW GAME-->
         <!--<CommandBinding Command="{Binding CreateNewGameCommand}"/>-->
-        
-        
+
+
         <!--QUIT-->
         <CommandBinding x:Uid="CommandBinding_1" Command="ApplicationCommands.Close" Executed="Close_Executed"/>
-        
+
     </Window.CommandBindings>
 
     <Window.InputBindings>
@@ -61,6 +62,19 @@
                 <RowDefinition x:Uid="RowDefinition_3" Height="Auto"/>
                 <RowDefinition x:Uid="RowDefinition_4" Height="*"/>
             </Grid.RowDefinitions>
+
+
+            <Grid.Resources>
+                <Style x:Key="SkeletonTabStyle" TargetType="{x:Type TabControl}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabControl">
+                                <ContentPresenter/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
 
             <!--TITLE-->
             <StackPanel x:Uid="StackPanel_1" Orientation="Horizontal" Visibility="Collapsed">
@@ -123,88 +137,30 @@
                 </DockPanel>
             </StackPanel>
 
-            <!--YAML CONFIG VIEWS-->
-            <TabControl x:Uid="TabControl_1" Grid.Row="3" Margin="3" IsEnabled="{Binding IsMainTabEnabled}">
+            <TabControl prism:RegionManager.RegionName="OpenTabsRegion"   
+                        IsEnabled="{Binding IsMainTabEnabled}" 
+                        Grid.Row="3" Margin="3" 
+                        >
+                <TabControl.ItemContainerStyle>
+                    
+                    <!--TAB HEADER-->
+                    <Style TargetType="TabItem">
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}, Mode=FindAncestor}, 
+                                            Path=Content.DataContext.Title}"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
 
-                <!--SKELETON GAME CONFIG-->
-                <TabItem x:Uid="TabItem_1" ToolTip="{Binding Cfg_ConfigYaml, Source={StaticResource ResourceKey=AppStringResource}}">
-
-                    <TabItem.Header>
-                        <DockPanel x:Uid="DockPanel_2">
-                            <TextBlock x:Uid="TextBlock_3" Text="Config" Margin="3"/>
-                            <Button x:Uid="Button_5" Style="{StaticResource OpenFileButton}"                                                         
-                                                        CommandParameter="config.yaml"
-                                                        />
-                        </DockPanel>
-                    </TabItem.Header>
-
-                    <ContentControl x:Uid="ContentControl_1" prism:RegionManager.RegionName="ConfigRegion" />
-                </TabItem>
-
-                <!--MACHINE CONFIG-->
-                <TabItem x:Uid="TabItem_2" IsEnabled="{Binding IsMachineConfigEnabled}">
-                    <TabItem.Header>
-                        <DockPanel x:Uid="DockPanel_3">
-                            <TextBlock x:Uid="TextBlock_4" Text="Machine Config" Margin="3"/>
-                            <Button x:Uid="Button_6" Style="{StaticResource OpenFileButton}"                                                         
-                                                        CommandParameter="machine.yaml"
-                                                        />
-                        </DockPanel>
-                    </TabItem.Header>
-
-                    <ContentControl x:Uid="ContentControl_2" prism:RegionManager.RegionName="MachineRegion" />
-                </TabItem>
-
-                <TabItem x:Uid="TabItem_3" IsEnabled="True">
-                    <TabItem.Header>
-                        <DockPanel x:Uid="DockPanel_4">
-                            <TextBlock x:Uid="TextBlock_5" Text="Score Display" Margin="3"/>
-                            <Button x:Uid="Button_7" Style="{StaticResource OpenFileButton}"                                                         
-                                                        CommandParameter="new_score_display.yaml"
-                                                        />
-                        </DockPanel>
-                    </TabItem.Header>
-
-                    <ContentControl x:Uid="ContentControl_3" prism:RegionManager.RegionName="ScoreLayoutRegion"/>
-                </TabItem>
-
-                <!--SKELETON GAME ASSETS-->
-                <TabItem x:Uid="TabItem_4">
-                    <TabItem.Header>
-                        <DockPanel x:Uid="DockPanel_5">
-                            <TextBlock x:Uid="TextBlock_6" Text="Asset List" Margin="3"/>
-                            <Button x:Uid="Button_8" Style="{StaticResource OpenFileButton}"                                                         
-                                                        CommandParameter="asset_list.yaml"                                                        
-                                                        />
-                        </DockPanel>
-                    </TabItem.Header>
-
-                    <ContentControl x:Uid="ContentControl_4" prism:RegionManager.RegionName="AssetsRegion"/>
-                </TabItem>
-
-                <!--SKELETON GAME ATTRACT-->
-                <TabItem x:Uid="TabItem_5" Header="Sequences">
-                    <ContentControl x:Uid="ContentControl_5" prism:RegionManager.RegionName="AttractRegion"/>
-                </TabItem>
-
-                <!--RECORDINGS / PLAYBACKS-->
-                <TabItem x:Uid="TabItem_6" Header="Recordings"                                              
-                                             IsEnabled="True">
-                    <ContentControl x:Uid="ContentControl_6" prism:RegionManager.RegionName="RecordingsRegion"/>
-                </TabItem>
-
-                <!--SCENE GRABBER-->
-                <TabItem x:Uid="TabItem_7" Header="Scene Grab" 
-                         IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
-                    <ContentControl x:Uid="ContentControl_7" prism:RegionManager.RegionName="ScenesRegion"/>
-                </TabItem>
-
-                <!--GAME DATA / TROPHYS-->
-                <TabItem x:Uid="TabItem_8" Header="Trophy" IsEnabled="{Binding Path=IsGameRunning, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NegateBoolConv},TargetNullValue=True}">
-                    <ContentControl x:Uid="ContentControl_8" prism:RegionManager.RegionName="GameDataRegion"/>
-                </TabItem>
+                </TabControl.ItemContainerStyle>
 
             </TabControl>
+
 
         </Grid>
 
