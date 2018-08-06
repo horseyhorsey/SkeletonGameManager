@@ -130,6 +130,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regions\Regions.cs" />
     <Compile Include="SkeletonGameManagerViewModelBase.cs" />
+    <Compile Include="SkeletonTabViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Models\SkeletonGame.Models\SkeletonGame.Models.csproj">
