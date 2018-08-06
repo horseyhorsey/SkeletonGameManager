@@ -13,7 +13,7 @@ using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.Module.Assets.ViewModels
 {
-    public class AssetListViewModel : SkeletonGameManagerViewModelBase
+    public class AssetListViewModel : SkeletonTabViewModel
     {
         #region Fields
         private IRegionManager _regionManager;
@@ -23,9 +23,12 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         #endregion
 
         #region Constructors
-        public AssetListViewModel(IRegionManager regionManager, IUnityContainer unityContainer, IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ISkeletonGameFiles skeletonGameFiles, ILoggerFacade loggerFacade) : 
+        public AssetListViewModel(IRegionManager regionManager, IUnityContainer unityContainer, IEventAggregator eventAggregator, 
+            ISkeletonGameProvider skeletonGameProvider, ISkeletonGameFiles skeletonGameFiles, ILoggerFacade loggerFacade) : 
             base(eventAggregator, loggerFacade)
         {
+            Title = "Assets";
+
             _regionManager = regionManager;
             _unityContainer = unityContainer;
             _skeletonGameProvider = skeletonGameProvider;
