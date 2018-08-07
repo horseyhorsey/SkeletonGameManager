@@ -77,16 +77,14 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="{Binding Number}" Grid.Column="0" MinWidth="30" Margin="3"/>
-
-                        <TextBlock Text="{Binding Name}" Grid.Column="1" MinWidth="30" Margin="3"/>
-
-                        <ComboBox Grid.Column="2" Width="140" Margin="3"
+                        <ComboBox Grid.Column="0" Width="140" Margin="3"
                                 SelectedValue="{Binding Keycode, UpdateSourceTrigger=PropertyChanged}"
                                 ItemsSource="{Binding Source={StaticResource SdlKeys}}"/>
-
-                        <TextBlock Grid.Column="3" Text="{Binding Keycode}" 
-                                       MinWidth="30" Margin="3"/>
+                        
+                        <TextBlock Text="{Binding Number}" Grid.Column="1" MinWidth="30"                                   
+                                   Margin="3"/>
+                        
+                        <TextBlock Text="{Binding Name}" Grid.Column="2" MinWidth="30" Margin="3"/>
 
                     </Grid>
                 </DataTemplate>

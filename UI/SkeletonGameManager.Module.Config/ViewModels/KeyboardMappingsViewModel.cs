@@ -76,28 +76,35 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         public async override Task OnLoadYamlFilesChanged()
         {
             SwitchKeys?.Clear();
+            Log("Populating keyboard switch maps");
 
             AvailableSwitches =
                 new ObservableCollection<PRSwitch>(_skeletonGameProvider
                     .MachineConfig.PRSwitches.Where(x => x.Name != "NOT USED").ToList());
+
+            Log($"Available switches: {AvailableSwitches?.Count}");
 
             //Order switches and create new view models for the collection
             var orderedSwitch = _skeletonGameProvider.GameConfig.KeyboardSwitchMap.OrderBy(x => x.Value);
 
             foreach (var keySwitch in orderedSwitch)
             {
-                var availableSwitch = AvailableSwitches.FirstOrDefault(x => x.Number == keySwitch.Value);
-
+                //TODO: Remove?
                 //keySwitch.Key = item.Key.Replace("\\b", "\b")
                 //.Replace("\\r", "\r")
                 //.Replace("\\t", "\t");
 
-                if (availableSwitch != null)
+                var availableSwitchFromNumber = AvailableSwitches.FirstOrDefault(x => x.Number == keySwitch.Value);
+                if (availableSwitchFromNumber == null)
+                    availableSwitchFromNumber = AvailableSwitches.FirstOrDefault(x => x.Name == keySwitch.Value);
+
+                if (availableSwitchFromNumber != null)
                 {
                     await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
-                    SwitchKeys.Add(new KeyboardMapItemViewModel(availableSwitch.Name, keySwitch)));
+                        SwitchKeys.Add(new KeyboardMapItemViewModel(availableSwitchFromNumber, keySwitch))
+                    );
 
-                    AvailableSwitches.Remove(availableSwitch);
+                    AvailableSwitches.Remove(availableSwitchFromNumber);
                 }
             }
         }

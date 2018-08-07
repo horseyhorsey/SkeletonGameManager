@@ -110,11 +110,12 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                 if (charCode > 10000)
                     item.Key = charCode.ToString();    
 
-                //Replace in dictionary.
+                //Replace in dictionary
+                //TODO: Give user option to save the Name or the Number to the config.yaml as it can handle reading from both in pyproc
                 if (_skeletonGameProvider.GameConfig.KeyboardSwitchMap.ContainsKey(item.Key))
-                    _skeletonGameProvider.GameConfig.KeyboardSwitchMap[item.Key] = item.Number;
+                    _skeletonGameProvider.GameConfig.KeyboardSwitchMap[item.Key] = item.Name;
                 else
-                    _skeletonGameProvider.GameConfig.KeyboardSwitchMap.Add(item.Key, item.Number);
+                    _skeletonGameProvider.GameConfig.KeyboardSwitchMap.Add(item.Key, item.Name);
             }
         }
 

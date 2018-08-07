@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkeletonGame.Models.Machine;
+using System;
 using System.Collections.Generic;
 using static SkeletonGame.Models.SdlKeyCode;
 
@@ -8,11 +9,11 @@ namespace SkeletonGameManager.Module.Config.ViewModels
     public class KeyboardMapItemViewModel
     {
         #region Constructors
-        public KeyboardMapItemViewModel(string name, KeyValuePair<string, string> keySwitch)
+        public KeyboardMapItemViewModel(PRSwitch prSwitch, KeyValuePair<string, string> keySwitch)
         {
-            Name = name;
+            Name = prSwitch.Name;
+            Number = prSwitch.Number;
             Key = keySwitch.Key;
-            Number = keySwitch.Value;
 
             GetKeycode(Key.ToString());
         }
