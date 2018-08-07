@@ -1,4 +1,6 @@
 ﻿using GongSolutions.Wpf.DragDrop;
+using Prism.Events;
+using Prism.Logging;
 using Prism.Mvvm;
 using SkeletonGameManager.Base;
 using System;
@@ -8,7 +10,7 @@ using System.Windows.Input;
 
 namespace SkeletonGameManager.Module.Assets.ViewModels
 {
-    public abstract class AssetFileBaseViewModel : BindableBase, IDropTarget
+    public abstract class AssetFileBaseViewModel : SkeletonGameManagerViewModelBase, IDropTarget
     {
         public ICommand OpenDirectoryCommand { get; set; }
 
@@ -19,6 +21,11 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         }
 
         private ObservableCollection<string> assetFiles = new ObservableCollection<string>();
+
+        public AssetFileBaseViewModel(IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
+        {
+        }
+
         public ObservableCollection<string> AssetFiles
         {
             get { return assetFiles; }

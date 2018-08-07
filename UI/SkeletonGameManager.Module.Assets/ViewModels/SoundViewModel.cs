@@ -12,6 +12,8 @@ using GongSolutions.Wpf.DragDrop;
 using System.Windows;
 using System.Linq;
 using SkeletonGameManager.Base;
+using Prism.Events;
+using Prism.Logging;
 
 namespace SkeletonGameManager.Module.Assets.ViewModels
 {
@@ -32,7 +34,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         
         #endregion
 
-        public SoundViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider)
+        public SoundViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider, IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             _skeletonGameFiles = skeletonGameFiles;
             _skeletonGameProvider = skeletonGameProvider;
@@ -42,7 +44,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                 Process.Start(s);
             });
 
-            OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_audioPathFull.AbsolutePath));            
+            OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_audioPathFull.AbsolutePath));
         }
 
         #region Properties
