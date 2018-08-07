@@ -1,5 +1,7 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using Prism.Commands;
+using Prism.Events;
+using Prism.Logging;
 using SkeletonGame.Engine;
 using SkeletonGame.Models;
 using SkeletonGameManager.Base;
@@ -15,31 +17,38 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
 {
     public class AnimationsViewModel : AssetFileBaseViewModel
     {
+        #region Fields
         private ISkeletonGameFiles _skeletonGameFiles;
         private ISkeletonGameProvider _skeletonGameProvider;
         private Uri _dmdPath;
+        #endregion
 
-        public AnimationsViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider)
+        #region Constructors
+        public AnimationsViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider, IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             _skeletonGameFiles = skeletonGameFiles;
             _skeletonGameProvider = skeletonGameProvider;
 
             OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_dmdPath.AbsolutePath));
-        }
+        } 
+        #endregion
 
-        private ObservableCollection<Animation> animation;        
+        #region Properties
+        private ObservableCollection<Animation> animation;
         public ObservableCollection<Animation> Animations
         {
             get { return animation; }
             set { SetProperty(ref animation, value); }
         }
+        #endregion
 
+        #region Public Methods
         public async override Task GetFiles()
         {
             if (Animations == null)
             {
                 Animations = _skeletonGameProvider.AssetsConfig.Animations;
-            }            
+            }
 
             var animPath = _skeletonGameProvider.GameConfig.DmdPath;
 
@@ -51,8 +60,35 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             var animFiles = await _skeletonGameFiles.GetFilesAsync(_dmdPath.AbsolutePath, AssetTypes.Animations);
 
             this.AssetFiles = new ObservableCollection<string>(animFiles);
-        }
+        } 
+        #endregion
 
+        #region Private Methods
+        /// <summary>
+        /// Checks the file extension to see if video/image (animation)
+        /// </summary>
+        /// <param name="file">The file.</param>
+        /// <returns></returns>
+        private bool FileIsAnimation(string file)
+        {
+            var extension = Path.GetExtension(file);
+
+            switch (extension)
+            {
+                case ".mp4":
+                case ".avi":
+                case ".png":
+                case ".jpg":
+                case ".gif":
+                case ".bmp":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        #endregion
+
+        #region Drag Drop
         public override void DragOver(IDropInfo dropInfo)
         {
             try
@@ -177,28 +213,6 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             {
             }
         }
-
-        /// <summary>
-        /// Checks the file extension to see if video/image (animation)
-        /// </summary>
-        /// <param name="file">The file.</param>
-        /// <returns></returns>
-        private bool FileIsAnimation(string file)
-        {
-            var extension = Path.GetExtension(file);
-
-            switch (extension)
-            {
-                case ".mp4":
-                case ".avi":
-                case ".png":
-                case ".jpg":
-                case ".gif":
-                case ".bmp":
-                    return true;
-                default:
-                    return false;
-            }
-        }
+        #endregion
     }
 }
