@@ -68,6 +68,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         #region Public Methods
         public override async Task OnLoadYamlFilesChanged()
         {
+            Log("Loading assets");
             AssetsFile = _skeletonGameProvider.AssetsConfig;
 
             try
@@ -99,6 +100,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             }
             catch (System.Exception ex)
             {
+                Log(ex.Message, Category.Exception);
                 //TODO: Log                
             }
         }
