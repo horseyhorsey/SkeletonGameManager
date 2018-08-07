@@ -13,24 +13,27 @@ using Prism.Commands;
 using System.Windows.Input;
 using System;
 using SkeletonGameManager.Base;
+using Prism.Events;
+using Prism.Logging;
 
 namespace SkeletonGameManager.Module.Assets.ViewModels
 {
     public class LampshowViewModel : AssetFileBaseViewModel
     {
+        #region Fields
         private string _lampshowPath;
         private ISkeletonGameFiles _skeletonGameFiles;
         private readonly ISkeletonGameProvider _skeletonGameProvider;
-        private ILampshowEdit _lampshowEdit;
+        private ILampshowEdit _lampshowEdit; 
+        #endregion        
 
-        public ICommand ReverseLampshowCommand { get; set; }
-
-        public LampshowViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider)
+        #region Constructors
+        public LampshowViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider, IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             _skeletonGameFiles = skeletonGameFiles;
             _skeletonGameProvider = skeletonGameProvider;
 
-            _lampshowEdit = new LampshowEdit();                      
+            _lampshowEdit = new LampshowEdit();
 
             OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_lampshowPath));
 
@@ -39,28 +42,11 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                 OnReverseLampshow(x);
             });
         }
+        #endregion
 
-        private void OnReverseLampshow(LampShow x)
-        {    
-            //Select a lampshow before reversing
-            if (x != null)
-            {
-                _lampshowEdit.ReverseLampshowFile(Path.Combine(_lampshowPath, x.File),
-                _lampshowPath + $"\\{Path.GetFileNameWithoutExtension(x.File)}_reversed.lampshow");
-            }            
-        }
-
-        private void LampShows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-            {
-                var lampFile = e.OldItems[0] as LampShow;
-
-                if (lampFile !=null)
-                    this.AssetFiles.Add(lampFile.File);
-            }
-            
-        }
+        #region Commands
+        public ICommand ReverseLampshowCommand { get; set; } 
+        #endregion
 
         #region Properties
         private ObservableCollection<LampShow> lampshows;
@@ -70,6 +56,8 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             set { SetProperty(ref lampshows, value); }
         }
         #endregion
+
+        #region Public Methods
 
         public async override Task GetFiles()
         {
@@ -91,18 +79,21 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                 var lampFile = Path.GetFileName(lampshow);
                 if (!LampShows.Any(x => x.File == lampFile))
                 {
-                    await Dispatcher.CurrentDispatcher.InvokeAsync(() => {
+                    await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                    {
                         AssetFiles.Add(lampFile);
                     });
                 }
             }
-        }
+        } 
+        #endregion
 
+        #region Drag Drop
         public override void Drop(IDropInfo dropInfo)
         {
             try
             {
-                
+
                 IList<LampShow> addedLampshows = new List<LampShow>();
                 List<string> droppedFiles = new List<string>();
 
@@ -122,7 +113,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                     try
                     {
                         //Add files and remove them from the available list
-                        droppedFiles.AddRange((IEnumerable<string>)dragFileList);                        
+                        droppedFiles.AddRange((IEnumerable<string>)dragFileList);
                     }
                     catch (System.Exception)
                     {
@@ -150,7 +141,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
 
                                 this.AssetFiles.Add(lampFileName);
                             }
-                                
+
                         }
                     }
                 }
@@ -186,7 +177,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                     {
                         LampShows.AddRange(addedLampshows);
                     }
-                }                
+                }
 
             }
             catch (System.Exception)
@@ -216,12 +207,37 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                 {
                     dropInfo.Effects = DragDropEffects.Copy;
                 }
-                    
+
             }
             catch (System.Exception)
             {
             }
-            
+
+        } 
+        #endregion
+
+        #region Private Methods
+        private void OnReverseLampshow(LampShow x)
+        {
+            //Select a lampshow before reversing
+            if (x != null)
+            {
+                _lampshowEdit.ReverseLampshowFile(Path.Combine(_lampshowPath, x.File),
+                _lampshowPath + $"\\{Path.GetFileNameWithoutExtension(x.File)}_reversed.lampshow");
+            }
         }
+
+        private void LampShows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+            {
+                var lampFile = e.OldItems[0] as LampShow;
+
+                if (lampFile != null)
+                    this.AssetFiles.Add(lampFile.File);
+            }
+
+        }
+        #endregion
     }
 }

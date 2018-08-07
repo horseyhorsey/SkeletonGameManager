@@ -1,4 +1,6 @@
 ﻿using Prism.Commands;
+using Prism.Events;
+using Prism.Logging;
 using SkeletonGame.Engine;
 using SkeletonGame.Models;
 using SkeletonGameManager.Base;
@@ -12,18 +14,24 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
 {
     public class FontsViewModel : AssetFileBaseViewModel
     {
+        #region Fields
         private readonly ISkeletonGameProvider _skeletonGameProvider;
         private Uri _fontPath;
         private readonly ISkeletonGameFiles _skeletonGameFiles;
+        #endregion
 
-        public FontsViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider)
+        #region Constructors
+        public FontsViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider, IEventAggregator eventAggregator, ILoggerFacade loggerFacade)
+    : base(eventAggregator, loggerFacade)
         {
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonGameFiles = skeletonGameFiles;
 
             OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_fontPath.AbsolutePath));
-        }
+        } 
+        #endregion
 
+        #region Properties
         private ObservableCollection<HdFont> hdFonts;
         public ObservableCollection<HdFont> HdFonts
         {
@@ -37,9 +45,12 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             get { return fontStyles; }
             set { SetProperty(ref fontStyles, value); }
         }
+        #endregion
 
+        #region Public Methods
         public async override Task GetFiles()
         {
+            Log("Attempting to get Font assets");
             FontStyles = _skeletonGameProvider.AssetsConfig?.Fonts.FontStyles;
             HdFonts = _skeletonGameProvider.AssetsConfig?.Fonts.HdFonts;
 
@@ -52,6 +63,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             var fontFiles = await _skeletonGameFiles.GetFilesAsync(_fontPath.AbsolutePath, AssetTypes.HdFonts);
 
             this.AssetFiles = new System.Collections.ObjectModel.ObservableCollection<string>(fontFiles);
-        }
+        } 
+        #endregion
     }
 }
