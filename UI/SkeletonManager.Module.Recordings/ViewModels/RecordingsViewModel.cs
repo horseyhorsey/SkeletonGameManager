@@ -149,6 +149,7 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
         private void OnGameEndedEventChanged(bool x)
         {
             _launchCommandEnabled = x;
+            Log("Game recording ended.");
 
             if (_launchedWithPlayback)
             {
