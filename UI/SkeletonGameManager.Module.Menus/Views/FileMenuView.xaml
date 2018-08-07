@@ -112,6 +112,7 @@
                 <MenuItem Header="_Attract" Command="{Binding NavigateCommand}" CommandParameter="AttractView"/>
                 <MenuItem Header="_Score Display" Command="{Binding NavigateCommand}" CommandParameter="ScoreLayoutView"/>
                 <MenuItem Header="_Trophy" Command="{Binding NavigateCommand}" CommandParameter="TrophyDataView"/>
+                <MenuItem Header="_Recordings" Command="{Binding NavigateCommand}" CommandParameter="RecordingsView"/>
                 <MenuItem Header="_Scene Grab" Command="{Binding NavigateCommand}" CommandParameter="ScenesView"/>
             </MenuItem>
 
