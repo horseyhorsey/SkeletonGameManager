@@ -10,7 +10,7 @@ using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.Module.Recordings.ViewModels
 {
-    public class RecordingsViewModel : SkeletonGameManagerViewModelBase
+    public class RecordingsViewModel : SkeletonTabViewModel
     {
         #region Fields
         private ISkeletonGameProvider _skeletonGameProvider;
@@ -68,50 +68,10 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
         {
             get { return recordIsChecked; }
             set { SetProperty(ref recordIsChecked, value); }
-        } 
+        }
         #endregion
 
         #region Public Methods
-
-        public async override Task OnLoadYamlFilesChanged()
-        {
-            PlaybackItemViewModels.Clear();
-
-            await Task.Run(() =>
-             {
-                 //Populate the recordings directory
-                 RecordingManager.GetPlaybackFiles(_skeletonGameProvider.GameFolder + @"\recordings");
-
-             });
-
-            foreach (var playbackFile in RecordingManager.PlayBackFiles)
-            {
-                var vm = new PlaybackItemViewModel(playbackFile);
-                vm.UpdatePlayBackItems(true);
-                PlaybackItemViewModels.Add(vm);
-            }
-        }
-
-        #endregion
-
-        #region Private Methods
-
-        private void LaunchGame(PlaybackItemViewModel playbackItem = null)
-        {
-            if (PlaybackIsChecked)
-            {
-                if (playbackItem != null)
-                {
-                    LaunchPlaybackFile(_skeletonGameProvider.GameFolder, this.playbackItemViewModel.PlaybackFile, true);
-                }
-            }
-            else
-            {
-                //Replace the skeleton game base class, could be recording or not.
-                var skeleGame = Path.Combine("procgame", "game", "skeletongame.py");
-                LaunchPlaybackFile(_skeletonGameProvider.GameFolder, skeleGame);
-            }
-        }
 
         public void LaunchPlaybackFile(string gameFolder, string playbackFile, bool playback = false)
         {
@@ -132,6 +92,55 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
             _eventAggregator.GetEvent<OnLaunchGameEvent>().Publish(null);
         }
 
+        public async override Task OnLoadYamlFilesChanged()
+        {
+            PlaybackItemViewModels.Clear();
+            var recordingDir = _skeletonGameProvider.GameFolder + @"\recordings";
+
+            Log($"Loading recordings from.. {recordingDir}");            
+            await Task.Run(() =>
+             {
+                 //Populate the recordings directory
+                 RecordingManager.GetPlaybackFiles(recordingDir);
+
+             });
+
+            Log($"Populating recordings.");
+            foreach (var playbackFile in RecordingManager.PlayBackFiles)
+            {
+                var vm = new PlaybackItemViewModel(playbackFile);
+                vm.UpdatePlayBackItems(true);
+                PlaybackItemViewModels.Add(vm);
+            }
+
+            if (PlaybackItemViewModels.Count > 0)
+                Log($"Recordings loaded successfully");
+            else
+                Log($"No recordings populated");
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void LaunchGame(PlaybackItemViewModel playbackItem = null)
+        {
+            if (PlaybackIsChecked)
+            {
+                Log("Running recording playback");
+                if (playbackItem != null)
+                {
+                    LaunchPlaybackFile(_skeletonGameProvider.GameFolder, this.playbackItemViewModel.PlaybackFile, true);
+                }
+            }
+            else
+            {
+                Log("New recording initiated.");
+                //Replace the skeleton game base class, could be recording or not.
+                var skeleGame = Path.Combine("procgame", "game", "skeletongame.py");
+                LaunchPlaybackFile(_skeletonGameProvider.GameFolder, skeleGame);
+            }
+        }
 
         /// <summary>
         /// Called when [game ended event changed]. Sets any recording parameters back to the normal game classes.
@@ -143,10 +152,12 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
 
             if (_launchedWithPlayback)
             {
+                Log("Setting FAKEPINPROC_CLASS");
                 RecordingManager.SetFakePinProcPlayback(_skeletonGameProvider.GameFolder, false);
             }
             else
             {
+                Log("Setting BASICGAME_CLASS");
                 //Replace the skeleton game base class, could be recording or not.                
                 var skeleGame = Path.Combine(_skeletonGameProvider.GameFolder, "procgame", "game", "skeletongame.py");                
                 RecordingManager.SetSkeletonGameBaseClass(skeleGame, false);
