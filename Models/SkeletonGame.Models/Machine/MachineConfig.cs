@@ -37,7 +37,11 @@ namespace SkeletonGame.Models.Machine
         public SolenoidType? SolenoidType { get; set; }
     }
 
-    public class PRLamp : GameItemBase { }
+    public class PRLamp : GameItemBase
+    {
+        [YamlMember(Alias = "polarity", ApplyNamingConventions = false)]
+        public bool Polarity { get; set; }
+    }
 
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class PRSwitch : GameItemBase
