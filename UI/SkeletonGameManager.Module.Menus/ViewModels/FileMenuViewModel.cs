@@ -60,18 +60,6 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
             //Get the recordings stored from containers view model
             Recordings = unityContainer.Resolve<RecordingsViewModel>().PlaybackItemViewModels;
-
-            LaunchRecordingCommand = new DelegateCommand<string>((playbackItem) =>
-            {
-                if (playbackItem != null)
-                {
-                    IsGameRunning = true;
-                    UpdateCanExecuteCommands();
-                    unityContainer.Resolve<RecordingsViewModel>().LaunchPlaybackFile(_skeletonGameProvider.GameFolder, playbackItem, true);
-                }
-
-            }, (x) => IsValidGameFolder() && !IsGameRunning);
-
             _eventAggregator.GetEvent<OnLaunchGameEvent>().Subscribe(async (x) =>
             {
                 IsGameRunning = true;
@@ -87,7 +75,9 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 IsGameRunning = true;
                 await OnLaunchedGame();
 
-            }, () => IsValidGameFolder());            
+            }, () => IsValidGameFolder());
+            LaunchRecordingCommand = new DelegateCommand<string>((playbackItem) =>{ OnLaunchRecordings(unityContainer, playbackItem);}, (x) => IsValidGameFolder() && !IsGameRunning);
+
             OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent);
             ReloadGameCommand = new DelegateCommand(async () => await OnReloadGame(), () => IsValidGameFolder());
             SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory(), () => !IsGameRunning);
@@ -97,13 +87,6 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
         }
 
-
-
-        private void OnNavigate(string navParam)
-        {
-            Log($"Navigating to {navParam}");            
-            _regionManager.RequestNavigate("OpenTabsRegion", navParam);
-        }
         #endregion
 
         #region Properties        
@@ -189,19 +172,53 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             }
         }
 
+        private void OnLaunchRecordings(IUnityContainer unityContainer, string playbackItem)
+        {
+            if (playbackItem != null)
+            {
+                IsGameRunning = true;
+                UpdateCanExecuteCommands();
+                unityContainer.Resolve<RecordingsViewModel>().LaunchPlaybackFile(_skeletonGameProvider.GameFolder, playbackItem, true);
+            }
+        }
+
+        private void OnNavigate(string navParam)
+        {
+            Log($"Navigating to {navParam}");
+            _regionManager.RequestNavigate("OpenTabsRegion", navParam);
+        }
+
         /// <summary>
         /// Sets the current skeleton game folder path and loads the configuration for a game if a valid folder is given
         /// </summary>
         private async void OnSetDirectory()
         {
+            Log("Setting game directory");
+
+            CloseAllTabs();
+
             var dlg = new FolderBrowserDialog();
             dlg.SelectedPath = @"C:\P-ROC";
             DialogResult result = dlg.ShowDialog();
 
             if (result == DialogResult.OK)
             {
+                Log($"Selected Folder: {dlg.SelectedPath}");
+
                 await SetGamePath(dlg.SelectedPath);
             };
+        }
+
+        private void CloseAllTabs()
+        {
+            Log("Closing all open tabs.");
+
+            IRegion region = _regionManager.Regions["OpenTabsRegion"];
+            if (region != null)
+            {
+                region.RemoveAll();
+                Log("All tabs closed.");
+            }
         }
 
         /// <summary>
@@ -224,14 +241,19 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         /// <returns></returns>
         private Task SetGamePath(string path)
         {
+            Log("Clearing UI configuration");
             _skeletonGameProvider.ClearConfigs();
+
             GameFolder = path;
 
             if (!IsValidGameFolder())
             {
-                System.Windows.MessageBox.Show($"Not a valid Game folder -  {GameFolder}");
+                var msg = $"Not a valid Game folder -  {GameFolder}";
+                System.Windows.MessageBox.Show(msg);
+                Log(msg, Category.Warn);
+
                 GameFolder = null;
-                return null;
+                return Task.CompletedTask;
             }
             else
                 return this.OnReloadGame();
@@ -305,14 +327,17 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         /// <exception cref="NotImplementedException"></exception>
         private async Task OnReloadGame()
         {
+            Log("Loading game configs");
             try
             {
                 await _skeletonGameProvider.LoadYamlEntriesAsync();
 
                 _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);                
 
+                Log("Loading success");
                 //Disable machine tab if failed top parse
                 //IsMachineConfigEnabled = _skeletonGameProvider.MachineConfig == null ? false : true;
+                this.OnNavigate("GameConfigView");
             }
             catch (Exception ex)
             {                
