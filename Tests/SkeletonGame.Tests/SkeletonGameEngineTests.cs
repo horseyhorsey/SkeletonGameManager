@@ -22,11 +22,12 @@ namespace SkeletonGame.Tests
         [Theory()]
         //[InlineData("EmptyGame")]
         [InlineData("SampleGame")]
+        [InlineData("TotalSickness")]
         //[InlineData("EvilDead")]
         //[InlineData("Bottom")]
         public void DeseralizeSkeletonGameConfig(string gameFolder)
         {
-            var gameConfig = _skeleSerializer.DeserializeSkeletonYaml<GameConfig>(@"TestData/" + gameFolder + "/config.yaml");
+            var gameConfig = _skeleSerializer.DeserializeSkeletonYaml<GameConfig>(@"TestData/" + gameFolder + "//" + Constants.FILE_CONFIG);
 
             Assert.NotNull(gameConfig);
         }
@@ -36,9 +37,10 @@ namespace SkeletonGame.Tests
         [InlineData("SampleGame")]
         [InlineData("EvilDead")]
         [InlineData("Bottom")]
+        [InlineData("TotalSickness")]
         public void DeseralizeSkeletonGameAssets(string gameFolder)
         {
-            var assets = _skeleSerializer.DeserializeSkeletonYaml<AssetsFile>(@"TestData/" + gameFolder + "/config/asset_list.yaml");
+            var assets = _skeleSerializer.DeserializeSkeletonYaml<AssetsFile>(@"TestData/" + gameFolder + "//" + Constants.FILE_ASSETS);
 
             Assert.NotNull(assets);
         }
@@ -46,13 +48,13 @@ namespace SkeletonGame.Tests
         [Theory()]
         //[InlineData("EmptyGame")]
         //[InlineData("SampleGame")]
-        //[InlineData("EvilDead")]
-        [InlineData("!FrankTest")]
+        //[InlineData("EvilDead")]        
+        [InlineData("TotalSickness")]
         public void DeserializeSkeletonAttract(string gameFolder)
         {
             var attractFilePath = "TestData/" + gameFolder + "/config/attract.yaml";
 
-            var attract = _skeleSerializer.DeserializeSkeletonYaml<SequenceYaml>(@"TestData/" + gameFolder + "/config/attract.yaml");
+            var attract = _skeleSerializer.DeserializeSkeletonYaml<SequenceYaml>(@"TestData/" + gameFolder + "//" + Constants.FILE_ATTRACT);
 
             Assert.NotNull(attract);
         }
@@ -64,7 +66,7 @@ namespace SkeletonGame.Tests
         [InlineData("Bottom")]
         public void DeserializeSkeletonScoreDisplay(string gameFolder)
         {
-            var scoreDisplayYaml = @"TestData/" + gameFolder + "/config/new_score_display.yaml";
+            var scoreDisplayYaml = @"TestData/" + gameFolder + Constants.FILE_SCOREDISPLAY;
 
             ScoreDisplay ScoreDisplayConfig = null;
 
@@ -73,7 +75,7 @@ namespace SkeletonGame.Tests
                 ScoreDisplayConfig = _skeleSerializer.DeserializeSkeletonYaml<ScoreDisplay>(scoreDisplayYaml);
             else
             {
-                scoreDisplayYaml = @"TestData/" + gameFolder + "/config/score_display.yaml";
+                scoreDisplayYaml = @"TestData/" + gameFolder + Constants.FILE_SCOREDISPLAY;
 
                 if (File.Exists(scoreDisplayYaml))
                     ScoreDisplayConfig = _skeleSerializer.DeserializeSkeletonYaml<ScoreDisplay>(scoreDisplayYaml);
@@ -86,7 +88,9 @@ namespace SkeletonGame.Tests
         public void DeserializeMachineYaml()
         {
             //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");
-            var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");            
+            var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/" + Constants.FILE_MACHINE);
+
+            Assert.NotNull(machine);
         }
 
         [Fact]
@@ -95,6 +99,8 @@ namespace SkeletonGame.Tests
             //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
             var gData = _skeleSerializer
                 .DeserializeSkeletonYaml<GameData>(@"TestData/EmptyGame/config/game_default_data.yaml");
+
+            Assert.NotNull(gData);
         }
 
         [Fact]
@@ -103,6 +109,8 @@ namespace SkeletonGame.Tests
             //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
             var gData = _skeleSerializer
                 .DeserializeSkeletonYaml<HighScoreData>(@"TestData/EmptyGame/config/hiscore_default_data.yaml");
+
+            Assert.NotNull(gData);
         }
 
         [Fact]
@@ -111,16 +119,19 @@ namespace SkeletonGame.Tests
             //var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/SampleGame/config/machine.yaml");
             var tData = _skeleSerializer
                 .DeserializeSkeletonYaml<TrophyData>(@"TestData/EmptyGame/config/trophy_default_data.yaml");
+
+            Assert.NotNull(tData);
         }
 
         [Fact]
         public void YamlToJson()
         {
             var attract = _skeleSerializer.ConvertToJson(@"TestData/EmptyGame/config.yaml");
-        }
 
-        //[Fact(Skip = "Just used for creating the extraction method")]
-        [Fact]
+            Assert.NotNull(attract);
+        }
+        
+        [Fact(Skip = "Integration")]
         public void ExtractZipArchive()
         {
             var createSkele = new CreateSkeletonGame();
@@ -129,7 +140,7 @@ namespace SkeletonGame.Tests
             createSkele.CreateNewGameEntry("MyNewGame", "EmptyGame", Environment.CurrentDirectory, zip);
         }
 
-        [Fact]
+        [Fact(Skip = "Integration")]
         public void ExportPrLampsToJsonLampshowUI()
         {
             var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");
@@ -137,7 +148,7 @@ namespace SkeletonGame.Tests
             export.ExportLampsToLampshowUI(machine.PRLamps, "EmptyGame", @"TestData/EmptyGame");
         }
 
-        [Fact]
+        [Fact(Skip ="Integration")]
         public void ExportToPyprocgameSwitchHits()
         {
             var machine = _skeleSerializer.DeserializeSkeletonYaml<MachineConfig>(@"TestData/EmptyGame/config/machine.yaml");
