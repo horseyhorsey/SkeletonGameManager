@@ -3,15 +3,11 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Logging;
-using Prism.Mvvm;
 using Prism.Regions;
 using SkeletonGameManager.Base;
-using SkeletonGameManager.Module.Menus.Views;
 using SkeletonGameManager.Module.Recordings.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,8 +17,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 {
     public class FileMenuViewModel : SkeletonGameManagerViewModelBase
     {
-        #region Fields
-        private IEventAggregator _eventAggregator;
+        #region Fields        
         private ISkeletonGameProvider _skeletonGameProvider;
         private IGameRunnner _gameRunnner;
         private IRegionManager _regionManager;
@@ -161,6 +156,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         {
             if (_skeletonGameProvider.GameFolder == null) return;
 
+            //TODO: what if dev has an entry file other than game.py?
             var gameEntryPointFile = Path.Combine(_skeletonGameProvider.GameFolder, "game.py");
 
             if (!File.Exists(gameEntryPointFile))
@@ -170,9 +166,6 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
             try
             {
-                //Clear the previous log.
-                //_skeletonLogger.LogData.Clear();
-
                 await _gameRunnner.Run(_skeletonGameProvider.GameFolder, "game.py");
             }
             //catch (FileNotFoundException ex)
@@ -191,12 +184,6 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 IsGameRunning = false;
 
                 UpdateCanExecuteCommands();
-
-                //if (_skeletonLogger?.LogData?.Count > 0)
-                //{
-                //    _lastgameLog = _skeletonLogger.LogData;
-                //    _skeletonLogger.LogToFile(Path.Combine(GameFolder, "Logs"));
-                //}
 
                 _eventAggregator.GetEvent<OnGameEndedEvent>().Publish(true);
             }
