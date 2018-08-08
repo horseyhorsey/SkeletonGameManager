@@ -78,6 +78,9 @@ namespace SkeletonGameManager.Module.Services
             //AssetsConfig = null;
             ScoreDisplayConfig = null;
             AttractConfig = null;
+            MachineConfig = null;
+            this.TrophyData = null;
+            this.AssetsConfig = null;
         }
 
         public Task LoadYamlEntriesAsync()
@@ -130,10 +133,21 @@ namespace SkeletonGameManager.Module.Services
                     }
                     catch (System.Exception ex)
                     {
-                        Dispatcher.CurrentDispatcher.Invoke(() =>
+                        try
                         {
-                            ParseMachineConfigWithKeyValues(ex);
-                        });
+                            Dispatcher.CurrentDispatcher.Invoke(() =>
+                                            {
+                                                ParseMachineConfigWithKeyValues(ex);
+                                            });
+                        }
+                        catch (Exception exee)
+                        {
+                            var msg = $"Failed loading Game. {exee.Data["yaml"]} {exee.Message}";
+                            msg += $"/n/r {exee.Data["err"]}";
+
+                            Log(msg);
+                            throw;
+                        }
                     }
 
                     SequenceYamls.Clear();
@@ -166,12 +180,12 @@ namespace SkeletonGameManager.Module.Services
                         TrophyData = _skeletonGameSerializer.DeserializeSkeletonYaml<TrophyData>(trophydefaultData);
                     }                        
                 }
-                catch (System.Exception ex)
+                catch (System.Exception)
                 {
                     ClearConfigs();
                     errored = true;
 
-                    throw ex;
+                    throw;
                 }
                 finally
                 {
@@ -424,48 +438,55 @@ namespace SkeletonGameManager.Module.Services
 
             //Parse with different object
             if (result == System.Windows.MessageBoxResult.Yes)
-            {                
-                var machineConfigFile = Path.Combine(GameFolder, YamlFiles[5]);
-                MachineConfigDict = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfigDict>(machineConfigFile);
-
-                Log($"Saving machine.yaml to {machineConfigFile}.bak");
-                File.Delete(machineConfigFile + ".bak");
-                File.Copy(machineConfigFile, machineConfigFile + ".bak");
-
-                if (MachineConfigDict != null)
+            {
+                try
                 {
-                    Log("Converting machine.yaml dictionary to list");
+                    var machineConfigFile = Path.Combine(GameFolder, YamlFiles[5]);
+                    MachineConfigDict = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfigDict>(machineConfigFile);
 
-                    foreach (var coil in MachineConfigDict.PRCoils.Select(x => x))
+                    Log($"Saving machine.yaml to {machineConfigFile}.bak");
+                    File.Delete(machineConfigFile + ".bak");
+                    File.Copy(machineConfigFile, machineConfigFile + ".bak");
+
+                    if (MachineConfigDict != null)
                     {
-                        coil.Value.Name = coil.Key;
+                        Log("Converting machine.yaml dictionary to list");
+
+                        foreach (var coil in MachineConfigDict.PRCoils.Select(x => x))
+                        {
+                            coil.Value.Name = coil.Key;
+                        }
+                        Log($"Coils converted = {string.Join(", ", MachineConfigDict.PRCoils.Select(x => x.Value.Name))}");
+
+                        foreach (var lamp in MachineConfigDict.PRLamps.Select(x => x))
+                        {
+                            lamp.Value.Name = lamp.Key;
+                        }
+                        Log($"Lamps converted = {string.Join(", ", MachineConfigDict.PRLamps.Select(x => x.Value.Name))}");
+
+                        foreach (var sw in MachineConfigDict.PRSwitches.Select(x => x))
+                        {
+                            sw.Value.Name = sw.Key;
+                        }
+                        Log($"Lamps converted = {string.Join(", ", MachineConfigDict.PRSwitches.Select(x => x.Value.Name))}");
+
+                        MachineConfig = new MachineConfig()
+                        {
+                            PRGame = MachineConfigDict.PRGame,
+                            PRBumpers = MachineConfigDict.PRBumpers,
+                            PRFlippers = MachineConfigDict.PRFlippers,
+                            PRCoils = MachineConfigDict.PRCoils.Select(x => x.Value).ToList(),
+                            PRLamps = MachineConfigDict.PRLamps.Select(x => x.Value).ToList(),
+                            PRSwitches = MachineConfigDict.PRSwitches.Select(x => x.Value).ToList()
+                        };
+
+                        this.SaveMachineConfig(MachineConfig);
+                        MachineConfigDict = null;
                     }
-                    Log($"Coils converted = {string.Join(", ", MachineConfigDict.PRCoils.Select(x => x.Value.Name))}");
-
-                    foreach (var lamp in MachineConfigDict.PRLamps.Select(x => x))
-                    {
-                        lamp.Value.Name = lamp.Key;
-                    }
-                    Log($"Lamps converted = {string.Join(", ", MachineConfigDict.PRLamps.Select(x => x.Value.Name))}");
-
-                    foreach (var sw in MachineConfigDict.PRSwitches.Select(x => x))
-                    {
-                        sw.Value.Name = sw.Key;
-                    }
-                    Log($"Lamps converted = {string.Join(", ", MachineConfigDict.PRSwitches.Select(x => x.Value.Name))}");
-
-                    MachineConfig = new MachineConfig()
-                    {
-                        PRGame = MachineConfigDict.PRGame,
-                        PRBumpers = MachineConfigDict.PRBumpers,
-                        PRFlippers = MachineConfigDict.PRFlippers,
-                        PRCoils = MachineConfigDict.PRCoils.Select(x => x.Value).ToList(),
-                        PRLamps = MachineConfigDict.PRLamps.Select(x => x.Value).ToList(),
-                        PRSwitches = MachineConfigDict.PRSwitches.Select(x => x.Value).ToList()
-                    };
-                    
-                    this.SaveMachineConfig(MachineConfig);
-                    MachineConfigDict = null;
+                }
+                catch (Exception)
+                {                    
+                    throw;
                 }
             }
         }        
