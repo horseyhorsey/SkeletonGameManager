@@ -4,12 +4,14 @@ using Prism.Events;
 using Prism.Interactivity.InteractionRequest;
 using Prism.Logging;
 using Prism.Regions;
+using SkeletonGame.Models;
 using SkeletonGameManager.Base;
 using SkeletonGameManager.Base.Interface;
 using SkeletonGameManager.Module.Menus.Model;
 using SkeletonGameManager.Module.Recordings.ViewModels;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,6 +41,8 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         public DelegateCommand<string> LaunchRecordingCommand { get; }
 
         public DelegateCommand<string> NavigateCommand { get; set; }
+
+        public DelegateCommand<string> LaunchToolCommand { get; }
         #endregion
 
         #region Requests
@@ -77,18 +81,19 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
             #region Commands
             BrowseFolderCommand = new DelegateCommand(() => FileFolder.Explore(_skeletonGameProvider.GameFolder), () => IsValidGameFolder());
-            CreateNewGameCommand = new DelegateCommand(OnCreateNewGame, () => true);
+            CreateNewGameCommand = new DelegateCommand(OnCreateNewGame, () => !IsGameRunning);
             ExportCommand = new DelegateCommand<string>(OnExport, (x) => IsValidGameFolder());
             LaunchGameCommand = new DelegateCommand(async () =>
             {
                 IsGameRunning = true;
                 await OnLaunchedGame();
 
-            }, () => IsValidGameFolder());
-            LaunchRecordingCommand = new DelegateCommand<string>((playbackItem) => { OnLaunchRecordings(unityContainer, playbackItem); }, (x) => IsValidGameFolder() && !IsGameRunning);
+            }, () => GameNotRunningAndFolderValid());
+            LaunchRecordingCommand = new DelegateCommand<string>((playbackItem) => { OnLaunchRecordings(unityContainer, playbackItem); }, (x) => GameNotRunningAndFolderValid());
+            LaunchToolCommand = new DelegateCommand<string>((toolName) => { OnLaunchTool(toolName); }, (x) => IsValidGameFolder());
 
-            OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent);
-            ReloadGameCommand = new DelegateCommand(async () => await OnReloadGame(), () => IsValidGameFolder());
+            OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent, (x) => !IsGameRunning);
+            ReloadGameCommand = new DelegateCommand(async () => await OnReloadGame(), () => GameNotRunningAndFolderValid());
             SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory(), () => !IsGameRunning);
 
             NavigateCommand = new DelegateCommand<string>(OnNavigate, (x) => IsValidGameFolder());
@@ -191,6 +196,54 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             }
         }
 
+        private bool GameNotRunningAndFolderValid() => IsValidGameFolder() && !IsGameRunning;
+
+        private void OnLaunchTool(string toolName)
+        {
+            Log("Launching external tool");
+            try
+            {
+                switch (toolName)
+                {
+                    case "SwitchMatrixClient":
+                        LaunchSwitchMatrix();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log($"{ex.Message}");
+                System.Windows.MessageBox.Show(ex.Message);
+            }            
+
+        }
+
+        private void LaunchSwitchMatrix()
+        {
+            Log("Attempting to launch SwitchMatrixClient");
+
+            var switchMatrixClient = _skeletonGameProvider.GameConfig.OscUiPath;
+            var layout = _skeletonGameProvider.GameConfig.OscUiLayout;
+            var playfield = _skeletonGameProvider.GameConfig.OscUiPlayfield;
+
+            //Throw errors if user has no files
+            if (!File.Exists(switchMatrixClient))
+                throw new FileNotFoundException($"Couldn't find Switch Matrix Client file. {switchMatrixClient}");
+            else if (!File.Exists(layout))
+                throw new FileNotFoundException($"Couldn't find Switch Matrix layout file. {layout}");
+            else if (!File.Exists(playfield))
+                throw new FileNotFoundException($"Couldn't find Switch Matrix playfield file. {playfield}");
+
+            //Build args to run the game.py with python
+            var startInfo = new ProcessStartInfo("python");
+            startInfo.WorkingDirectory = Path.GetDirectoryName(switchMatrixClient);
+            startInfo.Arguments = $"\"{switchMatrixClient}\" -l \"{layout}\" -i \"{playfield}\" -y \"{Path.Combine(GameFolder, Constants.FILE_MACHINE)}\"";
+
+            Process.Start(startInfo);
+        }
+
         private void OnNavigate(string navParam)
         {
             Log($"Navigating to {navParam}");
@@ -286,9 +339,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         ///   <c>true</c> if [is valid game folder]; otherwise, <c>false</c>.
         /// </returns>
         private bool IsValidGameFolder()
-        {
-            if (IsGameRunning) return false;
-
+        {            
             if (Directory.Exists(GameFolder))
                 if (File.Exists(Path.Combine(GameFolder, "config.yaml")))
                 {
@@ -390,6 +441,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             ExportCommand.RaiseCanExecuteChanged();
             LaunchRecordingCommand.RaiseCanExecuteChanged();
             NavigateCommand.RaiseCanExecuteChanged();
+            LaunchToolCommand.RaiseCanExecuteChanged();
         }
 
         #endregion

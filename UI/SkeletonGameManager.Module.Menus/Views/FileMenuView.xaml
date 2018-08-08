@@ -117,6 +117,12 @@
                 <MenuItem Header="_Scene Grab" Command="{Binding NavigateCommand}" CommandParameter="ScenesView"/>
             </MenuItem>
 
+            <MenuItem Header="Tools">
+                <MenuItem Header="_Switch Matrix" 
+                          Command="{Binding LaunchToolCommand}" 
+                          CommandParameter="SwitchMatrixClient"/>
+            </MenuItem>
+
             <!--RECORDINGS / PLAYBACK-->
             <MenuItem Header="Recordings"                     
                       >
