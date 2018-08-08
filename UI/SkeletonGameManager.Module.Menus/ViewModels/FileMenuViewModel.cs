@@ -92,8 +92,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 IsGameRunning = true;
                 await OnLaunchedGame();
 
-            }, () => IsValidGameFolder());
-            OpenGameFolderCommand = new DelegateCommand(() => Process.Start(skeletonGameProvider.GameFolder), () => IsValidGameFolder());
+            }, () => IsValidGameFolder());            
             OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent);
             ReloadGameCommand = new DelegateCommand(async () => await OnReloadGame(), () => IsValidGameFolder());
             SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory(), () => !IsGameRunning);
