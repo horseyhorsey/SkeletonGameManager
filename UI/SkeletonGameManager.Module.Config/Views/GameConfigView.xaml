@@ -61,7 +61,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -199,6 +199,35 @@
                           ToolTip="{Binding Tip_Trophys, Source={StaticResource ResourceKey=AppStringResource}}"
                           IsChecked="{Binding GameConfigModel.DefaultModes.PlayerTrophys, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
+
+        </GroupBox>
+
+        <!--OSC TOOL-->
+        <GroupBox BorderThickness="3" Grid.Row="3" Grid.Column="1">
+
+            <GroupBox.Header>
+                <DockPanel>
+                    <ContentPresenter Content="{DynamicResource Path_Dir}"/>
+                    <TextBlock Text="Switch Matrix Tool" FontWeight="DemiBold"/>
+                </DockPanel>
+            </GroupBox.Header>
+
+            <StackPanel>
+                <TextBlock Text="Switch Matrix Client"/>
+                <TextBox Text="{Binding GameConfigModel.OscUiPath, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{Binding Tip_PathsOscUi, Source={StaticResource ResourceKey=AppStringResource}}"
+                         />
+
+                <TextBlock Text="Layout File"/>
+                <TextBox Text="{Binding GameConfigModel.OscUiLayout, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{Binding Tip_PathsUiLayout, Source={StaticResource ResourceKey=AppStringResource}}"
+                         />
+
+                <TextBlock Text="Playfield"/>
+                <TextBox Text="{Binding GameConfigModel.OscUiPlayfield, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="{Binding Tip_PathsPlayfield, Source={StaticResource ResourceKey=AppStringResource}}"
+                         />
+            </StackPanel>
 
         </GroupBox>
 

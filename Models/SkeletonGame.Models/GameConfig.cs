@@ -95,6 +95,15 @@ namespace SkeletonGame.Models {
             SerializeAs = typeof(Dictionary<string, string>), 
             ScalarStyle = YamlDotNet.Core.ScalarStyle.DoubleQuoted)]
         public Dictionary<string, string> KeyboardSwitchMap { get; set; }
+
+        [YamlMember(Alias = "switch_matrix_client", ApplyNamingConventions = false)]
+        public string OscUiPath { get; set; } = @"C:\P-ROC\GuiTool\switchMatrixClient.py";
+
+        [YamlMember(Alias = "osc_ui_layout", ApplyNamingConventions = false)]
+        public string OscUiLayout { get; set; } = string.Empty;
+
+        [YamlMember(Alias = "osc_ui_pf", ApplyNamingConventions = false)]
+        public string OscUiPlayfield { get; set; } = string.Empty;
     }
 
     /// <summary>

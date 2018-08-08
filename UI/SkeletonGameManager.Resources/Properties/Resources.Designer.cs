@@ -350,6 +350,24 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The path to switchMatrixClient.py. Default install C:\P-ROC\GUITool.
+        /// </summary>
+        public static string Tip_PathsOscUi {
+            get {
+                return ResourceManager.GetString("Tip_PathsOscUi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The path to the playfield..
+        /// </summary>
+        public static string Tip_PathsPlayfield {
+            get {
+                return ResourceManager.GetString("Tip_PathsPlayfield", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The display uses SDL2. The Dlls path is the needed SDL2 Dlls..
         /// </summary>
         public static string Tip_PathsSdlPath {
@@ -373,6 +391,15 @@ namespace SkeletonGameManager.Resources.Properties {
         public static string Tip_PathsSound {
             get {
                 return ResourceManager.GetString("Tip_PathsSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The path to the GUI tools layout switch / lamp file..
+        /// </summary>
+        public static string Tip_PathsUiLayout {
+            get {
+                return ResourceManager.GetString("Tip_PathsUiLayout", resourceCulture);
             }
         }
         

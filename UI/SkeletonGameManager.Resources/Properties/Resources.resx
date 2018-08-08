@@ -306,4 +306,13 @@
   <data name="Tip_DmdOnTop" xml:space="preserve">
     <value>Raises the window above every other window. Good for Visual Pinball or always having the display in view.</value>
   </data>
+  <data name="Tip_PathsOscUi" xml:space="preserve">
+    <value>The path to switchMatrixClient.py. Default install C:\P-ROC\GUITool</value>
+  </data>
+  <data name="Tip_PathsPlayfield" xml:space="preserve">
+    <value>The path to the playfield.</value>
+  </data>
+  <data name="Tip_PathsUiLayout" xml:space="preserve">
+    <value>The path to the GUI tools layout switch / lamp file.</value>
+  </data>
 </root>
