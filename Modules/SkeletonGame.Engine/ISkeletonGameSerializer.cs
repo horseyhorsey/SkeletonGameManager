@@ -20,7 +20,7 @@ namespace SkeletonGame.Engine
         /// <typeparam name="T"></typeparam>
         /// <param name="yamlFile">The yaml file.</param>
         /// <returns></returns>
-        T DeserializeSkeletonYaml<T>(string yamlFile);        
+        T DeserializeSkeletonYaml<T>(string yamlFile, bool ignoreUnmatched = false);
 
         /// <summary>
         /// Serializes the game assets to yaml
@@ -39,18 +39,24 @@ namespace SkeletonGame.Engine
         /// <typeparam name="T"></typeparam>
         /// <param name="yamlFile">The yaml file.</param>
         /// <returns></returns>
-        public T DeserializeSkeletonYaml<T>(string yamlFile)
+        public T DeserializeSkeletonYaml<T>(string yamlFile, bool ignoreUnmatched)
         {
             try
             {
-                var deserializer = new DeserializerBuilder()
-                //.IgnoreUnmatchedProperties()                
-                .WithNamingConvention(new CamelCaseNamingConvention())
-                .Build();
+                DeserializerBuilder deserializer;
+                if (ignoreUnmatched)
+                {
+                    deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().WithNamingConvention(new CamelCaseNamingConvention());
+                }
+                else
+                {
+                    deserializer = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention());
+                }
 
+                var deserialize = deserializer.Build();
                 using (TextReader reader = File.OpenText(yamlFile))
                 {
-                    var objects = deserializer.Deserialize<T>(reader);                    
+                    var objects = deserialize.Deserialize<T>(reader);
 
                     return objects;
                 }
@@ -59,9 +65,10 @@ namespace SkeletonGame.Engine
             {
                 ex.Data.Add("yaml", yamlFile);
                 ex.Data.Add("err", ex.InnerException.Message);
-                throw;
+                throw ex;
             }
         }
+
 
         public string ConvertToJson(string yamlFile)
         {
@@ -87,5 +94,6 @@ namespace SkeletonGame.Engine
                 yamlSerializer.Serialize(writer, yamlObjectGraph);
             }
         }
+
     }
 }
