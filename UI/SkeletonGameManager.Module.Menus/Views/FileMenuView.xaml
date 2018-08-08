@@ -42,12 +42,13 @@
                 <MenuItem Header="_Open..." Command="{Binding SetDirectoryCommand}" InputGestureText="Ctrl+O"/>
 
                 <!--RecentDirectories-->
-                <MenuItem Header="Recent" Visibility="Hidden">
+                <MenuItem Header="Recent" Visibility="Visible">
 
                     <MenuItem.Resources>
                         <Style TargetType="{x:Type MenuItem}">
                             <Setter Property="Command" Value="{Binding OpenRecentCommand}"/>
                             <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self},Path=Header}"/>
+                            
                         </Style>
                     </MenuItem.Resources>
                     

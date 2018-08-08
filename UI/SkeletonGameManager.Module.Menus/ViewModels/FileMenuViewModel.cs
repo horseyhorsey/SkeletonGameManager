@@ -5,10 +5,13 @@ using Prism.Interactivity.InteractionRequest;
 using Prism.Logging;
 using Prism.Regions;
 using SkeletonGameManager.Base;
+using SkeletonGameManager.Base.Interface;
+using SkeletonGameManager.Module.Menus.Model;
 using SkeletonGameManager.Module.Recordings.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static SkeletonGameManager.Base.Events;
@@ -20,6 +23,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         #region Fields        
         private ISkeletonGameProvider _skeletonGameProvider;
         private IGameRunnner _gameRunnner;
+        private IAppSettingsModel _appSettingsModel;
         private IRegionManager _regionManager;
         #endregion
 
@@ -43,15 +47,20 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
         #region Constructors
 
-        public FileMenuViewModel(ISkeletonGameProvider skeletonGameProvider, IGameRunnner gameRunnner,
-            IEventAggregator eventAggregator, IUnityContainer unityContainer, IRegionManager regionManager, ILoggerFacade loggerFacade): base(eventAggregator, loggerFacade)
-        {            
+        public FileMenuViewModel(ISkeletonGameProvider skeletonGameProvider, IGameRunnner gameRunnner, IAppSettingsModel appSettingsModel,
+            IEventAggregator eventAggregator, IUnityContainer unityContainer, IRegionManager regionManager,
+            ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
+        {
             _skeletonGameProvider = skeletonGameProvider;
             _regionManager = regionManager;
             _gameRunnner = gameRunnner;
+            _appSettingsModel = appSettingsModel;
+            _appSettingsModel.Load();
 
             if (_eventAggregator == null)
                 _eventAggregator = eventAggregator;
+
+            RecentDirectories = appSettingsModel.RecentDirectories;
 
             CreateNewGameRequest = new InteractionRequest<IRequestNewGame>();
 
@@ -76,7 +85,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 await OnLaunchedGame();
 
             }, () => IsValidGameFolder());
-            LaunchRecordingCommand = new DelegateCommand<string>((playbackItem) =>{ OnLaunchRecordings(unityContainer, playbackItem);}, (x) => IsValidGameFolder() && !IsGameRunning);
+            LaunchRecordingCommand = new DelegateCommand<string>((playbackItem) => { OnLaunchRecordings(unityContainer, playbackItem); }, (x) => IsValidGameFolder() && !IsGameRunning);
 
             OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent);
             ReloadGameCommand = new DelegateCommand(async () => await OnReloadGame(), () => IsValidGameFolder());
@@ -194,7 +203,6 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         private async void OnSetDirectory()
         {
             Log("Setting game directory");
-
             CloseAllTabs();
 
             var dlg = new FolderBrowserDialog();
@@ -229,9 +237,12 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         {
             try
             {
-                await SetGamePath(obj);
+                await SetGamePath(obj);                
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                Log(ex.Message, Category.Exception);
+            }
         }
 
         /// <summary>
@@ -241,9 +252,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         /// <returns></returns>
         private Task SetGamePath(string path)
         {
-            Log("Clearing UI configuration");
-            _skeletonGameProvider.ClearConfigs();
-
+            Log("Clearing UI configuration");            
             GameFolder = path;
 
             if (!IsValidGameFolder())
@@ -253,10 +262,21 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 Log(msg, Category.Warn);
 
                 GameFolder = null;
+                CloseAllTabs();
+
                 return Task.CompletedTask;
             }
             else
+            {
                 return this.OnReloadGame();
+            }
+        }
+
+        private void AddRecentFolder(string gameFolder)
+        {
+            Log($"Add recent folder {gameFolder}");
+
+            _appSettingsModel.AddRecentDirectory(gameFolder);
         }
 
         /// <summary>
@@ -330,26 +350,32 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             Log("Loading game configs");
             try
             {
+                _skeletonGameProvider.GameFolder = GameFolder;
+
                 await _skeletonGameProvider.LoadYamlEntriesAsync();
 
-                _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);                
+                _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
 
                 Log("Loading success");
+                AddRecentFolder(GameFolder);
+
                 //Disable machine tab if failed top parse
                 //IsMachineConfigEnabled = _skeletonGameProvider.MachineConfig == null ? false : true;
                 this.OnNavigate("GameConfigView");
             }
             catch (Exception ex)
-            {                
+            {
                 var msg = $"Failed loading Game. {ex.Data["yaml"]} {ex.Message}";
                 msg += $"/n/r {ex.Data["err"]}";
                 Log(msg, Category.Exception);
                 System.Windows.MessageBox.Show(msg);
+                _skeletonGameProvider.ClearConfigs();
+                GameFolder = null;                
             }
             finally
             {
-                UpdateCanExecuteCommands();
-            }
+                
+            }            
         }
 
         /// <summary>
@@ -365,7 +391,6 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             LaunchRecordingCommand.RaiseCanExecuteChanged();
             NavigateCommand.RaiseCanExecuteChanged();
         }
-
 
         #endregion
     }
