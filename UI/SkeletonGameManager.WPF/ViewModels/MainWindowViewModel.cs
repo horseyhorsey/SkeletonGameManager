@@ -6,6 +6,7 @@ using SkeletonGameManager.Base;
 using System.Windows.Input;
 using Prism.Logging;
 using System;
+using Prism.Regions;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -15,25 +16,28 @@ namespace SkeletonGameManager.WPF.ViewModels
         private ISkeletonGameProvider _skeletonGameProvider;
         #endregion
 
-        #region Commands
+        #region Commands        
+        public ICommand CloseTabCommand { get; }
         public ICommand OpenFileFolderCommand { get; }
         #endregion
 
         #region Constructors
 
         public MainWindowViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, 
-            ISkeletonLogger skeletonLogger, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
+            ISkeletonLogger skeletonLogger, ILoggerFacade loggerFacade, IRegionManager regionManager) : base(eventAggregator, loggerFacade)
         {
             _skeletonGameProvider = skeletonGameProvider;            
             _skeletonGameProvider.StatusChanged += _skeletonGameProvider_StatusChanged;
+            _regionManager = regionManager;
 
             IsGameRunning = false;
 
             OpenFileFolderCommand = new DelegateCommand<string>(OnOpenFileFolder);
 
+            CloseTabCommand = new DelegateCommand<object>(OnCloseTab);
+
             Log("Initialized");
         }
-
         #endregion
 
         #region Properties
@@ -65,6 +69,8 @@ namespace SkeletonGameManager.WPF.ViewModels
         }
 
         private bool isGameRunning = false;
+        private IRegionManager _regionManager;
+
         /// <summary>
         /// Gets or sets the IsGameRunning.
         /// </summary>
@@ -84,6 +90,20 @@ namespace SkeletonGameManager.WPF.ViewModels
         private void OnApplicationBusyChanged(bool isBusy)
         {
             this.IsMainTabEnabled = !isBusy;
+        }
+
+        /// <summary>
+        /// Called when [close tab] to close a view /tab from the OpenTabsRegion.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        private void OnCloseTab(object obj)
+        {
+            IRegion region = _regionManager.Regions["OpenTabsRegion"];
+            if (region.Views.Contains(obj))
+            {                
+                region.Remove(obj);
+                Log("Removed tab: " + obj);
+            }
         }
 
         /// <summary>

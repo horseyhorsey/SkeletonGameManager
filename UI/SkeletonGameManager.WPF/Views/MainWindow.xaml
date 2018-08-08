@@ -148,9 +148,18 @@
                         <Setter Property="HeaderTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <DockPanel>
+                                    <DockPanel TextElement.FontSize="16">
                                         <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}, Mode=FindAncestor}, 
                                             Path=Content.DataContext.Title}"/>
+                                        
+                                        <Button Content="X" Margin="5,0"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Command="{Binding ElementName=LayoutRoot, Path=DataContext.CloseTabCommand}" 
+                                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}, Mode=FindAncestor}, 
+                                            Path=Content}"
+                                                DockPanel.Dock="Right"
+                                                />
                                     </DockPanel>
                                 </DataTemplate>
                             </Setter.Value>
