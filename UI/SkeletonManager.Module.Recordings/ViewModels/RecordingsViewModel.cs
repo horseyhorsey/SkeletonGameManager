@@ -18,7 +18,8 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
         #endregion
 
         #region Commands
-        public DelegateCommand LaunchGameCommand { get; set; } 
+        public DelegateCommand LaunchGameCommand { get; set; }
+        public DelegateCommand RefreshRecordingsCommand { get; set; }        
         #endregion
 
         #region Constructors
@@ -26,12 +27,17 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
         {
             _skeletonGameProvider = skeletonGameProvider;
 
+            #region Commands
             LaunchGameCommand = new DelegateCommand(() =>
             {
                 LaunchGame(this.PlaybackItemViewModel);
             }, () => _launchCommandEnabled);
 
+            RefreshRecordingsCommand = new DelegateCommand(PopulateRecordings); 
+            #endregion
+
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
+
             _eventAggregator.GetEvent<OnGameEndedEvent>().Subscribe(x =>
             {
                 OnGameEndedEventChanged(x);
@@ -69,6 +75,13 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
             get { return recordIsChecked; }
             set { SetProperty(ref recordIsChecked, value); }
         }
+
+        private string _recordingName;
+        public string RecordingName
+        {
+            get { return _recordingName; }
+            set { SetProperty(ref _recordingName, value); }
+        }
         #endregion
 
         #region Public Methods
@@ -93,25 +106,8 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
         }
 
         public async override Task OnLoadYamlFilesChanged()
-        {
-            PlaybackItemViewModels.Clear();
-            var recordingDir = _skeletonGameProvider.GameFolder + @"\recordings";
-
-            Log($"Loading recordings from.. {recordingDir}");            
-            await Task.Run(() =>
-             {
-                 //Populate the recordings directory
-                 RecordingManager.GetPlaybackFiles(recordingDir);
-
-             });
-
-            Log($"Populating recordings.");
-            foreach (var playbackFile in RecordingManager.PlayBackFiles)
-            {
-                var vm = new PlaybackItemViewModel(playbackFile);
-                vm.UpdatePlayBackItems(true);
-                PlaybackItemViewModels.Add(vm);
-            }
+        {            
+            PopulateRecordings();
 
             if (PlaybackItemViewModels.Count > 0)
                 Log($"Recordings loaded successfully");
@@ -124,7 +120,7 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
         #region Private Methods
 
         private void LaunchGame(PlaybackItemViewModel playbackItem = null)
-        {
+        {           
             if (PlaybackIsChecked)
             {
                 Log("Running recording playback");
@@ -136,6 +132,7 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
             else
             {
                 Log("New recording initiated.");
+
                 //Replace the skeleton game base class, could be recording or not.
                 var skeleGame = Path.Combine("procgame", "game", "skeletongame.py");
                 LaunchPlaybackFile(_skeletonGameProvider.GameFolder, skeleGame);
@@ -162,9 +159,31 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
                 //Replace the skeleton game base class, could be recording or not.                
                 var skeleGame = Path.Combine(_skeletonGameProvider.GameFolder, "procgame", "game", "skeletongame.py");                
                 RecordingManager.SetSkeletonGameBaseClass(skeleGame, false);
+
+                PopulateRecordings();
             }
 
             this.LaunchGameCommand.RaiseCanExecuteChanged();
+        }
+
+        /// <summary>
+        /// Clears and Re-Populates the recordings from {GameFolder}/recordings
+        /// </summary>
+        private void PopulateRecordings()
+        {
+            PlaybackItemViewModels.Clear();
+
+            var recordingDir = _skeletonGameProvider.GameFolder + @"\recordings";
+            Log($"Loading recordings from.. {recordingDir}");            
+            RecordingManager.GetPlaybackFiles(recordingDir);
+
+            Log($"Populating recordings.");
+            foreach (var playbackFile in RecordingManager.PlayBackFiles)
+            {
+                var vm = new PlaybackItemViewModel(playbackFile);
+                vm.UpdatePlayBackItems(true);
+                PlaybackItemViewModels.Add(vm);
+            }
         }
         #endregion
     }

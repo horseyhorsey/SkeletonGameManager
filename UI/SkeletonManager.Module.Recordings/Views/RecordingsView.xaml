@@ -19,26 +19,32 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Grid.Column="0" Header="Record Options" FontSize="18">
-
+        <GroupBox Grid.Column="0" Grid.ColumnSpan="2"
+                  Header="Record Options" FontSize="18">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <RadioButton Content="Record" Margin="3" IsChecked="{Binding RecordIsChecked}" 
+                <Button Grid.Column="0" Content="Refresh" Command="{Binding RefreshRecordingsCommand}"                        
+                        />
+                
+                <!--RECORD Checked-->
+                <RadioButton Grid.Column="2" Content="Record" Margin="3" IsChecked="{Binding RecordIsChecked}" 
                              IsEnabled="{Binding ElementName=LaunchGameButton, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"
                              ToolTip="{Binding Tip_EnableRecording, Source={StaticResource ResourceKey=AppStringResource}}"
                              />
-                
-                <RadioButton Content="Playback" Grid.Column="1" Margin="3" IsChecked="{Binding PlaybackIsChecked}" 
+                <!--PLayback checked-->
+                <RadioButton Content="Playback" Grid.Column="3" Margin="3" IsChecked="{Binding PlaybackIsChecked}" 
                              IsEnabled="{Binding ElementName=LaunchGameButton, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"
                              ToolTip="{Binding Tip_EnablePlayback, Source={StaticResource ResourceKey=AppStringResource}}"
                              />
-
-                <Button Grid.Column="2" x:Name="LaunchGameButton" 
+                <!--Launch record - playback-->
+                <Button Grid.Column="4" x:Name="LaunchGameButton" 
                         Content="{DynamicResource Path_Game}" Command="{Binding LaunchGameCommand}"
                         ToolTip="{Binding Tip_LaunchRecording, Source={StaticResource ResourceKey=AppStringResource}}"                        
                         />
@@ -49,13 +55,24 @@
         <Grid Grid.Column="0" Grid.Row="1">
 
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <!--RECORDING NAME-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding PlaybackItemViewModel.PlaybackFile, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+
             <DataGrid Margin="3" x:Name="PlaybackItemsDataGrid" 
+                      Grid.Row="1"
                       AutoGenerateColumns="False"
                       CanUserDeleteRows="False"
+                      IsReadOnly="True"
                       Style="{StaticResource DataGridRecording}"
                       SelectedItem="{Binding PlaybackItemViewModel}"
                       ItemsSource="{Binding PlaybackItemViewModels, UpdateSourceTrigger=PropertyChanged}"                      
@@ -68,9 +85,8 @@
             </DataGrid>
         </Grid>
         
-        <!--CONTENTS-->
-        <Grid Grid.Column="1" Grid.RowSpan="2">
-                        
+        <!--RECORDING FILE CONTENTS-->
+        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
             <DataGrid Margin="3" AutoGenerateColumns="False"
                       Style="{StaticResource DataGridRecording}"
                       ItemsSource="{Binding ElementName=PlaybackItemsDataGrid,Path=SelectedItem.PlayBackItems}"
