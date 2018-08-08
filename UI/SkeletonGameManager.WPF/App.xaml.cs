@@ -22,5 +22,10 @@ namespace SkeletonGameManager.WPF
             var bootstrapper = new Bootstrapper();
             bootstrapper.Run();        
         }
+
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            System.Windows.MessageBox.Show(e.Exception.Message);
+        }
     }
 }

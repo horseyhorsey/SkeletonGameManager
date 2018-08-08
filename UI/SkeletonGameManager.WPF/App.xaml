@@ -1,7 +1,9 @@
 ﻿<Application x:Uid="Application_1" x:Class="SkeletonGameManager.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:properties="clr-namespace:SkeletonGameManager.Resources.Properties;assembly=SkeletonGameManager.Resources">
+             xmlns:properties="clr-namespace:SkeletonGameManager.Resources.Properties;assembly=SkeletonGameManager.Resources"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException"
+             >
     <Application.Resources>
         
         <ResourceDictionary x:Uid="ResourceDictionary_1">
