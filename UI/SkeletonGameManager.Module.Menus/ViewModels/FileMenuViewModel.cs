@@ -322,7 +322,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             {
                 await _skeletonGameProvider.LoadYamlEntriesAsync();
 
-                _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);
+                _eventAggregator.GetEvent<LoadYamlFilesChanged>().Publish(null);                
 
                 //Disable machine tab if failed top parse
                 //IsMachineConfigEnabled = _skeletonGameProvider.MachineConfig == null ? false : true;

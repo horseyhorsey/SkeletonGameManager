@@ -128,6 +128,11 @@ namespace SkeletonGameManager.WPF.ViewModels
             else
                 this.IsMainTabEnabled = true;
 
+            if (!String.IsNullOrWhiteSpace(_skeletonGameProvider.GameFolder))
+                this.Title = "Skeleton Game Manager: " + _skeletonGameProvider.GameFolder;
+            else
+                this.Title = "Skeleton Game Manager";
+
             Log($"Main tab is enabled: {this.IsMainTabEnabled}");
         }
         #endregion
