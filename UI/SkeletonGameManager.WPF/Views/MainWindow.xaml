@@ -53,7 +53,19 @@
 
     <Grid x:Uid="LayoutRoot" x:Name="LayoutRoot">
 
-        <Grid x:Uid="Grid_1" Margin="0,20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+        <!--FILE MENU-->
+        <ContentControl x:Uid="ContentControl_9" 
+                        prism:RegionManager.RegionName="FileMenuRegion"
+                        VerticalAlignment="Top"/>
+
+
+        <Grid x:Uid="Grid_1" Grid.Row="1">
 
             <Grid.RowDefinitions>
                 <RowDefinition x:Uid="RowDefinition_1" Height="Auto"/>
@@ -61,7 +73,6 @@
                 <RowDefinition x:Uid="RowDefinition_3" Height="Auto"/>
                 <RowDefinition x:Uid="RowDefinition_4" Height="*"/>
             </Grid.RowDefinitions>
-
 
             <Grid.Resources>
                 <Style x:Key="SkeletonTabStyle" TargetType="{x:Type TabControl}">
@@ -172,9 +183,7 @@
 
         </Grid>
 
-        <!--FILE MENU-->
-        <ContentControl x:Uid="ContentControl_9" prism:RegionManager.RegionName="FileMenuRegion"
-                        VerticalAlignment="Top"/>
+
 
     </Grid>
 

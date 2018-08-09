@@ -62,8 +62,8 @@
             </Grid>
         </GroupBox>
 
-        <ListView Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                      Margin="3"
+        <ListView Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      Margin="3" 
                           BorderBrush="Black" BorderThickness="2"                       
                     ItemsSource="{Binding SwitchKeys, UpdateSourceTrigger=PropertyChanged}"
                     >

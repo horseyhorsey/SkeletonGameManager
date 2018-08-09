@@ -22,6 +22,11 @@
 
     <Grid x:Name="LayoutRoot">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
         <Grid.InputBindings>
             <KeyBinding Key="N" 
                         Gesture="Ctrl+N" 
@@ -63,6 +68,17 @@
                 <MenuItem Header="_Quit" Command="{x:Static ApplicationCommands.Close}" InputGestureText="Ctrl+Q"/>
             </MenuItem>
 
+            <MenuItem Header="View">
+                <MenuItem Header="_Assets" Command="{Binding NavigateCommand}" CommandParameter="AssetListView"/>
+                <MenuItem Header="_Attract" Command="{Binding NavigateCommand}" CommandParameter="AttractView"/>
+                <MenuItem Header="_Config" Command="{Binding NavigateCommand}" CommandParameter="GameConfigView"/>
+                <MenuItem Header="_Machine" Command="{Binding NavigateCommand}" CommandParameter="MachineConfigView"/>
+                <MenuItem Header="_Recordings" Command="{Binding NavigateCommand}" CommandParameter="RecordingsView"/>
+                <MenuItem Header="_Scene Grab" Command="{Binding NavigateCommand}" CommandParameter="ScenesView"/>
+                <MenuItem Header="_Score Display" Command="{Binding NavigateCommand}" CommandParameter="ScoreLayoutView"/>
+                <MenuItem Header="_Trophy" Command="{Binding NavigateCommand}" CommandParameter="TrophyDataView"/>
+            </MenuItem>
+
             <!--GAME MENU-->
             <MenuItem Header="_Game">
                 <MenuItem Header="_Browse" Command="{Binding BrowseFolderCommand}" InputGestureText="Ctrl+B"/>
@@ -71,7 +87,7 @@
             </MenuItem>
 
             <MenuItem Header="_Export">
-                
+
                 <MenuItem Header="_Pyprocgame">
                     <MenuItem 
                         Header="Switch Methods"
@@ -104,17 +120,6 @@
                             Command="{Binding ExportCommand}"                               
                             CommandParameter="lampshowUi"
                           />
-            </MenuItem>
-
-            <MenuItem Header="View">
-                <MenuItem Header="_Config" Command="{Binding NavigateCommand}" CommandParameter="GameConfigView"/>
-                <MenuItem Header="_Machine" Command="{Binding NavigateCommand}" CommandParameter="MachineConfigView"/>
-                <MenuItem Header="_Assets" Command="{Binding NavigateCommand}" CommandParameter="AssetListView"/>
-                <MenuItem Header="_Attract" Command="{Binding NavigateCommand}" CommandParameter="AttractView"/>
-                <MenuItem Header="_Score Display" Command="{Binding NavigateCommand}" CommandParameter="ScoreLayoutView"/>
-                <MenuItem Header="_Trophy" Command="{Binding NavigateCommand}" CommandParameter="TrophyDataView"/>
-                <MenuItem Header="_Recordings" Command="{Binding NavigateCommand}" CommandParameter="RecordingsView"/>
-                <MenuItem Header="_Scene Grab" Command="{Binding NavigateCommand}" CommandParameter="ScenesView"/>
             </MenuItem>
 
             <MenuItem Header="Tools">
@@ -157,5 +162,17 @@
             </MenuItem>
 
         </Menu>
+
+        <ToolBarTray Grid.Row="1" Background="Silver">
+            <ToolBar>
+                <Button  Content="{DynamicResource Path_Dir}"
+                         Command="{Binding BrowseFolderCommand}"
+                         ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"
+                         />
+                <Button Command="{Binding LaunchGameCommand}" 
+                        ToolTip="{Binding Tip_GameLaunchInfo, Source={StaticResource ResourceKey=AppStringResource}}"
+                        Content="{DynamicResource Path_Game}"/>
+            </ToolBar>
+        </ToolBarTray>
     </Grid>
 </UserControl>
