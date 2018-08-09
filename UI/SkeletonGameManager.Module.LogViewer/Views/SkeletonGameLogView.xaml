@@ -18,9 +18,9 @@
             </i:Interaction.Triggers>
         </ListView>
 
-        <ListView ItemsSource="{Binding LogLines}" Grid.Column="1">
+        <ListView ItemsSource="{Binding LogLines}" Grid.Column="1"
+                  Style="{DynamicResource LogListViewStyle}"/>
 
 
-        </ListView>
     </Grid>
 </UserControl>

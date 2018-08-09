@@ -1,0 +1,43 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:SkeletonGameManager.Resources.Style">
+
+    <!--VIEW COLOR CODED LOGS - SG and Ser-->
+    <Style x:Key="LogListViewStyle" TargetType="ListView">
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <DockPanel>
+                        <TextBlock Text="{Binding Line}"/>
+                    </DockPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListViewItem">
+
+                    <Setter Property="Background" Value="Ivory"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Level}" Value="0">
+                            <Setter Property="Background" Value="LightSkyBlue"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Level}" Value="1">
+                            <Setter Property="Background" Value="#d0404f"/>
+                            <Setter Property="FontWeight" Value="DemiBold"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Level}" Value="2">
+                            <Setter Property="Background" Value="LightGreen"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Level}" Value="3">
+                            <Setter Property="Background" Value="Orange"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+</ResourceDictionary>
