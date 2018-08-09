@@ -17,15 +17,18 @@ namespace SkeletonGameManager.Module.Assets
         public void Initialize()
         {
             _container.RegisterType<object, AssetListView>("AssetListView");
-            
-            //Register these view models with container.
+            _container.RegisterType<object, AssetDetailsView>("AssetDetailsView");
+
+            //Register these view models with container.            
+            _container.RegisterInstance(_container.Resolve<AnimationsViewModel>(), new ContainerControlledLifetimeManager());
+            _container.RegisterInstance(_container.Resolve<AssetDetailsViewModel>(), new ContainerControlledLifetimeManager());
             _container.RegisterInstance(_container.Resolve<AssetListViewModel>(), new ContainerControlledLifetimeManager());
             _container.RegisterInstance(_container.Resolve<FontsViewModel>(), new ContainerControlledLifetimeManager());
-            _container.RegisterInstance(_container.Resolve<SfxViewModel>(), new ContainerControlledLifetimeManager());
-            _container.RegisterInstance(_container.Resolve<MusicViewModel>(), new ContainerControlledLifetimeManager());
-            _container.RegisterInstance(_container.Resolve<VoiceViewModel>(), new ContainerControlledLifetimeManager());
             _container.RegisterInstance(_container.Resolve<LampshowViewModel>(), new ContainerControlledLifetimeManager());
-            _container.RegisterInstance(_container.Resolve<AnimationsViewModel>(), new ContainerControlledLifetimeManager());
+            _container.RegisterInstance(_container.Resolve<LoadingProgressViewModel>(), new ContainerControlledLifetimeManager());
+            _container.RegisterInstance(_container.Resolve<MusicViewModel>(), new ContainerControlledLifetimeManager());
+            _container.RegisterInstance(_container.Resolve<SfxViewModel>(), new ContainerControlledLifetimeManager());            
+            _container.RegisterInstance(_container.Resolve<VoiceViewModel>(), new ContainerControlledLifetimeManager());                       
         }
     }
 }

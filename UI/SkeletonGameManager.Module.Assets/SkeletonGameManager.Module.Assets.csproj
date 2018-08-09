@@ -70,6 +70,7 @@
       <DependentUpon>ucSoundAssets.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AnimationsViewModel.cs" />
+    <Compile Include="ViewModels\AssetDetailsViewModel.cs" />
     <Compile Include="ViewModels\AssetFileBaseViewModel.cs" />
     <Compile Include="ViewModels\AssetListViewModel.cs" />
     <Compile Include="ViewModels\FontsViewModel.cs" />
@@ -81,6 +82,9 @@
     <Compile Include="ViewModels\VoiceViewModel.cs" />
     <Compile Include="Views\AnimationsView.xaml.cs">
       <DependentUpon>AnimationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AssetDetailsView.xaml.cs">
+      <DependentUpon>AssetDetailsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AssetListView.xaml.cs">
       <DependentUpon>AssetListView.xaml</DependentUpon>
@@ -139,6 +143,10 @@
     <Page Include="Views\AnimationsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AssetDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AssetListView.xaml">
       <Generator>MSBuild:Compile</Generator>

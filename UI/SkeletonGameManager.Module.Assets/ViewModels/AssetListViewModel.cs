@@ -34,6 +34,8 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonGameFiles = skeletonGameFiles;
 
+            _regionManager.RequestNavigate(Regions.AssetDetailRegion, "AssetDetailsView");
+
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
 
             SaveCommand = new DelegateCommand(() =>
@@ -77,6 +79,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                 await fontsVm?.GetFiles();
 
                 var loadingVm = _unityContainer.Resolve(typeof(LoadingProgressViewModel)) as LoadingProgressViewModel;
+                loadingVm.UserInterface = this.AssetsFile.UserInterface;
 
                 var animsVm = _unityContainer.Resolve(typeof(AnimationsViewModel)) as AnimationsViewModel;
                 await animsVm?.GetFiles();
@@ -109,6 +112,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         #region Private Methods
         private void OnSwitchView(string viewName)
         {
+            //TODO: Make this more dynamic, don't reference view files in the VM !
             Type viewType = null;
             switch (viewName)
             {
