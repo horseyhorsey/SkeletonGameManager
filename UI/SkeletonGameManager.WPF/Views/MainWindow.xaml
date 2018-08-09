@@ -4,10 +4,9 @@
         xmlns:prism="http://prismlibrary.com/"        
         prism:ViewModelLocator.AutoWireViewModel="True"       
         WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip"
-        ShowInTaskbar="True" SizeToContent="WidthAndHeight" Background="White"                
-        xmlns:vm="clr-namespace:SkeletonGameManager.Module.Config.ViewModels;assembly=SkeletonGameManager.Module.Config"
+        ShowInTaskbar="True" SizeToContent="WidthAndHeight" Background="White"
         Title="{Binding Title}"
-        Width="1024" Height="768"
+        MinWidth="1024" MinHeight="768"
         xml:lang="en-US"
         >
 
