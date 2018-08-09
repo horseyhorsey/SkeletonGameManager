@@ -10,25 +10,18 @@ namespace SkeletonGameManager.Module.LogViewer.ViewModels
 {
     public class LogViewModelBase : SkeletonTabViewModel
     {
+        #region Commands
+        public ICommand SelectedLogChanged { get; set; } 
+        #endregion
+
         public LogViewModelBase(IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             SelectedLogChanged = new DelegateCommand<object>(OnSelectedLogChanged);
         }
 
-        protected virtual void UpdateFromSelected()
-        {
-            throw new NotImplementedException();
-        }
-
-
-        protected virtual void GetLogs()
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICommand SelectedLogChanged { get; set; }
-
+        #region Properties
         public string LogPath { get; set; }
+        public string SelectedLogFile { get; set; } = string.Empty;
 
         private ObservableCollection<string> _logs;
         public ObservableCollection<string> LogFiles
@@ -37,15 +30,27 @@ namespace SkeletonGameManager.Module.LogViewer.ViewModels
             set { SetProperty(ref _logs, value); }
         }
 
-        private ObservableCollection<string> _logLines;
-        public ObservableCollection<string> LogLines
+        private ObservableCollection<Log> _logLines;
+        public ObservableCollection<Log> LogLines
         {
             get { return _logLines; }
             set { SetProperty(ref _logLines, value); }
         }
+        #endregion
 
-        public string SelectedLogFile { get; set; } = string.Empty;
+        #region Virtual Methods
+        protected virtual void GetLogs()
+        {
+            throw new NotImplementedException();
+        }
 
+        protected virtual void UpdateFromSelected()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Private Methods
         private void OnSelectedLogChanged(object x)
         {
             try
@@ -58,6 +63,7 @@ namespace SkeletonGameManager.Module.LogViewer.ViewModels
             {
                 Log(ex.Message, Category.Warn);
             }
-        }
+        } 
+        #endregion
     }
 }

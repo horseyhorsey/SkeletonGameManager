@@ -16,6 +16,7 @@ namespace SkeletonGameManager.Module.LogViewer.ViewModels
             Title = "Sgm Log";
 
             LogPath = Path.Combine(Environment.CurrentDirectory, "logs");
+            this.LogLines = new System.Collections.ObjectModel.ObservableCollection<LogViewer.Log>();
 
             GetLogs();
         }
@@ -23,15 +24,21 @@ namespace SkeletonGameManager.Module.LogViewer.ViewModels
         protected override void GetLogs()
         {
             Log("Populating logs");
-            LogFiles = new System.Collections.ObjectModel.ObservableCollection<string>(Directory.EnumerateFiles(LogPath, "*.log"));
+            LogFiles = new System.Collections.ObjectModel.ObservableCollection<string>(
+                Directory.EnumerateFiles(LogPath, "*.log").Select(x => Path.GetFileName(x)));
         }
 
         protected override void UpdateFromSelected()
         {
             try
             {
-                var content = File.ReadLines(this.SelectedLogFile);
-                this.LogLines = new System.Collections.ObjectModel.ObservableCollection<string>(content);
+                this.LogLines?.Clear();
+
+                var content = File.ReadLines(Path.Combine(this.LogPath, this.SelectedLogFile));
+                foreach (var line in content)
+                {
+                    LogLines.Add(new LogViewer.Log(line));
+                }
             }
             catch (Exception ex)
             {
