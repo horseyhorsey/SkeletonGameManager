@@ -227,6 +227,10 @@
       <Project>{0fd93fc7-fa0a-4119-ab3f-0d77218e828b}</Project>
       <Name>SkeletonGameManager.Module.Config</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Module.LogViewer\SkeletonGameManager.Module.LogViewer.csproj">
+      <Project>{06edb6c9-924f-4611-b4dd-a3ba56b9e7fd}</Project>
+      <Name>SkeletonGameManager.Module.LogViewer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SkeletonGameManager.Module.Menus\SkeletonGameManager.Module.Menus.csproj">
       <Project>{9439ee15-2360-4006-801b-7207648bfa2c}</Project>
       <Name>SkeletonGameManager.Module.Menus</Name>

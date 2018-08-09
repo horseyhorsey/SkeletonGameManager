@@ -144,7 +144,18 @@
                 </MenuItem>
                     
             </MenuItem>
-            
+
+            <MenuItem Header="Logs">
+
+                <MenuItem Header="_Game Log" 
+                          Command="{Binding NavigateCommand}" 
+                          CommandParameter="SkeletonGameLogView"/>
+
+                <MenuItem Header="_Sgm" 
+                          Command="{Binding NavigateCommand}" 
+                          CommandParameter="AppLogView"/>
+            </MenuItem>
+
         </Menu>
     </Grid>
 </UserControl>

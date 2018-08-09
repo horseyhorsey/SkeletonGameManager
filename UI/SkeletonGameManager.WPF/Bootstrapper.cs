@@ -31,6 +31,7 @@ namespace SkeletonGameManager.WPF
             moduleCatalog.AddModule(typeof(Module.SceneGrab.SceneGrabModule));
             moduleCatalog.AddModule(typeof(Module.SceneManage.SceneManageModule));
             moduleCatalog.AddModule(typeof(Module.Menus.MenusModule));
+            moduleCatalog.AddModule(typeof(Module.LogViewer.LogViewerModule));
             moduleCatalog.Initialize();
         }
 
