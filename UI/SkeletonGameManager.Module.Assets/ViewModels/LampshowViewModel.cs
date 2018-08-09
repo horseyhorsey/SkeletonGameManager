@@ -61,19 +61,18 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
 
         public async override Task GetFiles()
         {
+            //Lamps from yaml
             if (LampShows == null)
             {
                 LampShows = _skeletonGameProvider.AssetsConfig?.LampShows;
                 LampShows.CollectionChanged += LampShows_CollectionChanged;
-            }
-
+            }            
+           
+            //Get lamp files
             _lampshowPath = Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows");
-
             if (!Directory.Exists(_lampshowPath)) Directory.CreateDirectory(_lampshowPath);
-
             var lampshowFiles = await _skeletonGameFiles.GetFilesAsync(_lampshowPath, AssetTypes.Lampshows);
             this.AssetFiles = new ObservableCollection<string>();
-
             foreach (var lampshow in lampshowFiles)
             {
                 var lampFile = Path.GetFileName(lampshow);
