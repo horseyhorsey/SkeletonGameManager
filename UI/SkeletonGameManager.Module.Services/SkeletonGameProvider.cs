@@ -46,26 +46,21 @@ namespace SkeletonGameManager.Module.Services
 
         #endregion
 
-        #region Properties
-        public IReadOnlyList<string> YamlFiles { get; } = new List<string>() { "config.yaml", "config/asset_list.yaml", "config/attract.yaml", "config/new_score_display.yaml", "config/score_display.yaml", "config/machine.yaml", "config/trophy_default_data.yaml" };
+        #region Properties        
 
         public string GameFolder { get; set; }
 
         public GameConfig GameConfig { get; set; }
-
         public SequenceYaml AttractConfig { get; set; }
-
         public ObservableCollection<string> SequenceYamls { get; set; } = new ObservableCollection<string>();
-
         public AssetsFile AssetsConfig { get; set; }
-
         public ScoreDisplay ScoreDisplayConfig { get; set; }
-
         public MachineConfig MachineConfig { get; set; }
-
         public MachineConfigDict MachineConfigDict { get; set; }
-
         public TrophyData TrophyData { get; set; }
+
+        public IReadOnlyList<string> YamlFiles { get; } = new List<string>()
+        { Constants.FILE_CONFIG, Constants.FILE_ASSETS, Constants.FILE_ATTRACT, Constants.FILE_NEWSCOREDISPLAY, Constants.FILE_SCOREDISPLAY, Constants.FILE_MACHINE, Constants.FILE_TROPHY};
 
         #endregion
 
@@ -122,7 +117,8 @@ namespace SkeletonGameManager.Module.Services
 
                     try
                     {
-                        MachineConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfig>(Path.Combine(GameFolder, YamlFiles[5]));
+                        var machineConfig = Path.Combine(GameFolder, YamlFiles[5]);
+                        MachineConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<MachineConfig>(machineConfig);
                     }
                     catch (FileNotFoundException ex)
                     {
@@ -133,6 +129,9 @@ namespace SkeletonGameManager.Module.Services
                     }
                     catch (System.Exception ex)
                     {
+                        var msg = $"Failed loading Game. \r\n {ex.Data["yaml"]} {ex.Message}";
+                        msg += $"\n\r {ex.Data["err"]}";
+                        Log(msg, Category.Exception);
                         try
                         {
                             Dispatcher.CurrentDispatcher.Invoke(() =>
@@ -142,8 +141,8 @@ namespace SkeletonGameManager.Module.Services
                         }
                         catch (Exception exee)
                         {
-                            var msg = $"Failed loading Game. {exee.Data["yaml"]} {exee.Message}";
-                            msg += $"/n/r {exee.Data["err"]}";
+                            msg = $"Failed loading Game. \r\n {exee.Data["yaml"]} {exee.Message}";
+                            msg += $"\n\r {exee.Data["err"]}";
 
                             Log(msg);
                             throw;
@@ -241,8 +240,6 @@ namespace SkeletonGameManager.Module.Services
                 sw.Write(scriptString);
             }
         }
-
-
 
         public SequenceYaml GetSequence(string yamlPath)
         {
