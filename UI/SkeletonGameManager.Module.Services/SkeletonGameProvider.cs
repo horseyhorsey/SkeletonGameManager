@@ -101,6 +101,8 @@ namespace SkeletonGameManager.Module.Services
                     if (GameConfig == null)
                         throw new NullReferenceException("Config.yaml returned null, please check your config.yaml");
 
+
+                    AssetsConfig = null;
                     if (File.Exists(Path.Combine(GameFolder, YamlFiles[1])))
                         AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
 
