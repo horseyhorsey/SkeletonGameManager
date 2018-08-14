@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Windows;
 using System.Windows.Input;
+using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.Module.Menus.ViewModels
 {
@@ -17,8 +18,9 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
         public DelegateCommand CreateNewSkeletonGame { get; set; }
 
-        public CreateNewGameWindowViewModel()
+        public CreateNewGameWindowViewModel(IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             _client = new WebClient();
 
             CreateNewSkeletonGame = new DelegateCommand(DownloadAndSetupNewGame, () => !string.IsNullOrEmpty(GameName));
@@ -78,7 +80,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 var gamePath = Path.Combine(ProcPath, GameName);
                 if (Directory.Exists(gamePath))
                 {
-                    MessageBox.Show($"Game folder already exists!..{gamePath}");
+                    _eventAggregator.GetEvent<ErrorMessageEvent>().Publish($"Game folder already exists!..{gamePath}");
                     return;
                 }
 
@@ -88,6 +90,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
                 if (File.Exists(fileDownload))
                 {
+                    //TODO: Add confirm dialogs
                     var result = MessageBox.Show("Download already exists, download and overwrite?", "Download", MessageBoxButton.YesNo);
 
                     if (result == MessageBoxResult.Yes)
@@ -103,23 +106,31 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 //Create game from download.
                 var creator = new CreateSkeletonGame();
                 creator.CreateNewGameEntry(GameName, SelectedTemplate, ProcPath, fileDownload);
-
-                //Add the machinetype and balls in machine
+                
+                //Machine file to copy and use as default
                 var machineYaml = Path.Combine(gamePath, "config", "machine.yaml");
-
-                //Read all and replace with the new values
+                //Change default machine.yaml if using PDB, copy backup, delete old
+                if (SelectedMachineType == MachineType.PDB)
+                {
+                    File.Copy(machineYaml, Path.Combine(gamePath, "config", "machine_standard.yaml"));
+                    File.Delete(machineYaml);
+                    machineYaml = Path.Combine(gamePath, "config", "PDB_Sample.yaml");
+                }
+                
+                //Add the machinetype and balls in machine
                 var machineConfigString = File.ReadAllText(machineYaml);
                 machineConfigString = machineConfigString.Replace("  machineType: wpc", $" machineType: {SelectedMachineType.ToString().ToLower()}");
                 machineConfigString = machineConfigString.Replace("  numBalls: 6", $" numBalls: {BallsInMachine}");
 
-                //Rewrite the text back
+                //Rewrite the text back to machine.yaml
+                machineYaml = Path.Combine(gamePath, "config", "machine.yaml");
                 File.WriteAllText(machineYaml, machineConfigString);
 
-                MessageBox.Show($"New game: {GameName} succesfully created at {gamePath}");                
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish($"New game: {GameName} succesfully created at {gamePath}");
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show($"Error creating game {ex.Message}");
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish($"Error creating game {ex.Message}");
             }
         }
 
