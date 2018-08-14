@@ -3,12 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"        
         prism:ViewModelLocator.AutoWireViewModel="True"       
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         WindowStyle="SingleBorderWindow" ResizeMode="CanResizeWithGrip"
         ShowInTaskbar="True" SizeToContent="WidthAndHeight" Background="White"
         Title="{Binding Title}"
-        MinWidth="1024" MinHeight="768"
+        MinWidth="350" MinHeight="640"
         xml:lang="en-US"
         >
+
 
     <Window.Resources>
 
@@ -46,6 +48,13 @@
 
     </Window.CommandBindings>
 
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding NotificationRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" />
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+
+    
     <Window.InputBindings>
         <KeyBinding x:Uid="KeyBinding_1" Key="O" Gesture="Ctrl+O" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.Open}"/>
         <KeyBinding x:Uid="KeyBinding_2" Key="Q" Gesture="Ctrl+Q" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.Close}"/>
@@ -152,7 +161,7 @@
                         Grid.Row="3" Margin="3" 
                         >
                 <TabControl.ItemContainerStyle>
-                    
+
                     <!--TAB HEADER-->
                     <Style TargetType="TabItem">
                         <Setter Property="HeaderTemplate">
@@ -161,7 +170,7 @@
                                     <DockPanel TextElement.FontSize="16">
                                         <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}, Mode=FindAncestor}, 
                                             Path=Content.DataContext.Title}"/>
-                                        
+
                                         <Button Content="X" Margin="5,0"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
@@ -182,8 +191,6 @@
 
 
         </Grid>
-
-
 
     </Grid>
 

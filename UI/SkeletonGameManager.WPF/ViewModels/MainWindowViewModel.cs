@@ -7,6 +7,9 @@ using System.Windows.Input;
 using Prism.Logging;
 using System;
 using Prism.Regions;
+using System.Diagnostics;
+using Prism.Interactivity.InteractionRequest;
+using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.WPF.ViewModels
 {
@@ -14,11 +17,13 @@ namespace SkeletonGameManager.WPF.ViewModels
     {
         #region Fields
         private ISkeletonGameProvider _skeletonGameProvider;
+        public InteractionRequest<INotification> NotificationRequest { get; private set; }
         #endregion
 
         #region Commands        
         public ICommand CloseTabCommand { get; }
         public ICommand OpenFileFolderCommand { get; }
+        public ICommand TestCommand { get; set; }
         #endregion
 
         #region Constructors
@@ -35,8 +40,22 @@ namespace SkeletonGameManager.WPF.ViewModels
             OpenFileFolderCommand = new DelegateCommand<string>(OnOpenFileFolder);
 
             CloseTabCommand = new DelegateCommand<object>(OnCloseTab);
+            
+            Log("".PadRight(25, '*'));
+            Log($"Skeleton Game Manager : {Base.Helpers.Versions.GetVersion()}");
+            Log("".PadRight(25, '*'));
 
-            Log("Initialized");
+            NotificationRequest = new InteractionRequest<INotification>();
+
+            eventAggregator.GetEvent<ErrorMessageEvent>().Subscribe((x) =>
+            {
+                NotificationRequest.Raise(new Notification
+                {
+                    Content = x,
+                    Title = "Error"
+                });
+            }, ThreadOption.UIThread);
+            
         }
         #endregion
 
@@ -140,9 +159,7 @@ namespace SkeletonGameManager.WPF.ViewModels
         }
 
         private void _skeletonGameProvider_StatusChanged(object sender, ProviderUpdatedEventArgs e)
-        {
-            Log($"Provider status changed. {e.Status}");
-
+        {            
             if (e.Status == 2)
                 this.IsMainTabEnabled = false;
             else
@@ -151,9 +168,7 @@ namespace SkeletonGameManager.WPF.ViewModels
             if (!String.IsNullOrWhiteSpace(_skeletonGameProvider.GameFolder))
                 this.Title = "Skeleton Game Manager: " + _skeletonGameProvider.GameFolder;
             else
-                this.Title = "Skeleton Game Manager";
-
-            Log($"Main tab is enabled: {this.IsMainTabEnabled}");
+                this.Title = "Skeleton Game Manager";            
         }
         #endregion
     }
