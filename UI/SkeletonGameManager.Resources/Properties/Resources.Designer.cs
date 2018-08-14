@@ -233,6 +233,15 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Drag &amp; Drop Lampshows and RGBShows files and to copy to lampshow directory. Drag &amp; Drop from the available files to each collection, lampshow and rgbshow..
+        /// </summary>
+        public static string Tip_DropLampshows {
+            get {
+                return ResourceManager.GetString("Tip_DropLampshows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabled game recording plaback. This will set the FakePinProc class to use the Playback version and set back when game is closed. The selected playback in the list will be copied to the main game directory as playback.txt..
         /// </summary>
         public static string Tip_EnablePlayback {
@@ -251,7 +260,7 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exports all the lamps into a compatible rampantslug LampshowUI project..
+        ///   Looks up a localized string similar to Exports all the lamps into a compatible rampantslug LampshowUI project saving time on initial setup. *You can load and move into place..
         /// </summary>
         public static string Tip_ExportLampshowUI {
             get {
@@ -296,11 +305,38 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reverses the selected Lamshow..
+        /// </summary>
+        public static string Tip_LampshowReverse {
+            get {
+                return ResourceManager.GetString("Tip_LampshowReverse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Launches the game with the options set..
         /// </summary>
         public static string Tip_LaunchRecording {
             get {
                 return ResourceManager.GetString("Tip_LaunchRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View SGM logs..
+        /// </summary>
+        public static string Tip_LogSgm {
+            get {
+                return ResourceManager.GetString("Tip_LogSgm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View logs from gamefolder/logs. Logs are produced when launched from SGM..
+        /// </summary>
+        public static string Tip_LogSgmGame {
+            get {
+                return ResourceManager.GetString("Tip_LogSgmGame", resourceCulture);
             }
         }
         
@@ -314,11 +350,29 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creates and setups a new game..
+        /// </summary>
+        public static string Tip_NewGame {
+            get {
+                return ResourceManager.GetString("Tip_NewGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Opens the current directory..
         /// </summary>
         public static string Tip_OpenDir {
             get {
                 return ResourceManager.GetString("Tip_OpenDir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loads a compatible SkeletonGame folder..
+        /// </summary>
+        public static string Tip_OpenGame {
+            get {
+                return ResourceManager.GetString("Tip_OpenGame", resourceCulture);
             }
         }
         
@@ -427,6 +481,24 @@ namespace SkeletonGameManager.Resources.Properties {
         public static string Tip_Profiles {
             get {
                 return ResourceManager.GetString("Tip_Profiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Playback a Recording..
+        /// </summary>
+        public static string Tip_RecordingPlaybackMenu {
+            get {
+                return ResourceManager.GetString("Tip_RecordingPlaybackMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reloads game config from disk..
+        /// </summary>
+        public static string Tip_Reload {
+            get {
+                return ResourceManager.GetString("Tip_Reload", resourceCulture);
             }
         }
         
@@ -613,6 +685,15 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Launch the OSC Switch Matrix Tool. Paths are configured in config.yaml..
+        /// </summary>
+        public static string Tip_SwitchMatrixLaunch {
+            get {
+                return ResourceManager.GetString("Tip_SwitchMatrixLaunch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enables/Disables the Tilt mode..
         /// </summary>
         public static string Tip_TiltConfig {
@@ -627,6 +708,15 @@ namespace SkeletonGameManager.Resources.Properties {
         public static string Tip_Trophys {
             get {
                 return ResourceManager.GetString("Tip_Trophys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export VP_ScriptFull.vbs. Creates a script starter ready for Visual Pinball. Troughs, saucers, ball stacks are created if VP type is specified in the machines switches and coils..
+        /// </summary>
+        public static string Tip_VPExportScriptFull {
+            get {
+                return ResourceManager.GetString("Tip_VPExportScriptFull", resourceCulture);
             }
         }
         

@@ -179,7 +179,7 @@
     <value>Enabled game recording. This will set the skeletons base class to BasicGameRecordable and set it back providing the game window is closed before the UI. Recordings are saved to the recordings directory.</value>
   </data>
   <data name="Tip_ExportLampshowUI" xml:space="preserve">
-    <value>Exports all the lamps into a compatible rampantslug LampshowUI project.</value>
+    <value>Exports all the lamps into a compatible rampantslug LampshowUI project saving time on initial setup. *You can load and move into place.</value>
   </data>
   <data name="Tip_ExportPythonSwitchCallbacks" xml:space="preserve">
     <value>Exports a python file that contains active switch method callbacks. All switches in the machine are exported except for the trough and dedicated switches.</value>
@@ -314,5 +314,35 @@
   </data>
   <data name="Tip_PathsUiLayout" xml:space="preserve">
     <value>The path to the GUI tools layout switch / lamp file.</value>
+  </data>
+  <data name="Tip_LampshowReverse" xml:space="preserve">
+    <value>Reverses the selected Lamshow.</value>
+  </data>
+  <data name="Tip_DropLampshows" xml:space="preserve">
+    <value>Drag &amp; Drop Lampshows and RGBShows files and to copy to lampshow directory. Drag &amp; Drop from the available files to each collection, lampshow and rgbshow.</value>
+  </data>
+  <data name="Tip_LogSgm" xml:space="preserve">
+    <value>View SGM logs.</value>
+  </data>
+  <data name="Tip_LogSgmGame" xml:space="preserve">
+    <value>View logs from gamefolder/logs. Logs are produced when launched from SGM.</value>
+  </data>
+  <data name="Tip_NewGame" xml:space="preserve">
+    <value>Creates and setups a new game.</value>
+  </data>
+  <data name="Tip_OpenGame" xml:space="preserve">
+    <value>Loads a compatible SkeletonGame folder.</value>
+  </data>
+  <data name="Tip_RecordingPlaybackMenu" xml:space="preserve">
+    <value>Playback a Recording.</value>
+  </data>
+  <data name="Tip_Reload" xml:space="preserve">
+    <value>Reloads game config from disk.</value>
+  </data>
+  <data name="Tip_VPExportScriptFull" xml:space="preserve">
+    <value>Export VP_ScriptFull.vbs. Creates a script starter ready for Visual Pinball. Troughs, saucers, ball stacks are created if VP type is specified in the machines switches and coils.</value>
+  </data>
+  <data name="Tip_SwitchMatrixLaunch" xml:space="preserve">
+    <value>Launch the OSC Switch Matrix Tool. Paths are configured in config.yaml.</value>
   </data>
 </root>
