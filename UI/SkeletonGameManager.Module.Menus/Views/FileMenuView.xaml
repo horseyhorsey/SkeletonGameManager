@@ -26,44 +26,54 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
+
         <Grid.InputBindings>
             <KeyBinding Key="N" 
                         Gesture="Ctrl+N" 
-                        Modifiers="Ctrl"
+                        Modifiers="Ctrl"                        
                         Command="{Binding CreateNewGameCommand}"/>
         </Grid.InputBindings>
-        
+
         <Menu>
             <MenuItem Header="_File">
 
                 <!--NEW GAME-->
                 <MenuItem Header="_New..." 
+                          ToolTip="{Binding Tip_NewGame, Source={StaticResource ResourceKey=AppStringResource}}"
                           Command="{Binding CreateNewGameCommand}"                          
                           InputGestureText="Ctrl+N"        
                           />
-                
+
                 <!--OPEN GAME-->
-                <MenuItem Header="_Open..." Command="{Binding SetDirectoryCommand}" InputGestureText="Ctrl+O"/>
+                <MenuItem Header="_Open..." 
+                          ToolTip="{Binding Tip_OpenGame, Source={StaticResource ResourceKey=AppStringResource}}"
+                          Command="{Binding SetDirectoryCommand}" InputGestureText="Ctrl+O"/>
 
                 <!--RecentDirectories-->
                 <MenuItem Header="Recent" Visibility="Visible">
-
                     <MenuItem.Resources>
+                        
+                        <!--Sets OpenRecentCommand and hides if null-->
                         <Style TargetType="{x:Type MenuItem}">
                             <Setter Property="Command" Value="{Binding OpenRecentCommand}"/>
                             <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self},Path=Header}"/>
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <!--<Style.Triggers>
+                                <DataTrigger Binding="{Binding Header}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>-->
                             
                         </Style>
                     </MenuItem.Resources>
-                    
+
                     <MenuItem Header="{Binding RecentDirectories[0]}"/>
                     <MenuItem Header="{Binding RecentDirectories[1]}"/>
                     <MenuItem Header="{Binding RecentDirectories[2]}"/>
                     <MenuItem Header="{Binding RecentDirectories[3]}"/>
                     <MenuItem Header="{Binding RecentDirectories[4]}"/>
                 </MenuItem>
-                
+
                 <!--QUIT UI-->
                 <MenuItem Header="_Quit" Command="{x:Static ApplicationCommands.Close}" InputGestureText="Ctrl+Q"/>
             </MenuItem>
@@ -81,8 +91,13 @@
 
             <!--GAME MENU-->
             <MenuItem Header="_Game">
-                <MenuItem Header="_Browse" Command="{Binding BrowseFolderCommand}" InputGestureText="Ctrl+B"/>
-                <MenuItem Header="R_eload" Command="{Binding ReloadGameCommand}"/>
+                <MenuItem Header="_Browse" 
+                          Command="{Binding BrowseFolderCommand}" 
+                          ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"
+                          InputGestureText="Ctrl+B"/>
+                <MenuItem Header="R_eload" 
+                          ToolTip="{Binding Tip_Reload, Source={StaticResource ResourceKey=AppStringResource}}"
+                          Command="{Binding ReloadGameCommand}"/>
                 <MenuItem Header="_Run" Command="{Binding LaunchGameCommand}" InputGestureText="Ctrl+R"/>
             </MenuItem>
 
@@ -98,25 +113,25 @@
                 </MenuItem>
 
                 <MenuItem Header="_Visual Pinball">
-                    <MenuItem Header="Switch Methods"
-                                ToolTip="{DynamicResource Tip_VPExportSwitch}"
+                    <MenuItem Header="Switch Methods"                                
+                                ToolTip="{Binding Tip_VPExportSwitch, Source={StaticResource ResourceKey=AppStringResource}}"
                                 Command="{Binding ExportCommand}"                               
                                 CommandParameter="switch"
                               />
                     <MenuItem Header="Solenoid Callbacks"
-                            ToolTip="Exports SolCallBacks for Visual Pinball"
-                            Command="{Binding ExportCommand}"                               
-                            CommandParameter="coil"
+                              ToolTip="{Binding Tip_VPExportSolenoid, Source={StaticResource ResourceKey=AppStringResource}}"
+                              Command="{Binding ExportCommand}"                               
+                              CommandParameter="coil"                              
                               />
                     <MenuItem Header="Full Table Script"
-                            ToolTip="Creates a full script to be used in Visual Pinball"
+                            ToolTip="{Binding Tip_VPExportScriptFull, Source={StaticResource ResourceKey=AppStringResource}}"                              
                             Command="{Binding ExportCommand}"                               
                             CommandParameter="ScriptFull"
                               />
                 </MenuItem>
 
                 <MenuItem Header="LampshowUI"
-                          ToolTip="{DynamicResource Tip_ExportLampshowUI}"
+                          ToolTip="{Binding Tip_ExportLampshowUI, Source={StaticResource ResourceKey=AppStringResource}}"                              
                             Command="{Binding ExportCommand}"                               
                             CommandParameter="lampshowUi"
                           />
@@ -124,6 +139,7 @@
 
             <MenuItem Header="Tools">
                 <MenuItem Header="_Switch Matrix" 
+                          ToolTip="{Binding Tip_SwitchMatrixLaunch, Source={StaticResource ResourceKey=AppStringResource}}"                          
                           Command="{Binding LaunchToolCommand}" 
                           CommandParameter="SwitchMatrixClient"/>
             </MenuItem>
@@ -132,11 +148,10 @@
             <MenuItem Header="Recordings"                     
                       >
 
-                <MenuItem Header="Record New"/>
-
                 <MenuItem Header="Playback" 
                           ItemsSource="{Binding Recordings}"
-                          DisplayMemberPath="PlaybackFile"                          
+                          DisplayMemberPath="PlaybackFile"   
+                          ToolTip="{Binding Tip_RecordingPlaybackMenu, Source={StaticResource ResourceKey=AppStringResource}}"
                           >
 
                     <MenuItem.Resources>
@@ -145,19 +160,22 @@
                             <Setter Property="CommandParameter" Value="{Binding PlaybackFile}"/>
                         </Style>
                     </MenuItem.Resources>
-                    
+
                 </MenuItem>
-                    
+
             </MenuItem>
 
             <MenuItem Header="Logs">
 
-                <MenuItem Header="_Game Log" 
+                <MenuItem Header="_Sgm Game Logs" 
                           Command="{Binding NavigateCommand}" 
-                          CommandParameter="SkeletonGameLogView"/>
+                          CommandParameter="SkeletonGameLogView"
+                          ToolTip="{Binding Tip_LogSgmGame, Source={StaticResource ResourceKey=AppStringResource}}"                                                        
+                          />
 
                 <MenuItem Header="_Sgm" 
                           Command="{Binding NavigateCommand}" 
+                          ToolTip="{Binding Tip_LogSgm, Source={StaticResource ResourceKey=AppStringResource}}"                                                        
                           CommandParameter="AppLogView"/>
             </MenuItem>
 
@@ -169,9 +187,28 @@
                          Command="{Binding BrowseFolderCommand}"
                          ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"
                          />
+            </ToolBar>
+
+            <ToolBar Header="{DynamicResource Path_Game}" MaxHeight="32"
+                                        
+                     >
+
+                
                 <Button Command="{Binding LaunchGameCommand}" 
+                        Content="{DynamicResource Path_Game}"                        
                         ToolTip="{Binding Tip_GameLaunchInfo, Source={StaticResource ResourceKey=AppStringResource}}"
-                        Content="{DynamicResource Path_Game}"/>
+                        ToolBar.OverflowMode="Always"  
+                        />
+
+                <Button Command="{Binding LaunchGameCommand}" 
+                        Content="{DynamicResource Path_Game}"
+                        ToolTip="{Binding Tip_GameLaunchInfo, Source={StaticResource ResourceKey=AppStringResource}}"
+                        ToolBar.OverflowMode="Always"
+                        />
+
+                <ToolBarOverflowPanel ToolBar.OverflowMode="Never">
+                    <Button Content="ee"/>
+                </ToolBarOverflowPanel>
             </ToolBar>
         </ToolBarTray>
     </Grid>
