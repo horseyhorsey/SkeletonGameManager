@@ -27,6 +27,8 @@ namespace SkeletonGameManager.Module.Recordings.ViewModels
         {
             _skeletonGameProvider = skeletonGameProvider;
 
+            Title = "Recordings";
+
             #region Commands
             LaunchGameCommand = new DelegateCommand(() =>
             {
