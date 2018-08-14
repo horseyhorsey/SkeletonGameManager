@@ -27,6 +27,8 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonGameFiles = skeletonGameFiles;
 
+            Title = "Fonts";
+
             OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_fontPath.AbsolutePath));
         } 
         #endregion
@@ -50,19 +52,28 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         #region Public Methods
         public async override Task GetFiles()
         {
-            Log("Attempting to get Font assets");
-            FontStyles = _skeletonGameProvider.AssetsConfig?.Fonts.FontStyles;
-            HdFonts = _skeletonGameProvider.AssetsConfig?.Fonts.HdFonts;
+            try
+            {
+                Log("Populating font files");
+                FontStyles = _skeletonGameProvider.AssetsConfig?.Fonts.FontStyles;
+                HdFonts = _skeletonGameProvider.AssetsConfig?.Fonts.HdFonts;
 
-            var hdFontPath = _skeletonGameProvider.GameConfig.HdFontPath;
-            if (hdFontPath.Contains('.'))
-                _fontPath = new Uri(Path.Combine(_skeletonGameProvider.GameFolder, hdFontPath), UriKind.RelativeOrAbsolute);
-            else
-                _fontPath = new Uri(hdFontPath);
+                var hdFontPath = _skeletonGameProvider.GameConfig.HdFontPath;
+                if (hdFontPath.Contains('.'))
+                    _fontPath = new Uri(Path.Combine(_skeletonGameProvider.GameFolder, hdFontPath), UriKind.RelativeOrAbsolute);
+                else
+                    _fontPath = new Uri(hdFontPath);
 
-            var fontFiles = await _skeletonGameFiles.GetFilesAsync(_fontPath.AbsolutePath, AssetTypes.HdFonts);
+                //Get font files and select the filename for assets list
+                var fontFiles = await _skeletonGameFiles.GetFilesAsync(_fontPath.AbsolutePath, AssetTypes.HdFonts);
+                this.AssetFiles = new ObservableCollection<string>(fontFiles.Select(x => Path.GetFileName(x)));
 
-            this.AssetFiles = new System.Collections.ObjectModel.ObservableCollection<string>(fontFiles);
+                Log($"Font file count: {AssetFiles.Count}");
+            }
+            catch (Exception ex)
+            {
+                Log($"Error populating fonts: {ex.Message}", Category.Warn);
+            }
         } 
         #endregion
     }
