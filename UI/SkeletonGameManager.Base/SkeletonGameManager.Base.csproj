@@ -123,9 +123,11 @@
     <Compile Include="Events\EventArgs.cs" />
     <Compile Include="Events\Events.cs" />
     <Compile Include="Helpers\FileFolder.cs" />
+    <Compile Include="Helpers\Versions.cs" />
     <Compile Include="Interface\IAppSettingsModel.cs" />
     <Compile Include="Interface\IGameRunnner.cs" />
     <Compile Include="Interface\IMediaPlayer.cs" />
+    <Compile Include="Interface\ISgmDialogService.cs" />
     <Compile Include="Interface\ISkeletonGameProvider.cs" />
     <Compile Include="Logging\SkeletonGameLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
