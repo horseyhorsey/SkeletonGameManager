@@ -1,6 +1,7 @@
 ﻿using GongSolutions.Wpf.DragDrop;
 using Prism.Events;
 using Prism.Logging;
+using Prism.Regions;
 using SkeletonGameManager.Base;
 using System;
 using System.Collections.ObjectModel;
@@ -9,9 +10,10 @@ using System.Windows.Input;
 
 namespace SkeletonGameManager.Module.Assets.ViewModels
 {
-    public abstract class AssetFileBaseViewModel : SkeletonGameManagerViewModelBase, IDropTarget
+    public abstract class AssetFileBaseViewModel : SkeletonTabViewModel, IDropTarget, INavigationAware
     {
-        public ICommand OpenDirectoryCommand { get; set; }        
+        public ICommand OpenDirectoryCommand { get; set; }
+        public ICommand OpenFileCommand { get; set; }
 
         public AssetFileBaseViewModel(IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
@@ -45,8 +47,16 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
 
         public void OpenDirectory(string path)
         {
-            if (!string.IsNullOrWhiteSpace(path))
-                FileFolder.Explore(path);
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(path))
+                    FileFolder.Explore(path);
+            }
+            catch (Exception ex)
+            {
+                Log($"Error opening file/folder: {path}, {ex.Message}");
+            }
+
         }
     }
 }
