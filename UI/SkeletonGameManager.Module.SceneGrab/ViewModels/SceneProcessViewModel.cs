@@ -12,6 +12,7 @@ using SkeletonGameManager.Base;
 using SkeletonGameManager.Module.SceneGrab.Model;
 using static SkeletonGameManager.Module.SceneGrab.Events.ViewModelEvents;
 using Prism.Logging;
+using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.Module.SceneGrab.ViewModels
 {
@@ -130,7 +131,10 @@ namespace SkeletonGameManager.Module.SceneGrab.ViewModels
 
                     }
                     //Any errors show to the user
-                    catch (Exception ex) { System.Windows.MessageBox.Show(ex.Message); return; }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show(ex.Message); return;
+                    }
                 }
             });
 
@@ -143,13 +147,13 @@ namespace SkeletonGameManager.Module.SceneGrab.ViewModels
         {
             if (!DoesProcessListHaveValidNamesAndNotEmptyStrings())
             {
-                System.Windows.MessageBox.Show("Fill in the export name in the process list.");
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish("Fill in the export name in the process list.");
                 return false;
             }
 
             if (!DoesProcessListHaveValidExportOptions())
             {
-                System.Windows.MessageBox.Show("Make sure an export option is checked for each item.");
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish("Make sure an export option is checked for each item.");
                 return false;
             }
 
