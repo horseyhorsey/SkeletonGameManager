@@ -6,7 +6,6 @@ using Prism.Regions;
 using SkeletonGame.Engine;
 using SkeletonGame.Models;
 using SkeletonGameManager.Base;
-using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using static SkeletonGameManager.Base.Events;
@@ -20,7 +19,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         private IUnityContainer _unityContainer;
         private ISkeletonGameProvider _skeletonGameProvider;
         private ISkeletonGameFiles _skeletonGameFiles;
-        #endregion
+        #endregion  
 
         #region Constructors
         public AssetListViewModel(IRegionManager regionManager, IUnityContainer unityContainer, IEventAggregator eventAggregator, 
@@ -33,21 +32,23 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             _unityContainer = unityContainer;
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonGameFiles = skeletonGameFiles;
-
-            _regionManager.RequestNavigate(Regions.AssetDetailRegion, "AssetDetailsView");
-
+            
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
 
-            SaveCommand = new DelegateCommand(() =>
-            {
-                _skeletonGameProvider.SaveAssetsFile(AssetsFile);
-            }, () => AssetsFile == null ? false : true);
-
+            #region Commands
+            CloseTabCommand = new DelegateCommand<object>(OnCloseTab);
+            SaveCommand = new DelegateCommand(() => { OnSaveAssetLists(); }, () => AssetsFile == null ? false : true);
             SwitchViewCommand = new DelegateCommand<string>(OnSwitchView);
-        } 
+            #endregion
+
+            //Set the main assets view
+            _regionManager.RequestNavigate(Regions.AssetDetailRegion, "AssetDetailsView");
+        }
+
         #endregion
 
         #region Commands
+        public ICommand CloseTabCommand { get; }
         public ICommand SwitchViewCommand { get; set; } 
         #endregion
 
@@ -104,46 +105,72 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             catch (System.Exception ex)
             {
                 Log(ex.Message, Category.Exception);
-                //TODO: Log                
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish($"Failed getting assets. {ex.Message}");
             }
         }
         #endregion
 
         #region Private Methods
-        private void OnSwitchView(string viewName)
+    
+        /// <summary>
+        /// Called when [close tab] to close a view /tab from the OpenTabsRegion.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        private void OnCloseTab(object obj)
         {
-            //TODO: Make this more dynamic, don't reference view files in the VM !
-            Type viewType = null;
+            IRegion region = _regionManager.Regions["CurrentAssetRegion"];
+            if (region.Views.Contains(obj))
+            {
+                region.Remove(obj);
+                Log("Removed assets tab: " + obj);
+            }
+        }
+
+        private void OnSaveAssetLists()
+        {
+            Log("Saving asset_list.yaml");
+
+            try
+            { _skeletonGameProvider.SaveAssetsFile(AssetsFile); }
+            catch (System.Exception ex)
+            {
+                Log($"Failed saving asset list. {ex.Message}", Category.Exception);
+            }
+        }
+
+        private void OnSwitchView(string viewName)
+        {            
             switch (viewName)
             {
                 case "Fonts":
-                    viewType = typeof(Views.FontsView);
+                    viewName = "FontsView";
                     break;
                 case "Lampshows":
-                    viewType = typeof(Views.LampshowView);
+                    viewName = "LampshowView";
                     break;
                 case "Sfx":
-                    viewType = typeof(Views.SfxView);
+                    viewName = "SfxView";
                     break;
                 case "Voice":
-                    viewType = typeof(Views.VoiceView);
+                    viewName = "VoiceView";
                     break;
                 case "Music":
-                    viewType = typeof(Views.MusicView);
+                    viewName = "MusicView";
                     break;
                 case "Progress":
-                    viewType = typeof(Views.LoadingProgressView);
+                    viewName = "LoadingProgressView";
                     break;
                 case "Anims":
-                    viewType = typeof(Views.AnimationsView);
+                    viewName = "AnimationsView";
                     break;                    
                 default:
                     break;
             }
 
-            _regionManager.Regions[Regions.CurrentAssetRegion].RemoveAll();
-            _regionManager.RegisterViewWithRegion(Regions.CurrentAssetRegion, viewType);
-        } 
+            Log($"Switching View. {viewName}");
+            _regionManager.RequestNavigate(Regions.CurrentAssetRegion, viewName);
+        }
         #endregion
+
     }
 }
