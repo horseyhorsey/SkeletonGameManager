@@ -16,6 +16,7 @@ namespace SkeletonGameManager.WPF.ViewModels
 
         public ScoreLayoutViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
+            //TODO: Animations dropdown not updating if user adds to asset list or saves.
             Title = "Score Display";
 
             _skeletonGameProvider = skeletonGameProvider;
@@ -32,7 +33,7 @@ namespace SkeletonGameManager.WPF.ViewModels
                 {
                     await OnLoadYamlFilesChanged();
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
                     throw;
                 }
@@ -40,18 +41,8 @@ namespace SkeletonGameManager.WPF.ViewModels
             );
         }
 
-        public async override Task OnLoadYamlFilesChanged()
-        {
-            ScoreLayout = _skeletonGameProvider.ScoreDisplayConfig?.ScoreLayout;
-
-            Animations = new ObservableCollection<string>(
-                _skeletonGameProvider.AssetsConfig?.Animations
-                .Select(x => x.Key));
-
-            await Task.Delay(100);
-        }
-
-        private ObservableCollection<string> animations;
+        #region Properties
+        private ObservableCollection<string> animations = new ObservableCollection<string>();
         public ObservableCollection<string> Animations
         {
             get { return animations; }
@@ -63,6 +54,16 @@ namespace SkeletonGameManager.WPF.ViewModels
         {
             get { return scoreLayout; }
             set { SetProperty(ref scoreLayout, value); }
+        } 
+        #endregion
+
+        public async override Task OnLoadYamlFilesChanged()
+        {
+            ScoreLayout = _skeletonGameProvider.ScoreDisplayConfig?.ScoreLayout;
+
+            Animations.AddRange(_skeletonGameProvider.AssetsConfig?.Animations.Select(x => x.Key));
+
+            await Task.Delay(100);
         }
 
         private void OnSaveCommand()
