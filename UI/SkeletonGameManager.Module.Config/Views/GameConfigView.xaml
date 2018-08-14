@@ -62,14 +62,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
@@ -354,10 +351,13 @@
         </StackPanel>
 
         <!--KEYBOARD MAPPINGS-->
-        <views:KeyboardMappingsView Grid.Row="0" Grid.Column="1"/>
+        <views:KeyboardMappingsView Grid.Row="0" Grid.RowSpan="2" 
+                                    Grid.Column="1"/>
 
         <!--SAVE-->
-        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom"
+        <Button Grid.Row="2" Grid.Column="1" 
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
                 Style="{DynamicResource StyleSaveButton}"                             
                 ToolTip="{Binding Tip_SaveConfigGame, Source={StaticResource ResourceKey=AppStringResource}}"
                 />
