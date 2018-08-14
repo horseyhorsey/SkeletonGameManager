@@ -22,53 +22,88 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <Button Content="{StaticResource Path_Dir}"
+        <ToolBarTray Grid.ColumnSpan="2">
+            <ToolBar>
+                <Button Content="{StaticResource Path_Dir}"
                     ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"
                     VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
-        </StackPanel>
 
-        <Button Content="{StaticResource Path_Lamps}" Grid.Column="1"
-                    ToolTip="Reverse selected"
+                <Button Content="{StaticResource Path_Lamps}" Grid.Column="1"
+                    ToolTip="{Binding Tip_LampshowReverse, Source={StaticResource ResourceKey=AppStringResource}}"                        
                     HorizontalAlignment="Left"
                     VerticalAlignment="Bottom" Height="30" Width="35" 
                     Command="{Binding ReverseLampshowCommand}"
-                    CommandParameter="{Binding ElementName=LampsDataGrid, Path=SelectedItem}"
+                    CommandParameter="{Binding ElementName=AvailableLampshowsListView, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged}"
                 />
+                
+            </ToolBar>
+        </ToolBarTray>
 
-        <!--TITLE AND HELP-->
-        <StackPanel  Orientation="Horizontal" Grid.Row="2">
-            <Label Content="Available Show files"/>
-            <Label Content="Drag/Drop lampshows to add to this list" FontStyle="Italic" FontSize="12"/>
-        </StackPanel>
 
-        <Grid Grid.Row="3">
-            <ListView ItemsSource="{Binding AssetFiles, UpdateSourceTrigger=PropertyChanged}"
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel>
+                <Label DockPanel.Dock="Top" Content="Available Show files"
+                       ToolTip="{Binding Tip_DropLampshows, Source={StaticResource ResourceKey=AppStringResource}}"
+                       />
+                <ListView DockPanel.Dock="Bottom" x:Name="AvailableLampshowsListView"
+                          ToolTip="{Binding Tip_DropLampshows, Source={StaticResource ResourceKey=AppStringResource}}"
+                          ItemsSource="{Binding AssetFiles, UpdateSourceTrigger=PropertyChanged}"
                                   dd:DragDrop.IsDragSource="True"
                                   dd:DragDrop.IsDropTarget="True"
                                   dd:DragDrop.DropHandler="{Binding}" Margin="0,-1,0,1"
                                   />
-        </Grid>
+            </DockPanel>
 
-        <!--Lampshows in asset_list-->
-        <StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="2">
-            <Label Content="Applied" />
-            <Label Content="Use delete key to remove from saved list" FontStyle="Italic" FontSize="12"/>
-        </StackPanel>
+            <DockPanel Grid.Column="1">
+                <Label DockPanel.Dock="Top" Content="{Binding Tip_DropLampshows, Source={StaticResource ResourceKey=AppStringResource}}"                          
+                       FontStyle="Italic" FontSize="12"/>
 
-        <DataGrid Grid.Row="3" Grid.Column="1" x:Name="LampsDataGrid"
+                <TabControl>
+                    <TabItem Header="LampShows">
+                        <DockPanel>
+                            <DataGrid x:Name="LampsDataGrid"
                               AutoGenerateColumns="False" CanUserAddRows="False"
                               dd:DragDrop.IsDropTarget="True"
                               dd:DragDrop.DropHandler="{Binding}"
-                              ItemsSource="{Binding LampShows, UpdateSourceTrigger=PropertyChanged}">
+                              ItemsSource="{Binding LampshowsCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Key}" Header="Key"/>
+                                    <DataGridTextColumn Binding="{Binding File}" Width="1*" IsReadOnly="True" Header="File"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Key}" Header="Key"/>
-                <DataGridTextColumn Binding="{Binding File}" Width="1*" IsReadOnly="True" Header="File"/>
-            </DataGrid.Columns>
+                    <TabItem Header="RGBShows">
+                        <DockPanel>
+                            <DataGrid Grid.Row="3" Grid.Column="1" x:Name="RbgShowDataGrid"
+                              AutoGenerateColumns="False" CanUserAddRows="False"
+                              dd:DragDrop.IsDropTarget="True"
+                              dd:DragDrop.DropHandler="{Binding}"
+                              ItemsSource="{Binding RgbshowsCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Key}" Header="Key"/>
+                                    <DataGridTextColumn Binding="{Binding File}" Width="1*" IsReadOnly="True" Header="File"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                </TabControl>
+            </DockPanel>
+        </Grid>
 
-            
-        </DataGrid>
+        <!--Lampshows in asset_list-->
+        <!--<StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="2">
+            <Label Content="Applied" />
+            <Label Content="Use delete key to remove from saved list" FontStyle="Italic" FontSize="12"/>
+        </StackPanel>-->
 
     </Grid>
 </UserControl>
