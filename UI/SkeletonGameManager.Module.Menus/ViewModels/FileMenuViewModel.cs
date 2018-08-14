@@ -153,11 +153,15 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         {
             if (_skeletonGameProvider.GameFolder == null) return;
 
-            //TODO: what if dev has an entry file other than game.py?
-            var gameEntryPointFile = Path.Combine(_skeletonGameProvider.GameFolder, "game.py");
-
-            if (!File.Exists(gameEntryPointFile))
+            //TODO: what if dev / user has an entry file other than game.py?
+            var entryFile = Path.Combine(_skeletonGameProvider.GameFolder, "game.py");
+            if (!File.Exists(entryFile))
+            {
+                var msg = $"{entryFile} doesn't exist.";
+                Log(msg, Category.Exception);
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish(msg);
                 return;
+            }
 
             UpdateCanExecuteCommands();
 
@@ -174,7 +178,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             //}
             catch (Exception ex)
             {
-
+                Log($"Error loading game. {ex.Message}", Category.Exception);
             }
             finally
             {
@@ -215,7 +219,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             catch (Exception ex)
             {
                 Log($"{ex.Message}");
-                System.Windows.MessageBox.Show(ex.Message);
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish($"{ex.Message}");
             }            
 
         }
@@ -311,7 +315,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             if (!IsValidGameFolder())
             {
                 var msg = $"Not a valid Game folder -  {GameFolder}";
-                System.Windows.MessageBox.Show(msg);
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish($"{msg}");
                 Log(msg, Category.Warn);
 
                 GameFolder = null;
@@ -419,7 +423,8 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
                 var msg = $"Failed loading Game. {ex.Data["yaml"]} {ex.Message}";
                 msg += $"/n/r {ex.Data["err"]}";
                 Log(msg, Category.Exception);
-                System.Windows.MessageBox.Show(msg);
+
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish($"{msg}");                
                 _skeletonGameProvider.ClearConfigs();
                 GameFolder = null;                
             }
