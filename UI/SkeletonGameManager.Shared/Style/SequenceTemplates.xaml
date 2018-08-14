@@ -132,6 +132,22 @@
         </Setter>
     </Style>
 
+    <Style x:Key="Style_RgbLEDsCombo" BasedOn="{StaticResource Style_AssetCombo}" x:Shared="false" 
+           TargetType="ComboBox">
+        <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.RGBShows}"/>
+        <Setter Property="SelectedValue" Value="{Binding lampshow,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Key}"/>
+                        <!--<Rectangle Fill="{Binding InteriorColor, Converter={StaticResource ListToColorConv},Mode=OneTime}"/>-->
+                    </StackPanel>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--FONT AND STYLE-->
     <Grid x:Key="FontOptionsGrid" x:Shared="false">
 
@@ -463,10 +479,11 @@
                 </DockPanel>
             </GroupBox.Header>
 
-            <Grid>
+            <StackPanel>
 
-                <ComboBox Grid.Column="2" Style="{StaticResource Style_LampsCombo}"/>
-            </Grid>
+                <ComboBox Style="{StaticResource Style_LampsCombo}"/>
+                <ComboBox Style="{StaticResource Style_RgbLEDsCombo}"/>
+            </StackPanel>
         </GroupBox>
 
         <!--DURATION-->
