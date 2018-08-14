@@ -229,7 +229,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                     var sw = new PRSwitch()
                     {
                         Name = item.Name,
-                        Number = item.Number,
+                        Number = item.Number.Split(':')[1],
                         Tags = item.Tags,
                         SwitchType = item.Type,
                         Label = item.Label,

@@ -375,9 +375,6 @@
                                             <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
                                                 <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="pdb">
-                                                <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
-                                            </DataTrigger>
                                         </Style.Triggers>
 
                                     </Style>

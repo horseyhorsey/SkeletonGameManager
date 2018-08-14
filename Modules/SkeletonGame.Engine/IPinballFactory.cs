@@ -324,18 +324,26 @@ namespace SkeletonGame.Engine
         {
             string numString = string.Empty;
 
+            int startSwNum = 32;
             //Column / rows            
             for (int ii = 0; ii < 7; ii++)
             {
                 for (int i = 0; i < 16; i++)
-                {
-                    numString = $"{ii}/{i}";
+                {                    
+                    var colString = $"{ii}/{i}";
+                    numString =  startSwNum < 99 ? $"0{startSwNum}:{colString}" : $"{startSwNum}:{colString}";
 
                     //Find switch
                     var _switch = _machineConfig.PRSwitches
-                        .FirstOrDefault(x => x.Number.ToUpper() == $"{numString}");
+                        .FirstOrDefault(x => x.Number.ToUpper() == $"{colString}");
                     if (_switch == null)
                         AddEmptyMachineItem(typeof(PRSwitch), numString);
+                    else
+                    {
+                        _switch.Number = numString;
+                    }
+
+                    startSwNum++;
                 }
             }
 
