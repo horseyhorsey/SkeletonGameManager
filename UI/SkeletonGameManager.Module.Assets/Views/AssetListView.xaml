@@ -15,16 +15,16 @@
         </Style>
     </UserControl.Resources>
     
-    <Grid>
+    <Grid x:Name="LayoutRoot">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto" MinWidth="50"/>
         </Grid.ColumnDefinitions>
 
         <ToolBarTray>
@@ -64,20 +64,48 @@
                         Style="{StaticResource SwitchViewButtonStyle}" 
                         CommandParameter="Sfx" 
                         />
-
-                <!--SAVE-->
-                <Button Style="{DynamicResource StyleSaveButton}"    
-                        ToolTip="{Binding Tip_SaveAssetsFile, Source={StaticResource ResourceKey=AppStringResource}}"
-                    />
             </ToolBar>
         </ToolBarTray>
 
-        <ContentControl Grid.Row="1" Grid.Column="0" prism:RegionManager.RegionName="{x:Static base:Regions.CurrentAssetRegion}"/>
+        <TabControl Grid.Row="1" Grid.Column="0" prism:RegionManager.RegionName="{x:Static base:Regions.CurrentAssetRegion}">
+            <TabControl.ItemContainerStyle>
+
+                <!--TAB HEADER-->
+                <Style TargetType="TabItem">
+                    <Setter Property="HeaderTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <DockPanel TextElement.FontSize="16">
+                                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}, Mode=FindAncestor}, 
+                                            Path=Content.DataContext.Title}"/>
+
+                                    <Button Content="X" Margin="5,0"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Command="{Binding ElementName=LayoutRoot, Path=DataContext.CloseTabCommand}" 
+                                                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}, Mode=FindAncestor}, 
+                                            Path=Content}"
+                                                DockPanel.Dock="Right"
+                                                />
+                                </DockPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+
+            </TabControl.ItemContainerStyle>
+        </TabControl>
 
         <!--<GridSplitter Grid.Column="1"/>-->
-        
+
         <ContentControl Grid.Column="1" Grid.Row="1"
                         prism:RegionManager.RegionName="{x:Static base:Regions.AssetDetailRegion}"/>
+
+        <!--SAVE-->
+        <Button Style="{DynamicResource StyleSaveButton}"   VerticalAlignment="Bottom"
+                Grid.Row="2"
+                        ToolTip="{Binding Tip_SaveAssetsFile, Source={StaticResource ResourceKey=AppStringResource}}"
+                    />
 
     </Grid>
 </UserControl>
