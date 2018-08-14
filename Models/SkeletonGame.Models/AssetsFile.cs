@@ -13,6 +13,9 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "LampShows", ApplyNamingConventions = false)]
         public ObservableCollection<LampShow> LampShows { get; set; } = new ObservableCollection<LampShow>();
 
+        [YamlMember(Alias = "RGBShows", ApplyNamingConventions = false)]
+        public ObservableCollection<LampShow> RGBShows { get; set; } = new ObservableCollection<LampShow>();
+
         [YamlMember(Alias = "Animations", ApplyNamingConventions = false)]
         public ObservableCollection<Animation> Animations { get; set; } = new ObservableCollection<Animation>();
 
