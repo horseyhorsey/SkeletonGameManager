@@ -29,7 +29,7 @@ namespace SkeletonGameManager.Resources.Properties {
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Resources() {
+        internal Resources() {
         }
         
         /// <summary>
@@ -337,6 +337,15 @@ namespace SkeletonGameManager.Resources.Properties {
         public static string Tip_LogSgmGame {
             get {
                 return ResourceManager.GetString("Tip_LogSgmGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View the C:\P-ROC\Shared\log.txt.
+        /// </summary>
+        public static string Tip_LogVp {
+            get {
+                return ResourceManager.GetString("Tip_LogVp", resourceCulture);
             }
         }
         

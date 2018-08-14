@@ -177,6 +177,11 @@
                           Command="{Binding NavigateCommand}" 
                           ToolTip="{Binding Tip_LogSgm, Source={StaticResource ResourceKey=AppStringResource}}"                                                        
                           CommandParameter="AppLogView"/>
+
+                <MenuItem Header="_VP Log" 
+                          Command="{Binding NavigateCommand}" 
+                          ToolTip="{Binding Tip_LogVp, Source={StaticResource ResourceKey=AppStringResource}}"                                                        
+                          CommandParameter="VpLogView"/>
             </MenuItem>
 
         </Menu>
@@ -207,7 +212,7 @@
                         />
 
                 <ToolBarOverflowPanel ToolBar.OverflowMode="Never">
-                    <Button Content="ee"/>
+                    <!--<Button Content="ee"/>-->
                 </ToolBarOverflowPanel>
             </ToolBar>
         </ToolBarTray>

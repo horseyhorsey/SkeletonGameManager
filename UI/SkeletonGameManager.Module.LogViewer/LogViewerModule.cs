@@ -18,10 +18,12 @@ namespace SkeletonGameManager.Module.LogViewer
         {
             _container.RegisterInstance(_container.Resolve<AppLogViewModel>(), new ContainerControlledLifetimeManager());
             _container.RegisterInstance(_container.Resolve<SkeletonGameLogViewModel>(), new ContainerControlledLifetimeManager());
+            _container.RegisterInstance(_container.Resolve<VpLogViewModel>(), new ContainerControlledLifetimeManager());
 
             ////Register type of view with container to be resolved.
             _container.RegisterType<object, AppLogView>("AppLogView");
             _container.RegisterType<object, SkeletonGameLogView>("SkeletonGameLogView");
+            _container.RegisterType<object, VpLogView>("VpLogView");
         }
     }
 }

@@ -65,9 +65,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\VpLogViewModel.cs" />
     <Compile Include="ViewModels\AppLogViewModel.cs" />
     <Compile Include="ViewModels\LogViewModelBase.cs" />
     <Compile Include="ViewModels\SkeletonGameLogViewModel.cs" />
+    <Compile Include="Views\VpLogView.xaml.cs">
+      <DependentUpon>VpLogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AppLogView.xaml.cs">
       <DependentUpon>AppLogView.xaml</DependentUpon>
     </Compile>
@@ -85,6 +89,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\VpLogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\AppLogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

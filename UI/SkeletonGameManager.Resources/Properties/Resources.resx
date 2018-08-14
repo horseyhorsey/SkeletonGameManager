@@ -345,4 +345,7 @@
   <data name="Tip_SwitchMatrixLaunch" xml:space="preserve">
     <value>Launch the OSC Switch Matrix Tool. Paths are configured in config.yaml.</value>
   </data>
+  <data name="Tip_LogVp" xml:space="preserve">
+    <value>View the C:\P-ROC\Shared\log.txt</value>
+  </data>
 </root>
