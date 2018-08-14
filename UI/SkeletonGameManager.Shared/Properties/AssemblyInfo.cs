@@ -59,3 +59,5 @@ using System.Windows.Markup;
 //[assembly: XmlnsDefinition("http://schemas/horsesoft.co.uk", "SkeletonGameManager.Resources.Properties")]
 
 [assembly: XmlnsPrefix("http://schemas/horsesoft.co.uk", "skelman")]
+
+[assembly: InternalsVisibleTo("SkeletonGameManager.WPF")]
