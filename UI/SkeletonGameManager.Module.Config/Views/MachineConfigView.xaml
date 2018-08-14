@@ -15,8 +15,8 @@
     <Grid x:Name="LayoutRoot">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -54,13 +54,13 @@
                                     >
 
                                 <ToggleButton.Resources>
-                                    
+
                                     <ObjectDataProvider x:Key="procSwitchTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
                                         <ObjectDataProvider.MethodParameters>
                                             <x:Type Type="{x:Type model:ProcSwitchType}"/>
                                         </ObjectDataProvider.MethodParameters>
                                     </ObjectDataProvider>
-                                    
+
                                     <ObjectDataProvider x:Key="vpSwitchTypes" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
                                         <ObjectDataProvider.MethodParameters>
                                             <x:Type Type="{x:Type model:VpSwitchType}"/>
@@ -146,7 +146,7 @@
                                         <StackPanel Orientation="Horizontal" Grid.Row="4" TextElement.FontSize="11" Grid.Column="1">
                                             <CheckBox Content="S" ToolTip="Ball search Stop" IsChecked="{Binding Stop}"/>
                                             <CheckBox Content="R" ToolTip="Ball search Reset" IsChecked="{Binding Reset}"/>
-                                               
+
                                         </StackPanel>
                                     </Grid>
                                 </ToggleButton.Content>
@@ -314,8 +314,24 @@
 
         </Grid.Resources>
 
+        <!--MACHINE (PRGAME)-->
+        <GroupBox Header="PR Game" Margin="3" Grid.Row="0" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal" Margin="5">
+
+                <TextBlock Text="{Binding MachineConfig.PRGame.MachineType, StringFormat={} Machine Type: {0}}"
+                           FontSize="12"
+                           Margin="3"
+                           />
+
+                <TextBlock Text="{Binding MachineConfig.PRGame.NumBalls, StringFormat={} Balls in Machine: {0}}" 
+                           FontSize="12"
+                           Margin="3"/>
+
+            </StackPanel>
+        </GroupBox>
+
         <!--MAIN TAB CONTROL-->
-        <TabControl Grid.Row="0" 
+        <TabControl Grid.Row="1" 
                     Grid.ColumnSpan="3" Background="{StaticResource Brush_Paper}">
 
             <!--SWITCHES - THE STYLE CHANGES DEPENDING ON THE MACHINE TYPE-->
@@ -325,9 +341,9 @@
                     <TabItem Header="Matrix" 
                              ToolTip="{Binding Tip_SwitchMatrix, Source={StaticResource ResourceKey=AppStringResource}}"                        
                              >
-                        
+
                         <Grid>
-                            
+
                             <!--OSC VIEW-->
                             <!--<machineviews:OscView Visibility="Hidden"/>-->
 
@@ -357,6 +373,9 @@
                                         <!--CHANGE THE STYLE IF USING A SAM CONFIG-->
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
+                                                <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="pdb">
                                                 <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -389,20 +408,20 @@
 
                             <!--STYLE-->
                             <ItemsControl.Style>
-
                                 <Style TargetType="ItemsControl" BasedOn="{StaticResource PinballSwitchMatrix}">
-
                                     <Setter Property="ItemsPanel" Value="{StaticResource STD_Matrix}"/>
-
+                                    
                                     <!--CHANGE THE STYLE IF USING A SAM CONFIG-->
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
                                             <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
                                         </DataTrigger>
+                                        <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="pdb">
+                                            <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
+                                        </DataTrigger>
                                     </Style.Triggers>
 
                                 </Style>
-
                             </ItemsControl.Style>
 
                         </ItemsControl>
@@ -413,9 +432,55 @@
 
             <!--LAMP MATRIX-->
             <TabItem Header="Lamps" Background="{StaticResource Brush_Paper}" 
+                     ToolTip="{Binding Tip_LampMatrix, Source={StaticResource ResourceKey=AppStringResource}}"                     
+                     >
+
+                <TabItem.Style>
+                    <Style TargetType="TabItem">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Lamps.Count}" Value="0">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TabItem.Style>
+
+                <ItemsControl ItemsSource="{Binding Lamps}">
+
+                    <ItemsControl.Resources>
+
+                        <!--STERN SAM 1-64 switches (10 x)-->
+                        <ItemsPanelTemplate x:Key="SAM_Matrix">
+                            <UniformGrid Columns="8" Rows="8" IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+
+                        <ItemsPanelTemplate x:Key="STD_Matrix">
+                            <skelman:UniformGridWithOrientation Columns="8" Rows="10" IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+
+                    </ItemsControl.Resources>
+
+                    <ItemsControl.Style>
+                        <Style BasedOn="{StaticResource PinballLampMatrix}" TargetType="ItemsControl">
+                            <Setter Property="ItemsPanel" Value="{StaticResource STD_Matrix}"/>
+
+                            <!--CHANGE THE STYLE IF USING A SAM CONFIG-->
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
+                                    <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.Style>
+
+                </ItemsControl>
+            </TabItem>
+
+            <!--LED MATRIX-->
+            <TabItem Header="LEDs" Background="{StaticResource Brush_Paper}" 
                      ToolTip="{Binding Tip_LampMatrix, Source={StaticResource ResourceKey=AppStringResource}}"                        
                      >
-                <ItemsControl ItemsSource="{Binding Lamps}">
+                <ItemsControl ItemsSource="{Binding PRLeds}">
 
                     <ItemsControl.Resources>
 
@@ -447,7 +512,7 @@
             </TabItem>
 
             <!--COIL FLASHER TABLE-->
-            <TabItem Header="Coils" 
+            <TabItem Header="Coils"
                      ToolTip="{Binding Tip_CoilFlashTable, Source={StaticResource ResourceKey=AppStringResource}}"                        
                      >
                 <Grid>
@@ -517,28 +582,12 @@
 
         </TabControl>
 
-        <!--MACHINE (PRGAME)-->
-        <GroupBox Header="PR Game" Margin="3" Grid.Row="1">
-            <StackPanel Orientation="Horizontal" Margin="5">
-
-                <TextBlock Text="{Binding MachineConfig.PRGame.MachineType, StringFormat={} Machine Type: {0}}"
-                           FontSize="12"
-                           Margin="3"
-                           />
-
-                <TextBlock Text="{Binding MachineConfig.PRGame.NumBalls, StringFormat={} Balls in Machine: {0}}" 
-                           FontSize="12"
-                           Margin="3"/>
-
-            </StackPanel>
-        </GroupBox>
-
         <!--SAVE-->
-        <GroupBox Header="Save" Grid.Column="2" Grid.Row="1" Margin="3">
+        <GroupBox Header="Save" Grid.Column="2" Grid.Row="0">
             <!--SAVE MACHINE BUTTON-->
             <Button Command="{Binding SaveMachineConfigCommand}" 
                         Style="{DynamicResource StyleSaveButton}"         
-                        ToolTip="{Binding Tip_SaveConfigMachine, Source={StaticResource ResourceKey=AppStringResource}}"                        
+                        ToolTip="{Binding Tip_SaveConfigMachine, Source={StaticResource ResourceKey=AppStringResource}}"
                         Height="35" Width="50"
                         />
         </GroupBox>
