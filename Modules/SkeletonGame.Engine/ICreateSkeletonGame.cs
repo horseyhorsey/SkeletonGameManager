@@ -15,6 +15,7 @@ namespace SkeletonGame.Engine
 
     public class CreateSkeletonGame : ICreateSkeletonGame
     {
+        //TODO: Move most of logic from CreateNewGame Window, like downloading
         /// <summary>
         /// Creates new game from a downloaded skeleton game framework.
         /// </summary>
@@ -40,6 +41,8 @@ namespace SkeletonGame.Engine
                         ExtractFile(gamePath, entry, fullname, $@"PyProcGameHD-SkeletonGame-dev/{templateName}/");
                     else if (fullname.Contains(@"PyProcGameHD-SkeletonGame-dev/procgame/"))
                         ExtractFile(gamePath, entry, fullname, @"PyProcGameHD-SkeletonGame-dev/");
+                    else if (fullname.Contains(@"PyProcGameHD-SkeletonGame-dev/shared/config/PDB_Sample.yaml"))
+                        ExtractFile(gamePath, entry, fullname, @"PyProcGameHD-SkeletonGame-dev/shared/");
                     else if (fullname.Contains("PyProcGameHD-SkeletonGame-dev/SampleGame/UNZIP ME assets.zip"))
                     {                        
                         using (ZipArchive assetArchive = new ZipArchive(entry.Open(), ZipArchiveMode.Read))
@@ -51,6 +54,7 @@ namespace SkeletonGame.Engine
             }
         }
 
+        #region Private Methods
         private void ExtractFile(string gamePath, ZipArchiveEntry entry, string fullname, string replaceString)
         {
             var ext = Path.HasExtension(fullname);
@@ -64,7 +68,7 @@ namespace SkeletonGame.Engine
                 {
                     entry.ExtractToFile(extractPath);
                 }
-                    
+
             }
         }
 
@@ -75,7 +79,7 @@ namespace SkeletonGame.Engine
         /// <param name="gameName">Name of the game.</param>
         /// <returns>The full path to the game</returns>
         private string CreateDirectoriesForNewGame(string fullGamePath)
-        {            
+        {
             Directory.CreateDirectory(fullGamePath);
             Directory.CreateDirectory(fullGamePath + "\\assets\\dmd");
             Directory.CreateDirectory(fullGamePath + "\\assets\\fonts");
@@ -100,7 +104,8 @@ namespace SkeletonGame.Engine
             Directory.CreateDirectory(fullGamePath + "\\procgame\\tools\\mailbox");
 
             return fullGamePath;
-        }
+        } 
+        #endregion
     }
 }
 
