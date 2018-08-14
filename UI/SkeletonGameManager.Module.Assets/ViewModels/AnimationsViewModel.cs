@@ -29,7 +29,10 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             _skeletonGameFiles = skeletonGameFiles;
             _skeletonGameProvider = skeletonGameProvider;
 
+            Title = "Animations";
+
             OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_dmdPath.AbsolutePath));
+            OpenFileCommand = new DelegateCommand<string>(x => OpenDirectory(Path.Combine(_dmdPath.AbsolutePath, x)));
         } 
         #endregion
 
@@ -59,7 +62,8 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
 
             var animFiles = await _skeletonGameFiles.GetFilesAsync(_dmdPath.AbsolutePath, AssetTypes.Animations);
 
-            this.AssetFiles = new ObservableCollection<string>(animFiles);
+            this.AssetFiles = new ObservableCollection<string>
+                (animFiles.Select(x => x.Replace(_dmdPath.AbsolutePath,string.Empty)));
         } 
         #endregion
 
