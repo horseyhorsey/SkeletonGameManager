@@ -1,4 +1,5 @@
-﻿using Prism.Logging;
+﻿using Prism.Events;
+using Prism.Logging;
 using SkeletonGame.Engine;
 using SkeletonGame.Models;
 using SkeletonGame.Models.Data;
@@ -12,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using static SkeletonGameManager.Base.Events;
 
 namespace SkeletonGameManager.Module.Services
 {
@@ -27,6 +29,7 @@ namespace SkeletonGameManager.Module.Services
         private IVpScriptExporter _vpScriptExporter;
         private ISkeletonGameExport _skeletonGameExport;
         private ILoggerFacade _loggerFacade;
+        private IEventAggregator _eventAggregator;
 
         public event EventHandler<ProviderUpdatedEventArgs> StatusChanged;
         #endregion
@@ -35,13 +38,14 @@ namespace SkeletonGameManager.Module.Services
 
         public SkeletonGameProvider(ISkeletonGameSerializer skeletonGameSerializer,
             ISkeletonGameFiles skeletonGameFiles,
-            IVpScriptExporter vpScriptExporter, ISkeletonGameExport skeletonGameExport, ILoggerFacade loggerFacade)
+            IVpScriptExporter vpScriptExporter, ISkeletonGameExport skeletonGameExport, ILoggerFacade loggerFacade, IEventAggregator eventAggregator)
         {
             _skeletonGameSerializer = skeletonGameSerializer;
             _skeletonGameFiles = skeletonGameFiles;
             _vpScriptExporter = vpScriptExporter;
             _skeletonGameExport = skeletonGameExport;
             _loggerFacade = loggerFacade;
+            _eventAggregator = eventAggregator;
         }
 
         #endregion
@@ -101,22 +105,7 @@ namespace SkeletonGameManager.Module.Services
                     if (GameConfig == null)
                         throw new NullReferenceException("Config.yaml returned null, please check your config.yaml");
 
-
-                    AssetsConfig = null;
-                    if (File.Exists(Path.Combine(GameFolder, YamlFiles[1])))
-                        AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
-
-                    AttractConfig = GetSequence(Path.Combine(GameFolder, YamlFiles[2]));
-
-                    var newScoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[3]);
-                    var scoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[4]);
-
-                    //Deal with the updated score display
-                    if (File.Exists(newScoreDisplayYaml))
-                        ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(newScoreDisplayYaml);
-                    else if (File.Exists(scoreDisplayYaml))
-                        ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(scoreDisplayYaml);
-
+                    #region MACHINE CONFIG
                     try
                     {
                         var machineConfig = Path.Combine(GameFolder, YamlFiles[5]);
@@ -137,9 +126,9 @@ namespace SkeletonGameManager.Module.Services
                         try
                         {
                             Dispatcher.CurrentDispatcher.Invoke(() =>
-                                            {
-                                                ParseMachineConfigWithKeyValues(ex);
-                                            });
+                            {
+                                ParseMachineConfigWithKeyValues(ex);
+                            });
                         }
                         catch (Exception exee)
                         {
@@ -150,6 +139,22 @@ namespace SkeletonGameManager.Module.Services
                             throw;
                         }
                     }
+                    #endregion                    
+
+                    AssetsConfig = null;
+                    if (File.Exists(Path.Combine(GameFolder, YamlFiles[1])))
+                        AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
+
+                    AttractConfig = GetSequence(Path.Combine(GameFolder, YamlFiles[2]));
+
+                    var newScoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[3]);
+                    var scoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[4]);
+
+                    //Deal with the updated score display
+                    if (File.Exists(newScoreDisplayYaml))
+                        ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(newScoreDisplayYaml);
+                    else if (File.Exists(scoreDisplayYaml))
+                        ScoreDisplayConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<ScoreDisplay>(scoreDisplayYaml);
 
                     SequenceYamls.Clear();
 
@@ -173,13 +178,15 @@ namespace SkeletonGameManager.Module.Services
                     //Trophy Data
                     var trophydefaultData = Path.Combine(GameFolder, YamlFiles[6]);
                     if (!File.Exists(trophydefaultData))
-                    {                        
-                        System.Windows.MessageBox.Show($"Couldn't find default trophy data at {trophydefaultData}");
+                    {
+                        string msg = $"Couldn't find default trophy data at {trophydefaultData}";
+                        _eventAggregator.GetEvent<ErrorMessageEvent>().Publish(msg);
+                        Log(msg, Category.Warn);
                     }
                     else
                     {
                         TrophyData = _skeletonGameSerializer.DeserializeSkeletonYaml<TrophyData>(trophydefaultData);
-                    }                        
+                    }
                 }
                 catch (System.Exception)
                 {
@@ -484,11 +491,11 @@ namespace SkeletonGameManager.Module.Services
                     }
                 }
                 catch (Exception)
-                {                    
+                {
                     throw;
                 }
             }
-        }        
+        }
 
         #endregion
     }
