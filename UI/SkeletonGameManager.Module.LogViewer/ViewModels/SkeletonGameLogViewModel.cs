@@ -39,8 +39,12 @@ namespace SkeletonGameManager.Module.LogViewer.ViewModels
         protected override void GetLogs()
         {
             Log("Populating logs");
-            LogFiles = new System.Collections.ObjectModel.ObservableCollection<string>(
-                Directory.EnumerateFiles(LogPath, "*.log").Select(x => Path.GetFileName(x)));
+
+            if (!Directory.Exists(LogPath))
+                Directory.CreateDirectory(LogPath);
+
+            LogFiles = new System.Collections.ObjectModel
+                .ObservableCollection<string>(Directory.EnumerateFiles(LogPath, "*.log").Select(x => Path.GetFileName(x)));
         }
 
         protected override void UpdateFromSelected()
