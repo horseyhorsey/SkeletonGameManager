@@ -351,6 +351,8 @@ namespace SkeletonGame.Engine
 
         public override void GetLeds()
         {
+            CreateLedBoard(0);
+            CreateLedBoard(1);
             CreateLedBoard(2);
         }
 
@@ -385,12 +387,17 @@ namespace SkeletonGame.Engine
             if (_machineConfig.PRLeds == null)
                 _machineConfig.PRLeds = new List<PRLed>();
 
-            for (int o = 0; o < 84; o += 3)
+            int o = boardAddress;
+            if (boardAddress != 0)
             {
-                var ledNum = $"A{boardAddress}-R{o}-G{o + 1}-B{o + 2}";
+                o = (1 + 84) * boardAddress;
+            }
 
-                var led = _machineConfig.PRLeds
-                    .FirstOrDefault(x => x.Number.ToUpper() == ledNum);
+            for (int y = o; y < 84 * (boardAddress + 1); y += 3)
+            {
+                var ledNum = $"A{boardAddress}-R{y}-G{y + 1}-B{y + 2}";
+
+                var led = _machineConfig.PRLeds.FirstOrDefault(x => x.Number.ToUpper() == ledNum);
                 if (led == null)
                     AddEmptyMachineItem(typeof(PRLed), ledNum);
             }
