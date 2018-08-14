@@ -11,5 +11,8 @@ namespace SkeletonGameManager.Base
         public class VideoSourceEvent : PubSubEvent<string> { }
 
         public class ApplicationBusyEvent : PubSubEvent<bool> { }
+
+        public class ErrorMessageEvent : PubSubEvent<string> { }
+        
     }
 }
