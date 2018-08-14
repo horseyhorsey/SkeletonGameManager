@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"             
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              xmlns:dd="urn:gong-wpf-dragdrop"
              d:DesignHeight="300" d:DesignWidth="600">
@@ -36,17 +37,23 @@
                        Margin="10,0"/>
         </StackPanel>
 
-        <ListView ItemsSource="{Binding AssetFiles}" Grid.Row="1" 
+        <ListView x:Name="AnimationsListView"  ItemsSource="{Binding AssetFiles}" Grid.Row="1" 
                   dd:DragDrop.IsDragSource="True"
                   dd:DragDrop.IsDropTarget="True"
                   dd:DragDrop.DropHandler="{Binding}" 
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.CacheLengthUnit="Pixel"
                   >
-            
-        </ListView>
+            <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding OpenFileCommand}" 
+                                       CommandParameter="{Binding ElementName=AnimationsListView, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 
-        <GridSplitter Width="5" Grid.Column="0" Grid.RowSpan="2" Background="Silver" Margin="0,20"/>
+            </ListView>
+
+        <GridSplitter Width="5" Grid.Column="1" Grid.RowSpan="2" Background="Silver" Margin="0,20"/>
 
         <StackPanel Orientation="Horizontal" Grid.Column="1">
             <TextBlock Text="{Binding Animations.Count, StringFormat={}   Entries: {0}   }"/>
@@ -65,24 +72,24 @@
                               EnableColumnVirtualization="True"                  
                   >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Key" Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
-                <DataGridTextColumn Header="File" Binding="{Binding File, UpdateSourceTrigger=PropertyChanged}" Width="2*"/>
+                <DataGridTextColumn Header="Key" Binding="{Binding Key, UpdateSourceTrigger=PropertyChanged}" Width="1*"/>
+                <DataGridTextColumn Header="File" Binding="{Binding File, UpdateSourceTrigger=PropertyChanged}" Width="1*"/>
                 <DataGridTextColumn Header="Scale" Binding="{Binding Scale}"/>
                 <DataGridTextColumn Header="X_Loc" Binding="{Binding XLoc}"/>
                 <DataGridTextColumn Header="Y_Loc" Binding="{Binding YLoc}"/>
                 <DataGridTextColumn Header="FrameTime" Binding="{Binding FrameTime}" MaxWidth="40"/>
-                <DataGridCheckBoxColumn Header="Repeat" Binding="{Binding Repeat}" MaxWidth="40"/>
+                <DataGridCheckBoxColumn Header="Repeat" Binding="{Binding Repeat}"/>
                 <DataGridCheckBoxColumn Header="Hold" Binding="{Binding HoldLastFrame}"/>
-                <DataGridCheckBoxColumn Binding="{Binding StreamingMovie}" Width="10">
+                <DataGridCheckBoxColumn Binding="{Binding StreamingMovie}">
                     <DataGridCheckBoxColumn.Header>
                         <Grid ToolTip="Streaming Movie">
                             <TextBlock Text="Smov"/>
                         </Grid>
                     </DataGridCheckBoxColumn.Header>
                 </DataGridCheckBoxColumn>
-                <DataGridCheckBoxColumn Header="Spng" Binding="{Binding StreamingPng}" Width="10"/>
-                <DataGridCheckBoxColumn Header="SpngC" Binding="{Binding StreamingPngCached}" Width="10"/>
-                <DataGridCheckBoxColumn Header="Skip" Binding="{Binding SkipPreLoading}" Width="20"/>
+                <DataGridCheckBoxColumn Header="Spng" Binding="{Binding StreamingPng}" />
+                <DataGridCheckBoxColumn Header="SpngC" Binding="{Binding StreamingPngCached}"/>
+                <DataGridCheckBoxColumn Header="Skip" Binding="{Binding SkipPreLoading}"/>
                 <!--<DataGridTemplateColumn Header="Sequence">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
