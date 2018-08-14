@@ -1,4 +1,5 @@
 ﻿using SkeletonGame.Models.Machine;
+using System.Linq;
 
 namespace SkeletonGameManager.Module.Config.ViewModels.Machine
 {
@@ -15,7 +16,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels.Machine
         public int PosTop { get; set; }
         public int PosLeft { get; set; }
 
-        public string[] BallSearch = new string[] { null, null };
+        public string[] BallSearch = new string[2];
 
         private bool reset;
         public bool Reset
@@ -27,6 +28,35 @@ namespace SkeletonGameManager.Module.Config.ViewModels.Machine
                 if (Reset) BallSearch[1] = "reset";
                 else BallSearch[1] = null;
             }
+        }
+
+
+
+        public SwitchViewModel(PRSwitch _switch)
+        {
+            this.Name = _switch.Name;
+            this.Number = _switch.Number;
+            this.VpSwitchType = _switch.VpSwitchType;
+            this.Tags = _switch.Tags;
+            this.Label = _switch.Label;
+
+            if (_switch.BallSearch != null)
+            {
+                var _search = _switch.BallSearch.Split(',');
+                try
+                {
+                    if (_search[0].Trim() == "stop")
+                        Stop = true;
+                    if (_search[1].Trim() == "reset")
+                        Reset = true;
+                }
+                catch { }
+            }
+        }
+
+        public SwitchViewModel()
+        {
+
         }
 
         private bool stop;
