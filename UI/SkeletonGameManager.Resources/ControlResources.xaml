@@ -486,7 +486,6 @@
         <Setter Property="Height" Value="50"/>
         <Setter Property="Width" Value="75"/>
         <Setter Property="Content" Value="{DynamicResource Path_Save}"/>
-        <Setter Property="Margin" Value="15"/>
     </Style>
 
     <!--DATAGRID STYLES-->
