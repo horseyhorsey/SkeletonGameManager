@@ -8,6 +8,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
     {
         public LoadingProgressViewModel(UserInterface userInterface, IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
+            Title = "Loading";
         }
 
         #region Properties

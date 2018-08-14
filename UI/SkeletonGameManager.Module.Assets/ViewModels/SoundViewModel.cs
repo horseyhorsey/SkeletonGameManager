@@ -39,6 +39,8 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             _skeletonGameFiles = skeletonGameFiles;
             _skeletonGameProvider = skeletonGameProvider;
 
+            Title = "Sound";
+
             OpenSoundCommand = new DelegateCommand<string>((s) =>
             {
                 Process.Start(s);

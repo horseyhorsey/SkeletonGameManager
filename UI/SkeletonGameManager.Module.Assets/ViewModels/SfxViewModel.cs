@@ -10,6 +10,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
     {
         public SfxViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider, IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(skeletonGameFiles, skeletonGameProvider, eventAggregator, loggerFacade)
         {
+            Title = "Sfx";
         }
     }
 }
