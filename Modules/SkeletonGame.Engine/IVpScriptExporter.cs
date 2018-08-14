@@ -157,7 +157,7 @@ namespace SkeletonGame.Engine
                 case MachineType.STERNWHITESTAR:
                     return "de.vbs";
                 case MachineType.PDB:
-                    return null;
+                    return "PDB.vbs";
             }
 
             return null;
