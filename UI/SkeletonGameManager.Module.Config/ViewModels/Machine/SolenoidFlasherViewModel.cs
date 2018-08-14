@@ -8,7 +8,23 @@ namespace SkeletonGameManager.Module.Config.ViewModels.Machine
     /// </summary>
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class SolenoidFlasherViewModel
-    {
+    {        
+        public SolenoidFlasherViewModel(PRCoil coil)
+        {
+            this.Number = coil.Number;
+            this.Name = coil.Name;
+            this.Tags = coil.Tags;
+            this.Label = coil.Label;
+            this.PatterOffTime = coil.PatterOffTime;
+            this.PatterOnTime = coil.PatterOnTime;
+            this.BallSearch = coil.BallSearch;
+        }
+
+        public SolenoidFlasherViewModel()
+        {
+
+        }
+
         public string Number { get; set; }
 
         public string Name { get; set; }
@@ -39,5 +55,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels.Machine
         public bool IsEnabled { get; set; }
 
         public bool ReadOnly { get; set; }
+
+        public string Tags { get; set; }
     }
 }
