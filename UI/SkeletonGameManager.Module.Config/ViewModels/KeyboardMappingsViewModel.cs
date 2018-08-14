@@ -36,12 +36,11 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                 {
                     await OnLoadYamlFilesChanged();
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
-
-                    throw;
+                    Log(ex.Message, Category.Exception);
                 }                
-            });
+            }, ThreadOption.UIThread);
         } 
         #endregion
 
