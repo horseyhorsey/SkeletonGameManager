@@ -15,6 +15,8 @@ using System;
 using SkeletonGameManager.Base;
 using Prism.Events;
 using Prism.Logging;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace SkeletonGameManager.Module.Assets.ViewModels
 {
@@ -24,67 +26,131 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         private string _lampshowPath;
         private ISkeletonGameFiles _skeletonGameFiles;
         private readonly ISkeletonGameProvider _skeletonGameProvider;
-        private ILampshowEdit _lampshowEdit; 
-        #endregion        
+        private ILampshowEdit _lampshowEdit;
+        #endregion
 
         #region Constructors
         public LampshowViewModel(ISkeletonGameFiles skeletonGameFiles, ISkeletonGameProvider skeletonGameProvider, IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             _skeletonGameFiles = skeletonGameFiles;
             _skeletonGameProvider = skeletonGameProvider;
-
             _lampshowEdit = new LampshowEdit();
 
-            OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_lampshowPath));
+            Title = "Lampshows";
 
-            ReverseLampshowCommand = new DelegateCommand<LampShow>((x) =>
+            OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_lampshowPath));
+            ReverseLampshowCommand = new DelegateCommand<string>((x) =>
             {
-                OnReverseLampshow(x);
+                OnReverseLampshow(new LampShow() { File = x });
             });
+        }
+
+        private static bool Initiliazed = false;
+
+        private void InitCollections()
+        {
+            if (_skeletonGameProvider.AssetsConfig?.LampShows == null)
+                _skeletonGameProvider.AssetsConfig.LampShows = new ObservableCollection<LampShow>();
+
+            if (_skeletonGameProvider.AssetsConfig?.RGBShows == null)
+                _skeletonGameProvider.AssetsConfig.RGBShows = new ObservableCollection<LampShow>();
+
+            LampShows = _skeletonGameProvider.AssetsConfig?.LampShows;
+            RGBShows = _skeletonGameProvider.AssetsConfig?.RGBShows;
+
+            if (LampShows != null)
+            {
+                LampShows.CollectionChanged -= LampShows_CollectionChanged;
+                LampShows.CollectionChanged += LampShows_CollectionChanged;
+                LampshowsCollectionView = new ListCollectionView(LampShows);
+                LampshowsCollectionView.Filter = new Predicate<object>((x) => !GetFilteredView(x));
+            }
+
+            if (RGBShows != null)
+            {
+                RGBShows.CollectionChanged -= LampShows_CollectionChanged;
+                RGBShows.CollectionChanged += LampShows_CollectionChanged;
+                RgbshowsCollectionView = new ListCollectionView(RGBShows);
+                RgbshowsCollectionView.Filter = new Predicate<object>(GetFilteredView);
+            }
+
+            Initiliazed = true;
         }
         #endregion
 
         #region Commands
-        public ICommand ReverseLampshowCommand { get; set; } 
+        public ICommand ReverseLampshowCommand { get; set; }
+
+        private ListCollectionView _lampshowsCollectionView;
+        public ListCollectionView LampshowsCollectionView
+        {
+            get { return _lampshowsCollectionView; }
+            set { SetProperty(ref _lampshowsCollectionView, value); }
+        }
+
+        private ListCollectionView _rgbshowsCollectionView;
+        public ListCollectionView RgbshowsCollectionView
+        {
+            get { return _rgbshowsCollectionView; }
+            set { SetProperty(ref _rgbshowsCollectionView, value); }
+        }
+
         #endregion
 
         #region Properties
-        private ObservableCollection<LampShow> lampshows;
-        public ObservableCollection<LampShow> LampShows
-        {
-            get { return lampshows; }
-            set { SetProperty(ref lampshows, value); }
-        }
+        public ObservableCollection<LampShow> LampShows { get; private set; }
+        public ObservableCollection<LampShow> RGBShows { get; private set; }
+
         #endregion
 
         #region Public Methods
 
+        private bool GetFilteredView(object obj)
+        {
+            var rgbShow = obj as LampShow;
+            return rgbShow.File.Contains(".rgbshow");
+        }
+
         public async override Task GetFiles()
         {
-            //Lamps from yaml
-            if (LampShows == null)
-            {
-                LampShows = _skeletonGameProvider.AssetsConfig?.LampShows;
-                LampShows.CollectionChanged += LampShows_CollectionChanged;
-            }            
-           
+            InitCollections();
+
             //Get lamp files
             _lampshowPath = Path.Combine(_skeletonGameProvider.GameFolder, "assets\\lampshows");
-            if (!Directory.Exists(_lampshowPath)) Directory.CreateDirectory(_lampshowPath);
-            var lampshowFiles = await _skeletonGameFiles.GetFilesAsync(_lampshowPath, AssetTypes.Lampshows);
+            if (!Directory.Exists(_lampshowPath))
+            {
+                Log($"Creating lampshow directory. {_lampshowPath}");
+                Directory.CreateDirectory(_lampshowPath);
+            }
+
+            Log($"Retrieving Lamp/RGB Shows from {_lampshowPath}");
             this.AssetFiles = new ObservableCollection<string>();
+            var lampshowFiles = await _skeletonGameFiles.GetFilesAsync(_lampshowPath, AssetTypes.Lampshows);
             foreach (var lampshow in lampshowFiles)
             {
                 var lampFile = Path.GetFileName(lampshow);
-                if (!LampShows.Any(x => x.File == lampFile))
+                if (lampFile.Contains(".lampshow"))
                 {
-                    await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                    if (!LampShows.Any(x => x.File == lampFile))
                     {
-                        AssetFiles.Add(lampFile);
-                    });
+                        await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                        {
+                            AssetFiles.Add(lampFile);
+                        });
+                    }
+                }
+                else if (lampFile.Contains(".rgbshow"))
+                {
+                    if (!RGBShows.Any(x => x.File == lampFile))
+                    {
+                        await Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                        {
+                            AssetFiles.Add(lampFile);
+                        });
+                    }
                 }
             }
-        } 
+        }
         #endregion
 
         #region Drag Drop
@@ -126,7 +192,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                 {
                     foreach (var lampFile in droppedFiles)
                     {
-                        if (Path.GetExtension(lampFile) == ".lampshow")
+                        if (Path.GetExtension(lampFile) == ".lampshow" || Path.GetExtension(lampFile) == ".rgbshow")
                         {
                             var lampFileName = Path.GetFileName(lampFile);
 
@@ -159,7 +225,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                     //Create lamp shows
                     foreach (var lampFile in droppedFiles)
                     {
-                        if (Path.GetExtension(lampFile) == ".lampshow")
+                        if (Path.GetExtension(lampFile) == ".lampshow" || Path.GetExtension(lampFile) == ".rgbshow")
                         {
                             var file = Path.GetFileName(lampFile);
                             var key = Path.GetFileNameWithoutExtension(lampFile);
@@ -173,8 +239,9 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                     }
 
                     if (addedLampshows.Count > 0)
-                    {
-                        LampShows.AddRange(addedLampshows);
+                    {                        
+                        LampShows.AddRange(addedLampshows.Where(x => x.File.Contains(".lampshow")));
+                        RGBShows.AddRange(addedLampshows.Where(x => x.File.Contains(".rgbshow")));
                     }
                 }
 
@@ -212,7 +279,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             {
             }
 
-        } 
+        }
         #endregion
 
         #region Private Methods
@@ -221,17 +288,37 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             //Select a lampshow before reversing
             if (x != null)
             {
-                _lampshowEdit.ReverseLampshowFile(Path.Combine(_lampshowPath, x.File),
-                _lampshowPath + $"\\{Path.GetFileNameWithoutExtension(x.File)}_reversed.lampshow");
+                Log($"Reversing Lampshow. {x.Key}");
+
+                var reverseFileName = _lampshowPath + $"\\{Path.GetFileNameWithoutExtension(x.File)}_reversed{Path.GetExtension(x.File)}";
+                var result = _lampshowEdit.ReverseLampshowFile(Path.Combine(_lampshowPath, x.File), reverseFileName);
+
+                if (!string.IsNullOrWhiteSpace(result))
+                {
+                    if (!this.AssetFiles.Any(s => s == result))
+                    {
+                        this.AssetFiles.Add(result);
+                        Log("Reverse Lampshow added");
+                        return;
+                    }
+                    
+                    Log("Lampshow reversed but not added, already exists.", Category.Warn);
+                }
+                else                    
+                    Log($"Failed to reverse Lampshow. {x.Key}", Category.Warn);
             }
         }
 
+        /// <summary>
+        /// Adds the lampshow to the asset file list when item is removed from a collection
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
         private void LampShows_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
                 var lampFile = e.OldItems[0] as LampShow;
-
                 if (lampFile != null)
                     this.AssetFiles.Add(lampFile.File);
             }
