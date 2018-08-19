@@ -490,6 +490,10 @@
                             <skelman:UniformGridWithOrientation Columns="8" Rows="8" IsItemsHost="True"/>
                         </ItemsPanelTemplate>
 
+                        <ItemsPanelTemplate x:Key="Pdb_Matrix">
+                            <skelman:UniformGridWithOrientation Columns="12" Rows="8" IsItemsHost="True"/>
+                        </ItemsPanelTemplate>
+
                     </ItemsControl.Resources>
 
                     <ItemsControl.Style>
@@ -500,6 +504,10 @@
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="sternSAM">
                                     <Setter Property="ItemsPanel" Value="{StaticResource SAM_Matrix}"/>
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="pdb">
+                                    <Setter Property="ItemsPanel" Value="{StaticResource Pdb_Matrix}"/>
                                 </DataTrigger>
                             </Style.Triggers>
                         </Style>
