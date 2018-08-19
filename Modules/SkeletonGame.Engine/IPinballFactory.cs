@@ -362,12 +362,14 @@ namespace SkeletonGame.Engine
             CreateLedBoard(0);
             CreateLedBoard(1);
             CreateLedBoard(2);
+            CreateLedBoard(3);
         }
 
         public override void GetCoils()
         {           
             CreateDriverCoils(0);
             CreateDriverCoils(1);
+            CreateDriverCoils(2);
         }
 
         #region Private Methods
