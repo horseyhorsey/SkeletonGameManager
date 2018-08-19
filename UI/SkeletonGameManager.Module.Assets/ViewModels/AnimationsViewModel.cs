@@ -61,9 +61,7 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
                 _dmdPath = new Uri(animPath);
 
             var animFiles = await _skeletonGameFiles.GetFilesAsync(_dmdPath.AbsolutePath, AssetTypes.Animations);
-
-            this.AssetFiles = new ObservableCollection<string>
-                (animFiles.Select(x => x.Replace(_dmdPath.AbsolutePath,string.Empty)));
+            this.AssetFiles = new ObservableCollection<string>(animFiles);
         } 
         #endregion
 
