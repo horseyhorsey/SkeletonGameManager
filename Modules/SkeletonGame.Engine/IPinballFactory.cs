@@ -379,16 +379,25 @@ namespace SkeletonGame.Engine
         /// <param name="board">The board.</param>
         private void CreateDriverCoils(int board)
         {
+            //Coils start at 32 for PDB
+            var coilCnt = 32 * (board + 1);
             for (int i = 0; i < 2; i++)
             {
                 for (int o = 0; o < 8; o++)
                 {
                     var coilNum = $"A{board}-B{i}-{o}";
+                    var coilNumWithPrefix = coilCnt < 99 ? $"0{coilCnt}:{coilNum}" : $"{coilCnt}:{coilNum}";
 
                     var coil = _machineConfig.PRCoils.FirstOrDefault(x => x.Number.ToUpper() == coilNum);
                     if (coil == null)
-                        AddEmptyMachineItem(typeof(PRCoil), coilNum);
+                        AddEmptyMachineItem(typeof(PRCoil), coilNumWithPrefix);
+                    else
+                        coil.Number = coilNumWithPrefix;
+
+                    coilCnt++;
                 }
+
+                coilCnt++;
             }
         }
 

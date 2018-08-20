@@ -224,12 +224,16 @@ namespace SkeletonGameManager.Module.Config.ViewModels
             Log("Adding switches");
             foreach (var item in Switches)
             {
+                var number = item.Number;
+                if (MachineConfig.GetMachineType() == MachineType.PDB)
+                    number = item.Number.Split(':')[1];
+
                 if (item.Name != "NOT USED")
                 {
                     var sw = new PRSwitch()
                     {
                         Name = item.Name,
-                        Number = item.Number.Split(':')[1],
+                        Number = number,
                         Tags = item.Tags,
                         SwitchType = item.Type,
                         Label = item.Label,
@@ -298,12 +302,16 @@ namespace SkeletonGameManager.Module.Config.ViewModels
             Log("Adding Coils");
             foreach (var coil in Coils)
             {
+                var number = coil.Number;
+                if (MachineConfig.GetMachineType() == MachineType.PDB)
+                    number = coil.Number.Split(':')[1];
+
                 if (coil.Name != "NOT USED")
                 {
                     var newcoil = new PRCoil()
                     {
                         Name = coil.Name,
-                        Number = coil.Number,
+                        Number = number,
                         Tags = coil.Tags,
                         PatterOffTime = coil.PatterOffTime,
                         PatterOnTime = coil.PatterOnTime,
