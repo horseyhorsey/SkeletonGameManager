@@ -348,4 +348,7 @@
   <data name="Tip_LogVp" xml:space="preserve">
     <value>View the C:\P-ROC\Shared\log.txt</value>
   </data>
+  <data name="Tip_VpLaunchInfo" xml:space="preserve">
+    <value>Launch game simulated in Visual Pinball.</value>
+  </data>
 </root>

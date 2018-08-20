@@ -746,5 +746,14 @@ namespace SkeletonGameManager.Resources.Properties {
                 return ResourceManager.GetString("Tip_VPExportSwitch", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Launch game simulated in Visual Pinball..
+        /// </summary>
+        public static string Tip_VpLaunchInfo {
+            get {
+                return ResourceManager.GetString("Tip_VpLaunchInfo", resourceCulture);
+            }
+        }
     }
 }
