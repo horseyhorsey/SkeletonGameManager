@@ -40,7 +40,7 @@
         </Grid.RowDefinitions>
 
         <!--SEQUENCE FILE SELECTOR-->
-        <GroupBox Header="Options" Grid.Row="0" Grid.ColumnSpan="2" BorderThickness="2">
+        <GroupBox Header="Options" Grid.Row="0" BorderThickness="2">
             <DockPanel>
 
                 <ComboBox ItemsSource="{Binding SequenceYamls}" DisplayMemberPath="Filename"

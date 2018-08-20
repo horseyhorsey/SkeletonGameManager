@@ -13,6 +13,7 @@ using System.Windows;
 using SkeletonGameManager.Base;
 using static SkeletonGameManager.Base.Events;
 using Prism.Logging;
+using System.IO;
 
 namespace SkeletonGameManager.Module.SceneManage.ViewModels
 {
@@ -173,14 +174,20 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
 
                 //add attract file to provider                
                 var attractFile = _skeletonGameProvider.GameFolder + @"\config\attract.yaml";
+                var defaultSequenceFile = _skeletonGameProvider.GameFolder + @"\config\sequences.yaml";
                 _skeletonGameProvider.SequenceYamls.Add(attractFile);
+                _skeletonGameProvider.SequenceYamls.Add(defaultSequenceFile);
 
                 //Assign from all files found in config/sequences
                 foreach (var item in _skeletonGameProvider.SequenceYamls)
                 {
                     bool seqAdded = false;
+
                     try
                     {
+                        if (!File.Exists(item))
+                            throw new FileNotFoundException(item);
+
                         SequenceYamls.Add(new SequenceYamlItemViewModel(item, _skeletonGameProvider.GetSequence(item)));
 
                         seqAdded = true;
@@ -191,7 +198,8 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
                         if (seqAdded)
                             SequenceYamls.Remove(SequenceYamls.Last());
 
-                        _eventAggregator.GetEvent<ErrorMessageEvent>().Publish("Sequence parse error");
+                        Log($"Error deserializing sequence file. {item}");
+                        _eventAggregator.GetEvent<ErrorMessageEvent>().Publish($"Sequences loading error. {ex.Message}");
                     }
                 }
 
