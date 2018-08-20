@@ -148,7 +148,9 @@
             <MenuItem Header="Recordings"                     
                       >
 
-                <MenuItem Header="Playback" 
+                <MenuItem Header="_Recordings View" Command="{Binding NavigateCommand}" CommandParameter="RecordingsView"/>
+                
+                <MenuItem Header="Quick Playback" 
                           ItemsSource="{Binding Recordings}"
                           DisplayMemberPath="PlaybackFile"   
                           ToolTip="{Binding Tip_RecordingPlaybackMenu, Source={StaticResource ResourceKey=AppStringResource}}"
@@ -186,28 +188,32 @@
 
         </Menu>
 
-        <ToolBarTray Grid.Row="1" Background="Silver">
-            <ToolBar>
+        <ToolBarTray Grid.Row="1" Background="Silver" Height="30">
+            
+            <!--BROWSE-->
+            <ToolBar Height="30">
                 <Button  Content="{DynamicResource Path_Dir}"
                          Command="{Binding BrowseFolderCommand}"
                          ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"
                          />
             </ToolBar>
 
-            <ToolBar Header="{DynamicResource Path_Game}" MaxHeight="32"
-                                        
+            <ToolBar Header="{DynamicResource Path_Game}" MaxHeight="32"   
+                     Height="30"
                      >
-
                 
-                <Button Command="{Binding LaunchGameCommand}" 
+                <!--LAUNCH SGRUNNER-->
+                <Button Command="{Binding LaunchGameCommand}"                         
                         Content="{DynamicResource Path_Game}"                        
                         ToolTip="{Binding Tip_GameLaunchInfo, Source={StaticResource ResourceKey=AppStringResource}}"
                         ToolBar.OverflowMode="Always"  
                         />
 
-                <Button Command="{Binding LaunchGameCommand}" 
-                        Content="{DynamicResource Path_Game}"
-                        ToolTip="{Binding Tip_GameLaunchInfo, Source={StaticResource ResourceKey=AppStringResource}}"
+                <!--LAUNCH VP-->
+                <Button Command="{Binding LaunchGameCommand}" Visibility="Collapsed"
+                        Content="VP" FontWeight="DemiBold"
+                        FontSize="18"
+                        ToolTip="{Binding Tip_VpLaunchInfo, Source={StaticResource ResourceKey=AppStringResource}}"
                         ToolBar.OverflowMode="Always"
                         />
 

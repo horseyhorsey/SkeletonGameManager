@@ -30,19 +30,17 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         #endregion
 
         #region Commands
-        public DelegateCommand CreateNewGameCommand { get; }
-        public DelegateCommand OpenGameFolderCommand { get; }
-        public DelegateCommand SetDirectoryCommand { get; }
-        public DelegateCommand ReloadGameCommand { get; }
-        public DelegateCommand<string> OpenRecentCommand { get; }
-        public DelegateCommand LaunchGameCommand { get; }
-        public DelegateCommand<string> ExportCommand { get; }
         public DelegateCommand BrowseFolderCommand { get; }
+        public DelegateCommand CreateNewGameCommand { get; }
+        public DelegateCommand<string> ExportCommand { get; }
+        public DelegateCommand LaunchGameCommand { get; }
         public DelegateCommand<string> LaunchRecordingCommand { get; }
-
-        public DelegateCommand<string> NavigateCommand { get; set; }
-
         public DelegateCommand<string> LaunchToolCommand { get; }
+        public DelegateCommand<string> NavigateCommand { get; set; }
+        public DelegateCommand OpenGameFolderCommand { get; }
+        public DelegateCommand<string> OpenRecentCommand { get; }
+        public DelegateCommand ReloadGameCommand { get; }
+        public DelegateCommand SetDirectoryCommand { get; }                      
         #endregion
 
         #region Requests
@@ -80,9 +78,9 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             });
 
             #region Commands
-            BrowseFolderCommand = new DelegateCommand(() => FileFolder.Explore(_skeletonGameProvider.GameFolder), () => IsValidGameFolder());
+            BrowseFolderCommand = new DelegateCommand(() => FileFolder.Explore(_skeletonGameProvider.GameFolder), () => GameFolder != null);
             CreateNewGameCommand = new DelegateCommand(OnCreateNewGame, () => !IsGameRunning);
-            ExportCommand = new DelegateCommand<string>(OnExport, (x) => IsValidGameFolder());
+            ExportCommand = new DelegateCommand<string>(OnExport, (x) => GameFolder != null);
             LaunchGameCommand = new DelegateCommand(async () =>
             {
                 IsGameRunning = true;
@@ -90,13 +88,13 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
             }, () => GameNotRunningAndFolderValid());
             LaunchRecordingCommand = new DelegateCommand<string>((playbackItem) => { OnLaunchRecordings(unityContainer, playbackItem); }, (x) => GameNotRunningAndFolderValid());
-            LaunchToolCommand = new DelegateCommand<string>((toolName) => { OnLaunchTool(toolName); }, (x) => IsValidGameFolder());
+            LaunchToolCommand = new DelegateCommand<string>((toolName) => { OnLaunchTool(toolName); }, (x) => GameFolder != null);
 
             OpenRecentCommand = new DelegateCommand<string>(OnOpenRecent, (x) => !IsGameRunning);
             ReloadGameCommand = new DelegateCommand(async () => await OnReloadGame(), () => GameNotRunningAndFolderValid());
             SetDirectoryCommand = new DelegateCommand(() => OnSetDirectory(), () => !IsGameRunning);
 
-            NavigateCommand = new DelegateCommand<string>(OnNavigate, (x) => IsValidGameFolder());
+            NavigateCommand = new DelegateCommand<string>(OnNavigate, (x) => GameFolder != null);
             #endregion
 
         }
@@ -200,7 +198,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             }
         }
 
-        private bool GameNotRunningAndFolderValid() => IsValidGameFolder() && !IsGameRunning;
+        private bool GameNotRunningAndFolderValid() => GameFolder != null && !IsGameRunning;
 
         private void OnLaunchTool(string toolName)
         {
@@ -303,7 +301,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         }
 
         /// <summary>
-        /// Sets the game path folder. Clears configs.
+        /// Sets the game path folder. Clears configs. If it isn't a valid game then game folder is set null and menu disabled.
         /// </summary>
         /// <param name="path">The path.</param>
         /// <returns></returns>
@@ -345,6 +343,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         private bool IsValidGameFolder()
         {            
             if (Directory.Exists(GameFolder))
+            {
                 if (File.Exists(Path.Combine(GameFolder, "config.yaml")))
                 {
                     if (_skeletonGameProvider.GameConfig != null)
@@ -354,7 +353,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
                     return true;
                 }
-
+            }                
             //IsMainTabEnabled = false;
             return false;
         }
@@ -439,6 +438,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
         /// </summary>
         private void UpdateCanExecuteCommands()
         {
+            BrowseFolderCommand.RaiseCanExecuteChanged();
             LaunchGameCommand.RaiseCanExecuteChanged();
             CreateNewGameCommand.RaiseCanExecuteChanged();
             ReloadGameCommand.RaiseCanExecuteChanged();
