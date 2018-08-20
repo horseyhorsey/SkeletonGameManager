@@ -37,7 +37,7 @@ namespace SkeletonGame.Engine
         /// <exception cref="NotImplementedException"></exception>
         public string CreateVisualPinballScript(MachineConfig config, string romName)
         {
-            var templateScript = GetTemplateScript();            
+            var templateScript = GetTemplateScript();
 
             string switchOptions = ExportMachineValuesToScript(config, VpScriptExportType.Switch);
             string coilOptions = ExportMachineValuesToScript(config, VpScriptExportType.Coil);
@@ -149,7 +149,7 @@ namespace SkeletonGame.Engine
             {
                 case MachineType.WPC95:
                 case MachineType.WPC:
-                    return "WPC.vbs";                
+                    return "WPC.vbs";
                 case MachineType.WPCALPHANUMERIC:
                     return "S11.vbs";
                 case MachineType.STERNSAM:
@@ -161,6 +161,81 @@ namespace SkeletonGame.Engine
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets a VP scripted switch method.
+        /// </summary>
+        /// <param name="pRSwitch">The Machines switch</param>
+        /// <param name="procMachineType">Type of the PROC Board.</param>
+        /// <returns>String that contains a Hit() and UnHit() method invoking the Controller.Switch(num). If setting VP Switch type the controllers invocation will be different.</returns>
+        private string GetVpSwitchMethod(PRSwitch pRSwitch, MachineType procMachineType)
+        {
+            var exportString = $"' {pRSwitch.Name} hit {Environment.NewLine}";
+            string swNumber = null;
+            string swName = pRSwitch.Name;
+
+            //Get switch number with out any chars. Depending on machine type. Different with a PDB
+            if (procMachineType != MachineType.PDB)
+            {
+                swNumber = pRSwitch.Number.Replace("S", string.Empty);
+            }
+            else
+            {
+                swNumber = pRSwitch.Number.Split(':')[0];
+                if (swNumber.StartsWith("0"))
+                    swNumber = swNumber.Remove(0, 1);
+            }
+
+            // VP Pulse Switches
+            if (pRSwitch.VpSwitchType == VpSwitchType.PulseSwitch)
+            {
+                if (procMachineType != MachineType.PDB)
+                {
+                    exportString += $"' {swName} hit {Environment.NewLine}";
+                    exportString += $"Sub {swNumber}_Hit():vpmTimer.PulseSw {swNumber}:End Sub{Environment.NewLine}";
+                }
+            }
+            // VP Pulse Spinners
+            else if (pRSwitch.VpSwitchType == VpSwitchType.Spinner)
+            {
+                if (procMachineType != MachineType.PDB)
+                {
+                    exportString += $"' {swName} spin {Environment.NewLine}";
+                    exportString += $"Sub {swNumber}_Spin():vpmTimer.PulseSw {swNumber}:End Sub{Environment.NewLine}";
+                }
+            }
+            // Anything but BallStacks / Saucers
+            else if (pRSwitch.VpSwitchType != VpSwitchType.Saucer || pRSwitch.VpSwitchType != VpSwitchType.Vuk || pRSwitch.VpSwitchType != VpSwitchType.Scoop)
+            {
+                exportString += $"Sub sw{swNumber}_Hit():Controller.Switch({swNumber}) = 1 :End Sub{Environment.NewLine}";
+                exportString += $"Sub sw{swNumber}_UnHit():Controller.Switch({swNumber}) = 0 :End Sub{Environment.NewLine}";
+            }
+            return exportString;
+        }
+
+        private string GetVpSolCallback(PRCoil prCoil, MachineType procMachineType)
+        {
+            ///var exportString = $"' {pRSwitch.Name} hit {Environment.NewLine}";
+
+            //Create a string for vbscript
+            var solName = "Sol" + prCoil.Name;
+            var solStr = "\"" + solName + "\"";
+            string solNumber = null;
+
+            if (procMachineType != MachineType.PDB)
+            {
+                solNumber = prCoil.Number.Replace("C0", string.Empty);
+                solNumber = solNumber.Replace("C", string.Empty);
+            }
+            else
+            {
+                solNumber = prCoil.Number.Split(':')[0];
+                if (solNumber.StartsWith("0"))
+                    solNumber = solNumber.Remove(0, 1);
+            }
+            
+            return $"SolCallback({solNumber}) = {solStr}{Environment.NewLine}";
         }
 
         /// <summary>
@@ -178,61 +253,52 @@ namespace SkeletonGame.Engine
             switch (exportType)
             {
                 case VpScriptExportType.Switch:
-
                     exportString += $"' ** VP SWITCH EVENTS **  {newLine}";
-
                     foreach (var _switch in machineConfig.PRSwitches)
                     {
                         //Don't export trough switches, flippers and dedicated
-                        if (!_switch.Name.Contains("trough"))
-                            if (!_switch.Name.Contains("flipper"))
-                                if (!_switch.Number.Contains("SD"))
-                                {
-                                    if (_switch.VpSwitchType == VpSwitchType.PulseSwitch)
+                        if (_switch.Name.ToUpper() != "NOT USED")
+                            if (!_switch.Name.Contains("trough"))
+                                if (!_switch.Name.Contains("flipper"))
+                                    if (!_switch.Number.Contains("SD"))
                                     {
-                                        exportString += $"' {_switch.Name} hit {newLine}";
-                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit():vpmTimer.PulseSw {_switch.Number.Remove(0, 1)}:End Sub{newLine}";
-                                    } 
-                                    else if(_switch.VpSwitchType == VpSwitchType.Spinner)
-                                    {
-                                        exportString += $"' {_switch.Name} spin {newLine}";
-                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Spin():vpmTimer.PulseSw {_switch.Number.Remove(0, 1)}:End Sub{newLine}";
+                                        exportString += GetVpSwitchMethod(_switch, machineConfig.GetMachineType());
                                     }
-                                    else if (_switch.VpSwitchType != VpSwitchType.Saucer || _switch.VpSwitchType != VpSwitchType.Vuk || _switch.VpSwitchType != VpSwitchType.Scoop)
-                                    {
-                                        exportString += $"' {_switch.Name} hit {newLine}";
-                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_Hit():Controller.Switch({_switch.Number.Remove(0, 1)}) = 1 :End Sub{newLine}";
-                                        exportString += $"Sub {_switch.Number.Replace("S", "sw")}_UnHit():Controller.Switch({_switch.Number.Remove(0, 1)}) = 0 :End Sub{newLine}";
-                                    }
-                                }
                     }
+
                     break;
                 case VpScriptExportType.Coil:
 
                     exportString += $"' ** VP SOL CALLBACKS **  {newLine}";
-
                     var solCallBackSubs = new List<string>();
+                    var machineType = machineConfig.GetMachineType();
 
                     foreach (var _coil in machineConfig.PRCoils)
                     {
-                        if (!_coil.Name.Contains("flipper"))
+                        if (_coil.Name.ToUpper() != "NOT USED")
                         {
-                            //Create a string for vbscript
+                            if (machineType != MachineType.PDB && _coil.Name.Contains("flipper"))
+                            {
+                                continue;
+                            }
+
+                            // Don't add Main flippers just the hold coil
+                            if (_coil.Name.Contains("LMain") || _coil.Name.Contains("RMain"))
+                                continue;
+
                             var solName = "Sol" + _coil.Name;
-                            var solStr = "\"" + solName + "\"";
 
-                            var solNumber = _coil.Number.Replace("C0", string.Empty);
-                            solNumber = solNumber.Replace("C", string.Empty);
+                            //SolCallback entry
+                            exportString += GetVpSolCallback(_coil, machineConfig.GetMachineType());
 
-                            exportString += $"SolCallback({solNumber}) = {solStr}{newLine}";
-
+                            //Create a callback method
                             var str = $"Sub {solName}(Enabled){newLine}If Enabled Then{newLine}'{newLine}Else{newLine}'{newLine}End If{newLine}End Sub{newLine}{newLine}";
                             solCallBackSubs.Add(str);
                         }
 
                     }
 
-                    //Add a sub routine for the solcallback
+                    //Add all the sub routine for the solcallback
                     exportString += $"{newLine}{newLine}";
                     foreach (var sub in solCallBackSubs)
                     {
@@ -262,7 +328,7 @@ namespace SkeletonGame.Engine
 
             switch (prSwitch.VpSwitchType)
             {
-                case VpSwitchType.Saucer:                                   
+                case VpSwitchType.Saucer:
                     ballStackScript += $"Set {dimName}=New cvpmSaucer : With {dimName}" + Environment.NewLine;
                     ballStackScript += $".initKicker sw{vpSwitchNumber}, {vpSwitchNumber}, 80, 5" + Environment.NewLine;
                     ballStackScript += ".initSounds " + "\"" + "Solenoid" + "\"" + ", " + "\"" + "Solenoid" + "\"" + ", " + "\"" + "Solenoid" + "\"" + Environment.NewLine;
@@ -289,7 +355,7 @@ namespace SkeletonGame.Engine
                 default:
                     break;
             }
-        
+
             return ballStackScript;
         }
     }
