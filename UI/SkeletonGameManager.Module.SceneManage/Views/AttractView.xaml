@@ -9,9 +9,22 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"             
              xmlns:dd="urn:gong-wpf-dragdrop"
              xmlns:selectors="clr-namespace:SkeletonGameManager.Module.SceneManage.Selectors"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:views="clr-namespace:SkeletonGameManager.Module.SceneManage.Views"
              mc:Ignorable="d" 
              PresentationTraceSources.TraceLevel="High"
              d:DesignHeight="300" d:DesignWidth="300">
+
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding CustomPopupRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True">
+                <prism:PopupWindowAction.WindowContent>
+                    <views:YamlStructDialog />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+
     
     <Grid x:Name="LayoutRoot">
 

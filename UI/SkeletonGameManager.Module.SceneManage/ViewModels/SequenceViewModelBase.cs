@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Events;
+using Prism.Interactivity.InteractionRequest;
 using Prism.Logging;
 using SkeletonGame.Engine;
 using SkeletonGame.Models;
@@ -16,6 +17,7 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
         private ISkeletonGameSerializer _skeletonGameSerializer;
 
         public ICommand ShowYamlStructCommand { get; set; }
+        public InteractionRequest<INotification> CustomPopupRequest { get; private set; }
 
         public SequenceViewModelBase(ISkeletonGameSerializer skeletonGameSerializer,
             IEventAggregator eventAggregator, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
@@ -23,6 +25,10 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
             _skeletonGameSerializer = skeletonGameSerializer;
 
             ShowYamlStructCommand = new DelegateCommand<Content>(OnShowYamlStruct);
+
+            #region Interaction Request
+            CustomPopupRequest = new InteractionRequest<INotification>();
+            #endregion
         }
 
         private ObservableCollection<SequenceItemViewModel> sequences;
@@ -49,6 +55,13 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
         {
             string yamlStruct = string.Empty;
             yamlStruct = GenerateYamlStruct(content);
+
+            RaiseCustomPopup(yamlStruct);
+        }
+
+        private void RaiseCustomPopup(string yaml)
+        {
+            CustomPopupRequest.Raise(new Notification { Title = "Yaml Struct", Content = yaml }, r => Title = "Good to go");
         }
 
         private string GenerateYamlStruct(Content content)

@@ -14,6 +14,7 @@ using SkeletonGameManager.Base;
 using static SkeletonGameManager.Base.Events;
 using Prism.Logging;
 using System.IO;
+using Prism.Interactivity.InteractionRequest;
 
 namespace SkeletonGameManager.Module.SceneManage.ViewModels
 {
@@ -21,17 +22,18 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
     {
         #region Fields
         public ISkeletonGameProvider _skeletonGameProvider { get; set; }
-        private ISkeletonGameAttract _skeletonGameAttract; 
+        private ISkeletonGameAttract _skeletonGameAttract;
         #endregion
 
         #region Commands
-        public DelegateCommand<object> AddNewSequenceCommand { get; set; }
-        public DelegateCommand<object> DuplicateSequenceCommand { get; set; }
         public DelegateCommand<object> AddLayerCommand { get; set; }
+        public DelegateCommand<object> AddNewSequenceCommand { get; set; }
+        public DelegateCommand CustomPopupCommand { get; }
+        public DelegateCommand<object> DuplicateSequenceCommand { get; set; }
         public DelegateCommand SaveAttractCommand { get; set; }
         #endregion
 
-        //TODO: Add back in sequences file..Add option to create other sequence files. Duplicate layers
+        //TODO: Duplicate layers
 
         #region Constructors
         public AttractViewModel(ISkeletonGameSerializer skeletonGameSerializer, IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(skeletonGameSerializer, eventAggregator, loggerFacade)
