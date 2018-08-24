@@ -58,7 +58,7 @@ namespace SkeletonGameManager.Base
             .AddFile("Logs\\" + fileName, LogLevel.Debug);
 #else
         ILoggerFactory logFactory = new LoggerFactory()
-        .AddFile(fileName, LogLevel.Error);
+        .AddFile(fileName, LogLevel.Warning);
 #endif
             //Create the logger from incoming name.
             if (!string.IsNullOrWhiteSpace(name))
