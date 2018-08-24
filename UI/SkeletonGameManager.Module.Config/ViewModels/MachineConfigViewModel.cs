@@ -19,7 +19,6 @@ namespace SkeletonGameManager.Module.Config.ViewModels
         #region Fields
         private ISkeletonGameProvider _skeletonGameProvider;
         private ISkeletonOSC _skeletonOSC;
-        private ISkeletonGameExport _skeletonExport;
         #endregion
 
         #region Commands
@@ -29,13 +28,12 @@ namespace SkeletonGameManager.Module.Config.ViewModels
 
         #region Constructors
         public MachineConfigViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, 
-            ISkeletonOSC skeletonOSC, ISkeletonGameExport skeletonGameExport, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
+            ISkeletonOSC skeletonOSC, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
         {
             Title = "Machine";
 
             _skeletonGameProvider = skeletonGameProvider;
             _skeletonOSC = skeletonOSC;
-            _skeletonExport = skeletonGameExport;            
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
 
