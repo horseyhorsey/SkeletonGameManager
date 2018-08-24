@@ -118,6 +118,14 @@
 
                         <DataGridTextColumn Binding="{Binding Sequence.Name}" Width="1*" IsReadOnly="True"/>
 
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="YAML" HorizontalAlignment="Center" Command="{Binding ElementName=LayoutRoot, Path=DataContext.ShowYamlStructCommand}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
                     </DataGrid.Columns>
 
                 </DataGrid>
@@ -129,9 +137,13 @@
         <Grid Grid.Column="1" Background="White" Grid.Row="1" Grid.ColumnSpan="2">
 
             <ScrollViewer>
-                <ContentPresenter ContentTemplateSelector="{StaticResource AttractSequenceSelector}"
+
+                <StackPanel>
+
+                    <ContentPresenter ContentTemplateSelector="{StaticResource AttractSequenceSelector}"
                               Content="{Binding SelectedSequence.Sequence}"
                               />
+                </StackPanel>
 
             </ScrollViewer>
 

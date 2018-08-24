@@ -457,7 +457,7 @@
                     <Viewbox Height="20" Width="50">
                         <ContentPresenter Content="{DynamicResource Path_Music}" Height="50" Width="50"/>
                     </Viewbox>
-                    <TextBlock Text="Sound" FontSize="14" FontWeight="DemiBold"/>
+                    <TextBlock Text="Sound" FontWeight="DemiBold"/>
                 </DockPanel>
             </GroupBox.Header>
 
@@ -475,13 +475,14 @@
                     <Viewbox Height="20" Width="50">
                         <ContentPresenter Content="{DynamicResource Path_Lamps}" Height="50" Width="50"/>
                     </Viewbox>
-                    <TextBlock Text="Lampshow" FontSize="14" FontWeight="DemiBold"/>
+                    <TextBlock Text="Lampshow / RGBShow" FontWeight="DemiBold"/>
                 </DockPanel>
             </GroupBox.Header>
 
-            <StackPanel>
-
+            <StackPanel Orientation="Horizontal">
+                <Label Content="LS"/>
                 <ComboBox Style="{StaticResource Style_LampsCombo}"/>
+                <Label Content="RGB"/>
                 <ComboBox Style="{StaticResource Style_RgbLEDsCombo}"/>
             </StackPanel>
         </GroupBox>
@@ -495,7 +496,7 @@
                             Content="{DynamicResource Path_Assets}" 
                             Height="50" Width="50"/>
                     </Viewbox>
-                    <TextBlock Text="Duration" FontSize="14" FontWeight="DemiBold"/>
+                    <TextBlock Text="Duration" FontWeight="DemiBold"/>
                 </DockPanel>
             </GroupBox.Header>
 
@@ -1286,34 +1287,49 @@
                 <GroupBox Grid.Row="1" Header="Add layer" FontSize="14" FontWeight="DemiBold" BorderBrush="{DynamicResource Brush_GroupLayer}"
                           Margin="3"
                           >
-                    <DockPanel>
-                        <ComboBox x:Name="LayerCombobox" Margin="3"                                                                                                       
-                                  SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}" 
-                                  DockPanel.Dock="Top">
-                            <ComboBox.Items>
-                                <ComboBoxItem Content="Animation" IsSelected="True"/>
-                                <ComboBoxItem Content="Combo" IsEnabled="False"/>
-                                <ComboBoxItem Content="Credits" IsEnabled="False"/>
-                                <ComboBoxItem Content="GroupLayer" IsEnabled="False"/>
-                                <ComboBoxItem Content="HighScores" IsEnabled="False"/>
-                                <ComboBoxItem Content="LastScores" IsEnabled="False"/>
-                                <ComboBoxItem Content="MarkupLayer"/>
-                                <ComboBoxItem Content="MoveLayer"/>
-                                <ComboBoxItem Content="PanningLayer" IsEnabled="False"/>
-                                <ComboBoxItem Content="ParticleLayer"/>
-                                <ComboBoxItem Content="RandomText" IsEnabled="False"/>
-                                <ComboBoxItem Content="ScriptedText" IsEnabled="True"/>
-                                <ComboBoxItem Content="TextLayer"/>
-                            </ComboBox.Items>
-                        </ComboBox>
+                    <Grid>
 
-                        <Button Margin="3" Content="+" Width="50" Height="60"
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid MaxHeight="32">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox x:Name="LayerCombobox" Margin="3"
+                                  SelectedIndex="{Binding ElementName=LayoutRoot,Path=DataContext.SelectedGroupLayerType, UpdateSourceTrigger=PropertyChanged}">
+                                <ComboBox.Items>
+                                    <ComboBoxItem Content="Animation" IsSelected="True"/>
+                                    <ComboBoxItem Content="Combo" IsEnabled="False"/>
+                                    <ComboBoxItem Content="Credits" IsEnabled="False"/>
+                                    <ComboBoxItem Content="GroupLayer" IsEnabled="False"/>
+                                    <ComboBoxItem Content="HighScores" IsEnabled="False"/>
+                                    <ComboBoxItem Content="LastScores" IsEnabled="False"/>
+                                    <ComboBoxItem Content="MarkupLayer"/>
+                                    <ComboBoxItem Content="MoveLayer"/>
+                                    <ComboBoxItem Content="PanningLayer" IsEnabled="False"/>
+                                    <ComboBoxItem Content="ParticleLayer"/>
+                                    <ComboBoxItem Content="RandomText" IsEnabled="False"/>
+                                    <ComboBoxItem Content="ScriptedText" IsEnabled="True"/>
+                                    <ComboBoxItem Content="TextLayer"/>
+                                </ComboBox.Items>
+                            </ComboBox>
+
+                            <Button Margin="3" Content="+" FontSize="18"
+                                    Grid.Column="1"
+                                HorizontalAlignment="Right"
                                 Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddLayerCommand }"
-                                CommandParameter="{Binding ElementName=LayerCombobox, Path=SelectedItem.DataContext,UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right"/>
+                                CommandParameter="{Binding ElementName=LayerCombobox, Path=SelectedItem.DataContext,UpdateSourceTrigger=PropertyChanged}"
+                                />
 
+                        </Grid>
 
                         <!--GROUP LAYER CONTENTS-->
-                        <DataGrid Grid.Row="3" Margin="3" 
+                        <DataGrid Grid.Row="1" Margin="3" 
                               DockPanel.Dock="Bottom"
                               ItemsSource="{Binding Contents}" x:Name="GroupedLayerDataGrid" 
                           BorderThickness="2" BorderBrush="{DynamicResource Brush_GroupLayer}"
@@ -1332,6 +1348,7 @@
                                 <DataGridTemplateColumn>
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
+                                            <!--Style for labels with the initials-->
                                             <Label Height="20">
                                                 <Label.Style>
                                                     <MultiBinding Converter="{StaticResource StyleConverter}">
@@ -1347,11 +1364,20 @@
                                 </DataGridTemplateColumn>
                                 <DataGridTextColumn Binding="{Binding SeqType}" Width="1*" IsReadOnly="True"/>
                                 <DataGridTextColumn Binding="{Binding animation_layer.Name}" Width="1*" IsReadOnly="True"/>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Content="YAML" HorizontalAlignment="Center" 
+                                                    Command="{Binding ElementName=LayoutRoot, Path=DataContext.ShowYamlStructCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                             </DataGrid.Columns>
 
                         </DataGrid>
-
-                    </DockPanel>
+                    </Grid>
                 </GroupBox>
 
 
@@ -1978,7 +2004,7 @@
                     <Button Margin="3"
                             Content="+" Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddLayerCommand }"            
                                    CommandParameter="{Binding Contents.group_layer,UpdateSourceTrigger=PropertyChanged}"
-                                         DockPanel.Dock="Top"/>
+                                         DockPanel.Dock="Right"/>
                 </DockPanel>
 
                 <!--GROUP LAYER CONTENTS-->
@@ -2023,4 +2049,4 @@
     </DataTemplate>
 
 </ResourceDictionary>
-    
+   
