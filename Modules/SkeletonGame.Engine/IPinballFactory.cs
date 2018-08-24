@@ -324,37 +324,40 @@ namespace SkeletonGame.Engine
         {
             string numString = string.Empty;
 
-            int startSwNum = 32;
-            //Column / rows            
-            for (int ii = 0; ii < 7; ii++)
-            {
-                for (int i = 0; i < 16; i++)
-                {                    
-                    var colString = $"{ii}/{i}";
-                    numString =  startSwNum < 99 ? $"0{startSwNum}:{colString}" : $"{startSwNum}:{colString}";
-
-                    //Find switch
-                    var _switch = _machineConfig.PRSwitches
-                        .FirstOrDefault(x => x.Number.ToUpper() == $"{colString}");
-                    if (_switch == null)
-                        AddEmptyMachineItem(typeof(PRSwitch), numString);
-                    else
-                    {
-                        _switch.Number = numString;
-                    }
-
-                    startSwNum++;
-                }
-            }
-
-            //Add dedicated for PDB. 32 switches.
-            for (int i = 0; i < 32; i++)
+            // Add dedicated for PDB. 32 switches.
+            for (int i = 0; i < 128; i++)
             {
                 numString = i < 10 ? $"SD0{i}" : $"SD{i}";
+
                 var _switch = _machineConfig.PRSwitches.FirstOrDefault(x => x.Number.ToUpper() == $"{numString}");
                 if (_switch == null)
                     _machineConfig.PRSwitches.Add(new PRSwitch() { Number = $"{numString}", Name = "NOT USED" });
             }
+
+            //TODO: Keep this in the case we someone will use column naming the machine.yaml.
+            //      It's better to use the SD prefix here.
+            //int startSwNum = 32;
+            ////Column / rows            
+            //for (int ii = 0; ii < 7; ii++)
+            //{
+            //    for (int i = 0; i < 16; i++)
+            //    {                    
+            //        var colString = $"{ii}/{i}";
+            //        numString =  startSwNum < 99 ? $"0{startSwNum}:{colString}" : $"{startSwNum}:{colString}";
+
+            //        //Find switch
+            //        var _switch = _machineConfig.PRSwitches
+            //            .FirstOrDefault(x => x.Number.ToUpper() == $"{colString}");
+            //        if (_switch == null)
+            //            AddEmptyMachineItem(typeof(PRSwitch), numString);
+            //        else
+            //        {
+            //            _switch.Number = numString;
+            //        }
+
+            //        startSwNum++;
+            //    }
+            //}
         }
 
         public override void GetLeds()

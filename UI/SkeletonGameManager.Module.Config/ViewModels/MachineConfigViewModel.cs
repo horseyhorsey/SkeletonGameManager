@@ -200,51 +200,16 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                     VpSwitchType = x.VpSwitchType
                 }));
 
-            Log("Adding Dedicated switches");
-            // Save dedicated switches 
-            foreach (var item in DedicatedSwitches)
-            {
-                if (item.Name != "NOT USED")
-                {
-                    var sw = new PRSwitch()
-                    {
-                        Name = item.Name,
-                        Number = item.Number,
-                        Tags = item.Tags,
-                        SwitchType = item.Type,
-                        Label = item.Label
-
-                    };
-
-                    mConfig.PRSwitches.Add(sw);
-                }
+            var allSwitches = Switches;
+            if (mConfig.GetMachineType() == MachineType.PDB)
+            {                
+                UpdateSwitchesBeforeSaved(mConfig);
+                UpdateDedicatedBeforeSave(mConfig);
             }
-
-            //Save switches
-            Log("Adding switches");
-            foreach (var item in Switches)
+            else
             {
-                var number = item.Number;
-                if (MachineConfig.GetMachineType() == MachineType.PDB)
-                    number = item.Number.Split(':')[1];
-
-                if (item.Name != "NOT USED")
-                {
-                    var sw = new PRSwitch()
-                    {
-                        Name = item.Name,
-                        Number = number,
-                        Tags = item.Tags,
-                        SwitchType = item.Type,
-                        Label = item.Label,
-                        VpSwitchType = item.VpSwitchType
-                    };
-
-                    if (item.BallSearch.Any(x => x != null))
-                        sw.BallSearch = $"{item.BallSearch[0]}, {item.BallSearch[1]}";
-
-                    mConfig.PRSwitches.Add(sw);
-                }
+                UpdateDedicatedBeforeSave(mConfig);
+                UpdateSwitchesBeforeSaved(mConfig);
             }
 
             //Save Lamps
@@ -335,6 +300,28 @@ namespace SkeletonGameManager.Module.Config.ViewModels
             _skeletonGameProvider.SaveMachineConfig(mConfig);
         }
 
+        private void UpdateDedicatedBeforeSave(MachineConfig mConfig)
+        {
+            Log("Adding Dedicated switches");
+            foreach (var item in DedicatedSwitches)
+            {
+                if (item.Name != "NOT USED")
+                {
+                    var sw = new PRSwitch()
+                    {
+                        Name = item.Name,
+                        Number = item.Number,
+                        Tags = item.Tags,
+                        SwitchType = item.Type,
+                        Label = item.Label
+
+                    };
+
+                    mConfig.PRSwitches.Add(sw);
+                }
+            }
+        }
+
         /// <summary>
         /// Updates the machine configuration collections. Switches, lamps, coils etc.
         /// </summary>
@@ -345,20 +332,36 @@ namespace SkeletonGameManager.Module.Config.ViewModels
             //Add only the switches not containing dedicated and flipper
             if (MachineConfig.PRSwitches != null)
             {
-                Log("Adding switches");
-                Switches.AddRange(MachineConfig.PRSwitches
-                    .Where(x => !x.Number.Contains("F") & !x.Number.Contains("SD"))
-                    .Select(x => new SwitchViewModel(x)).OrderBy(x => x.Number));
-
                 Log("Adding dedicated switches");
-                DedicatedSwitches.AddRange(MachineConfig.PRSwitches
-                    .Where(x => x.Number.Contains("SD"))
-                    .Select(x => new SwitchViewModel(x)).OrderBy(x => x.Number));
+
+                //Quick hack for PDB switches. Need to put the 64-127 range of switch into the dedicated collection...
+                if (MachineConfig.GetMachineType() == MachineType.PDB)
+                {
+                    var lowRange = MachineConfig.PRSwitches.Where(x => x.Number.Contains("SD") 
+                            && Convert.ToByte(x.Number.Replace("SD", "")) < 64);
+                    var hiRange = MachineConfig.PRSwitches.Where(x => x.Number.Contains("SD")
+                        && (Convert.ToByte(x.Number.Replace("SD", "")) < 128 && Convert.ToByte(x.Number.Replace("SD", "")) > 63));
+
+                    Switches.AddRange(lowRange.Select(x=> new SwitchViewModel(x)));
+                    DedicatedSwitches.AddRange(hiRange.Select(x => new SwitchViewModel(x)));
+                }
+                else
+                {
+                    DedicatedSwitches.AddRange(MachineConfig.PRSwitches
+                                        .Where(x => x.Number.Contains("SD"))
+                                        .Select(x => new SwitchViewModel(x)).OrderBy(x => x.Number));
+
+                    Log("Adding switches");
+                    Switches.AddRange(MachineConfig.PRSwitches
+                        .Where(x => !x.Number.Contains("F") & !x.Number.Contains("SD"))
+                        .Select(x => new SwitchViewModel(x)).OrderBy(x => x.Number));
+                }
 
                 Log("Adding flipper switches");
                 FlippersSwitches.AddRange(MachineConfig.PRSwitches
                     .Where(x => x.Number.Contains("SF"))
                     .Select(x => new SwitchViewModel(x)).OrderBy(x => x.Number));
+
             }                
             else
                 Log("PRSwitches doesn't exist");
@@ -377,6 +380,38 @@ namespace SkeletonGameManager.Module.Config.ViewModels
                 PRLeds.AddRange(MachineConfig.PRLeds.Select(x => new LampViewModel(x)));//.OrderBy(x => x.Number.Replace("A8-", "")));
             else
                 Log("PRLeds doesn't exist");
+        }
+
+        private void UpdateSwitchesBeforeSaved(MachineConfig mConfig)
+        {
+            //Save switches
+            Log("Adding switches");
+            foreach (var item in Switches)
+            {
+                var number = item.Number;
+
+                //TODO: Keep or REMOVE for old column naming
+                //if (MachineConfig.GetMachineType() == MachineType.PDB)
+                //    number = item.Number.Split(':')[1];
+
+                if (item.Name != "NOT USED")
+                {
+                    var sw = new PRSwitch()
+                    {
+                        Name = item.Name,
+                        Number = number,
+                        Tags = item.Tags,
+                        SwitchType = item.Type,
+                        Label = item.Label,
+                        VpSwitchType = item.VpSwitchType
+                    };
+
+                    if (item.BallSearch.Any(x => x != null))
+                        sw.BallSearch = $"{item.BallSearch[0]}, {item.BallSearch[1]}";
+
+                    mConfig.PRSwitches.Add(sw);
+                }
+            }
         }
         #endregion
     }

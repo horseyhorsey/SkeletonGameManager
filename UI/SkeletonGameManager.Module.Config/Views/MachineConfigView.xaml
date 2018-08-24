@@ -338,8 +338,7 @@
             <TabItem Header="Switches">
                 <TabControl>
 
-                    <TabItem Header="Matrix" 
-                             ToolTip="{Binding Tip_SwitchMatrix, Source={StaticResource ResourceKey=AppStringResource}}"                        
+                    <TabItem ToolTip="{Binding Tip_SwitchMatrix, Source={StaticResource ResourceKey=AppStringResource}}"                        
                              >
 
                         <Grid>
@@ -384,10 +383,34 @@
                             </ItemsControl>
                         </Grid>
 
+                         <!--Change the header if using PDB-->
+                        <TabItem.Style>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Header" Value="Matrix"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="pdb">
+                                        <Setter Property="Header" Value="SW16 ( 0-63 )"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TabItem.Style>
+
                     </TabItem>
 
                     <!--TODO - MAYBE JUST MOVE THESE INTO AN EXPANDER IN THE SAME TAB?-->
-                    <TabItem Header="Dedicated">
+                    <TabItem>
+
+                        <TabItem.Style>
+                            <Style TargetType="TabItem">
+                                <Setter Property="Header" Value="Dedicated"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding MachineConfig.PRGame.MachineType}" Value="pdb">
+                                        <Setter Property="Header" Value="SW16 ( 64-127 )"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TabItem.Style>
+
                         <ItemsControl ItemsSource="{Binding DedicatedSwitches}">
 
                             <ItemsControl.Resources>
@@ -422,6 +445,7 @@
                             </ItemsControl.Style>
 
                         </ItemsControl>
+                        
                     </TabItem>
 
                 </TabControl>
