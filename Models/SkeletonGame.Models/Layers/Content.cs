@@ -37,5 +37,30 @@ namespace SkeletonGame.Models.Layers
 
         [YamlMember(Alias = "solid_layer", ApplyNamingConventions = false)]
         public SolidLayer solid_layer { get; set; }
+
+        #region Public Methods
+
+        /// <summary>
+        /// Gets the content layer that isn't null. A Sequene contains all but only one is not null
+        /// </summary>
+        /// <returns></returns>
+        public SequenceBase GetNotNullContentLayer()
+        {
+            if (animation_layer != null)
+                return animation_layer;
+            else if (combo_layer != null)
+                return combo_layer;
+            else if (group_layer != null)
+                return group_layer;
+            else if (last_scores != null)
+                return last_scores;
+            else if (scripted_text_layer != null)
+                return scripted_text_layer;
+            else if (text_layer != null)
+                return text_layer;
+
+            return null;
+        } 
+        #endregion
     }
 }
