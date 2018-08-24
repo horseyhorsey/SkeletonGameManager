@@ -1,8 +1,8 @@
 ﻿Option Explicit
 Randomize
-Const cGameName="{ROMNAME}" ' Don't change this
-Const UseSolenoids = 1 ' Or this
-Dim B2SController, b2sOn ' Used by script
+Const cGameName="{ROMNAME}" ' This is the game mapping name, RomName
+Const UseSolenoids = 1 ' Use callbacks
+Dim B2SController, b2sOn ' Used by script, only for backglass emulation, this can be removed from the script if not needed.
 
 'Ball Stacks
 {BALL_STACKS_VARS}
@@ -131,62 +131,14 @@ End Sub
 ' Each Lamp must have it's lamp number entered in the TimerInterval box
 ' Create at least one GI collection called GI_low. Add all GI to this collection. From skeleton game the lamp gi01 will control these
 '######################################################################
-Const UseLamps = True
-Dim GIon
-vpmMapLights AllLamps
-Set LampCallback    = GetRef("UpdateMultipleLamps")
-Sub UpdateMultipleLamps : End Sub
 
-Set GICallback    = GetRef("UpdateGI")
-Sub UpdateGI(giNo, stat)
-  Select Case giNo
-    Case 0 GI_low(abs(stat))
-    Case 1 GI_up(abs(stat))
-    Case 2 GI_mid(abs(stat)) ' GI_mid
-  End Select
-End Sub
+vpmMapLights AllLamps   ' Lamps / Leds timer interval section should contain the lamp/led number
 
-Sub SolGI(enabled)
-End Sub
+{LAMP_SECTION}
 
-Dim lamp
-Sub GI_low(enabled)
-   For each lamp in GILow
-    lamp.State= enabled
-   Next
-    If enabled Then
-		'ColGradeGI.enabled=True:ColGradeGIOff.enabled=False:i=5
-		If b2sOn Then B2SController.B2ssetdata 100,1
-    Else
-		'ColGradeGI.enabled=False:ColGradeGIOff.enabled=True:i=1  
-		If b2sOn Then B2SController.B2ssetdata 100,0
-    End If
+{LED_SECTION}
 
-End Sub
-
-Sub GI_up(enabled)
-    For each lamp in GITop
-    lamp.State=enabled
-   Next
-    If enabled Then
-        If b2sOn Then B2SController.B2ssetdata 101,1
-    Else
-       If b2sOn Then B2SController.B2ssetdata 101,0
-    End If
-
-End Sub
-
-Sub GI_mid(enabled)
-   For each lamp in GIMid
-       lamp.State=enabled
-   Next
-    If enabled Then
-        If b2sOn Then B2SController.B2ssetdata 102,1
-   Else
-       If b2sOn Then B2SController.B2ssetdata 102,0
-    End If
-End Sub
-
+{GI_SECTION}
 
 '#######################################################################
 ' VPROC Controller
