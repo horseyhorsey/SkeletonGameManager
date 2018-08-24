@@ -34,7 +34,7 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
         //TODO: Add back in sequences file..Add option to create other sequence files. Duplicate layers
 
         #region Constructors
-        public AttractViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
+        public AttractViewModel(ISkeletonGameSerializer skeletonGameSerializer, IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(skeletonGameSerializer, eventAggregator, loggerFacade)
         {
             Title = "Sequences";
 
