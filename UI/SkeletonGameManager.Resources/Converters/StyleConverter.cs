@@ -22,7 +22,7 @@ namespace SkeletonGameManager.Resources.Converters
             else
                 return null;
 
-            Style newStyle = (Style)targetElement.TryFindResource(styleName);
+            Style newStyle = (Style)targetElement.TryFindResource(styleName + "SequenceStyle");
 
             if (newStyle == null)
                 newStyle = (Style)targetElement.TryFindResource("GroupLayerSequenceStyle");
