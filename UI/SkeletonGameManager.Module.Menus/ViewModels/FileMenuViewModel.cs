@@ -379,19 +379,28 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
         private void OnExport(string exportParam)
         {
-            switch (exportParam)
+            try
             {
-                case "switch":
-                case "coil":
-                case "ScriptFull":
-                    _skeletonGameProvider.ExportVpScript(exportParam);
-                    break;
-                case "switchPy":
-                case "lampshowUi":
-                    _skeletonGameProvider.ExportPyProcgame(exportParam);
-                    break;
-                default:
-                    break;
+                switch (exportParam)
+                {
+                    case "switch":
+                    case "coil":
+                    case "ScriptFull":
+                        _skeletonGameProvider.ExportVpScript(exportParam);
+                        break;
+                    case "switchPy":
+                    case "lampshowUi":
+                        _skeletonGameProvider.ExportPyProcgame(exportParam);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = $"Error exporting {exportParam}. {ex.Message}";
+                Log(msg, Category.Exception);
+                _eventAggregator.GetEvent<ErrorMessageEvent>().Publish(msg);
             }
         }
 
