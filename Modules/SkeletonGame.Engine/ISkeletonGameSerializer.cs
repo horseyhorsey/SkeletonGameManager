@@ -1,4 +1,5 @@
 ﻿using SkeletonGame.Models;
+using SkeletonGame.Models.Layers;
 using System.IO;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -13,6 +14,8 @@ namespace SkeletonGame.Engine
         /// <param name="yamlFile">The yaml file.</param>
         /// <returns></returns>
         string ConvertToJson(string yamlFile);
+
+        string ConvertToJson(object yamlObject);
 
         /// <summary>
         /// Deserializes the yaml from given type
@@ -69,20 +72,22 @@ namespace SkeletonGame.Engine
             }
         }
 
-
         public string ConvertToJson(string yamlFile)
         {
             using (TextReader reader = File.OpenText(yamlFile))
             {
                 var deserializer = new DeserializerBuilder().Build();
                 var yamlObject = deserializer.Deserialize(reader);
-
-                var serializer = new SerializerBuilder()
-                    .JsonCompatible()
-                    .Build();
-
-                return serializer.Serialize(yamlObject);
+                return ConvertToJson(yamlObject);
             }
+        }
+
+        public string ConvertToJson(object yamlObject)
+        {
+            var serializer = new SerializerBuilder()
+                .JsonCompatible()
+                .Build();
+            return serializer.Serialize(yamlObject);
         }
 
         public void SerializeYaml(string yamlFile, object yamlObjectGraph)
@@ -94,6 +99,5 @@ namespace SkeletonGame.Engine
                 yamlSerializer.Serialize(writer, yamlObjectGraph);
             }
         }
-
     }
 }
