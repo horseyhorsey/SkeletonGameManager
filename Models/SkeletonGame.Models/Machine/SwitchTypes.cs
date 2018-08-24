@@ -6,6 +6,7 @@
     public enum VpSwitchType
     {
         Normal,
+        None,
         PulseSwitch,
         Saucer,
         Scoop,
