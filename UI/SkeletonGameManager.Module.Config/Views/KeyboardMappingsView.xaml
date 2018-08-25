@@ -13,9 +13,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <GroupBox Header="Set Key">
+        <GroupBox Header="Set Switch to Key" Grid.Row="0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -43,6 +44,8 @@
                                 ItemsSource="{Binding Source={StaticResource SdlKeys}}"
                                 SelectedValue="{Binding CapturedSdlCode, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedValuePath=""
+                                IsTextSearchEnabled="True"
+                                IsTextSearchCaseSensitive="False"                                 
                           />
 
                 <Button Grid.Column="2" Content="+"
@@ -62,10 +65,10 @@
             </Grid>
         </GroupBox>
 
-        <ListView Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      Margin="3" 
-                          BorderBrush="Black" BorderThickness="2"                       
-                    ItemsSource="{Binding SwitchKeys, UpdateSourceTrigger=PropertyChanged}"
+        <ListView Grid.Row="1" VerticalAlignment="Top"
+                        Margin="3"
+                        BorderBrush="Black" BorderThickness="2"                       
+                        ItemsSource="{Binding SwitchKeys, UpdateSourceTrigger=PropertyChanged}"
                     >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -90,5 +93,6 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ListView>
+        
     </Grid>
 </UserControl>

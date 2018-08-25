@@ -57,7 +57,7 @@ namespace SkeletonGameManager.Module.Config.ViewModels
             {
                 SDL_Keycode _keycode;
                 Enum.TryParse(key, out _keycode);
-                if (_keycode == SDL_Keycode.SDLK_UNKNOWN)
+                if (_keycode == SDL_Keycode.UNKNOWN)
                 {
                     var newKey = key.Replace("\\b", "\b")
                                     .Replace("\\r", "\r")
