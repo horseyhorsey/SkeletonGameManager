@@ -30,6 +30,9 @@ namespace SkeletonGame.Models.Layers
         [YamlMember(Alias = "opaque", ApplyNamingConventions = false)]
         public bool Opaque { get; set; }
 
+        [YamlMember(Alias = "composite_op", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public string CompositeOp { get; set; }
+
         public AttractAnimation()
         {
             this.AnimName = "missing";
