@@ -80,6 +80,7 @@
                 <DataGridTextColumn Header="FrameTime" Binding="{Binding FrameTime}" MaxWidth="40"/>
                 <DataGridCheckBoxColumn Header="Repeat" Binding="{Binding Repeat}"/>
                 <DataGridCheckBoxColumn Header="Hold" Binding="{Binding HoldLastFrame}"/>
+                <DataGridTextColumn Header="Comp" Binding="{Binding CompositeOp}"/>
                 <DataGridCheckBoxColumn Binding="{Binding StreamingMovie}">
                     <DataGridCheckBoxColumn.Header>
                         <Grid ToolTip="Streaming Movie">
