@@ -41,7 +41,8 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
             OpenDirectoryCommand = new DelegateCommand(() => OpenDirectory(_lampshowPath));
             ReverseLampshowCommand = new DelegateCommand<string>((x) =>
             {
-                OnReverseLampshow(new LampShow() { File = x });
+                if (x != null)
+                    OnReverseLampshow(new LampShow() { File = x });                
             });
         }
 
