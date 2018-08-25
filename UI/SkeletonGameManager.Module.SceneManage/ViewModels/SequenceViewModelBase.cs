@@ -61,7 +61,7 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
 
         private void RaiseCustomPopup(string yaml)
         {
-            CustomPopupRequest.Raise(new Notification { Title = "Yaml Struct", Content = yaml }, r => Title = "Good to go");
+            CustomPopupRequest.Raise(new Notification { Title = "Yaml Struct", Content = yaml });
         }
 
         private string GenerateYamlStruct(Content content)
