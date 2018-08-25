@@ -64,10 +64,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>-->
 
         <StackPanel Grid.Column="0">
             <!--PATHS-->
@@ -199,7 +199,7 @@
                                   IsChecked="{Binding GameConfigModel.DmdWindowBorder, UpdateSourceTrigger=PropertyChanged}" />
 
                             <CheckBox Grid.Column="1" Grid.Row="4" Margin="3"
-                                   ToolTip="{Binding Tip_DmdFramerate, Source={StaticResource ResourceKey=AppStringResource}}"
+                                   ToolTip="{Binding Tip_DotFilter, Source={StaticResource ResourceKey=AppStringResource}}"
                                   IsChecked="{Binding GameConfigModel.DmdDotFilter, UpdateSourceTrigger=PropertyChanged}" Content="Dot Filter"/>
 
                             <CheckBox Grid.Column="2" Grid.Row="4" Margin="3"
@@ -231,10 +231,13 @@
                 </Expander.Header>
 
                 <StackPanel>
-                    <TextBlock Text="Buffer size"/>
+                    <TextBlock Text="Buffer size" />
                     <ComboBox ItemsSource="{Binding Source={StaticResource BufferSizes}}" 
-                              SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBox Text="{Binding GameConfigModel.AudioFrequency}"/>
+                              SelectedItem="{Binding SelectedBufferSize, UpdateSourceTrigger=PropertyChanged}"
+                              ToolTip="{Binding Tip_AudioBuff, Source={StaticResource ResourceKey=AppStringResource}}"
+                              />
+                    <TextBox Text="{Binding GameConfigModel.AudioFrequency}"
+                             ToolTip="{Binding Tip_AudioFreq, Source={StaticResource ResourceKey=AppStringResource}}"/>
                 </StackPanel>
             </Expander>
 
@@ -351,11 +354,23 @@
         </StackPanel>
 
         <!--KEYBOARD MAPPINGS-->
-        <views:KeyboardMappingsView Grid.Row="0" Grid.RowSpan="2" 
-                                    Grid.Column="1"/>
+        <Expander Grid.Row="1" Grid.Column="0" IsExpanded="True"
+                  >
+
+            <Expander.Header>
+                <DockPanel>
+                    <ContentPresenter Content="{DynamicResource Path_Keyboard}" MaxWidth="32"/>
+                    <TextBlock Text="Keyboard Switch Map" FontWeight="DemiBold"/>
+                </DockPanel>
+            </Expander.Header>
+
+            <views:KeyboardMappingsView/>
+        </Expander>
+
+
 
         <!--SAVE-->
-        <Button Grid.Row="2" Grid.Column="1" 
+        <Button Grid.Row="2"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"
                 Style="{DynamicResource StyleSaveButton}"                             
