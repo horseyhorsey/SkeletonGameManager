@@ -163,9 +163,12 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
 
             UpdateCanExecuteCommands();
 
+            Log("Attempting to launch game through sg_runner");
             try
-            {
+            {                
                 await _gameRunnner.Run(_skeletonGameProvider.GameFolder, "game.py");
+                _eventAggregator.GetEvent<OnGameEndedEvent>().Publish(true);
+
             }
             //catch (FileNotFoundException ex)
             //{
@@ -177,6 +180,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             catch (Exception ex)
             {
                 Log($"Error loading game. {ex.Message}", Category.Exception);
+                _eventAggregator.GetEvent<OnGameEndedEvent>().Publish(false);
             }
             finally
             {
