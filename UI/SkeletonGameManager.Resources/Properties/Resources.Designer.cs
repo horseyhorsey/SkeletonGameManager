@@ -79,11 +79,29 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Todo.
+        ///   Looks up a localized string similar to Enables the attract mode..
         /// </summary>
         public static string Tip_Attract {
             get {
                 return ResourceManager.GetString("Tip_Attract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio buffer size..
+        /// </summary>
+        public static string Tip_AudioBuff {
+            get {
+                return ResourceManager.GetString("Tip_AudioBuff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 22000, 44100, 48000.
+        /// </summary>
+        public static string Tip_AudioFreq {
+            get {
+                return ResourceManager.GetString("Tip_AudioFreq", resourceCulture);
             }
         }
         
@@ -115,7 +133,7 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enables/Disables the Bonus mode..
+        ///   Looks up a localized string similar to Enables/Disables the Bonus mode at end of each ball..
         /// </summary>
         public static string Tip_BonusTally {
             get {
@@ -224,6 +242,15 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This applies the Dmd grid. .
+        /// </summary>
+        public static string Tip_DotFilter {
+            get {
+                return ResourceManager.GetString("Tip_DotFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Drop files to copy..
         /// </summary>
         public static string Tip_DropFilesInfo {
@@ -260,7 +287,7 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Exports all the lamps into a compatible rampantslug LampshowUI project saving time on initial setup. *You can load and move into place..
+        ///   Looks up a localized string similar to Exports all the lamps into a compatible rampantslug LampshowUI project saving time on initial setup..
         /// </summary>
         public static string Tip_ExportLampshowUI {
             get {
@@ -319,6 +346,186 @@ namespace SkeletonGameManager.Resources.Properties {
         public static string Tip_LaunchRecording {
             get {
                 return ResourceManager.GetString("Tip_LaunchRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The animation asset to be used on this layer..
+        /// </summary>
+        public static string Tip_LayerAnimAsset {
+            get {
+                return ResourceManager.GetString("Tip_LayerAnimAsset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The total duration of the layer..
+        /// </summary>
+        public static string Tip_LayerDuration {
+            get {
+                return ResourceManager.GetString("Tip_LayerDuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font to be used on the TextLayer..
+        /// </summary>
+        public static string Tip_LayerFont {
+            get {
+                return ResourceManager.GetString("Tip_LayerFont", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The style for the Font.
+        /// </summary>
+        public static string Tip_LayerFontStyle {
+            get {
+                return ResourceManager.GetString("Tip_LayerFontStyle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order of HiScore Categories to be displayed..
+        /// </summary>
+        public static string Tip_LayerHighScoreOrder {
+            get {
+                return ResourceManager.GetString("Tip_LayerHighScoreOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a lampshow to attach to this sequence..
+        /// </summary>
+        public static string Tip_LayerLampshow {
+            get {
+                return ResourceManager.GetString("Tip_LayerLampshow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The font to be used with Bold # #.
+        /// </summary>
+        public static string Tip_LayerMarkupBold {
+            get {
+                return ResourceManager.GetString("Tip_LayerMarkupBold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add markup lines. Eg Normal: [ Left, Right ], [ Center ]      Bold 	      # Left, Right #, # Center #.
+        /// </summary>
+        public static string Tip_LayerMarkupLines {
+            get {
+                return ResourceManager.GetString("Tip_LayerMarkupLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The font to be used with Normal [].
+        /// </summary>
+        public static string Tip_LayerMarkupNormal {
+            get {
+                return ResourceManager.GetString("Tip_LayerMarkupNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply a MovingLayer to this layer when enabled..
+        /// </summary>
+        public static string Tip_LayerMove {
+            get {
+                return ResourceManager.GetString("Tip_LayerMove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name of the Layer which is used as a Key to access in Game..
+        /// </summary>
+        public static string Tip_LayerName {
+            get {
+                return ResourceManager.GetString("Tip_LayerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a Rgbshow to attach to this sequence..
+        /// </summary>
+        public static string Tip_LayerRgbshow {
+            get {
+                return ResourceManager.GetString("Tip_LayerRgbshow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply a RotationLayer to this layer when enabled.
+        /// </summary>
+        public static string Tip_LayerRotate {
+            get {
+                return ResourceManager.GetString("Tip_LayerRotate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a Voice or Sfx key from the assets..
+        /// </summary>
+        public static string Tip_LayerSound {
+            get {
+                return ResourceManager.GetString("Tip_LayerSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blink / Flashes text.
+        /// </summary>
+        public static string Tip_LayerTextBlink {
+            get {
+                return ResourceManager.GetString("Tip_LayerTextBlink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal justify of the text..
+        /// </summary>
+        public static string Tip_LayerTextJustifyH {
+            get {
+                return ResourceManager.GetString("Tip_LayerTextJustifyH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Veritcal justify of the text..
+        /// </summary>
+        public static string Tip_LayerTextJustifyV {
+            get {
+                return ResourceManager.GetString("Tip_LayerTextJustifyV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to X position of text.
+        /// </summary>
+        public static string Tip_LayerTextX {
+            get {
+                return ResourceManager.GetString("Tip_LayerTextX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Y position of text.
+        /// </summary>
+        public static string Tip_LayerTextY {
+            get {
+                return ResourceManager.GetString("Tip_LayerTextY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply a ZoomingLayer to this layer when enabled..
+        /// </summary>
+        public static string Tip_LayerZoom {
+            get {
+                return ResourceManager.GetString("Tip_LayerZoom", resourceCulture);
             }
         }
         
@@ -386,7 +593,7 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enables an OSC server which listens for switches pushed from a UI. eg SwitchMatrix Gui..
+        ///   Looks up a localized string similar to Enables an OSC server which listens for switches pushed from a UI. eg SwitchMatrix Gui, this applications machine switch matrix..
         /// </summary>
         public static string Tip_OSC {
             get {
@@ -485,7 +692,7 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enables a profile menu players where players can create &amp;amp; select players..
+        ///   Looks up a localized string similar to Enables a profile menu players where players can create &amp; select saved players..
         /// </summary>
         public static string Tip_Profiles {
             get {
@@ -584,6 +791,15 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duplicates the selected layer..
+        /// </summary>
+        public static string Tip_SeqDupeLayer {
+            get {
+                return ResourceManager.GetString("Tip_SeqDupeLayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Groups multiple display layers together..
         /// </summary>
         public static string Tip_SeqGroupLayer {
@@ -627,6 +843,24 @@ namespace SkeletonGameManager.Resources.Properties {
         public static string Tip_SeqMoveLayer {
             get {
                 return ResourceManager.GetString("Tip_SeqMoveLayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creates a sequence layer from selected drop down item..
+        /// </summary>
+        public static string Tip_SeqNew {
+            get {
+                return ResourceManager.GetString("Tip_SeqNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds a new layer from selected dropdown..
+        /// </summary>
+        public static string Tip_SeqNewLayer {
+            get {
+                return ResourceManager.GetString("Tip_SeqNewLayer", resourceCulture);
             }
         }
         
@@ -676,6 +910,24 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select from attract.yaml and sequences.yaml. Attract is used in the Attract default modes. Sequences is populated into a separate dictionary where you can use PlaySequence or GetSequence, see SkeletonGames  AdvancedMode..
+        /// </summary>
+        public static string Tip_SequenceYamls {
+            get {
+                return ResourceManager.GetString("Tip_SequenceYamls", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens window to copy the YamlStruct. This can be used as an export dictionary and used with GenerateLayerFromYaml, saving creating layers by &quot;hand&quot; and good for testing..
+        /// </summary>
+        public static string Tip_SeqYaml {
+            get {
+                return ResourceManager.GetString("Tip_SeqYaml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enables/Disables the Service Mode Menu..
         /// </summary>
         public static string Tip_ServiceMenu {
@@ -712,7 +964,16 @@ namespace SkeletonGameManager.Resources.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enables a mode that displays trophys when complete. See the trophy_default_data..
+        ///   Looks up a localized string similar to Setting to None turns off the transition. *Warn not all options can be applied to a transition. ToDo: Only show available for the selected Transition..
+        /// </summary>
+        public static string Tip_TransOption {
+            get {
+                return ResourceManager.GetString("Tip_TransOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enables a mode that displays trophys when complete* . See the trophy_default_data to create trophys. *Profiles must be enabled..
         /// </summary>
         public static string Tip_Trophys {
             get {
