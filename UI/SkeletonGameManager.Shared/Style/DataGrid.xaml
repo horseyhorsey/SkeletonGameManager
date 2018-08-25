@@ -8,7 +8,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <DataGrid ItemsSource="{Binding AudioEntries}" AutoGenerateColumns="False">
+                    <DataGrid ItemsSource="{Binding AudioEntries}" AutoGenerateColumns="False"
+                        IsTextSearchEnabled="True"
+                        IsTextSearchCaseSensitive="False"
+                        TextSearch.TextPath="File"
+                              >
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="2*"/>
                             <DataGridTextColumn Binding="{Binding File}" Header="File" Width="2*"/>
