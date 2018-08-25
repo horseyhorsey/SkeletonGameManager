@@ -1,7 +1,9 @@
-﻿using YamlDotNet.Serialization;
+﻿using System;
+using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Transition
 {
+    [Serializable]
     public abstract class TransitionBaseLayer : SequenceBase, ITransitionLayer
     {
         [YamlMember(Alias = "transition", ApplyNamingConventions = false, SerializeAs = typeof(string))]

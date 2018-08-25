@@ -1,7 +1,9 @@
-﻿using YamlDotNet.Serialization;
+﻿using System;
+using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
+    [Serializable]
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class AnimationLayer : SequenceBase
     {

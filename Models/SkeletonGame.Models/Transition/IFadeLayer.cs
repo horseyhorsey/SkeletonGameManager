@@ -1,4 +1,5 @@
-﻿using YamlDotNet.Serialization;
+﻿using System;
+using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Transition
 {
@@ -9,6 +10,7 @@ namespace SkeletonGame.Models.Transition
         int FrameCount { get; set; }
     }
 
+    [Serializable]
     public class FadeLayer : IFadeLayer
     {
         [YamlMember(Alias = "param", ApplyNamingConventions = false, SerializeAs = typeof(string), ScalarStyle = YamlDotNet.Core.ScalarStyle.SingleQuoted)]

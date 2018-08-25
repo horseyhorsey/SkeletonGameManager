@@ -1,9 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
-
+    [Serializable]
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class RandomText : SequenceTextAnimationBase
     {

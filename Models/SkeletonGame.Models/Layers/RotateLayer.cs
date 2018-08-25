@@ -1,8 +1,10 @@
 ﻿using SkeletonGame.Models.Transforms;
+using System;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
+    [Serializable]
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class RotateLayer : IRotationLayer
     {

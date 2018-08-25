@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
+    [Serializable]
     public class ParticleLayer
     {
         [YamlMember(Alias = "width", ApplyNamingConventions = false)]
@@ -27,6 +29,7 @@ namespace SkeletonGame.Models.Layers
         }
     }
 
+    [Serializable]
     public class ParticleEmitter
     {
         [YamlMember(Alias = "x", ApplyNamingConventions = false)]

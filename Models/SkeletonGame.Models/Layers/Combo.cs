@@ -1,10 +1,12 @@
 ﻿using SkeletonGame.Models.Transition;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
+    [Serializable]
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class Combo : SequenceTextAnimationBase, ITextEntries, ITransitionLayer
     {

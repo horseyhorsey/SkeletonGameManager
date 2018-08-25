@@ -1,9 +1,11 @@
 ﻿using SkeletonGame.Models.Layers;
+using System;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models
 {
-    [PropertyChanged.AddINotifyPropertyChangedInterface]
+    [Serializable]
+    [PropertyChanged.AddINotifyPropertyChangedInterface]    
     public class SequenceBase
     {
         public string lampshow { get; set; }
@@ -19,6 +21,7 @@ namespace SkeletonGame.Models
         public SequenceType SeqType { get; set; }
     }
 
+    [Serializable]
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class Sequence
     {
@@ -122,6 +125,7 @@ namespace SkeletonGame.Models
         }
     }
 
+    [Serializable]
     public class SequenceTextBase : SequenceBase
     {
         [YamlMember(Alias = "Name", ApplyNamingConventions = false)]
@@ -134,6 +138,7 @@ namespace SkeletonGame.Models
         public string FontStyle { get; set; } = "default";
     }
 
+    [Serializable]
     public class SequenceTextAnimationBase : SequenceTextBase
     {
         [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]
