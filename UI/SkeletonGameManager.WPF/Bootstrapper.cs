@@ -54,6 +54,8 @@ namespace SkeletonGameManager.WPF
             Container.RegisterType<object, TrophyDataView>("TrophyDataView");
 
             Container.RegisterInstance(Container.Resolve<ScoreLayoutViewModel>(), new ContainerControlledLifetimeManager());
+
+            Container.RegisterInstance(Container.Resolve<TrophyDataViewModel>(), new ContainerControlledLifetimeManager());
         }
 
         protected override void ConfigureViewModelLocator()

@@ -47,19 +47,24 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition x:Uid="RowDefinition_4"/>
                                 <RowDefinition x:Uid="RowDefinition_5"/>
-                                <RowDefinition x:Uid="RowDefinition_6"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock x:Uid="TextBlock_1" Text="{Binding Path=Key}" 
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock x:Uid="TextBlock_1" 
+                                       Grid.Column="1"
+                                       Text="{Binding Path=Key}" 
                                        FontWeight="DemiBold" Margin="3"
                                        FontSize="16"
                                        />
 
-                            <Grid x:Uid="Grid_4" Grid.Row="1" DataContext="{Binding Path=Value}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition x:Uid="ColumnDefinition_6" Width="Auto"/>
-                                    <ColumnDefinition x:Uid="ColumnDefinition_7" Width="*"/>
-                                </Grid.ColumnDefinitions>
+                            <!--IMAGE WITH SELECTION-->
+                            <Grid x:Uid="Grid_4" Grid.Row="0" 
+                                  Grid.RowSpan="2"
+                                  DataContext="{Binding Path=Value}">
 
                                 <Grid.RowDefinitions>
                                     <RowDefinition x:Uid="RowDefinition_7" Height="Auto"/>
@@ -67,16 +72,19 @@
                                 </Grid.RowDefinitions>
 
                                 <Image x:Uid="Image_1" Grid.Column="0" Source="{Binding UiIcon}" Height="50"/>
-                                <TextBox x:Uid="TextBox_3" Grid.Column="1" Text="{Binding Description}"
-                                         MaxHeight="20"
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Stretch"/>
 
-                                <ComboBox x:Uid="ComboBox_1" Grid.Row="1" Style="{StaticResource Style_AttractAnimationsCombo}"                                          
+
+                                <ComboBox x:Uid="ComboBox_1" Grid.Row="1" 
+                                          Style="{StaticResource Style_AttractAnimationsCombo}"                                          
                                           SelectedValue="{Binding Icon}"                                          
                                           Margin="3"/>
                             </Grid>
-                            
+
+                            <TextBox Grid.Column="1"
+                                     Grid.Row="1" Width="300"
+                                     DataContext="{Binding Path=Value}"
+                                     Text="{Binding Path=Description, UpdateSourceTrigger=PropertyChanged}"/>
+
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
