@@ -145,6 +145,9 @@ namespace SkeletonGameManager.Module.Services
                     if (File.Exists(Path.Combine(GameFolder, YamlFiles[1])))
                         AssetsConfig = _skeletonGameSerializer.DeserializeSkeletonYaml<AssetsFile>(Path.Combine(GameFolder, YamlFiles[1]));
 
+                    if (!File.Exists(Path.Combine(GameFolder, YamlFiles[2])))
+                        throw new FileNotFoundException("attract.yaml not found.");
+
                     AttractConfig = GetSequence(Path.Combine(GameFolder, YamlFiles[2]));
 
                     var newScoreDisplayYaml = Path.Combine(GameFolder, YamlFiles[3]);
