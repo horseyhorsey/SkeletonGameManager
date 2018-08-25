@@ -29,7 +29,7 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
         public DelegateCommand<object> AddLayerCommand { get; set; }
         public DelegateCommand<object> AddNewSequenceCommand { get; set; }
         public DelegateCommand CustomPopupCommand { get; }
-        public DelegateCommand<object> DuplicateSequenceCommand { get; set; }
+        public DelegateCommand<SequenceItemViewModel> DuplicateSequenceCommand { get; set; }
         public DelegateCommand SaveAttractCommand { get; set; }
         #endregion
 
@@ -54,9 +54,12 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
                 OnSaveAttract();
             });
 
-            DuplicateSequenceCommand = new DelegateCommand<object>((x) =>
-            {
-                OnDuplicateSequence(x);
+            DuplicateSequenceCommand = new DelegateCommand<SequenceItemViewModel>((x) =>
+            {                
+                if (x != null)
+                {                    
+                    OnDuplicateSequence(x);
+                }                    
             });
 
             AddNewSequenceCommand = new DelegateCommand<object>((x) =>
@@ -427,28 +430,14 @@ namespace SkeletonGameManager.Module.SceneManage.ViewModels
             }
         }
 
-        private void OnDuplicateSequence(object x)
+        private void OnDuplicateSequence(SequenceItemViewModel x)
         {
-            var seqbase = x as SequenceBase;
+            Log($"Duplicating sequence {x.Sequence.SeqType}", Category.Debug);
 
+            var seqbase = x.Sequence;
             if (seqbase != null)
-            {
-                if (seqbase.SeqType == SequenceType.GroupLayer)
-                {
-                    var groupBase = (GroupLayer)seqbase;
-
-                    var newGroup = new GroupLayer();
-
-                    foreach (var item in groupBase.Contents.ToList())
-                    {
-                        newGroup.Contents.Add(new Content
-                        {
-                            animation_layer = item.animation_layer
-                        });
-                    }
-
-                    this.Sequences.Add(new SequenceItemViewModel(newGroup));
-                }
+            {                
+                this.Sequences.Add(new SequenceItemViewModel(seqbase.DeepClone()));
             }
         }
 

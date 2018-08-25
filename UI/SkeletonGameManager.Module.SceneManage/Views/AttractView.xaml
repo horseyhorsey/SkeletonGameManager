@@ -87,7 +87,7 @@
                         CommandParameter="{Binding ElementName=SequenceSelector,Path=SelectedItem}"
                     />
 
-                    <Button Content="+" MinWidth="25" IsEnabled="False"
+                    <Button Content="+" MinWidth="25" IsEnabled="True"
                         Command="{Binding ElementName=LayoutRoot,Path=DataContext.DuplicateSequenceCommand}"
                         CommandParameter="{Binding ElementName=DataGridSequences,Path=SelectedItem}"
                     />
