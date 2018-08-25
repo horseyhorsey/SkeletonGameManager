@@ -21,6 +21,8 @@ namespace SkeletonGameManager.Module.LogViewer.ViewModels
             _skeletonGameProvider = skeletonGameProvider;
 
             _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
+
+            _eventAggregator.GetEvent<OnGameEndedEvent>().Subscribe(OnGameEnded);
         }
 
         /// <summary>
@@ -45,6 +47,20 @@ namespace SkeletonGameManager.Module.LogViewer.ViewModels
 
             LogFiles = new System.Collections.ObjectModel
                 .ObservableCollection<string>(Directory.EnumerateFiles(LogPath, "*.log").Select(x => Path.GetFileName(x)));
+        }
+
+        private void OnGameEnded(bool obj)
+        {
+            try
+            {
+                Log("Updating SkeletonGame logs after launching game");
+                this.LogFiles.Clear();
+                this.GetLogs();
+            }
+            catch (Exception ex)
+            {
+                Log($"Error refreshing logs. {ex.Message}", Category.Exception);
+            }
         }
 
         protected override void UpdateFromSelected()
