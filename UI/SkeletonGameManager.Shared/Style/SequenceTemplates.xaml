@@ -89,6 +89,7 @@
            TargetType="ComboBox">
         <Setter Property="ItemsSource" Value="{Binding ElementName=LayoutRoot, Path=DataContext._skeletonGameProvider.AssetsConfig.Animations}"/>
         <Setter Property="SelectedValue" Value="{Binding Name,UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="ToolTip" Value="{Binding Tip_LayerAnimAsset, Source={StaticResource ResourceKey=AppStringResource}}"/>
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -167,9 +168,13 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <ComboBox Style="{StaticResource Style_FontCombo}" Margin="3"/>
+                <ComboBox Style="{StaticResource Style_FontCombo}" 
+                          ToolTip="{Binding Tip_LayerFont, Source={StaticResource ResourceKey=AppStringResource}}"
+                          Margin="3"/>
 
-                <ComboBox Grid.Column="1" Style="{StaticResource Style_FontStyleCombo}" Margin="3"/>
+                <ComboBox Grid.Column="1" 
+                          ToolTip="{Binding Tip_LayerFontStyle, Source={StaticResource ResourceKey=AppStringResource}}"
+                          Style="{StaticResource Style_FontStyleCombo}" Margin="3"/>
             </Grid>
 
         </GroupBox>
@@ -188,7 +193,9 @@
     </Grid>
     
     <DataTemplate x:Key="ZoomOptions">
-        <GroupBox Header="Zoom" x:Name="ZoomGroupBox">
+        <GroupBox Header="Zoom" x:Name="ZoomGroupBox"
+                  ToolTip="{Binding Tip_LayerZoom, Source={StaticResource ResourceKey=AppStringResource}}"
+                  >
 
             <GroupBox.Style>
                 <Style TargetType="GroupBox">
@@ -258,7 +265,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MoveOptions">
-        <GroupBox Header="Move">
+        <GroupBox Header="Move" ToolTip="{Binding Tip_LayerMove, Source={StaticResource ResourceKey=AppStringResource}}">
 
             <GroupBox.Style>
                 <Style TargetType="GroupBox">
@@ -328,7 +335,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="RotateOptions">
-        <GroupBox Header="Rotate">
+        <GroupBox Header="Rotate" ToolTip="{Binding Tip_LayerRotate, Source={StaticResource ResourceKey=AppStringResource}}">
 
             <GroupBox.Style>
                 <Style TargetType="GroupBox">
@@ -403,7 +410,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ComboBox ItemsSource="{Binding Source={StaticResource Transitions}}" ToolTip="Setting to None turns off the transition."
+            <ComboBox ItemsSource="{Binding Source={StaticResource Transitions}}" 
+                                      ToolTip="{Binding Tip_TransOption, Source={StaticResource ResourceKey=AppStringResource}}"
                                       FontWeight="DemiBold" VerticalAlignment="Center"
                                       SelectedItem="{Binding Transition}" Margin="5"/>
             <ComboBox ItemsSource="{Binding Source={StaticResource TransParams}}" Grid.Column="1" 
@@ -462,7 +470,9 @@
             </GroupBox.Header>
 
             <Grid>
-                <ComboBox Grid.Column="0" Style="{StaticResource Style_SoundsCombo}"/>
+                <ComboBox Grid.Column="0" 
+                          ToolTip="{Binding Tip_LayerSound, Source={StaticResource ResourceKey=AppStringResource}}"
+                          Style="{StaticResource Style_SoundsCombo}"/>
             </Grid>
 
         </GroupBox>
@@ -481,9 +491,12 @@
 
             <StackPanel Orientation="Horizontal">
                 <Label Content="LS"/>
-                <ComboBox Style="{StaticResource Style_LampsCombo}"/>
+                <ComboBox ToolTip="{Binding Tip_LayerLampshow, Source={StaticResource ResourceKey=AppStringResource}}"
+                          Style="{StaticResource Style_LampsCombo}"/>
                 <Label Content="RGB"/>
-                <ComboBox Style="{StaticResource Style_RgbLEDsCombo}"/>
+                <ComboBox
+                    ToolTip="{Binding Tip_LayerRggshow, Source={StaticResource ResourceKey=AppStringResource}}"
+                    Style="{StaticResource Style_RgbLEDsCombo}"/>
             </StackPanel>
         </GroupBox>
 
@@ -501,7 +514,9 @@
             </GroupBox.Header>
 
             <DockPanel>
-                <xctk:DecimalUpDown Value="{Binding duration, UpdateSourceTrigger=PropertyChanged}"                                     
+                <xctk:DecimalUpDown
+                    ToolTip="{Binding Tip_LayerDuration, Source={StaticResource ResourceKey=AppStringResource}}"
+                    Value="{Binding duration, UpdateSourceTrigger=PropertyChanged}"                                     
                                     Increment="0.1" Minimum="0.0" 
                                     ClipValueToMinMax="True"/>
             </DockPanel>
@@ -540,6 +555,7 @@
 
                 <DockPanel>
                     <xctk:DecimalUpDown Value="{Binding duration, UpdateSourceTrigger=PropertyChanged}" 
+                                        ToolTip="{Binding Tip_LayerDuration, Source={StaticResource ResourceKey=AppStringResource}}"
                                     DockPanel.Dock="Right" MaxWidth="100" 
                                         HorizontalAlignment="Left"
                                     MinWidth="55" Increment="0.1" Minimum="1.0" 
@@ -600,6 +616,7 @@
         <Setter Property="BorderThickness" Value="2"/>
     </Style>
 
+    <!--COMBO LAYER-->
     <DataTemplate x:Key="Sequence_Combo" x:Shared="false">
         <GroupBox 
                   Style="{StaticResource SequenceBaseGroupBox}" BorderBrush="{DynamicResource Brush_ComboLayer}">
@@ -628,8 +645,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <ComboBox Style="{StaticResource Style_AssetCombo}" Grid.Row="3"/>
-                
                 <!--ANIMATION-->
 
                 <Grid Grid.Row="0">
@@ -774,17 +789,27 @@
                           >
                     <StackPanel Orientation="Horizontal" Margin="5" >
 
-                        <xctk:IntegerUpDown Value="{Binding X}" Minimum="0" ClipValueToMinMax="True" ToolTip="X position of text" Margin="3"/>
-                        <xctk:IntegerUpDown Value="{Binding Y}" Minimum="0" ClipValueToMinMax="True" ToolTip="Y position of text" Margin="3"/>
+                        <xctk:IntegerUpDown Value="{Binding X}" 
+                                            ToolTip="{Binding Tip_LayerTextX, Source={StaticResource ResourceKey=AppStringResource}}"
+                                            Minimum="0" ClipValueToMinMax="True" Margin="3"/>
+                        <xctk:IntegerUpDown Value="{Binding Y}" Minimum="0" 
+                                            ToolTip="{Binding Tip_LayerTextY, Source={StaticResource ResourceKey=AppStringResource}}"
+                                            ClipValueToMinMax="True" Margin="3"/>
 
                         <TextBlock Text="Vert Justify:   " VerticalAlignment="Center"/>
-                        <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
+                        <ComboBox VerticalAlignment="Center" 
+                                  ToolTip="{Binding Tip_LayerTextJustifyV, Source={StaticResource ResourceKey=AppStringResource}}"
+                                  ItemsSource="{Binding Source={StaticResource VJustifyOptions}}" SelectedValue="{Binding VJustify, UpdateSourceTrigger=PropertyChanged}"/>
 
                         <TextBlock Text="    Horz Justify:   " VerticalAlignment="Center"/>
-                        <ComboBox VerticalAlignment="Center" ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustify, UpdateSourceTrigger=PropertyChanged}"/>
+                        <ComboBox VerticalAlignment="Center" 
+                                  ToolTip="{Binding Tip_LayerTextJustifyH, Source={StaticResource ResourceKey=AppStringResource}}"
+                                  ItemsSource="{Binding Source={StaticResource HJustifyOptions}}" SelectedValue="{Binding HJustify, UpdateSourceTrigger=PropertyChanged}"/>
                         
                         
-                        <CheckBox VerticalAlignment="Center" IsChecked="{Binding BlinkFrames}" Content="Blink Text" Margin="3"></CheckBox>
+                        <CheckBox VerticalAlignment="Center" 
+                                  ToolTip="{Binding Tip_LayerTextBlink, Source={StaticResource ResourceKey=AppStringResource}}"
+                                  IsChecked="{Binding BlinkFrames}" Content="Blink Text" Margin="3"></CheckBox>
 
                     </StackPanel>
                 </GroupBox>
@@ -1097,11 +1122,11 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="PosX" Margin="3"/>
-                <xctk:IntegerUpDown Grid.Column="1" Margin="3" MaxHeight="20"
+                <xctk:DecimalUpDown Grid.Column="1" Margin="3" MaxHeight="20"
                                     Value="{Binding X}"  ClipValueToMinMax="True"/>
 
                 <Label Content="PosY" Grid.Column="2" Margin="3"/>
-                <xctk:IntegerUpDown Grid.Column="3" Margin="3" MaxHeight="20"
+                <xctk:DecimalUpDown Grid.Column="3" Margin="3" MaxHeight="20"
                                     Value="{Binding Y}"  ClipValueToMinMax="True"/>
 
                 <CheckBox Grid.Column="4" Margin="3" VerticalAlignment="Center"
@@ -1218,6 +1243,7 @@
         </Grid>
     </DataTemplate>
 
+    <!--CONTENT COMBO-->
     <DataTemplate x:Key="Content_Combo">
         <StackPanel Margin="3" DataContext="{Binding combo_layer}">
 
@@ -1274,7 +1300,9 @@
                 <StackPanel Grid.Row="0">
 
                     <!--NAME-->
-                    <xctk:WatermarkTextBox Text="{Binding Name}" Watermark="Group layer name" Margin="3"/>
+                    <xctk:WatermarkTextBox Text="{Binding Name}" 
+                                           ToolTip="{Binding Tip_LayerName, Source={StaticResource ResourceKey=AppStringResource}}"
+                                           Watermark="Group layer name" Margin="3"/>
 
                     <!--SOUND LAMP COMBOS-->
                     <ContentPresenter Content="{StaticResource SoundLampDurationCombo}"/>
@@ -1367,7 +1395,10 @@
                                 <DataGridTemplateColumn>
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Button Content="YAML" HorizontalAlignment="Center" 
+                                            <Button Content="{DynamicResource Path_Duplicate}" 
+                                                    HorizontalAlignment="Center" 
+                                                    MaxHeight="32"
+                                                    ToolTip="View yaml struct"
                                                     Command="{Binding ElementName=LayoutRoot, Path=DataContext.ShowYamlStructCommand}"
                                                     CommandParameter="{Binding}"
                                                     />
@@ -1765,6 +1796,11 @@
                     <Label Content="Width" VerticalAlignment="Center"/>
                     <xctk:IntegerUpDown Value="{Binding Width}" Margin="10"/>
 
+                    <Label Content="Duration" VerticalAlignment="Center"/>
+                    <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" 
+                                                      ToolTip="{Binding Tip_LayerDuration, Source={StaticResource ResourceKey=AppStringResource}}"
+                                                      Increment="0.1" Minimum="1.0"/>
+
                 </StackPanel>
 
                 <!--FONT AND STYLE-->
@@ -1772,7 +1808,8 @@
 
                 <GroupBox>
                     <StackPanel>
-                        <GroupBox Header="Bold">
+                        <GroupBox Header="Bold" 
+                                  ToolTip="{Binding Tip_LayerMarkupBold, Source={StaticResource ResourceKey=AppStringResource}}">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="Font"/>
                                 <ComboBox Style="{StaticResource Style_FontCombo}" 
@@ -1785,7 +1822,9 @@
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="Normal">
+                        <GroupBox Header="Normal"
+                                  ToolTip="{Binding Tip_LayerMarkupNormal, Source={StaticResource ResourceKey=AppStringResource}}">
+                                  
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="Font"/>
                                 <ComboBox Style="{StaticResource Style_FontCombo}" 
@@ -1803,13 +1842,14 @@
                 <!--<Label Content="Animation"/>
                 <ComboBox Style="{StaticResource Style_AttractAnimationsCombo}" SelectedValue="{Binding Animation}"/>-->
 
-                <ContentPresenter Content="{StaticResource Transition_Standard}" Grid.Row="1"/>
-
-                <xctk:PropertyGridEditorDecimalUpDown Value="{Binding duration}" Increment="0.1" Minimum="1.0"/>
+                <!--<ContentPresenter Content="{StaticResource Transition_Standard}" Grid.Row="1"/>-->
+                <ContentPresenter Grid.Row="1" Content="{StaticResource TransitionOptions}" Margin="3"/>
 
                 <GroupBox>
 
-                    <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="True" AutoGenerateColumns="False">
+                    <DataGrid ItemsSource="{Binding TextEntries, UpdateSourceTrigger=PropertyChanged}" 
+                              ToolTip="{Binding Tip_LayerMarkupLines, Source={StaticResource ResourceKey=AppStringResource}}"
+                              CanUserAddRows="True" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding TextLine}" Width="1*"></DataGridTextColumn>
                             <!--<DataGridTemplateColumn Width="1*">
@@ -1878,7 +1918,9 @@
 
                 <ContentPresenter Grid.Row="2" Content="{StaticResource FontOptionsGrid}" Margin="3"/>
 
-                <GroupBox Header="Order" Grid.Row="3">
+                <GroupBox Header="Order" Grid.Row="3"
+                          ToolTip="{Binding Tip_LayerHighScoreOrder, Source={StaticResource ResourceKey=AppStringResource}}"
+                          >
                     <ListView ItemsSource="{Binding Order}"                       
                       xmlns:dd="urn:gong-wpf-dragdrop"
                       dd:DragDrop.IsDragSource="True"
