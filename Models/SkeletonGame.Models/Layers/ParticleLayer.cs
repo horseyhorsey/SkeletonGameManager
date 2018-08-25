@@ -5,7 +5,7 @@ using YamlDotNet.Serialization;
 namespace SkeletonGame.Models.Layers
 {
     [Serializable]
-    public class ParticleLayer
+    public class ParticleLayer : SequenceBase
     {
         [YamlMember(Alias = "width", ApplyNamingConventions = false)]
         public int Width { get; set; }
@@ -15,12 +15,6 @@ namespace SkeletonGame.Models.Layers
 
         [YamlMember(Alias = "emitters", ApplyNamingConventions = false)]
         public List<ParticleEmitter> Emitters { get; set; }
-
-        [YamlIgnore]
-        public SequenceType SeqType { get; set; }
-
-        [YamlIgnore]
-        public string SequenceName { get; set; }
 
         public ParticleLayer()
         {

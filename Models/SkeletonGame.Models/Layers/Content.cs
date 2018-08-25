@@ -60,6 +60,8 @@ namespace SkeletonGame.Models.Layers
                 return scripted_text_layer;
             else if (text_layer != null)
                 return text_layer;
+            else if (particle_layer != null)
+                return particle_layer;
 
             return null;
         } 
