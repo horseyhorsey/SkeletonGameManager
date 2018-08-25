@@ -122,6 +122,10 @@
       <Project>{be479251-3b5f-4138-a6cd-5c3701c1fe8e}</Project>
       <Name>SkeletonGameManager.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Resources\SkeletonGameManager.Resources.csproj">
+      <Project>{ce1e49c2-ec38-4853-b807-ca94248a1780}</Project>
+      <Name>SkeletonGameManager.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

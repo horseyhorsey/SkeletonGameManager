@@ -11,6 +11,7 @@
              xmlns:selectors="clr-namespace:SkeletonGameManager.Module.SceneManage.Selectors"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:views="clr-namespace:SkeletonGameManager.Module.SceneManage.Views"
+             xmlns:converters="clr-namespace:SkeletonGameManager.Resources.Windows.Converters;assembly=SkeletonGameManager.Resources"
              mc:Ignorable="d" 
              PresentationTraceSources.TraceLevel="High"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -24,6 +25,10 @@
             </prism:PopupWindowAction>
         </prism:InteractionRequestTrigger>
     </i:Interaction.Triggers>
+
+    <UserControl.Resources>
+        <converters:StyleConverter x:Key="StyleConverter"/>
+    </UserControl.Resources>
 
     
     <Grid x:Name="LayoutRoot">
@@ -76,18 +81,25 @@
                 
                 <StackPanel Orientation="Horizontal" Margin="3">
 
-                    <Label Content="New Sequence"/>
+                    <Label Content="New Sequence"
+                           ToolTip="{Binding Tip_SeqNew, Source={StaticResource ResourceKey=AppStringResource}}"
+                           />
                     
                     <ComboBox x:Name="SequenceSelector" MinWidth="45"                          
                           ItemsSource="{Binding Source={StaticResource SequenceTypes}}"
+                              ToolTip="{Binding Tip_SequenceYamls, Source={StaticResource ResourceKey=AppStringResource}}"
                           />
 
-                    <Button Content="+" MinWidth="25"
+                    <!--//TODO: ToolTips-->
+                    <Button Content="{Binding Source={StaticResource Path_Add}}" MinWidth="25"
+                            ToolTip="{Binding Tip_SeqNewLayer, Source={StaticResource ResourceKey=AppStringResource}}"
                         Command="{Binding ElementName=LayoutRoot,Path=DataContext.AddNewSequenceCommand}"
                         CommandParameter="{Binding ElementName=SequenceSelector,Path=SelectedItem}"
                     />
-
-                    <Button Content="+" MinWidth="25" IsEnabled="True"
+                    
+                    <Button MinWidth="25" IsEnabled="True"
+                        ToolTip="{Binding Tip_SeqDupeLayer, Source={StaticResource ResourceKey=AppStringResource}}"
+                        Content="{Binding Source={StaticResource Path_Pin}}"
                         Command="{Binding ElementName=LayoutRoot,Path=DataContext.DuplicateSequenceCommand}"
                         CommandParameter="{Binding ElementName=DataGridSequences,Path=SelectedItem}"
                     />
@@ -134,7 +146,11 @@
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="YAML" HorizontalAlignment="Center" Command="{Binding ElementName=LayoutRoot, Path=DataContext.ShowYamlStructCommand}"/>
+                                    <Button Content="{Binding Source={StaticResource Path_Duplicate}}" 
+                                            HorizontalAlignment="Center" 
+                                            MaxHeight="32"
+                                            ToolTip="{Binding Tip_SeqYaml, Source={StaticResource ResourceKey=AppStringResource}}"
+                                            Command="{Binding ElementName=LayoutRoot, Path=DataContext.ShowYamlStructCommand}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace SkeletonGameManager.Resources.Windows.Converters
 {
-    class StyleConverter : IMultiValueConverter
+    public class StyleConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
