@@ -1,9 +1,11 @@
 ﻿using SkeletonGame.Models.Layers;
+using System;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models
 {
-    [PropertyChanged.AddINotifyPropertyChangedInterface]
+    [Serializable]
+    [PropertyChanged.AddINotifyPropertyChangedInterface]    
     public class SequenceBase
     {
         public string lampshow { get; set; }
@@ -19,6 +21,7 @@ namespace SkeletonGame.Models
         public SequenceType SeqType { get; set; }
     }
 
+    [Serializable]
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class Sequence
     {
@@ -58,6 +61,8 @@ namespace SkeletonGame.Models
         [YamlMember(Alias = "move_layer", ApplyNamingConventions = false)]
         public MoveLayer MoveLayer { get; set; }
 
+        [YamlMember(Alias = "animation_layer", ApplyNamingConventions = false)]
+        public AttractAnimation animation_layer { get; set; }
 
         [YamlMember(Alias = "zoom_layer", ApplyNamingConventions = false)]
         public ZoomLayer ZoomLayer { get; set; }
@@ -77,6 +82,9 @@ namespace SkeletonGame.Models
             {
                 case SequenceType.Animation:
                     AttractAnimation = (AttractAnimation)sequenceBase;
+                    break;
+                case SequenceType.AnimationLayer:
+                    animation_layer = (AttractAnimation)sequenceBase;
                     break;
                 case SequenceType.Combo:
                     Combo = (Combo)sequenceBase;
@@ -117,8 +125,12 @@ namespace SkeletonGame.Models
         }
     }
 
+    [Serializable]
     public class SequenceTextBase : SequenceBase
     {
+        [YamlMember(Alias = "Name", ApplyNamingConventions = false)]
+        public string Name { get; set; }
+
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
         public string Font { get; set; } = "default";
 
@@ -126,6 +138,7 @@ namespace SkeletonGame.Models
         public string FontStyle { get; set; } = "default";
     }
 
+    [Serializable]
     public class SequenceTextAnimationBase : SequenceTextBase
     {
         [YamlMember(Alias = "Animation", ApplyNamingConventions = false)]

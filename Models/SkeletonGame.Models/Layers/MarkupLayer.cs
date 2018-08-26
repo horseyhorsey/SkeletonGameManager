@@ -1,10 +1,12 @@
 ﻿using SkeletonGame.Models.Transition;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
+    [Serializable]
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class MarkupLayer : TransitionBaseLayer
     {
@@ -57,6 +59,7 @@ namespace SkeletonGame.Models.Layers
         }
     }
 
+    [Serializable]
     public class Bold
     {
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]
@@ -66,6 +69,7 @@ namespace SkeletonGame.Models.Layers
         public string FontStyle { get; set; } = "default";
     }
 
+    [Serializable]
     public class Normal
     {
         [YamlMember(Alias = "Font", ApplyNamingConventions = false)]

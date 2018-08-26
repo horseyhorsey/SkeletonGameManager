@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
+    //TODO: Not sure what this is for, could just use the GroupLayers bakground.
+    [Serializable]
     public class SolidLayer
     {
         [YamlMember(Alias = "width", ApplyNamingConventions = false)]

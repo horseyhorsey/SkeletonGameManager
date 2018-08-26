@@ -1,14 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
-    //public class Contents
-    //{
-    //    [YamlMember(Alias = "group_layer", ApplyNamingConventions = false)]
-    //    public GroupLayer group_layer { get; set; }
-    //}
-
+    [Serializable]
     public class PanningLayer : SequenceBase
     { 
 

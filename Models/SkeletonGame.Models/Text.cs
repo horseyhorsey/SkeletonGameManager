@@ -14,6 +14,7 @@ namespace SkeletonGame.Models
 
     public enum HJustify
     {
+        None,
         left,
         center, 
         right
@@ -21,6 +22,7 @@ namespace SkeletonGame.Models
 
     public enum VJustify
     {
+        None,
         top,
         center,
         bottom

@@ -105,11 +105,11 @@ namespace SkeletonGame.Models.Score
         [YamlMember(Alias = "font_style", ApplyNamingConventions = false)]
         public string FontStyle { get; set; } = "default";
 
-        [YamlMember(Alias = "h_justify", ApplyNamingConventions = false, SerializeAs = typeof(string))]
-        public HJustify HJustifyOptions { get; set; }
+        [YamlMember(Alias = "h_justify", ApplyNamingConventions = false, ScalarStyle = YamlDotNet.Core.ScalarStyle.SingleQuoted)]
+        public HJustify HJustifyOptions { get; set; } = HJustify.left;
 
-        [YamlMember(Alias = "v_justify", ApplyNamingConventions = false, SerializeAs = typeof(string))]
-        public VJustify VJustifyOptions { get; set; }
+        [YamlMember(Alias = "v_justify", ApplyNamingConventions = false, ScalarStyle = YamlDotNet.Core.ScalarStyle.SingleQuoted)]
+        public VJustify VJustifyOptions { get; set; } = VJustify.top;
 
         [YamlMember(Alias = "x", ApplyNamingConventions = false, SerializeAs = typeof(string))]
         public decimal X { get; set; } = 0.5m;

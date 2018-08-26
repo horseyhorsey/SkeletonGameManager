@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using YamlDotNet.Serialization;
 
@@ -14,17 +15,20 @@ namespace SkeletonGame.Models
         ObservableCollection<TextListViewModel> TextEntries { get; set; }
     }
 
+    [Serializable]
     public class Message
     {
         [YamlMember(Alias = "TextOptions", ApplyNamingConventions = false)]
         public List<TextOption> TextOptions { get; set; }
     }
 
+    [Serializable]
     public class TextListViewModel
     {
         public string TextLine { get; set; } = "";
     }
-
+    
+    [Serializable]
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class TextOption : ITextEntries
     {

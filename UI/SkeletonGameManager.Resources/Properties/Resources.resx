@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,330 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cfg_ConfigYaml" xml:space="preserve">
+    <value>This file contains global configuration for the game. Paths, Dmd, Audio, Modes.</value>
+  </data>
+  <data name="GameFolder" xml:space="preserve">
+    <value>SkeletonGame path</value>
+  </data>
+  <data name="Tip_Attract" xml:space="preserve">
+    <value>Enables the attract mode.</value>
+  </data>
+  <data name="Tip_AudioStreamingLoad" xml:space="preserve">
+    <value>Disabling will load into memory. (Only compatible with music). If using lots of music it's probably best to disable streaming load.</value>
+  </data>
+  <data name="Tip_BallSearch" xml:space="preserve">
+    <value>Enables/Disables the BallSearch Mode.</value>
+  </data>
+  <data name="Tip_BallSearchDelay" xml:space="preserve">
+    <value>How long to wait for a ball search to start.</value>
+  </data>
+  <data name="Tip_BonusTally" xml:space="preserve">
+    <value>Enables/Disables the Bonus mode at end of each ball.</value>
+  </data>
+  <data name="Tip_CoilBallSearch" xml:space="preserve">
+    <value>Coils tagged for ballsearch are fired when the ball has not been seen or at the start of the game when all balls can't be found so these coils are coils that help return the ball to the trough. NOTE: trough should NOT be tagged for ballsearch since firing the
+        # trough would not help fill the trough...Add the tag autoPlunger to a coil to support autoplunging on ball save.</value>
+  </data>
+  <data name="Tip_CoilFlashTable" xml:space="preserve">
+    <value>This view allows you to configure all the coils/flashers in a machine. Coils in the table must have a name to be exported to yaml and will be skipped if NOT USED. The SolenoidType isn't needed for pyprocgame but just as extra options for reference.</value>
+  </data>
+  <data name="Tip_DmdBordered" xml:space="preserve">
+    <value>Shows a border around the window. (F11 toggles window border and F12 will save position when window is running).</value>
+  </data>
+  <data name="Tip_DmdFlipped" xml:space="preserve">
+    <value>Flips the display. Options are 0, 1, 2, 3.</value>
+  </data>
+  <data name="Tip_DmdFramerate" xml:space="preserve">
+    <value>The displays framerate.</value>
+  </data>
+  <data name="Tip_DmdFullScreen" xml:space="preserve">
+    <value>Full-screen mode scales the contents to fit the full display; may not look right.</value>
+  </data>
+  <data name="Tip_DmdGrid" xml:space="preserve">
+    <value>Where to find the dmdgrid32x32.png file.</value>
+  </data>
+  <data name="Tip_DmdPosition" xml:space="preserve">
+    <value>Sets the displays position.</value>
+  </data>
+  <data name="Tip_DmdResolution" xml:space="preserve">
+    <value>Display resolution. Shouldn't be changed after doing work to a game.</value>
+  </data>
+  <data name="Tip_DmdScale" xml:space="preserve">
+    <value>The display scale is the multiplier per dot.  At 5 each dot is 5x5 pixels.</value>
+  </data>
+  <data name="Tip_DropFilesInfo" xml:space="preserve">
+    <value>Drop files to copy.</value>
+  </data>
+  <data name="Tip_EnablePlayback" xml:space="preserve">
+    <value>Enabled game recording plaback. This will set the FakePinProc class to use the Playback version and set back when game is closed. The selected playback in the list will be copied to the main game directory as playback.txt.</value>
+  </data>
+  <data name="Tip_EnableRecording" xml:space="preserve">
+    <value>Enabled game recording. This will set the skeletons base class to BasicGameRecordable and set it back providing the game window is closed before the UI. Recordings are saved to the recordings directory.</value>
+  </data>
+  <data name="Tip_ExportLampshowUI" xml:space="preserve">
+    <value>Exports all the lamps into a compatible rampantslug LampshowUI project saving time on initial setup.</value>
+  </data>
+  <data name="Tip_ExportPythonSwitchCallbacks" xml:space="preserve">
+    <value>Exports a python file that contains active switch method callbacks. All switches in the machine are exported except for the trough and dedicated switches.</value>
+  </data>
+  <data name="Tip_FileOptionInfo" xml:space="preserve">
+    <value>Double clicking opens with default process.</value>
+  </data>
+  <data name="Tip_GameLaunchInfo" xml:space="preserve">
+    <value>Launches the game with your default python install.</value>
+  </data>
+  <data name="Tip_LampMatrix" xml:space="preserve">
+    <value>This view allows you to configure all the lamps in a machine. Lamps must have a name to be exported to yaml and will be skipped if NOT USED. Some tags are needed for Skeleton game. Noteably; shoot_again (Used for ball save).</value>
+  </data>
+  <data name="Tip_LaunchRecording" xml:space="preserve">
+    <value>Launches the game with the options set.</value>
+  </data>
+  <data name="Tip_MachineYaml" xml:space="preserve">
+    <value>This file contains all the configuration for a machine.</value>
+  </data>
+  <data name="Tip_OpenDir" xml:space="preserve">
+    <value>Opens the current directory.</value>
+  </data>
+  <data name="Tip_OSC" xml:space="preserve">
+    <value>Enables an OSC server which listens for switches pushed from a UI. eg SwitchMatrix Gui, this applications machine switch matrix.</value>
+  </data>
+  <data name="Tip_PathsDmd" xml:space="preserve">
+    <value>Asset manager path for display files. Images, movie, .dmd.</value>
+  </data>
+  <data name="Tip_PathsHdFonts" xml:space="preserve">
+    <value>Asset manager path for fonts. .ttf.</value>
+  </data>
+  <data name="Tip_PathsSdlPath" xml:space="preserve">
+    <value>The display uses SDL2. The Dlls path is the needed SDL2 Dlls.</value>
+  </data>
+  <data name="Tip_PathsSfx" xml:space="preserve">
+    <value>Asset manager for the sfx dir.</value>
+  </data>
+  <data name="Tip_PathsSound" xml:space="preserve">
+    <value>Asset manager path for the parent Sound folder.</value>
+  </data>
+  <data name="Tip_PathsVoice" xml:space="preserve">
+    <value>Asset manager path for the parent Voice folder.</value>
+  </data>
+  <data name="Tip_PathsVpGameMap" xml:space="preserve">
+    <value>The is where the vp_game_map.yaml can be found. This is more of a globally used path, not per game.</value>
+  </data>
+  <data name="Tip_Profiles" xml:space="preserve">
+    <value>Enables a profile menu players where players can create &amp; select saved players.</value>
+  </data>
+  <data name="Tip_SaveAssetsFile" xml:space="preserve">
+    <value>Saves the asset_list.yaml.</value>
+  </data>
+  <data name="Tip_SaveConfigGame" xml:space="preserve">
+    <value>Overwrites the config.yaml in the current game folder.</value>
+  </data>
+  <data name="Tip_SaveConfigMachine" xml:space="preserve">
+    <value>Overwrites the machine.yaml in the games config folder.</value>
+  </data>
+  <data name="Tip_SaveScoreDisplayConfig" xml:space="preserve">
+    <value>Overwrites the new_score_display.yaml in the games config folder.</value>
+  </data>
+  <data name="Tip_SaveSequences" xml:space="preserve">
+    <value>Saves the sequence file that's in view.</value>
+  </data>
+  <data name="Tip_SeqAnimation" xml:space="preserve">
+    <value>An animation layer, no text.</value>
+  </data>
+  <data name="Tip_SeqCombo" xml:space="preserve">
+    <value>A multi-line text layer and animation Combo.</value>
+  </data>
+  <data name="Tip_SeqCredits" xml:space="preserve">
+    <value>A static animation with a moving image(credit scroll) that scrolls over animation.</value>
+  </data>
+  <data name="Tip_SeqGroupLayer" xml:space="preserve">
+    <value>Groups multiple display layers together.</value>
+  </data>
+  <data name="Tip_SeqHighScores" xml:space="preserve">
+    <value>Displays the high scores.</value>
+  </data>
+  <data name="Tip_SeqLastScores" xml:space="preserve">
+    <value>Displays the last games scores.</value>
+  </data>
+  <data name="Tip_SeqMarkupLayer" xml:space="preserve">
+    <value>Has a Bold # and Normal [ font. eg:
+        # Left, Right #, # Center #
+        [ Left, Right ], [ Center ].</value>
+  </data>
+  <data name="Tip_SeqMoveLayer" xml:space="preserve">
+    <value>Moves an animation or text.</value>
+  </data>
+  <data name="Tip_SeqPanningLayer" xml:space="preserve">
+    <value>ToDo</value>
+  </data>
+  <data name="Tip_SeqParticleLayer" xml:space="preserve">
+    <value>Displays particle emitters in a layer.</value>
+  </data>
+  <data name="Tip_SeqRandomText" xml:space="preserve">
+    <value>Create a list of sentences to display at random when this layer is used.</value>
+  </data>
+  <data name="Tip_SeqScriptedText" xml:space="preserve">
+    <value>Runs a script of text lists. Duration is how long each text list will be displayed. If an animation is set to play with the layers and the duration of the animation is longer than the text script, then the duration is set to let the whole animtion finish.</value>
+  </data>
+  <data name="Tip_SeqTextLayer" xml:space="preserve">
+    <value>A text layer with no animation.</value>
+  </data>
+  <data name="Tip_ServiceMenu" xml:space="preserve">
+    <value>Enables/Disables the Service Mode Menu.</value>
+  </data>
+  <data name="Tip_SwitchMatrix" xml:space="preserve">
+    <value>This view allows you configure the switches. Switches must have a name to be exported to yaml and will be skipped if NOT USED. Don't use spaces in names, use the label. Some tags are needed for Skeleton game. Noteably; shooter, trough, early_save.</value>
+  </data>
+  <data name="Tip_TiltConfig" xml:space="preserve">
+    <value>Enables/Disables the Tilt mode.</value>
+  </data>
+  <data name="Tip_Trophys" xml:space="preserve">
+    <value>Enables a mode that displays trophys when complete* . See the trophy_default_data to create trophys. *Profiles must be enabled.</value>
+  </data>
+  <data name="Tip_VPExportSolenoid" xml:space="preserve">
+    <value>Export VP_Coil.txt - all the coils into Visual Pinball 'SolCallBacks'. Creates Sub routines for the Solenoid callback and a list of SolCallBacks. Flippers should be skipped from this process.</value>
+  </data>
+  <data name="Tip_VPExportSwitch" xml:space="preserve">
+    <value>Export VP_Switch.txt -  all the switches into Visual Pinball switch hits. Creates Sub routines for switches and these can be copied into a tables script.</value>
+  </data>
+  <data name="Tip_DmdOnTop" xml:space="preserve">
+    <value>Raises the window above every other window. Good for Visual Pinball or always having the display in view.</value>
+  </data>
+  <data name="Tip_PathsOscUi" xml:space="preserve">
+    <value>The path to switchMatrixClient.py. Default install C:\P-ROC\GUITool</value>
+  </data>
+  <data name="Tip_PathsPlayfield" xml:space="preserve">
+    <value>The path to the playfield.</value>
+  </data>
+  <data name="Tip_PathsUiLayout" xml:space="preserve">
+    <value>The path to the GUI tools layout switch / lamp file.</value>
+  </data>
+  <data name="Tip_LampshowReverse" xml:space="preserve">
+    <value>Reverses the selected Lamshow.</value>
+  </data>
+  <data name="Tip_DropLampshows" xml:space="preserve">
+    <value>Drag &amp; Drop Lampshows and RGBShows files and to copy to lampshow directory. Drag &amp; Drop from the available files to each collection, lampshow and rgbshow.</value>
+  </data>
+  <data name="Tip_LogSgm" xml:space="preserve">
+    <value>View SGM logs.</value>
+  </data>
+  <data name="Tip_LogSgmGame" xml:space="preserve">
+    <value>View logs from gamefolder/logs. Logs are produced when launched from SGM.</value>
+  </data>
+  <data name="Tip_NewGame" xml:space="preserve">
+    <value>Creates and setups a new game.</value>
+  </data>
+  <data name="Tip_OpenGame" xml:space="preserve">
+    <value>Loads a compatible SkeletonGame folder.</value>
+  </data>
+  <data name="Tip_RecordingPlaybackMenu" xml:space="preserve">
+    <value>Playback a Recording.</value>
+  </data>
+  <data name="Tip_Reload" xml:space="preserve">
+    <value>Reloads game config from disk.</value>
+  </data>
+  <data name="Tip_VPExportScriptFull" xml:space="preserve">
+    <value>Export VP_ScriptFull.vbs. Creates a script starter ready for Visual Pinball. Troughs, saucers, ball stacks are created if VP type is specified in the machines switches and coils.</value>
+  </data>
+  <data name="Tip_SwitchMatrixLaunch" xml:space="preserve">
+    <value>Launch the OSC Switch Matrix Tool. Paths are configured in config.yaml.</value>
+  </data>
+  <data name="Tip_LogVp" xml:space="preserve">
+    <value>View the C:\P-ROC\Shared\log.txt</value>
+  </data>
+  <data name="Tip_VpLaunchInfo" xml:space="preserve">
+    <value>Launch game simulated in Visual Pinball.</value>
+  </data>
+  <data name="Tip_AudioBuff" xml:space="preserve">
+    <value>Audio buffer size.</value>
+  </data>
+  <data name="Tip_AudioFreq" xml:space="preserve">
+    <value>22000, 44100, 48000</value>
+  </data>
+  <data name="Tip_DotFilter" xml:space="preserve">
+    <value>This applies the Dmd grid. </value>
+  </data>
+  <data name="Tip_LayerDuration" xml:space="preserve">
+    <value>The total duration of the layer.</value>
+  </data>
+  <data name="Tip_LayerLampshow" xml:space="preserve">
+    <value>Select a lampshow to attach to this sequence.</value>
+  </data>
+  <data name="Tip_LayerName" xml:space="preserve">
+    <value>The name of the Layer which is used as a Key to access in Game.</value>
+  </data>
+  <data name="Tip_LayerRgbshow" xml:space="preserve">
+    <value>Select a Rgbshow to attach to this sequence.</value>
+  </data>
+  <data name="Tip_LayerSound" xml:space="preserve">
+    <value>Select a Voice or Sfx key from the assets.</value>
+  </data>
+  <data name="Tip_LayerTextBlink" xml:space="preserve">
+    <value>Blink / Flashes text</value>
+  </data>
+  <data name="Tip_LayerTextJustifyH" xml:space="preserve">
+    <value>Horizontal justify of the text.</value>
+  </data>
+  <data name="Tip_LayerTextJustifyV" xml:space="preserve">
+    <value>Veritcal justify of the text.</value>
+  </data>
+  <data name="Tip_LayerTextX" xml:space="preserve">
+    <value>X position of text</value>
+  </data>
+  <data name="Tip_LayerTextY" xml:space="preserve">
+    <value>Y position of text</value>
+  </data>
+  <data name="Tip_SeqDupeLayer" xml:space="preserve">
+    <value>Duplicates the selected layer.</value>
+  </data>
+  <data name="Tip_SeqNew" xml:space="preserve">
+    <value>Creates a sequence layer from selected drop down item.</value>
+  </data>
+  <data name="Tip_SeqNewLayer" xml:space="preserve">
+    <value>Adds a new layer from selected dropdown.</value>
+  </data>
+  <data name="Tip_SequenceYamls" xml:space="preserve">
+    <value>Select from attract.yaml and sequences.yaml. Attract is used in the Attract default modes. Sequences is populated into a separate dictionary where you can use PlaySequence or GetSequence, see SkeletonGames  AdvancedMode.</value>
+  </data>
+  <data name="Tip_SeqYaml" xml:space="preserve">
+    <value>Opens window to copy the YamlStruct. This can be used as an export dictionary and used with GenerateLayerFromYaml, saving creating layers by "hand" and good for testing.</value>
+  </data>
+  <data name="Tip_TransOption" xml:space="preserve">
+    <value>Setting to None turns off the transition. *Warn not all options can be applied to a transition. ToDo: Only show available for the selected Transition.</value>
+  </data>
+  <data name="Tip_LayerAnimAsset" xml:space="preserve">
+    <value>The animation asset to be used on this layer.</value>
+  </data>
+  <data name="Tip_LayerFont" xml:space="preserve">
+    <value>Font to be used on the TextLayer.</value>
+  </data>
+  <data name="Tip_LayerFontStyle" xml:space="preserve">
+    <value>The style for the Font</value>
+  </data>
+  <data name="Tip_LayerHighScoreOrder" xml:space="preserve">
+    <value>Order of HiScore Categories to be displayed.</value>
+  </data>
+  <data name="Tip_LayerMarkupBold" xml:space="preserve">
+    <value>The font to be used with Bold # #</value>
+  </data>
+  <data name="Tip_LayerMarkupLines" xml:space="preserve">
+    <value>Add markup lines. Eg Normal: [ Left, Right ], [ Center ]      Bold 	      # Left, Right #, # Center #</value>
+  </data>
+  <data name="Tip_LayerMarkupNormal" xml:space="preserve">
+    <value>The font to be used with Normal []</value>
+  </data>
+  <data name="Tip_LayerMove" xml:space="preserve">
+    <value>Apply a MovingLayer to this layer when enabled.</value>
+  </data>
+  <data name="Tip_LayerRotate" xml:space="preserve">
+    <value>Apply a RotationLayer to this layer when enabled</value>
+  </data>
+  <data name="Tip_LayerZoom" xml:space="preserve">
+    <value>Apply a ZoomingLayer to this layer when enabled.</value>
+  </data>
 </root>

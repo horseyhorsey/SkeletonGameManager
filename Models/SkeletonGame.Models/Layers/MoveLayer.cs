@@ -1,10 +1,11 @@
 ﻿using SkeletonGame.Models.Transforms;
 using SkeletonGame.Models.Transition;
+using System;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
-
+    [Serializable]
     public class MoveLayer : TransitionBaseLayer, IMoveLayer
     {
         public MoveLayer()

@@ -1,25 +1,24 @@
-﻿<Application x:Class="SkeletonGameManager.WPF.App"
+﻿<Application x:Uid="Application_1" x:Class="SkeletonGameManager.WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:converters="clr-namespace:SkeletonGameManager.WPF.Converters">
+             xmlns:properties="clr-namespace:SkeletonGameManager.Resources.Properties;assembly=SkeletonGameManager.Resources"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException"
+             >
     <Application.Resources>
+        
+        <ResourceDictionary x:Uid="ResourceDictionary_1">
 
-        <ResourceDictionary>
+            <!--Localization-->
+            <properties:Resources x:Uid="properties:Resources_1" x:Key="AppStringResource"/>
+
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/StringResources.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/BrushResources.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/ControlResources.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/IconResources.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/ImageResources.xaml" />
 
-                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/Templates/SequenceTemplates.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/SkeletonGameManager.Resources;component/Templates/DataGridTemplates.xaml" />
+                <ResourceDictionary x:Uid="ResourceDictionary_2" Source="pack://application:,,,/SkeletonGameManager.Resources;component/BrushResources.xaml" />
+                <ResourceDictionary x:Uid="ResourceDictionary_3" Source="pack://application:,,,/SkeletonGameManager.Resources;component/ImageResources.xaml" />
+                <ResourceDictionary x:Uid="ResourceDictionary_4" Source="/SkeletonGameManager.Resources;component/Style/SkelegameWpf.xaml" />
+                <ResourceDictionary x:Uid="ResourceDictionary_5" Source="pack://application:,,,/SkeletonGameManager.Resources;component/ControlResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <converters:ListToColorConverter x:Key="NegateBoolConv"/>
-            <converters:ListToColorConverter x:Key="ListToColorConv"/>
-            <converters:StyleConverter x:Key="StyleConverter"/>
-            <converters:DoubleToTimespanConverter x:Key="DoubleToTimspanConverter"/>
         </ResourceDictionary>
 
     </Application.Resources>

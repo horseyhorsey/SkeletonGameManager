@@ -23,7 +23,8 @@ namespace SkeletonGame.Engine
                 switch (assetType)
                 {
                     case AssetTypes.Lampshows:
-                        return Directory.EnumerateFiles(path, @"*.lampshow");
+                        var lampshowFileFilters = new List<string> { "*.lampshow", "*.rgbshow" };
+                        return GetFiles(path, lampshowFileFilters);
                     case AssetTypes.HdFonts:
                         return Directory.EnumerateFiles(path, @"*.ttf");
                     case AssetTypes.Music:

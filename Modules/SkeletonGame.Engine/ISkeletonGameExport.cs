@@ -73,11 +73,15 @@ namespace SkeletonGame.Engine
         /// <param name="exportFolder">The export folder. The game folder</param>
         private void ExportLampsToUi(IEnumerable<PRLamp> lamps, string gameName, string exportFolder)
         {
+            var lampUiDir = Path.Combine(exportFolder, "LampShowUI", gameName);
+            //TODO: Message like this should be in resource for localization.
+            if (Directory.Exists(lampUiDir))
+                throw new Exception("Cannot overwrite existing lampshow UI configurations. If this is what you want, delete the LampshowUI directory from the game folder.");
+
             var lampshowExportModel = CreatePrExportFromPrLamps(lamps);
             var json = JsonConvert.SerializeObject(lampshowExportModel);
 
             //Create the folder and config files for a lampshow UI
-            var lampUiDir = Path.Combine(exportFolder, "LampShowUI", gameName);
             Directory.CreateDirectory(lampUiDir);
             Directory.CreateDirectory(lampUiDir + "\\LedShows");
 

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
-    public class ParticleLayer
+    [Serializable]
+    public class ParticleLayer : SequenceBase
     {
         [YamlMember(Alias = "width", ApplyNamingConventions = false)]
         public int Width { get; set; }
@@ -14,12 +16,6 @@ namespace SkeletonGame.Models.Layers
         [YamlMember(Alias = "emitters", ApplyNamingConventions = false)]
         public List<ParticleEmitter> Emitters { get; set; }
 
-        [YamlIgnore]
-        public SequenceType SeqType { get; set; }
-
-        [YamlIgnore]
-        public string SequenceName { get; set; }
-
         public ParticleLayer()
         {
             this.SeqType = SequenceType.ParticleLayer;
@@ -27,6 +23,7 @@ namespace SkeletonGame.Models.Layers
         }
     }
 
+    [Serializable]
     public class ParticleEmitter
     {
         [YamlMember(Alias = "x", ApplyNamingConventions = false)]

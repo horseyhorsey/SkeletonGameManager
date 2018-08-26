@@ -1,0 +1,226 @@
+﻿<UserControl x:Class="SkeletonGameManager.Module.Menus.Views.FileMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SkeletonGameManager.Module.Menus.Views"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             d:DesignHeight="300" d:DesignWidth="300"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True" >
+
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding CreateNewGameRequest}">
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" >
+                <prism:PopupWindowAction.WindowContent>
+                    <local:CreateNewGameWindow />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid x:Name="LayoutRoot">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.InputBindings>
+            <KeyBinding Key="N" 
+                        Gesture="Ctrl+N" 
+                        Modifiers="Ctrl"                        
+                        Command="{Binding CreateNewGameCommand}"/>
+        </Grid.InputBindings>
+
+        <Menu>
+            <MenuItem Header="_File">
+
+                <!--NEW GAME-->
+                <MenuItem Header="_New..." 
+                          ToolTip="{Binding Tip_NewGame, Source={StaticResource ResourceKey=AppStringResource}}"
+                          Command="{Binding CreateNewGameCommand}"                          
+                          InputGestureText="Ctrl+N"        
+                          />
+
+                <!--OPEN GAME-->
+                <MenuItem Header="_Open..." 
+                          ToolTip="{Binding Tip_OpenGame, Source={StaticResource ResourceKey=AppStringResource}}"
+                          Command="{Binding SetDirectoryCommand}" InputGestureText="Ctrl+O"/>
+
+                <!--RecentDirectories-->
+                <MenuItem Header="Recent" Visibility="Visible">
+                    <MenuItem.Resources>
+                        
+                        <!--Sets OpenRecentCommand and hides if null-->
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Command" Value="{Binding OpenRecentCommand}"/>
+                            <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self},Path=Header}"/>
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <!--<Style.Triggers>
+                                <DataTrigger Binding="{Binding Header}" Value="{x:Null}">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>-->
+                            
+                        </Style>
+                    </MenuItem.Resources>
+
+                    <MenuItem Header="{Binding RecentDirectories[0]}"/>
+                    <MenuItem Header="{Binding RecentDirectories[1]}"/>
+                    <MenuItem Header="{Binding RecentDirectories[2]}"/>
+                    <MenuItem Header="{Binding RecentDirectories[3]}"/>
+                    <MenuItem Header="{Binding RecentDirectories[4]}"/>
+                </MenuItem>
+
+                <!--QUIT UI-->
+                <MenuItem Header="_Quit" Command="{x:Static ApplicationCommands.Close}" InputGestureText="Ctrl+Q"/>
+            </MenuItem>
+
+            <MenuItem Header="View">
+                <MenuItem Header="_Assets" Command="{Binding NavigateCommand}" CommandParameter="AssetListView"/>
+                <MenuItem Header="_Attract" Command="{Binding NavigateCommand}" CommandParameter="AttractView"/>
+                <MenuItem Header="_Config" Command="{Binding NavigateCommand}" CommandParameter="GameConfigView"/>
+                <MenuItem Header="_Machine" Command="{Binding NavigateCommand}" CommandParameter="MachineConfigView"/>
+                <MenuItem Header="_Recordings" Command="{Binding NavigateCommand}" CommandParameter="RecordingsView"/>
+                <MenuItem Header="_Scene Grab" Command="{Binding NavigateCommand}" CommandParameter="ScenesView"/>
+                <MenuItem Header="_Score Display" Command="{Binding NavigateCommand}" CommandParameter="ScoreLayoutView"/>
+                <MenuItem Header="_Trophy" Command="{Binding NavigateCommand}" CommandParameter="TrophyDataView"/>
+            </MenuItem>
+
+            <!--GAME MENU-->
+            <MenuItem Header="_Game">
+                <MenuItem Header="_Browse" 
+                          Command="{Binding BrowseFolderCommand}" 
+                          ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"
+                          InputGestureText="Ctrl+B"/>
+                <MenuItem Header="R_eload" 
+                          ToolTip="{Binding Tip_Reload, Source={StaticResource ResourceKey=AppStringResource}}"
+                          Command="{Binding ReloadGameCommand}"/>
+                <MenuItem Header="_Run" Command="{Binding LaunchGameCommand}" InputGestureText="Ctrl+R"/>
+            </MenuItem>
+
+            <MenuItem Header="_Export">
+
+                <MenuItem Header="_Pyprocgame">
+                    <MenuItem 
+                        Header="Switch Methods"
+                        ToolTip="{DynamicResource Tip_ExportPythonSwitchCallbacks}"
+                        Command="{Binding ExportCommand}"                               
+                        CommandParameter="switchPy"
+                              />
+                </MenuItem>
+
+                <MenuItem Header="_Visual Pinball">
+                    <MenuItem Header="Switch Methods"                                
+                                ToolTip="{Binding Tip_VPExportSwitch, Source={StaticResource ResourceKey=AppStringResource}}"
+                                Command="{Binding ExportCommand}"                               
+                                CommandParameter="switch"
+                              />
+                    <MenuItem Header="Solenoid Callbacks"
+                              ToolTip="{Binding Tip_VPExportSolenoid, Source={StaticResource ResourceKey=AppStringResource}}"
+                              Command="{Binding ExportCommand}"                               
+                              CommandParameter="coil"                              
+                              />
+                    <MenuItem Header="Full Table Script"
+                            ToolTip="{Binding Tip_VPExportScriptFull, Source={StaticResource ResourceKey=AppStringResource}}"                              
+                            Command="{Binding ExportCommand}"                               
+                            CommandParameter="ScriptFull"
+                              />
+                </MenuItem>
+
+                <MenuItem Header="LampshowUI"
+                          ToolTip="{Binding Tip_ExportLampshowUI, Source={StaticResource ResourceKey=AppStringResource}}"                              
+                            Command="{Binding ExportCommand}"                               
+                            CommandParameter="lampshowUi"
+                          />
+            </MenuItem>
+
+            <MenuItem Header="Tools">
+                <MenuItem Header="_Switch Matrix" 
+                          ToolTip="{Binding Tip_SwitchMatrixLaunch, Source={StaticResource ResourceKey=AppStringResource}}"                          
+                          Command="{Binding LaunchToolCommand}" 
+                          CommandParameter="SwitchMatrixClient"/>
+            </MenuItem>
+
+            <!--RECORDINGS / PLAYBACK-->
+            <MenuItem Header="Recordings"                     
+                      >
+
+                <MenuItem Header="_Recordings View" Command="{Binding NavigateCommand}" CommandParameter="RecordingsView"/>
+                
+                <MenuItem Header="Quick Playback" 
+                          ItemsSource="{Binding Recordings}"
+                          DisplayMemberPath="PlaybackFile"   
+                          ToolTip="{Binding Tip_RecordingPlaybackMenu, Source={StaticResource ResourceKey=AppStringResource}}"
+                          >
+
+                    <MenuItem.Resources>
+                        <Style TargetType="{x:Type MenuItem}">
+                            <Setter Property="Command" Value="{Binding ElementName=LayoutRoot,Path=DataContext.LaunchRecordingCommand}"/>
+                            <Setter Property="CommandParameter" Value="{Binding PlaybackFile}"/>
+                        </Style>
+                    </MenuItem.Resources>
+
+                </MenuItem>
+
+            </MenuItem>
+
+            <MenuItem Header="Logs">
+
+                <MenuItem Header="_Sgm Game Logs" 
+                          Command="{Binding NavigateCommand}" 
+                          CommandParameter="SkeletonGameLogView"
+                          ToolTip="{Binding Tip_LogSgmGame, Source={StaticResource ResourceKey=AppStringResource}}"                                                        
+                          />
+
+                <MenuItem Header="_Sgm" 
+                          Command="{Binding NavigateCommand}" 
+                          ToolTip="{Binding Tip_LogSgm, Source={StaticResource ResourceKey=AppStringResource}}"                                                        
+                          CommandParameter="AppLogView"/>
+
+                <MenuItem Header="_VP Log" 
+                          Command="{Binding NavigateCommand}" 
+                          ToolTip="{Binding Tip_LogVp, Source={StaticResource ResourceKey=AppStringResource}}"                                                        
+                          CommandParameter="VpLogView"/>
+            </MenuItem>
+
+        </Menu>
+
+        <ToolBarTray Grid.Row="1" Background="Silver" Height="30">
+            
+            <!--BROWSE-->
+            <ToolBar Height="30">
+                <Button  Content="{DynamicResource Path_Dir}"
+                         Command="{Binding BrowseFolderCommand}"
+                         ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"
+                         />
+            </ToolBar>
+
+            <ToolBar Header="{DynamicResource Path_Game}" MaxHeight="32"   
+                     Height="30"
+                     >
+                
+                <!--LAUNCH SGRUNNER-->
+                <Button Command="{Binding LaunchGameCommand}"                         
+                        Content="{DynamicResource Path_Game}"                        
+                        ToolTip="{Binding Tip_GameLaunchInfo, Source={StaticResource ResourceKey=AppStringResource}}"
+                        ToolBar.OverflowMode="Always"  
+                        />
+
+                <!--LAUNCH VP-->
+                <Button Command="{Binding LaunchGameCommand}" Visibility="Collapsed"
+                        Content="VP" FontWeight="DemiBold"
+                        FontSize="18"
+                        ToolTip="{Binding Tip_VpLaunchInfo, Source={StaticResource ResourceKey=AppStringResource}}"
+                        ToolBar.OverflowMode="Always"
+                        />
+
+                <ToolBarOverflowPanel ToolBar.OverflowMode="Never">
+                    <!--<Button Content="ee"/>-->
+                </ToolBarOverflowPanel>
+            </ToolBar>
+        </ToolBarTray>
+    </Grid>
+</UserControl>

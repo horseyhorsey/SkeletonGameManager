@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <UICulture>en-US</UICulture>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -41,9 +42,8 @@
     <ApplicationIcon>skull.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Costura, Version=1.6.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="Costura, Version=3.1.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Costura.Fody.3.1.0\lib\net46\Costura.dll</HintPath>
     </Reference>
     <Reference Include="GongSolutions.Wpf.DragDrop, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\gong-wpf-dragdrop.1.1.0\lib\net46\GongSolutions.Wpf.DragDrop.dll</HintPath>
@@ -124,93 +124,26 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviours\DragBehaviour.cs" />
-    <Compile Include="Controls\UniformGridWithOrientation.cs" />
-    <Compile Include="Converters\DoubleToTimespanConverter.cs" />
-    <Compile Include="Converters\NegateBoolConverter.cs" />
-    <Compile Include="Converters\StyleConverter.cs" />
-    <Compile Include="Interfaces\IMediaPlayer.cs" />
-    <Compile Include="Model\TrimVideo.cs" />
-    <Compile Include="ViewModels\Config\KeyboardMapItemViewModel.cs" />
-    <Compile Include="ViewModels\CreateNewGameWindowViewModel.cs" />
-    <Compile Include="ViewModels\KeyboardMappingsViewModel.cs" />
-    <Compile Include="ViewModels\MachineConfigViewModel.cs" />
-    <Compile Include="ViewModels\Machine\LampViewModel.cs" />
-    <Compile Include="ViewModels\Machine\SolenoidFlasherViewModel.cs" />
-    <Compile Include="ViewModels\Machine\SwitchViewModel.cs" />
-    <Compile Include="ViewModels\PlaybackItemViewModel.cs" />
-    <Compile Include="ViewModels\SceneMediaViewModel.cs" />
-    <Compile Include="ViewModels\SceneEditViewModels\SceneProcessItemViewModel.cs" />
-    <Compile Include="ViewModels\SceneProcessViewModel.cs" />
-    <Compile Include="ViewModels\ScenesViewModel.cs" />
+    <Compile Include="ViewModels\GameDataViewModel.cs" />
+    <Compile Include="ViewModels\TrophyDataViewModel.cs" />
     <Compile Include="ViewModels\ScoreLayoutViewModel.cs" />
-    <Compile Include="ViewModels\SequenceCreateViewModel.cs" />
-    <Compile Include="ViewModels\SequenceItemViewModel.cs" />
-    <Compile Include="ViewModels\SequenceViewModelBase.cs" />
-    <Compile Include="ViewModels\SequenceYamlItemViewModel.cs" />
-    <Compile Include="Views\KeyboardMappingsView.xaml.cs">
-      <DependentUpon>KeyboardMappingsView.xaml</DependentUpon>
+    <Compile Include="Views\GameDataView.xaml.cs">
+      <DependentUpon>GameDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrophyDataView.xaml.cs">
+      <DependentUpon>TrophyDataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MachineViews\OscView.xaml.cs">
       <DependentUpon>OscView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RecordingsView.xaml.cs">
-      <DependentUpon>RecordingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\RecordingsViewModel.cs" />
     <Compile Include="Views\ScoreLayoutView.xaml.cs">
       <DependentUpon>ScoreLayoutView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SequenceView.xaml.cs">
-      <DependentUpon>SequenceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CreateNewGameWindow.xaml.cs">
-      <DependentUpon>CreateNewGameWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MachineConfigView.xaml.cs">
-      <DependentUpon>MachineConfigView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SceneMediaView.xaml.cs">
-      <DependentUpon>SceneMediaView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SceneProcessView.xaml.cs">
-      <DependentUpon>SceneProcessView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ScenesView.xaml.cs">
-      <DependentUpon>ScenesView.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\AssetListView.xaml">
+    <Page Include="Views\GameDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\AssetViews\AnimationsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AssetViews\FontsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AssetViews\LampshowView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AssetViews\LoadingProgressView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AssetViews\SfxView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AssetViews\SoundView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AssetViews\VoiceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\KeyboardMappingsView.xaml">
+    <Page Include="Views\TrophyDataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,31 +151,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RecordingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ScoreLayoutView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SequenceView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\AttractView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\CreateNewGameWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\GameConfigView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MachineConfigView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -255,68 +164,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Converters\ListToColorConverter.cs" />
-    <Compile Include="Events\ViewModelEvents.cs" />
-    <Compile Include="Providers\ISkeletonGameProvider.cs" />
-    <Compile Include="Selectors\AttractSequenceSelector.cs" />
-    <Compile Include="Selectors\GroupedLayerSelector.cs" />
-    <Compile Include="ViewModels\AssetListViewModel.cs" />
-    <Compile Include="ViewModels\AssetViewModels\AnimationsViewModel.cs" />
-    <Compile Include="ViewModels\AssetViewModels\AssetFileBaseViewModel.cs" />
-    <Compile Include="ViewModels\AssetViewModels\FontsViewModel.cs" />
-    <Compile Include="ViewModels\AssetViewModels\LampshowViewModel.cs" />
-    <Compile Include="ViewModels\AssetViewModels\LoadingProgressViewModel.cs" />
-    <Compile Include="ViewModels\AssetViewModels\SoundViewModel.cs" />
-    <Compile Include="ViewModels\AttractViewModel.cs" />
-    <Compile Include="ViewModels\GameConfigViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\SkeletonGameManagerViewModelBase.cs" />
-    <Compile Include="Views\AssetListView.xaml.cs">
-      <DependentUpon>AssetListView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AssetViews\AnimationsView.xaml.cs">
-      <DependentUpon>AnimationsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AssetViews\FontsView.xaml.cs">
-      <DependentUpon>FontsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AssetViews\LampshowView.xaml.cs">
-      <DependentUpon>LampshowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AssetViews\LoadingProgressView.xaml.cs">
-      <DependentUpon>LoadingProgressView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AssetViews\SfxView.xaml.cs">
-      <DependentUpon>SfxView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AssetViews\SoundView.xaml.cs">
-      <DependentUpon>SoundView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AssetViews\VoiceView.xaml.cs">
-      <DependentUpon>VoiceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AttractView.xaml.cs">
-      <DependentUpon>AttractView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\GameConfigView.xaml.cs">
-      <DependentUpon>GameConfigView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\SceneMediaView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SceneProcessView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ScenesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -340,7 +192,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
@@ -363,30 +215,69 @@
       <Project>{5cec6504-bd25-45d0-830c-a2162f4aad12}</Project>
       <Name>FFMpegSharp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Base\SkeletonGameManager.Base.csproj">
+      <Project>{BE479251-3B5F-4138-A6CD-5C3701C1FE8E}</Project>
+      <Name>SkeletonGameManager.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Module.Assets\SkeletonGameManager.Module.Assets.csproj">
+      <Project>{d2d0ceda-ad0d-4652-99f5-7cf6949ffa87}</Project>
+      <Name>SkeletonGameManager.Module.Assets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Module.Config\SkeletonGameManager.Module.Config.csproj">
+      <Project>{0fd93fc7-fa0a-4119-ab3f-0d77218e828b}</Project>
+      <Name>SkeletonGameManager.Module.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Module.LogViewer\SkeletonGameManager.Module.LogViewer.csproj">
+      <Project>{06edb6c9-924f-4611-b4dd-a3ba56b9e7fd}</Project>
+      <Name>SkeletonGameManager.Module.LogViewer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Module.Menus\SkeletonGameManager.Module.Menus.csproj">
+      <Project>{9439ee15-2360-4006-801b-7207648bfa2c}</Project>
+      <Name>SkeletonGameManager.Module.Menus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Module.SceneGrab\SkeletonGameManager.Module.SceneGrab.csproj">
+      <Project>{7f3090f9-152d-478e-84bb-bad4454b0255}</Project>
+      <Name>SkeletonGameManager.Module.SceneGrab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Module.SceneManage\SkeletonGameManager.Module.SceneManage.csproj">
+      <Project>{de6d7034-570d-4aaf-bdbe-9bb2ef0730be}</Project>
+      <Name>SkeletonGameManager.Module.SceneManage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Module.Services\SkeletonGameManager.Module.Services.csproj">
+      <Project>{C46A910E-E5C2-4A31-9ED7-4720236DF0F2}</Project>
+      <Name>SkeletonGameManager.Module.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SkeletonGameManager.Resources\SkeletonGameManager.Resources.csproj">
       <Project>{ce1e49c2-ec38-4853-b807-ca94248a1780}</Project>
       <Name>SkeletonGameManager.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SkeletonManager.Module.Recordings\SkeletonGameManager.Module.Recordings.csproj">
+      <Project>{84df587a-e917-419d-9902-db61e2d073cd}</Project>
+      <Name>SkeletonGameManager.Module.Recordings</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\SceneEditViews\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="skull.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="tools\sg_runner.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
   </Target>
-  <Import Project="..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets" Condition="Exists('..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" />
+  <Import Project="..\..\packages\Fody.3.1.3\build\Fody.targets" Condition="Exists('..\..\packages\Fody.3.1.3\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Fody.2.4.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.2.4.1\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Fody.3.1.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.3.1.3\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Costura.Fody.3.1.0\build\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Costura.Fody.3.1.0\build\Costura.Fody.targets'))" />
   </Target>
-  <Import Project="..\..\packages\Fody.2.4.1\build\Fody.targets" Condition="Exists('..\..\packages\Fody.2.4.1\build\Fody.targets')" />
+  <Import Project="..\..\packages\Costura.Fody.3.1.0\build\Costura.Fody.targets" Condition="Exists('..\..\packages\Costura.Fody.3.1.0\build\Costura.Fody.targets')" />
 </Project>

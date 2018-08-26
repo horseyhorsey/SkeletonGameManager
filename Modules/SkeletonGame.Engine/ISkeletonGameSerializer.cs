@@ -1,4 +1,5 @@
 ﻿using SkeletonGame.Models;
+using SkeletonGame.Models.Layers;
 using System.IO;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -14,13 +15,15 @@ namespace SkeletonGame.Engine
         /// <returns></returns>
         string ConvertToJson(string yamlFile);
 
+        string ConvertToJson(object yamlObject);
+
         /// <summary>
         /// Deserializes the yaml from given type
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="yamlFile">The yaml file.</param>
         /// <returns></returns>
-        T DeserializeSkeletonYaml<T>(string yamlFile);        
+        T DeserializeSkeletonYaml<T>(string yamlFile, bool ignoreUnmatched = false);
 
         /// <summary>
         /// Serializes the game assets to yaml
@@ -39,17 +42,24 @@ namespace SkeletonGame.Engine
         /// <typeparam name="T"></typeparam>
         /// <param name="yamlFile">The yaml file.</param>
         /// <returns></returns>
-        public T DeserializeSkeletonYaml<T>(string yamlFile)
+        public T DeserializeSkeletonYaml<T>(string yamlFile, bool ignoreUnmatched)
         {
             try
             {
-                var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(new CamelCaseNamingConvention())
-                .Build();
+                DeserializerBuilder deserializer;
+                if (ignoreUnmatched)
+                {
+                    deserializer = new DeserializerBuilder().IgnoreUnmatchedProperties().WithNamingConvention(new CamelCaseNamingConvention());
+                }
+                else
+                {
+                    deserializer = new DeserializerBuilder().WithNamingConvention(new CamelCaseNamingConvention());
+                }
 
+                var deserialize = deserializer.Build();
                 using (TextReader reader = File.OpenText(yamlFile))
                 {
-                    var objects = deserializer.Deserialize<T>(reader);                    
+                    var objects = deserialize.Deserialize<T>(reader);
 
                     return objects;
                 }
@@ -57,7 +67,8 @@ namespace SkeletonGame.Engine
             catch (System.Exception ex)
             {
                 ex.Data.Add("yaml", yamlFile);
-                throw;
+                ex.Data.Add("err", ex.InnerException.Message);
+                throw ex;
             }
         }
 
@@ -67,13 +78,16 @@ namespace SkeletonGame.Engine
             {
                 var deserializer = new DeserializerBuilder().Build();
                 var yamlObject = deserializer.Deserialize(reader);
-
-                var serializer = new SerializerBuilder()
-                    .JsonCompatible()
-                    .Build();
-
-                return serializer.Serialize(yamlObject);
+                return ConvertToJson(yamlObject);
             }
+        }
+
+        public string ConvertToJson(object yamlObject)
+        {
+            var serializer = new SerializerBuilder()
+                .JsonCompatible()
+                .Build();
+            return serializer.Serialize(yamlObject);
         }
 
         public void SerializeYaml(string yamlFile, object yamlObjectGraph)

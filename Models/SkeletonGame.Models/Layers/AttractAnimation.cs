@@ -1,8 +1,10 @@
 ﻿using SkeletonGame.Models.Transition;
+using System;
 using YamlDotNet.Serialization;
 
 namespace SkeletonGame.Models.Layers
 {
+    [Serializable]
     [PropertyChanged.AddINotifyPropertyChangedInterface]
     public class AttractAnimation : SequenceBase
     {
@@ -27,6 +29,9 @@ namespace SkeletonGame.Models.Layers
 
         [YamlMember(Alias = "opaque", ApplyNamingConventions = false)]
         public bool Opaque { get; set; }
+
+        [YamlMember(Alias = "composite_op", ApplyNamingConventions = false, SerializeAs = typeof(string))]
+        public string CompositeOp { get; set; }
 
         public AttractAnimation()
         {

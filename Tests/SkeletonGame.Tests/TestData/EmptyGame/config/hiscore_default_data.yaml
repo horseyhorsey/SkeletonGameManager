@@ -1,0 +1,9 @@
+﻿HiscoreCategories:
+- "ClassicHighScores":
+    - {title: Grand Champion, inits: GSS, score: 500}
+    - {title: High Score 1, inits: ASP, score: 400}
+    - {title: High Score 2, inits: JRP, score: 300}
+    - {title: High Score 3, inits: JAG, score: 200}
+    - {title: High Score 4, inits: JTW, score: 100}
+- "LoopsHighScoreData":
+    - {title: Loop Master, inits: GSS, score: 5}
