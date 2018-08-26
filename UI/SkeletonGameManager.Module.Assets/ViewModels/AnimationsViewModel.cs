@@ -48,18 +48,18 @@ namespace SkeletonGameManager.Module.Assets.ViewModels
         #region Public Methods
         public async override Task GetFiles()
         {
-            if (Animations == null)
-            {
-                Animations = _skeletonGameProvider.AssetsConfig.Animations;
-            }
+            Log("Populating Animation files");
 
+            Animations = _skeletonGameProvider.AssetsConfig.Animations;
+
+            //Get the dmd path and create relative URI if includes .
             var animPath = _skeletonGameProvider.GameConfig.DmdPath;
-
             if (animPath.Contains("."))
                 _dmdPath = new Uri(Path.Combine(_skeletonGameProvider.GameFolder, animPath), UriKind.RelativeOrAbsolute);
             else
                 _dmdPath = new Uri(animPath);
 
+            // Get the files and create collection.
             var animFiles = await _skeletonGameFiles.GetFilesAsync(_dmdPath.AbsolutePath, AssetTypes.Animations);
             this.AssetFiles = new ObservableCollection<string>(animFiles);
         } 
