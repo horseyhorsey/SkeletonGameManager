@@ -168,14 +168,12 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <!--ToolTip="{Binding Tip_LayerFont, Source={StaticResource ResourceKey=AppStringResource}}"-->
                 <ComboBox Style="{StaticResource Style_FontCombo}" 
-                          
+                    ToolTip="{Binding Tip_LayerFont, Source={StaticResource ResourceKey=AppStringResource}}"      
                           Margin="3"/>
 
-                <!--ToolTip="{Binding Tip_LayerFontStyle, Source={StaticResource ResourceKey=AppStringResource}}"-->
                 <ComboBox Grid.Column="1" 
-                          
+                          ToolTip="{Binding Tip_LayerFontStyle, Source={StaticResource ResourceKey=AppStringResource}}"                          
                           Style="{StaticResource Style_FontStyleCombo}" Margin="3"/>
             </Grid>
 
