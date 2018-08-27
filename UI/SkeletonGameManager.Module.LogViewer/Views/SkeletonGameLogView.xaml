@@ -18,8 +18,28 @@
             </i:Interaction.Triggers>
         </ListView>
 
-        <ListView ItemsSource="{Binding LogLines}" Grid.Column="1"
+
+        <Grid Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <DockPanel Margin="5">
+                <Label Content="Filter: " DockPanel.Dock="Left"/>
+                <CheckBox Content="Case Sensitive" HorizontalAlignment="Right" VerticalAlignment="Center"
+                          IsChecked="{Binding CaseSensitiveFilter}"
+                          Margin="5"
+                          />
+                <TextBox Text="{Binding LogLineFilterText, UpdateSourceTrigger=PropertyChanged}"
+                         MaxHeight="25" VerticalContentAlignment="Center"
+                         />
+            </DockPanel>
+
+            <ListView Grid.Row="1" ItemsSource="{Binding LogLinesCollectionView}"
                   Style="{DynamicResource LogListViewStyle}"/>
+        </Grid>
 
 
     </Grid>

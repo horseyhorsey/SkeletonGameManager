@@ -15,8 +15,10 @@
 
                 <ResourceDictionary x:Uid="ResourceDictionary_2" Source="pack://application:,,,/SkeletonGameManager.Resources;component/BrushResources.xaml" />
                 <ResourceDictionary x:Uid="ResourceDictionary_3" Source="pack://application:,,,/SkeletonGameManager.Resources;component/ImageResources.xaml" />
-                <ResourceDictionary x:Uid="ResourceDictionary_4" Source="/SkeletonGameManager.Resources;component/Style/SkelegameWpf.xaml" />
+                
+                <!--DON't change the ordering of this resource! -->
                 <ResourceDictionary x:Uid="ResourceDictionary_5" Source="pack://application:,,,/SkeletonGameManager.Resources;component/ControlResources.xaml" />
+                <ResourceDictionary x:Uid="ResourceDictionary_4" Source="/SkeletonGameManager.Resources;component/Style/SkelegameWpf.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
