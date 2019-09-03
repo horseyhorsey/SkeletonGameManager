@@ -1,0 +1,48 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:transforms="clr-namespace:SkeletonGame.Models.Transition;assembly=SkeletonGame.Models"
+    xmlns:model="clr-namespace:SkeletonGame.Models;assembly=SkeletonGame.Models"    
+    >
+
+    <!--#region ENUMS-->
+    <ObjectDataProvider x:Key="VJustifyOptions" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="model:VJustify"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider x:Key="HJustifyOptions" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="model:HJustify"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider x:Key="Transitions" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="transforms:TransitionType"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider x:Key="TransParams" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="transforms:TransitionParam"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider x:Key="Particles" ObjectType="{x:Type sys:Enum}" MethodName="GetValues">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="model:Particles"/>
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <ObjectDataProvider x:Key="SdlKeys" ObjectType="{x:Type sys:Enum}" MethodName="GetValues" >
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="model:SdlKeyCode+SDL_Keycode" />
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+
+    <!--#endregion-->
+
+</ResourceDictionary>

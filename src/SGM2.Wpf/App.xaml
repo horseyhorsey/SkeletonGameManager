@@ -1,0 +1,27 @@
+﻿<Application x:Class="SGM2.Wpf.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	     xmlns:prism="http://prismlibrary.com/"
+             xmlns:local="clr-namespace:SGM2.Wpf"
+                        xmlns:properties="clr-namespace:SkeletonGameManager.Resources.Properties;assembly=SkeletonGameManager.Resources">
+    <Application.Resources>
+
+        <ResourceDictionary>
+
+            <!--Localization-->
+            <properties:Resources x:Uid="properties:Resources_1" x:Key="AppStringResource"/>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary x:Uid="ResourceDictionary_2" Source="pack://application:,,,/SkeletonGameManager.Resources;component/BrushResources.xaml" />
+                <ResourceDictionary x:Uid="ResourceDictionary_3" Source="pack://application:,,,/SkeletonGameManager.Resources;component/ImageResources.xaml" />
+
+                <!--DON't change the ordering of this resource!-->
+                <ResourceDictionary x:Uid="ResourceDictionary_5" Source="pack://application:,,,/SkeletonGameManager.Resources;component/ControlResources.xaml" />
+                <ResourceDictionary x:Uid="ResourceDictionary_4" Source="/SkeletonGameManager.Resources;component/Style/SkelegameWpf.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+
+    </Application.Resources>
+</Application>

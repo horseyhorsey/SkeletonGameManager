@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{234CAAE8-2A59-4B73-A2AE-7368155D4733}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SGM2.Wpf</RootNamespace>
+    <AssemblyName>SGM2.Wpf</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Behaviours\DragBehaviour.cs" />
+    <Compile Include="Views\ScoreLayoutView.xaml.cs">
+      <DependentUpon>ScoreLayoutView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrophyDataView.xaml.cs">
+      <DependentUpon>TrophyDataView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Resource\Icons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GameDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="ViewModels\GameDataViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\ScoreLayoutViewModel.cs" />
+    <Compile Include="ViewModels\TrophyDataViewModel.cs" />
+    <Compile Include="Views\GameDataView.xaml.cs">
+      <DependentUpon>GameDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\ScoreLayoutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TrophyDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Prism.Core">
+      <Version>6.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Unity" Version="6.3.0" />
+    <PackageReference Include="Prism.Wpf">
+      <Version>6.3.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PrismModules\SkeletonGameManager.Base\SkeletonGameManager.Base.csproj">
+      <Project>{BE479251-3B5F-4138-A6CD-5C3701C1FE8E}</Project>
+      <Name>SkeletonGameManager.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrismModules\SkeletonGameManager.Module.Assets\SkeletonGameManager.Module.Assets.csproj">
+      <Project>{d2d0ceda-ad0d-4652-99f5-7cf6949ffa87}</Project>
+      <Name>SkeletonGameManager.Module.Assets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrismModules\SkeletonGameManager.Module.Config\SkeletonGameManager.Module.Config.csproj">
+      <Project>{0fd93fc7-fa0a-4119-ab3f-0d77218e828b}</Project>
+      <Name>SkeletonGameManager.Module.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrismModules\SkeletonGameManager.Module.LogViewer\SkeletonGameManager.Module.LogViewer.csproj">
+      <Project>{06edb6c9-924f-4611-b4dd-a3ba56b9e7fd}</Project>
+      <Name>SkeletonGameManager.Module.LogViewer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrismModules\SkeletonGameManager.Module.Menus\SkeletonGameManager.Module.Menus.csproj">
+      <Project>{9439ee15-2360-4006-801b-7207648bfa2c}</Project>
+      <Name>SkeletonGameManager.Module.Menus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrismModules\SkeletonGameManager.Module.SceneGrab\SkeletonGameManager.Module.SceneGrab.csproj">
+      <Project>{7f3090f9-152d-478e-84bb-bad4454b0255}</Project>
+      <Name>SkeletonGameManager.Module.SceneGrab</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrismModules\SkeletonGameManager.Module.SceneManage\SkeletonGameManager.Module.SceneManage.csproj">
+      <Project>{de6d7034-570d-4aaf-bdbe-9bb2ef0730be}</Project>
+      <Name>SkeletonGameManager.Module.SceneManage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrismModules\SkeletonGameManager.Module.Services\SkeletonGameManager.Module.Services.csproj">
+      <Project>{C46A910E-E5C2-4A31-9ED7-4720236DF0F2}</Project>
+      <Name>SkeletonGameManager.Module.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PrismModules\SkeletonManager.Module.Recordings\SkeletonGameManager.Module.Recordings.csproj">
+      <Project>{84df587a-e917-419d-9902-db61e2d073cd}</Project>
+      <Name>SkeletonGameManager.Module.Recordings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGame.Engine\SkeletonGame.Engine.csproj">
+      <Project>{83B1D193-9535-4C9F-8CFF-2889BCFBE21B}</Project>
+      <Name>SkeletonGame.Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGame.Models\SkeletonGame.Models.csproj">
+      <Project>{11B594F9-D994-4F17-A86B-D5018E7AC8BA}</Project>
+      <Name>SkeletonGame.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SkeletonGameManager.Resources\SkeletonGameManager.Resources.csproj">
+      <Project>{ce1e49c2-ec38-4853-b807-ca94248a1780}</Project>
+      <Name>SkeletonGameManager.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="tools\sg_runner.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

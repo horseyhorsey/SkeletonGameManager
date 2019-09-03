@@ -1,0 +1,137 @@
+﻿using Prism.Commands;
+using Prism.Events;
+using Prism.Logging;
+using SkeletonGame.Models.Data;
+using SkeletonGameManager.Base;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using static SkeletonGameManager.Base.Events;
+
+namespace SGM2.Wpf.ViewModels
+{
+    public class TrophyDataViewModel : SkeletonTabViewModel
+    {
+
+        #region Commands
+        public ICommand CreateTrophyCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
+        #endregion
+
+        #region Fields
+        public ISkeletonGameProvider _skeletonGameProvider { get; set; }    
+        #endregion
+
+        #region Constructors
+        public TrophyDataViewModel(IEventAggregator eventAggregator, ISkeletonGameProvider skeletonGameProvider, ILoggerFacade loggerFacade) : base(eventAggregator, loggerFacade)
+        {
+            _skeletonGameProvider = skeletonGameProvider;
+
+            Title = "Trophy";
+
+            _eventAggregator.GetEvent<LoadYamlFilesChanged>().Subscribe(async x => await OnLoadYamlFilesChanged());
+
+            CreateTrophyCommand = new DelegateCommand(() =>
+            {
+                OnCreateTrophy();
+            });
+
+            SaveCommand = new DelegateCommand(() =>
+            {
+                _skeletonGameProvider.SaveTrophyData(TrophyData);
+            });            
+        }
+        #endregion
+
+        #region Public Methods
+
+        public override Task OnLoadYamlFilesChanged()
+        {            
+            TrophyData = _skeletonGameProvider.TrophyData;
+
+            if (TrophyData != null)
+            {
+                Log("Loading trophy data");
+
+                return Task.Run(() =>
+                {
+                    //UiIcon
+                    foreach (var trophy in TrophyData.Trophys.Values)
+                    {
+                        //Assign the default trophy icon if value is empty for an icon
+                        var iconKey = string.Empty;
+                        if (string.IsNullOrWhiteSpace(trophy.Icon))
+                            iconKey = "trophy";
+                        else
+                            iconKey = trophy.Icon;
+
+                        //Get the animation from the assets
+                        var trophyAnim = _skeletonGameProvider.AssetsConfig.Animations.FirstOrDefault(x => x.Key == iconKey);
+
+                        //Create a URI to view in the UI
+                        if (trophyAnim != null)
+                        {
+                            trophy.UiIcon = new Uri(Path.Combine(_skeletonGameProvider.GameFolder, _skeletonGameProvider.GameConfig.DmdPath, trophyAnim.File), UriKind.RelativeOrAbsolute).AbsolutePath;
+                        }
+                    }
+                });
+            }
+
+            //Clear trophys if failed
+            _skeletonGameProvider.TrophyData?.Trophys?.Clear();
+            return Task.CompletedTask;
+        }
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Called when [create trophy]. Adds the trophy to the disctionary if key doesn't exist
+        /// </summary>
+        private void OnCreateTrophy()
+        {
+            if (TrophyData == null)
+            {
+                Log($"Cannot create trophy's with no default trophy data file.", Category.Warn);
+                return;
+            }
+
+            if (!TrophyData.Trophys.ContainsKey(this.NewTrophyName))
+            {                
+                TrophyData.Trophys.Add(this.NewTrophyName, new Trophy
+                {
+                    Description = this.NewTrophyDesc                    
+                });
+                Log($"Created new trophy. {this.NewTrophyName}");
+            }    
+        }
+
+        #endregion
+
+        #region Properties
+
+        private TrophyData trophyData;
+        public TrophyData TrophyData
+        {
+            get { return trophyData; }
+            set { SetProperty(ref trophyData, value); }
+        }
+
+        private string newTrophyName;
+        public string NewTrophyName
+        {
+            get { return newTrophyName; }
+            set { SetProperty(ref newTrophyName, value); }
+        }
+
+        private string newTrophyDesc;
+        public string NewTrophyDesc
+        {
+            get { return newTrophyDesc; }
+            set { SetProperty(ref newTrophyDesc, value); }
+        } 
+        #endregion
+    }
+}

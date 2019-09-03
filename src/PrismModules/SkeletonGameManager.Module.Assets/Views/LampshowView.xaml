@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="SkeletonGameManager.Module.Assets.Views.LampshowView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="500">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ToolBarTray Grid.ColumnSpan="2">
+            <ToolBar>
+                <Button Content="{StaticResource Path_Dir}"
+                    ToolTip="{Binding Tip_OpenDir, Source={StaticResource ResourceKey=AppStringResource}}"
+                    VerticalAlignment="Bottom" Height="30" Width="35" Command="{Binding OpenDirectoryCommand}"/>
+
+                <Button Content="{StaticResource Path_Lamps}" Grid.Column="1"
+                    ToolTip="{Binding Tip_LampshowReverse, Source={StaticResource ResourceKey=AppStringResource}}"                        
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom" Height="30" Width="35" 
+                    Command="{Binding ReverseLampshowCommand}"
+                    CommandParameter="{Binding ElementName=AvailableLampshowsListView, Path=SelectedItem, UpdateSourceTrigger=PropertyChanged}"
+                />
+                
+            </ToolBar>
+        </ToolBarTray>
+
+
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <DockPanel>
+                <Label DockPanel.Dock="Top" Content="Available Show files"
+                       ToolTip="{Binding Tip_DropLampshows, Source={StaticResource ResourceKey=AppStringResource}}"
+                       />
+                <ListView DockPanel.Dock="Bottom" x:Name="AvailableLampshowsListView"
+                          ToolTip="{Binding Tip_DropLampshows, Source={StaticResource ResourceKey=AppStringResource}}"
+                          ItemsSource="{Binding AssetFiles, UpdateSourceTrigger=PropertyChanged}"
+                                  dd:DragDrop.IsDragSource="True"
+                                  dd:DragDrop.IsDropTarget="True"
+                                  dd:DragDrop.DropHandler="{Binding}" Margin="0,-1,0,1"
+                                  />
+            </DockPanel>
+
+            <DockPanel Grid.Column="1">
+                <Label DockPanel.Dock="Top" Content="{Binding Tip_DropLampshows, Source={StaticResource ResourceKey=AppStringResource}}"                          
+                       FontStyle="Italic" FontSize="12"/>
+
+                <TabControl>
+                    <TabItem Header="LampShows">
+                        <DockPanel>
+                            <DataGrid x:Name="LampsDataGrid"
+                              AutoGenerateColumns="False" CanUserAddRows="False"
+                              dd:DragDrop.IsDropTarget="True"
+                              dd:DragDrop.DropHandler="{Binding}"
+                              ItemsSource="{Binding LampshowsCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Key}" Header="Key"/>
+                                    <DataGridTextColumn Binding="{Binding File}" Width="1*" IsReadOnly="True" Header="File"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+
+                    <TabItem Header="RGBShows">
+                        <DockPanel>
+                            <DataGrid Grid.Row="3" Grid.Column="1" x:Name="RbgShowDataGrid"
+                              AutoGenerateColumns="False" CanUserAddRows="False"
+                              dd:DragDrop.IsDropTarget="True"
+                              dd:DragDrop.DropHandler="{Binding}"
+                              ItemsSource="{Binding RgbshowsCollectionView, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Key}" Header="Key"/>
+                                    <DataGridTextColumn Binding="{Binding File}" Width="1*" IsReadOnly="True" Header="File"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </DockPanel>
+                    </TabItem>
+                </TabControl>
+            </DockPanel>
+        </Grid>
+
+        <!--Lampshows in asset_list-->
+        <!--<StackPanel Grid.Column="1" Orientation="Horizontal" Grid.Row="2">
+            <Label Content="Applied" />
+            <Label Content="Use delete key to remove from saved list" FontStyle="Italic" FontSize="12"/>
+        </StackPanel>-->
+
+    </Grid>
+</UserControl>

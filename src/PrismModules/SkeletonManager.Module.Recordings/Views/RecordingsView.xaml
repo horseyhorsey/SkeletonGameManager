@@ -1,0 +1,140 @@
+﻿<UserControl x:Class="SkeletonGameManager.Module.Recordings.Views.RecordingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1024">
+    
+    <Grid Background="{StaticResource Brush_GradientBackground}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Column="0" Grid.ColumnSpan="2"
+                  Header="Record Options" FontSize="18">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="Refresh" Command="{Binding RefreshRecordingsCommand}"                        
+                        />
+                
+                <!--RECORD Checked-->
+                <RadioButton Grid.Column="2" Content="Record" Margin="3" IsChecked="{Binding RecordIsChecked}" 
+                             IsEnabled="{Binding ElementName=LaunchGameButton, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="{Binding Tip_EnableRecording, Source={StaticResource ResourceKey=AppStringResource}}"
+                             />
+                <!--PLayback checked-->
+                <RadioButton Content="Playback" Grid.Column="3" Margin="3" IsChecked="{Binding PlaybackIsChecked}" 
+                             IsEnabled="{Binding ElementName=LaunchGameButton, Path=IsEnabled, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="{Binding Tip_EnablePlayback, Source={StaticResource ResourceKey=AppStringResource}}"
+                             />
+                <!--Launch record - playback-->
+                <Button Grid.Column="4" x:Name="LaunchGameButton" 
+                        Content="{DynamicResource Path_Game}" Command="{Binding LaunchGameCommand}"
+                        ToolTip="{Binding Tip_LaunchRecording, Source={StaticResource ResourceKey=AppStringResource}}"                        
+                        />
+            </Grid>
+        </GroupBox>
+
+        <!--PLAYBACK FILES-->
+        <Grid Grid.Column="0" Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--RECORDING NAME-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding PlaybackItemViewModel.PlaybackFile, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
+
+            <DataGrid Margin="3" x:Name="PlaybackItemsDataGrid" 
+                      Grid.Row="1"
+                      AutoGenerateColumns="False"
+                      CanUserDeleteRows="False"
+                      IsReadOnly="True"
+                      Style="{StaticResource DataGridRecording}"
+                      SelectedItem="{Binding PlaybackItemViewModel}"
+                      ItemsSource="{Binding PlaybackItemViewModels, UpdateSourceTrigger=PropertyChanged}"                      
+                      >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Recorded files" 
+                                        Binding="{Binding PlaybackFile}" 
+                                        />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        
+        <!--RECORDING FILE CONTENTS-->
+        <Grid Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+            <DataGrid Margin="3" AutoGenerateColumns="False"
+                      Style="{StaticResource DataGridRecording}"
+                      ItemsSource="{Binding ElementName=PlaybackItemsDataGrid,Path=SelectedItem.PlayBackItems}"
+                      >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Time" Binding="{Binding Event, Converter={StaticResource DoubleToTimspanConverter}}" IsReadOnly="True"/>
+
+                    <DataGridTextColumn Binding="{Binding value}" IsReadOnly="True">
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="Value" ToolTip="This is the P-ROC decoded switch number"/>
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Binding="{Binding Type}" IsReadOnly="True">
+                        
+                        <!--HEADER-->
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="Type" ToolTip="The type of switch event, on/off"/>
+                        </DataGridTextColumn.Header>
+
+                        <!--STYLE-->
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+
+                                <Setter Property="Background" Value="White"/>
+
+                                <Style.Triggers>
+                                    
+                                    <DataTrigger Binding="{Binding Type}" Value="1">
+                                        <Setter Property="Background" Value="PaleGreen"/>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding Type}" Value="2">
+                                        <Setter Property="Background" Value="LightPink"/>
+                                    </DataTrigger>
+                                    
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                        
+                    </DataGridTextColumn>
+                    
+                    <DataGridTextColumn Header="SwName" Binding="{Binding SwName}" Width="1*" IsReadOnly="True"/>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+        </Grid>
+        
+    </Grid>
+</UserControl>

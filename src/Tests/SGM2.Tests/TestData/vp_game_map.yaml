@@ -1,0 +1,37 @@
+﻿# Path to your pyprocgame directory
+rundir: C:\P-ROC\
+
+# Create an entry for each pinmame ROM associated with the VP table you want to use.
+jd_l7: 
+    # Path to the game directory - relative path from tools/register_vpcom.py
+    # so, if your putting this reg_vpcom in c:/p-roc/tools then this
+    # means games must be in /p-roc/games
+    # this value MUST start with a slash...weird no?
+    path: /../games/jd
+    # jd is the python file name, Game is the class in that file
+    kls: jd.Game
+    # Path to the machine-specific YAML
+    yaml: C:\P-ROC\shared\config\JD.yaml
+
+cftbl_l4: 
+    # Path to the game directory - relative path from tools/register_vpcom.py
+    path: /../games/cftbl
+    # cftbl is the file; CreatureGame is the Game class in that file
+    kls: cftbl.CreatureGame
+    # Path to YAML
+    yaml: C:\P-ROC\shared\config\CFTBL.yaml
+
+t2_l8: 
+    # Path to the game directory - relative path from tools/register_vpcom.py
+    # here's a fun one c:/Users/Michael/Dropbox/pinball/T2
+    path: /../PyProcGameHD-SkeletonGame-dev/SampleGame
+    kls: T2Game.T2Game
+    # Path to YAML
+    yaml: C:\P-ROC\PyProcGameHD-SkeletonGame-dev\SampleGame\config\T2.yaml
+
+drac_l1: 
+    # Path to the game directory - relative path from tools/register_vpcom.py
+    path: /../games/drac
+    kls: ExampleGame.BSD
+    # Path to YAML
+    yaml: C:\P-ROC\shared\config\BSD.yaml

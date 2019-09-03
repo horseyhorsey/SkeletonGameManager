@@ -1,0 +1,197 @@
+﻿<UserControl x:Uid="UserControl_1" x:Class="SGM2.Wpf.Views.ScoreLayoutView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" Background="{StaticResource Brush_GradientBackground}"
+             d:DesignHeight="1000" d:DesignWidth="600">
+
+    
+    <Grid x:Uid="LayoutRoot" x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Uid="ColumnDefinition_1"/>
+            <ColumnDefinition x:Uid="ColumnDefinition_2"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition x:Uid="RowDefinition_1" Height="*"/>
+            <RowDefinition x:Uid="RowDefinition_2"/>
+        </Grid.RowDefinitions>
+
+        <!--SINGLE PLAYER-->
+        <Grid x:Uid="Grid_1" Grid.Row="0" Grid.RowSpan="2">
+
+            <GroupBox x:Uid="GroupBox_1" Grid.Row="0" Header="Single Player" FontSize="12">
+
+                <Grid x:Uid="Grid_2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Uid="RowDefinition_3" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_4" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_5" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_6" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_7" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_8" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_9" Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!--BACKGROUND ANIMATION OPTONS-->
+                    <GroupBox x:Uid="GroupBox_2" Header="BackGround" FontSize="14">
+                        <StackPanel x:Uid="StackPanel_1" Orientation="Horizontal">
+                            
+                            <ComboBox x:Uid="ComboBox_1" Grid.Column="0" MinWidth="100" 
+                                      ItemsSource="{Binding Animations}"
+                                      SelectedValue="{Binding ScoreLayout.SinglePlayer.Background.Animation.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                            
+                            <CheckBox x:Uid="ChkBoxFromSaved" x:Name="ChkBoxFromSaved" Content="From Saved" VerticalAlignment="Center" 
+                                      IsChecked="{Binding ScoreLayout.SinglePlayer.Background.Animation.FromSaved, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+                            
+                            <TextBox  x:Uid="TextBox_1" Grid.Row="0" Grid.Column="0"  
+                                      ToolTip="Enter a layer name that is in your saved sequences, not the attract.yaml"
+                                      IsEnabled="{Binding ElementName=ChkBoxFromSaved, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                      Text="{Binding ScoreLayout.SinglePlayer.Background.Animation.Name}" Margin="3"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!--FOREGROUND ANIMATION OPTONS-->
+                    <GroupBox x:Uid="GroupBox_3" Header="Foreground" FontSize="14" Grid.Row="1">
+                        <Grid x:Uid="Grid_3">
+                            <ComboBox x:Uid="ComboBox_2" Grid.Column="0" ItemsSource="{Binding Animations}" MinWidth="100" 
+                                      SelectedValue="{Binding ScoreLayout.SinglePlayer.Foreground.AnimationLayer.Name}"/>
+                        </Grid>
+                    </GroupBox>
+
+                    <!--SCORE-->
+                    <GroupBox x:Uid="GroupBox_4" Header="Score" Grid.Row="2" Style="{DynamicResource SequenceBaseGroupBox}">
+                        <ContentPresenter x:Uid="ContentPresenter_1" Grid.Row="0" Grid.Column="0" 
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.Score}"/>
+                    </GroupBox>
+
+                    <!--CREDITS-->
+                    <GroupBox x:Uid="GroupBox_5" Header="Credit Indicator" Grid.Row="3" Grid.Column="1" Style="{StaticResource SequenceBaseGroupBox}">
+                        <StackPanel x:Uid="StackPanel_2">
+                            <ContentPresenter 
+                                      x:Uid="ContentPresenter_2" ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.CreditIndicator}"/>
+
+                            <ContentPresenter x:Uid="ContentPresenter_3" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4"
+                                      ContentTemplate="{StaticResource ScoreTextLayerFormatGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.CreditIndicator}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!--BALL NUMBER-->
+                    <GroupBox x:Uid="GroupBox_6" Header="Ball Number" Grid.Row="4" Style="{StaticResource SequenceBaseGroupBox}">
+                        <StackPanel x:Uid="StackPanel_3">
+                            <ContentPresenter x:Uid="ContentPresenter_4" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.BallNumber}"/>
+
+                            <ContentPresenter x:Uid="ContentPresenter_5" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="4"
+                                      ContentTemplate="{StaticResource ScoreTextLayerFormatGrid}" 
+                                      Content="{Binding ScoreLayout.SinglePlayer.BallNumber}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                </Grid>
+
+            </GroupBox>
+
+        </Grid>
+
+        <!--MULTI PLAYER-->
+        <GroupBox x:Uid="GroupBox_7" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3"
+                  Header="Multi Player"
+                  >
+
+            <ScrollViewer x:Uid="ScrollViewer_1">
+                <Grid x:Uid="Grid_4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Uid="RowDefinition_10" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_11" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_12" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_13" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_14" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_15" Height="Auto"/>
+                        <RowDefinition x:Uid="RowDefinition_16" Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox x:Uid="GroupBox_8" Header="BackGround" FontSize="14">
+                        <StackPanel x:Uid="StackPanel_4" Orientation="Horizontal">
+                            <ComboBox x:Uid="ComboBox_3" Grid.Column="0" ItemsSource="{Binding Animations}" MinWidth="100" SelectedValue="{Binding ScoreLayout.MultiPlayer.Background.Animation.Name}"/>
+                            <CheckBox x:Uid="ChkBoxFromSavedMulti" x:Name="ChkBoxFromSavedMulti" Content="From Saved" VerticalAlignment="Center" IsChecked="{Binding ScoreLayout.MultiPlayer.Background.Animation.FromSaved}" Margin="3"/>
+                            <TextBox  x:Uid="TextBox_2" Grid.Row="0" Grid.Column="0"  
+                                      ToolTip="Enter Same here to use the single player animation."
+                                      IsEnabled="{Binding ElementName=ChkBoxFromSaved, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                      Text="{Binding ScoreLayout.MultiPlayer.Background.Animation.Name}" Margin="3"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox x:Uid="GroupBox_9" Header="Foreground" FontSize="14" Grid.Row="1">
+                        <StackPanel x:Uid="StackPanel_5" Orientation="Horizontal">
+                            <ComboBox x:Uid="ComboBox_4" Grid.Column="0" ItemsSource="{Binding Animations}"  MinWidth="100" 
+                                      SelectedValue="{Binding ScoreLayout.MultiPlayer.Foreground.AnimationLayer.Name}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!--Active Player-->
+                    <GroupBox x:Uid="GroupBox_10" Header="Active Player" Grid.Row="2" Style="{DynamicResource SequenceBaseGroupBox}">
+                        <StackPanel x:Uid="StackPanel_6">
+                            <ContentPresenter x:Uid="ContentPresenter_6" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.ActivePlayer}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!--Player One-->
+                    <GroupBox x:Uid="GroupBox_11" Header="Player One" Grid.Row="3" Style="{DynamicResource SequenceBaseGroupBox}">
+                        <StackPanel x:Uid="StackPanel_7">
+                            <ContentPresenter x:Uid="ContentPresenter_7" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.PlayerOne}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!--Player Two-->
+                    <GroupBox x:Uid="GroupBox_12" Header="Player Two" Grid.Row="4" Style="{DynamicResource SequenceBaseGroupBox}">
+                        <StackPanel x:Uid="StackPanel_8">
+                            <ContentPresenter x:Uid="ContentPresenter_8" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.PlayerTwo}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!--Player Three-->
+                    <GroupBox x:Uid="GroupBox_13" Header="Player Three" Grid.Row="5" Style="{DynamicResource SequenceBaseGroupBox}">
+                        <StackPanel x:Uid="StackPanel_9">
+                            <ContentPresenter x:Uid="ContentPresenter_9" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.PlayerThree}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <!--Player Four-->
+                    <GroupBox x:Uid="GroupBox_14" Header="Player Four" Grid.Row="6" Style="{DynamicResource SequenceBaseGroupBox}">
+                        <StackPanel x:Uid="StackPanel_10">
+                            <ContentPresenter x:Uid="ContentPresenter_10" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="5"
+                                      ContentTemplate="{StaticResource TextLayerOptionsGrid}" 
+                                      Content="{Binding ScoreLayout.MultiPlayer.PlayerFour}"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                </Grid>
+            </ScrollViewer>
+        </GroupBox>
+
+        <!--SAVE MACHINE BUTTON-->
+        <Button x:Uid="Button_1" Grid.Row="1" Grid.Column="1"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding SaveCommand}" 
+                        Style="{DynamicResource StyleSaveButton}" 
+                        ToolTip="{Binding Tip_SaveConfigMachine, Source={StaticResource ResourceKey=AppStringResource}}"                        
+                        />
+
+    </Grid>
+</UserControl>

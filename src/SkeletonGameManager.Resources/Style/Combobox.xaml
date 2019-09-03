@@ -1,0 +1,14 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+
+    <Style x:Key="Style_AssetCombo" TargetType="ComboBox"  x:Shared="false">
+        <Setter Property="SelectedValuePath" Value="Key"/>
+    </Style>
+
+    <Style x:Key="Style_AnimAssetCombo" TargetType="ComboBox">
+        <Setter Property="SelectedValuePath" Value="Name"/>
+    </Style>
+
+</ResourceDictionary>

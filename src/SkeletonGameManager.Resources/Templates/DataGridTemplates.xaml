@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+
+    <ControlTemplate x:Key="Datagrid_AudioAssetTemplate">
+        <DataGrid ItemsSource="{Binding AudioEntries}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Key}" Header="Key" Width="2*"/>
+                <DataGridTextColumn Binding="{Binding File}" Header="File" Width="2*"/>
+                <DataGridTextColumn Binding="{Binding Volume}" Header="Vol" MaxWidth="50"/>
+                <DataGridCheckBoxColumn Binding="{Binding StreamingLoad}" MaxWidth="100">
+                    <DataGridCheckBoxColumn.Header>
+                        <Label ToolTip="{StaticResource Tip_AudioStreamingLoad}"
+                               Content="StreamLoad"
+                               />
+                    </DataGridCheckBoxColumn.Header>
+                </DataGridCheckBoxColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </ControlTemplate>
+
+</ResourceDictionary>
