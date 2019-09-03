@@ -8,6 +8,7 @@ using SkeletonGameManager.Module.Services;
 using Prism.Logging;
 using SGM2.Wpf.Views;
 using SGM2.Wpf.ViewModels;
+using System.Configuration;
 
 namespace SGM2.Wpf
 {
@@ -48,6 +49,10 @@ namespace SGM2.Wpf
             Container.RegisterInstance<ISkeletonGameSerializer>(Container.Resolve<SkeletonGameSerializer>());
             Container.RegisterInstance<ISkeletonGameFiles>(Container.Resolve<SkeletonGameFiles>());
             Container.RegisterInstance<ISkeletonGameExport>(Container.Resolve<SkeletonGameExport>());
+            
+            Container.RegisterInstance<IVpGameMapper>(Container.Resolve<VpGameMapper>());
+            var vppath = ConfigurationManager.AppSettings["visualPinball"];
+            Container.RegisterInstance<IVisualPinball>(new VpLaunch(vppath));
 
             //Register views for View discovery            
             Container.RegisterType<object, ScoreLayoutView>("ScoreLayoutView");

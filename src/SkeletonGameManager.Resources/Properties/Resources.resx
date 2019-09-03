@@ -438,4 +438,7 @@
   <data name="Tip_LayerZoom" xml:space="preserve">
     <value>Apply a ZoomingLayer to this layer when enabled.</value>
   </data>
+  <data name="Tip_SaveVpMapping" xml:space="preserve">
+    <value>Saves the vp_game_map.yaml</value>
+  </data>
 </root>

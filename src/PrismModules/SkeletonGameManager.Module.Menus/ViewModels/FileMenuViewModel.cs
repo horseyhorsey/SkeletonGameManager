@@ -264,7 +264,7 @@ namespace SkeletonGameManager.Module.Menus.ViewModels
             Log("Setting game directory");
             CloseAllTabs();
 
-            var dlg = new FolderBrowserDialog();
+            var dlg = new FolderBrowserDialog();            
             dlg.SelectedPath = @"C:\P-ROC";
             DialogResult result = dlg.ShowDialog();
 

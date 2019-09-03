@@ -22,10 +22,12 @@ namespace SkeletonGameManager.Module.Config
             //Create and register as singletons
             _container.RegisterInstance(_container.Resolve<GameConfigViewModel>(), new ContainerControlledLifetimeManager());
             _container.RegisterInstance(_container.Resolve<MachineConfigViewModel>(), new ContainerControlledLifetimeManager());
-            
+            _container.RegisterInstance(_container.Resolve<VisualPinballViewModel>(), new ContainerControlledLifetimeManager());
+
             //Register type of view with container to be resolved.
             _container.RegisterType<object, GameConfigView>("GameConfigView");
             _container.RegisterType<object, MachineConfigView>("MachineConfigView");
+            _container.RegisterType<object, VisualPinballView>("VisualPinballView");
         }
     }
 }

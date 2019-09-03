@@ -99,6 +99,7 @@
                           ToolTip="{Binding Tip_Reload, Source={StaticResource ResourceKey=AppStringResource}}"
                           Command="{Binding ReloadGameCommand}"/>
                 <MenuItem Header="_Run" Command="{Binding LaunchGameCommand}" InputGestureText="Ctrl+R"/>
+                <MenuItem Header="_Visual Pinball" Command="{Binding NavigateCommand}" CommandParameter="VisualPinballView"/>
             </MenuItem>
 
             <MenuItem Header="_Export">

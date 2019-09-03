@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +71,7 @@
     <Compile Include="ViewModels\Machine\LampViewModel.cs" />
     <Compile Include="ViewModels\Machine\SolenoidFlasherViewModel.cs" />
     <Compile Include="ViewModels\Machine\SwitchViewModel.cs" />
+    <Compile Include="ViewModels\VisualPinballViewModel.cs" />
     <Compile Include="Views\GameConfigView.xaml.cs">
       <DependentUpon>GameConfigView.xaml</DependentUpon>
     </Compile>
@@ -78,6 +80,9 @@
     </Compile>
     <Compile Include="Views\MachineConfigView.xaml.cs">
       <DependentUpon>MachineConfigView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VisualPinballView.xaml.cs">
+      <DependentUpon>VisualPinballView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -119,6 +124,10 @@
     <Page Include="Views\MachineConfigView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\VisualPinballView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
